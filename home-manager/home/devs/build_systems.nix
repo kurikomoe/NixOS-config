@@ -12,6 +12,7 @@ in {
     meson
 
     pkg-config
+    llvmPackages.bintools
 
     just
 

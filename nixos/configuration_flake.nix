@@ -25,6 +25,10 @@ p@{ inputs, pkgs, customVars, ... }:
 
   environment.systemPackages = with pkgs; [
     steam-run
+
+    openssl
+    pkg-config
+
     inputs.nix-alien.packages.${system}.nix-alien
 
     # inputs.agenix.packages.${system}.default

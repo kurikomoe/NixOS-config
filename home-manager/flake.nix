@@ -63,7 +63,30 @@
     };
 
 
+    # ----------------- helper functions ------------------
+    _commonNixPkgsConfig = {
+      allowUnfree = true;
+      settings = {
+        trusted-users = [ customVars.userName ];
+        substituters = [
+          https://mirrors.ustc.edu.cn/nix-channels/store
+          https://mirror.sjtu.edu.cn/nix-channels/store
+          https://cache.nixos.org
+          https://nix-community.cachix.org
+        ];
+        trusted-public-keys = self.mkAfter [
+          "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        ];
+      };
+    };
+
     # ----------------- reimport inputs ------------------
+    customNixPkgsImport = src: extraConfig: import src {
+      inherit system;
+      config = _commonNixPkgsConfig;
+    } // extraConfig;
+
+
     versionMap = {
       "stable" = {
         nixpkgs = inputs.nixpkgs;
@@ -75,34 +98,21 @@
       };
     };
 
-    pkgs = import versionMap.${currentVersion}.nixpkgs {
-      inherit system;
-      config.allowUnfree = true;
-    };
+    pkgs = customNixPkgsImport versionMap.${currentVersion}.nixpkgs {};
+
     agenix = inputs.agenix;
 
     # -------------- pkgs versions ------------------
-    pkgs-stable = import versionMap."stable".nixpkgs {
-      inherit system;
-      config.allowUnfree = true;
-    };
-    pkgs-unstable = import versionMap."unstable".nixpkgs {
-      inherit system;
-      config.allowUnfree = true;
-    };
+    pkgs-stable = customNixPkgsImport versionMap."stable".nixpkgs {};
+
+    pkgs-unstable = customNixPkgsImport versionMap."unstable".nixpkgs {};
 
     repos = {
       inherit pkgs-stable pkgs-unstable;
 
       cuda = {
-        "12.2" = import inputs.nixpkgs-cuda-12_2 {
-          inherit system;
-          config.allowUnfree = true;
-        };
-        "12.4" = import inputs.nixpkgs-cuda-12_4 {
-          inherit system;
-          config.allowUnfree = true;
-        };
+        "12.2" = customNixPkgsImport inputs.nixpkgs-cuda-12_2 {};
+        "12.4" = customNixPkgsImport inputs.nixpkgs-cuda-12_4 {};
       };
     };
 

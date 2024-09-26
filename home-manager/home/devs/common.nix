@@ -12,6 +12,8 @@ in {
     binutils
     coreutils-full
 
+    asdf-vm
+
     wget
     curl
 

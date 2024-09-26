@@ -38,6 +38,8 @@ in {
     hm = "home-manager";
     hme = "vim $HOME/.config/home-manager";
     hms = "home-manager switch";
+
+    nxsearch = "nix search nixpkgs";
   };
 
   programs = {
