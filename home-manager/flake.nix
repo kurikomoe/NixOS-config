@@ -12,6 +12,8 @@
     nixpkgs-cuda-12_4.url = "github:nixos/nixpkgs/5ed627539ac84809c78b2dd6d26a5cebeb5ae269";
     nixpkgs-cuda-12_2.url = "github:nixos/nixpkgs/0cb2fd7c59fed0cd82ef858cbcbdb552b9a33465";
 
+    nur.url = "github:nix-community/NUR";
+
     home-manager = {
       url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -110,8 +112,13 @@
 
     pkgs-unstable = customNixPkgsImport versionMap."unstable".nixpkgs {};
 
+    pkgs-nur = import inputs.nur {
+      inherit pkgs;
+      nurpkgs = customNixPkgsImport versionMap."unstable".nixpkgs {};
+    };
+
     repos = {
-      inherit pkgs-stable pkgs-unstable;
+      inherit pkgs-stable pkgs-unstable pkgs-nur;
 
       cuda = {
         "12.2" = customNixPkgsImport inputs.nixpkgs-cuda-12_2 {};
@@ -140,6 +147,13 @@
         {
           imports = [ ./home/age.nix ];
           home.packages = [ agenix.packages.${system}.default ];
+        }
+
+        # -------------- enable nur ----------------
+        {
+          # This should be safe cause nur use username as namespace.
+          nixpkgs.overlays = [ inputs.nur.overlay ];
+          home.packages = [ ];
         }
 
         # --------------- load home config ---------------
