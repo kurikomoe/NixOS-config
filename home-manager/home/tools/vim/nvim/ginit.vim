@@ -1,0 +1,2 @@
+Guifont monospace
+colorscheme dracula

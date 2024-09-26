@@ -1,0 +1,38 @@
+p@{inputs, pkgs, ...}:
+
+let
+
+in {
+  imports = [
+    ./build_systems.nix
+  ];
+
+  home.packages = with pkgs; [
+    # Shell Tools
+    binutils
+    coreutils-full
+
+    wget
+    curl
+
+    htop
+    which
+
+    dust     # du-dust
+    fd       # find
+    fend
+    ripgrep  # search tools
+
+    # compress
+    p7zip
+    zip
+    xz
+    unzip
+    rar
+    gzip
+
+    # Git
+    git
+    git-ignore
+  ];
+}

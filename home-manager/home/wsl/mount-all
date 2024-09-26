@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+sudo true
+
+wsl.exe -d NixOS --mount --vhd 'W:\@Packages\WSL\LinuxProjects.vhdx' --bare
+
+# sudo mount -t drvfs 'E:' /mnt/e
+sudo mount -a

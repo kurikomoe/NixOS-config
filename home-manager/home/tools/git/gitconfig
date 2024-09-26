@@ -1,0 +1,14 @@
+[init]
+	defaultBranch = main
+[core]
+	eol = lf
+	autocrlf = input
+[credential "https://github.com"]
+	helper =
+	helper = !/usr/bin/env gh auth git-credential
+[credential "https://gist.github.com"]
+	helper =
+	helper = !/usr/bin/env gh auth git-credential
+[oh-my-zsh]
+	hide-dirty = 1
+
