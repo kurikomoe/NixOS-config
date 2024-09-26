@@ -36,5 +36,10 @@ in {
     # Git
     git
     git-ignore
+
+    # dev
+    devenv
+    direnv
+    cachix
   ];
 }
