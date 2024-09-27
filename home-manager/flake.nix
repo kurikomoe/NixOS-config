@@ -67,11 +67,10 @@
       homeDirectory = /home/${userName};
     };
 
-
     # ----------------- helper functions ------------------
     _commonNixPkgsConfig = {
       allowUnfree = true;
-      settings = {
+      settings = rec {
         trusted-users = [ customVars.userName ];
         substituters = [
           https://mirrors.ustc.edu.cn/nix-channels/store
@@ -79,7 +78,8 @@
           https://cache.nixos.org
           https://nix-community.cachix.org
         ];
-        trusted-public-keys = self.mkAfter [
+        trusted-substituters = substituters;
+        trusted-public-keys = [
           "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
         ];
       };
@@ -103,11 +103,12 @@
       };
     };
 
-    pkgs = customNixPkgsImport versionMap.${currentVersion}.nixpkgs {};
-
+    nixpkgs = versionMap.${currentVersion}.nixpkgs;
     agenix = inputs.agenix;
 
     # -------------- pkgs versions ------------------
+    pkgs = customNixPkgsImport nixpkgs {};
+
     pkgs-stable = customNixPkgsImport versionMap."stable".nixpkgs {};
 
     pkgs-unstable = customNixPkgsImport versionMap."unstable".nixpkgs {};
@@ -143,6 +144,11 @@
       };
 
       modules = [
+        # ------------ user nix settings --------------------
+        {
+          nix.package = pkgs.nix;
+          nix.settings = _commonNixPkgsConfig.settings;
+        }
         # -------------- load agenix secrets ----------------
         {
           imports = [ ./home/age.nix ];
@@ -151,7 +157,7 @@
 
         # -------------- enable nur ----------------
         {
-          # This should be safe cause nur use username as namespace.
+          # This should be safe, since nur use username as namespace.
           nixpkgs.overlays = [ inputs.nur.overlay ];
           home.packages = [ ];
         }

@@ -26,6 +26,7 @@ in
 
   programs = {
     # autojump.enable = true;
+    dircolors.enableFishIntegration = true;
 
     zoxide = {
       enable = true;
@@ -34,7 +35,13 @@ in
 
     fish = {
       enable = true;
-      shellInit = myShellInit;
+      shellInit = ''
+        set fish_prompt_pwd_dir_length 0
+
+        # function postexec_test --on-event fish_postexec
+        #    echo
+        # end
+      '';
       plugins = with pkgs.fishPlugins; [
         # {
         #   name = "fish-ssh-agent";

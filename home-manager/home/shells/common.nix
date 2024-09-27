@@ -21,11 +21,11 @@ in
     j = "z";
   };
 
-  home.file = {
-    ".dir_colors".source = ./common_data/.dir_colors;
-  };
-
   programs = {
+    dircolors = {
+      enable = true;
+      extraConfig = builtins.readFile ./common_data/dir_colors;
+    };
     zoxide = {
       enable = true;
       enableFishIntegration = true;
