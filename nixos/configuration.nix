@@ -37,8 +37,18 @@ with proxy; (if enable then {
     }
   ];
 
+  # For first time update
+  system.autoUpgrade.channel = "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/nixpkgs-unstable/nixexprs.tar.xz";
+
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
+    trusted-substituters = [
+      https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store
+      https://mirrors.ustc.edu.cn/nix-channels/store
+      https://mirror.sjtu.edu.cn/nix-channels/store
+      https://cache.nixos.org
+      https://nix-community.cachix.org
+    ];
     substituters = [
       https://mirrors.ustc.edu.cn/nix-channels/store
       https://mirror.sjtu.edu.cn/nix-channels/store
