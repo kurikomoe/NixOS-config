@@ -41,11 +41,11 @@ let
 
 in {
   imports = [
-    "${root}/home/devs/langs/python.nix"
-    "${root}/home/devs/langs/ruby.nix"
-    "${root}/home/devs/langs/perl.nix"
-    "${root}/home/devs/langs/lua.nix"
-    "${root}/home/devs/langs/node.nix"
+    "${root}/packages/devs/langs/python.nix"
+    "${root}/packages/devs/langs/ruby.nix"
+    "${root}/packages/devs/langs/perl.nix"
+    "${root}/packages/devs/langs/lua.nix"
+    "${root}/packages/devs/langs/node.nix"
   ];
 
   xdg.configFile = {

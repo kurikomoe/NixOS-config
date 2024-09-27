@@ -5,19 +5,10 @@ let
 
 in {
   imports = [
-    ../build_systems.nix
+    ../common.nix
   ];
 
   home.packages = with pkgs; [
-    # build systems
-    cmake
-    xmake
-    meson
-    autoconf
-
-    ninja
-    gnumake
-
     # gcc
     (hiPrio gcc)
     # gcc_multi

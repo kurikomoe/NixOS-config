@@ -4,7 +4,7 @@ let
 
 in {
   imports = [
-    ./build_systems.nix
+    ./buildsystems.nix
   ];
 
   home.packages = with pkgs; [

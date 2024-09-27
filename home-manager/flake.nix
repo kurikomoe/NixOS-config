@@ -33,6 +33,8 @@
       inputs.home-manager.follows = "home-manager";
     };
 
+    flake-parts.url = "github:hercules-ci/flake-parts";
+
     # --------------------- Third Party inputs ---------------------
     nix-alien.url = "github:thiagokokada/nix-alien";
 
@@ -54,133 +56,13 @@
 
 # ---------------------------------------------------------------------------
 
-  outputs = inputs@{ self, ... }:
-  let
-    # -------------- custom variables --------------------
-    system = "x86_64-linux";
-    currentVersion = "stable";
+outputs = inputs@{ self, flake-parts, ... }:
 
-    editor = "nvim";
-
-    customVars = rec {
-      inherit system currentVersion editor;
-      hostName = "KurikoNixOS";
-
-      userName = "kuriko";
-      userNameFull = "KurikoMoe";
-
-      userEmail = "kurikomoe@gmail.com";
-
-      homeDirectory = /home/${userName};
-    };
-
-    # ----------------- helper functions ------------------
-    _commonNixPkgsConfig = {
-      allowUnfree = true;
-      settings = rec {
-        trusted-users = [ customVars.userName ];
-        substituters = [
-          https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store
-          https://mirrors.ustc.edu.cn/nix-channels/store
-          https://mirror.sjtu.edu.cn/nix-channels/store
-          https://cache.nixos.org
-          https://nix-community.cachix.org
-        ];
-        trusted-substituters = substituters;
-        trusted-public-keys = pkgs.lib.mkAfter [
-          "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-          "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-        ];
-      };
-    };
-
-    # ----------------- reimport inputs ------------------
-    customNixPkgsImport = src: extraConfig: import src {
-      inherit system;
-      config = _commonNixPkgsConfig;
-    } // extraConfig;
-
-
-    versionMap = {
-      "stable" = {
-        nixpkgs = inputs.nixpkgs;
-        home-manager = inputs.home-manager;
-      };
-      "unstable" = {
-        nixpkgs = inputs.nixpkgs-unstable;
-        home-manager = inputs.home-manager-unstable;
-      };
-    };
-
-    nixpkgs = versionMap.${currentVersion}.nixpkgs;
-    agenix = inputs.agenix;
-
-    # -------------- pkgs versions ------------------
-    pkgs = customNixPkgsImport nixpkgs {};
-
-    pkgs-stable = customNixPkgsImport versionMap."stable".nixpkgs {};
-
-    pkgs-unstable = customNixPkgsImport versionMap."unstable".nixpkgs {};
-
-    pkgs-nur = import inputs.nur {
-      inherit pkgs;
-      nurpkgs = customNixPkgsImport versionMap."unstable".nixpkgs {};
-    };
-
-    repos = {
-      inherit pkgs-stable pkgs-unstable pkgs-nur;
-
-      cuda = {
-        "12.2" = customNixPkgsImport inputs.nixpkgs-cuda-12_2 {};
-        "12.4" = customNixPkgsImport inputs.nixpkgs-cuda-12_4 {};
-      };
-    };
-
-  in
-  with customVars;
-  with versionMap.${currentVersion}; {
-    homeConfigurations.${userName} = home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
-
-      extraSpecialArgs = {
-        inherit customVars inputs;
-
-        # locked pkgs
-        inherit repos;
-
-        # root_path
-        root = "${self}";
-      };
-
-      modules = [
-        # ------------ user nix settings --------------------
-        {
-          nix.package = pkgs.nix;
-          nix.settings = _commonNixPkgsConfig.settings;
-        }
-        # -------------- load agenix secrets ----------------
-        {
-          imports = [ ./home/age.nix ];
-          home.packages = [ agenix.packages.${system}.default ];
-        }
-
-        # -------------- enable nur ----------------
-        {
-          # This should be safe, since nur use username as namespace.
-          nixpkgs.overlays = [ inputs.nur.overlay ];
-          home.packages = [ ];
-        }
-        # ------------- others -------------
-        {
-          home.packages = [
-            # inputs.nix-search.packages.${system}.default
-            pkgs.nix-search-cli
-          ];
-        }
-
-        # --------------- load home config ---------------
-        ./home
-      ];
-    };
+let
+  kurikoG14 = import ./devices/KurikoG14.nix {
+    inherit inputs;
+    root = "${self}";
   };
+in
+  kurikoG14;
 }

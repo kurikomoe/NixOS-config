@@ -10,7 +10,7 @@ in {
   programs = {
     git = {
       enable = true;
-      userName = customVars.userNameFull;
+      userName = customVars.usernameFull;
       userEmail = customVars.userEmail;
       signing = {
         key = "B6CF5D8D8ED4D90ED1D830922D6BAAE3F96083D2";

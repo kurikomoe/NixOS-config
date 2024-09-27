@@ -1,23 +1,11 @@
 p@{ root, inputs, pkgs, lib, nixpkgs, ... }:
 let
   myShellInit = builtins.readFile ./shell_init.fish;
-
-  # Not appliable on nixos for lacking FHS
-  # fish-ssh-agent = pkgs.stdenv.mkDerivation {
-  #   pname = "fish-ssh-agent";
-  #   version = "unstable";
-
-  #   src = inputs.fish-ssh-agent;
-
-  #   installPhase = ''
-  #     echo 233
-  #   '';
-  # };
 in
 {
   imports = [
-    "${root}/home/devs/common.nix"
-    "${root}/home/shells/common.nix"
+    "${root}/packages/devs/common.nix"
+    "${root}/packages/shells/common.nix"
   ];
 
   home.packages = with pkgs; [];
@@ -36,7 +24,7 @@ in
     fish = {
       enable = true;
       shellInit = ''
-        set fish_prompt_pwd_dir_length 0
+        # set fish_prompt_pwd_dir_length 0
 
         # function postexec_test --on-event fish_postexec
         #    echo

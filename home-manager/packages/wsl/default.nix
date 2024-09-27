@@ -2,14 +2,14 @@ p@{ config, lib, customVars, ... }:
 
 let
   mkBinWinAbs = {name, src, isExecutable ? false}: {
-    "/home/${customVars.userName}/.local/bin.win/${name}" = {
+    "/home/${customVars.username}/.local/bin.win/${name}" = {
       source = config.lib.file.mkOutOfStoreSymlink src;
       executable = isExecutable;
     };
   };
 
   mkBinWinRel = {name, src, isExecutable ? false}: {
-    "/home/${customVars.userName}/.local/bin.win/${name}" = {
+    "/home/${customVars.username}/.local/bin.win/${name}" = {
       source = config.lib.file.mkOutOfStoreSymlink ./${src};
       executable = isExecutable;
     };

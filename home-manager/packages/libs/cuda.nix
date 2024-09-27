@@ -4,7 +4,7 @@ let
 
 in {
   nixpkgs.overlays = [
-    (self: super: {
+    (final: prev: {
       cudaPackages.cudatoolkit = repos.cuda."12.2".cudaPackages.cudatoolkit;
     })
   ];

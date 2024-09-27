@@ -1,7 +1,7 @@
 { root, pkgs, inputs, config, lib, ... }:
 
 let
-  utils = import "${root}/home/utils.nix";
+  utils = import "${root}/packages/utils.nix";
 
   files = {
     "ssh/config" = ".ssh/data/config";
