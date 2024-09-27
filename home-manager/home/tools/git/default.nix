@@ -1,6 +1,6 @@
 { config, pkgs, inputs, customVars, ... }:
 let
-  configDir = "$HOME/.config";
+  configDir = "${config.xdg.configHome}";
   ghConfigDir = "${configDir}/gh";
   gitConfigDir = "${configDir}/git";
 

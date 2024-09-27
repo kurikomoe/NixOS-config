@@ -38,5 +38,6 @@ in {
 
     # others
     macchina
+    topgrade
   ];
 }

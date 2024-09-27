@@ -39,8 +39,6 @@ let
     coc-java
   ];
 
-  configDir = ".config";
-  nvimConfigDir = "${configDir}/nvim";
 in {
   imports = [
     "${root}/home/devs/langs/python.nix"

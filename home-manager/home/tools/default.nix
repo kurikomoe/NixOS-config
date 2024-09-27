@@ -4,11 +4,13 @@
   imports = [
     ./ssh
 
-    ./gnupg.nix
     ./git
+    ./gnupg.nix
+
+    ./vim
 
     ./tmux
-    ./vim
+    ./topgrade
 
     ./direnv.nix
     ./vscode.nix

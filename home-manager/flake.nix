@@ -47,6 +47,9 @@
       url = "github:soyuka/tmux-current-pane-hostname/master";
       flake = false;
     };
+
+    # -------------------- nix search --------------------
+    # nix-search.url = github:diamondburned/nix-search;
   };
 
 # ---------------------------------------------------------------------------
@@ -166,6 +169,7 @@
           nixpkgs.overlays = [ inputs.nur.overlay ];
           home.packages = [ ];
         }
+        # ------------- others -------------
 
         # --------------- load home config ---------------
         ./home

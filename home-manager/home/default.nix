@@ -36,7 +36,7 @@ in {
 
   home.shellAliases = {
     hm = "home-manager";
-    hme = "vim $HOME/.config/home-manager";
+    hme = "$EDITOR ${config.xdg.configHome}/home-manager";
     hms = "home-manager switch";
 
     nxsearch = "nix search nixpkgs";
