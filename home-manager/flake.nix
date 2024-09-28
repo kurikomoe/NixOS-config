@@ -59,10 +59,13 @@
 outputs = inputs@{ self, flake-parts, ... }:
 
 let
-  kurikoG14 = import ./devices/KurikoG14.nix {
+  devices = [
+    ./devices/KurikoG14.nix
+  ];
+in
+  builtins.foldl'
+  (acc: device: acc // (import device {
     inherit inputs;
     root = "${self}";
-  };
-in
-  kurikoG14;
+  })) {} devices;
 }

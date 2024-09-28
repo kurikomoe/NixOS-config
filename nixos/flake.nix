@@ -8,6 +8,8 @@
     nixpkgs.url = "https://mirrors.ustc.edu.cn/nix-channels/nixos-24.05/nixexprs.tar.xz";
     nixpkgs-unstable.url = "https://mirrors.ustc.edu.cn/nix-channels/nixpkgs-unstable/nixexprs.tar.xz";
 
+    nur.url = "github:nix-community/NUR";
+
     # nixpkgs.url = "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/nixos-24.05/nixexprs.tar.xz";
     # nixpkgs-unstable.url = "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/nixpkgs-unstable/nixexprs.tar.xz";
 
@@ -23,6 +25,8 @@
     };
 
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
+
+    flake-parts.url = "github:hercules-ci/flake-parts";
 
     # --------------------- Third Party inputs ---------------------
     nix-alien.url = "github:thiagokokada/nix-alien";
@@ -40,74 +44,13 @@
   };
 
   # Outputs
-  outputs = inputs@{ self, ... }:
+  outputs = inputs@{ self, flake-parts, ... }:
   let
-    # -------------- custom variables --------------------
-    system = "x86_64-linux";
-
-    customVars = {
-      inherit system;
-      hostName = "KurikoNixOS";
-      userName = "kuriko";
-    };
-
-
-    # ----------------- reimport inputs ------------------
-    nixpkgs = inputs.nixpkgs;
-    # nixpkgs = inputs.nixpkgs-unstable;
-
-    # -------------- pkgs versions ------------------
-    lockedVersion = {
-      cuda = {
-        # "12.2" = import inputs.nixpkgs-cuda-12_2 {
-        #   inherit system;
-        #   config.allowUnfree = true;
-        # };
-      };
-    };
-
-  in with customVars; {
-    # Used with `nixos-rebuild --flake [path]#<hostname>`
-    nixosConfigurations.${hostName} = nixpkgs.lib.nixosSystem {
-
-      specialArgs = {
-         inherit customVars lockedVersion inputs;
-      };
-
-      modules = [
-        ./configuration.nix
-        ./configuration_flake.nix
-
-        inputs.nixos-wsl.nixosModules.default {
-            system.stateVersion = "24.05";
-            wsl.enable = true;
-            wsl.defaultUser = userName;
-            wsl.interop.includePath = false;
-            wsl.interop.register = true;
-            wsl.usbip.enable = true;
-            wsl.useWindowsDriver = true;
-            wsl.wslConf.automount.ldconfig = true;
-            wsl.wslConf.automount.enabled = true;
-            wsl.wslConf.interop.enabled = true;
-            wsl.wslConf.interop.appendWindowsPath = false;
-            wsl.wslConf.user.default = userName;
-        }
-
-        # agenix.nixosModules.default
-
-        #inputs.home-manager.nixosModules.home-manager {
-        #   home-manager.useGlobalPkgs = true;
-        #   home-manager.useUserPackages = true;
-
-        #   home-manager.users.${userName} = import ./home;
-
-        #   home-manager.extraSpecialArgs = {
-        #     inherit customVars;
-        #     root = "${self}";
-        #     inputs = self.inputs;
-        #   };
-        #}
-      ];
-    };
-  };
+    devices = [
+      devices/KurikoG14.nix
+    ];
+  in
+    builtins.foldl'
+      (acc: device: acc // (import device { inherit inputs; })) {} devices;
 }
+

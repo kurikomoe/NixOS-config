@@ -7,20 +7,7 @@
 
 p@{ config, lib, pkgs, ... }:
 
-let
-  proxy = {
-    enable = true;
-    endpoint = "127.0.0.1:8899";
-  };
-in
-# setup proxy
-with proxy; (if enable then {
-  environment.variables = {
-    http_proxy = "http://${endpoint}";
-    https_proxy = "http://${endpoint}";
-    socks_proxy = "socks5://${endpoint}";
-  };
-} else {}) // {
+{
   imports = [
     ./hardware-configuration.nix
   ];
@@ -36,9 +23,6 @@ with proxy; (if enable then {
       };
     }
   ];
-
-  # For first time update
-  system.autoUpgrade.channel = "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/nixpkgs-unstable/nixexprs.tar.xz";
 
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
