@@ -13,6 +13,7 @@ p@{
   customVars,
   modules ? [],
   repos ? {},
+  extraNixPkgsOptions ? {},
   stateVersion,
   ...
 }:
@@ -38,15 +39,15 @@ let
   agenix = inputs.agenix;
 
   # -------------- pkgs versions ------------------
-  pkgs = customNixPkgsImport nixpkgs {};
+  pkgs = customNixPkgsImport nixpkgs extraNixPkgsOptions;
 
-  pkgs-stable = customNixPkgsImport versionMap."stable".nixpkgs {};
+  pkgs-stable = customNixPkgsImport versionMap."stable".nixpkgs extraNixPkgsOptions;
 
-  pkgs-unstable = customNixPkgsImport versionMap."unstable".nixpkgs {};
+  pkgs-unstable = customNixPkgsImport versionMap."unstable".nixpkgs extraNixPkgsOptions;
 
   pkgs-nur = import inputs.nur {
     inherit pkgs;
-    nurpkgs = customNixPkgsImport versionMap."unstable".nixpkgs {};
+    nurpkgs = customNixPkgsImport versionMap."unstable".nixpkgs extraNixPkgsOptions;
   };
 
   repos = {
@@ -101,8 +102,8 @@ with versionMap.${currentVersion};
         xdg.enable = true;
 
         home.sessionVariables = {
-          EDITOR = "nvim";
-        } // (lib.mkForce p.sessionVariables or {});
+          EDITOR = lib.mkDefault "nvim";
+        };
 
         home.packages = with pkgs; [
           (lib.lowPrio vim)
@@ -110,29 +111,30 @@ with versionMap.${currentVersion};
         ] ++ (p.packages or []);
 
         home.shellAliases = {
-          hm = "home-manager";
-          hme = "$EDITOR '${config.xdg.configHome}/home-manager'";
-          hms = "home-manager --flake $HOME/.nixos/home-manager#${deviceName} switch";
-          hmcd = "cd '${config.xdg.configHome}/home-manager'";
+          hm = lib.mkDefault "home-manager";
+          hme = lib.mkDefault "$EDITOR '${config.xdg.configHome}/home-manager'";
+          hms = "home-manager --flake '${config.home.homeDirectory}/.nixos/home-manager#${deviceName}' switch";
+          hmsdr = "home-manager --flake '${config.home.homeDirectory}/.nixos/home-manager#${deviceName}' switch --dry-run";
+          hmcd = lib.mkDefault "cd '${config.xdg.configHome}/home-manager'";
 
-          nxsearch = "nix search nixpkgs";
-        } // (lib.mkForce p.home.shellAliasesl or {});
+          nxsearch = lib.mkDefault "nix search nixpkgs";
+        };
 
-        programs = {
+        programs = lib.mkDefault {
           home-manager.enable = true;
 
-          ssh = {
+          ssh = lib.mkDefault {
             enable = true;
             compression = true;
             forwardAgent = true;
           };
 
-          fish = {
+          fish = lib.mkDefault {
             enable = true;
           };
-        } // (lib.mkForce p.programs or {});
+        };
 
-        services = {} // (lib.mkForce p.services or {});
+        services = lib.mkDefault {};
       })
     ];
   };

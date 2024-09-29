@@ -4,5 +4,13 @@ sudo true
 
 wsl.exe -d NixOS --mount --vhd 'W:\@Packages\WSL\LinuxProjects.vhdx' --bare
 
-# sudo mount -t drvfs 'E:' /mnt/e
-sudo mount -a
+sleep 5
+
+for i in `seq 1 10` do;
+  # sudo mount -t drvfs 'E:' /mnt/e
+  sudo mount -a;
+  if [[ $? == 0 ]]; then
+    break
+  fi
+  sleep 1;
+done

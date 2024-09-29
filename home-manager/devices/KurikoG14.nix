@@ -8,12 +8,12 @@ let
     inherit system;
     currentVersion = "unstable";
 
+    deviceName = "KurikoG14";
+
     hostName = "KurikoNixOS";
-    deviceName = hostName;
 
     username = "kuriko";
     usernameFull = "KurikoMoe";
-
     userEmail = "kurikomoe@gmail.com";
 
     homeDirectory = /home/${username};
@@ -26,8 +26,8 @@ in let
 
   repos = {
     cuda = {
-      "12.2" = customNixPkgsImport inputs.nixpkgs-cuda-12_2 {};
-      "12.4" = customNixPkgsImport inputs.nixpkgs-cuda-12_4 {};
+      "12.2" = customNixPkgsImport inputs.nixpkgs-cuda-12_2 { cudaSupport = true; };
+      "12.4" = customNixPkgsImport inputs.nixpkgs-cuda-12_4 { cudaSupport = true; };
     };
   };
 
@@ -35,8 +35,13 @@ in
   template (with customVars; {
     inherit inputs customVars repos root;
     stateVersion = "24.05";
+
+    extraNixPkgsOptions = {
+      cudaSupport = true;
+    };
+
     modules = [
-      {
+      ({config, inputs, lib, pkgs, ...}: {
         imports = [
           ../packages/wsl
 
@@ -53,8 +58,9 @@ in
         ];
 
         home.shellAliases = {
-          "hms" = "home-manager --flake $HOME/.nixos/home-manager#${deviceName}";
+          hms = "home-manager --flake '${config.home.homeDirectory}/.nixos/home-manager#${deviceName}' switch";
+          hmsd = "home-manager --flake '${config.home.homeDirectory}/.nixos/home-manager#${deviceName}' switch --dry-run";
         };
-      }
+      })
     ];
   })
