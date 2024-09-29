@@ -111,8 +111,9 @@ with versionMap.${currentVersion};
 
         home.shellAliases = {
           hm = "home-manager";
-          hme = "$EDITOR ${config.xdg.configHome}/home-manager";
+          hme = "$EDITOR '${config.xdg.configHome}/home-manager'";
           hms = "home-manager switch";
+          hmcd = "cd '${config.xdg.configHome}/home-manager'";
 
           nxsearch = "nix search nixpkgs";
         };

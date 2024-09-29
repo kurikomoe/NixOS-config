@@ -6,11 +6,10 @@ let
 
   customVars = rec {
     inherit system;
-    currentVersion = "stable";
+    currentVersion = "unstable";
 
     hostName = "KurikoNixOS";
-    # deviceName = "KurikoNixOS";
-    deviceName = "kuriko";
+    deviceName = hostName;
 
     username = "kuriko";
     usernameFull = "KurikoMoe";

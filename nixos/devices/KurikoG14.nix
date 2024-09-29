@@ -7,7 +7,7 @@ let
   customVars = rec {
     inherit system;
 
-    currentVersion = "stable";
+    currentVersion = "unstable";
 
     hostName = "KurikoNixOS";
 

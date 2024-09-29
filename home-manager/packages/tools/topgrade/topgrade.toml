@@ -15,7 +15,7 @@
 # sudo_command = "sudo"
 
 # Disable specific steps - same options as the command line flag
-disable = ["bun", "bun_packages", "dotnet"]
+# disable = ["bun", "bun_packages", "dotnet", "vcpkg", "yarn", "pnpm"]
 
 # Ignore failures for these steps
 # ignore_failures = ["powershell"]
@@ -60,7 +60,7 @@ disable = ["bun", "bun_packages", "dotnet"]
 # bashit_branch = "stable"
 
 # Run specific steps - same options as the command line flag
-# only = ["system", "emacs"]
+only = ["system", "home_manager", "asdf"]
 
 # Whether to self update
 #

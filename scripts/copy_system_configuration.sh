@@ -4,4 +4,4 @@ set -ex
 
 ROOT=$(dirname $0)
 
-rsync -avP /etc/nixos/ "$ROOT/../nixos"
+sudo rsync -avP "$ROOT/../nixos/" /etc/nixos/
