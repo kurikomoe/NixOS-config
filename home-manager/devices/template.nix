@@ -57,7 +57,7 @@ in
 with customVars;
 with versionMap.${currentVersion};
 {
-  homeConfigurations.${customVars.deviceName} = home-manager.lib.homeManagerConfiguration {
+  homeConfigurations.${deviceName} = home-manager.lib.homeManagerConfiguration {
     inherit pkgs;
 
     extraSpecialArgs = {
@@ -67,7 +67,7 @@ with versionMap.${currentVersion};
       inherit repos;
     };
 
-    modules = modules ++ [
+    modules = p.modules ++ [
       # -------------- load agenix secrets ----------------
       {
         imports = [ ../packages/age.nix ];
@@ -88,7 +88,7 @@ with versionMap.${currentVersion};
         ];
       }
       # ------------ user nix settings --------------------
-      ({config, inputs, ... }: {
+      ({config, inputs, lib, ... }: {
         home.stateVersion = stateVersion;
         home.username = username;
         home.homeDirectory = homeDirectory;
@@ -102,21 +102,21 @@ with versionMap.${currentVersion};
 
         home.sessionVariables = {
           EDITOR = "nvim";
-        };
+        } // (lib.mkForce p.sessionVariables or {});
 
         home.packages = with pkgs; [
           (lib.lowPrio vim)
           (lib.lowPrio neovim)
-        ];
+        ] ++ (p.packages or []);
 
         home.shellAliases = {
           hm = "home-manager";
           hme = "$EDITOR '${config.xdg.configHome}/home-manager'";
-          hms = "home-manager switch";
+          hms = "home-manager --flake $HOME/.nixos/home-manager#${deviceName} switch";
           hmcd = "cd '${config.xdg.configHome}/home-manager'";
 
           nxsearch = "nix search nixpkgs";
-        };
+        } // (lib.mkForce p.home.shellAliasesl or {});
 
         programs = {
           home-manager.enable = true;
@@ -130,8 +130,9 @@ with versionMap.${currentVersion};
           fish = {
             enable = true;
           };
-        };
-        services = {};
+        } // (lib.mkForce p.programs or {});
+
+        services = {} // (lib.mkForce p.services or {});
       })
     ];
   };

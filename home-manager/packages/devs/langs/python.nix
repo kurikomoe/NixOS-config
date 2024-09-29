@@ -13,6 +13,8 @@ in {
   home.packages = with pkgs; [
     python312
 
+    poetry
+
     python312Packages.pysocks
   ];
 }

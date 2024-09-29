@@ -32,7 +32,7 @@ in let
   };
 
 in
-  template {
+  template (with customVars; {
     inherit inputs customVars repos root;
     stateVersion = "24.05";
     modules = [
@@ -51,6 +51,10 @@ in
 
           ../packages/libs/cuda.nix
         ];
+
+        home.shellAliases = {
+          "hms" = "home-manager --flake $HOME/.nixos/home-manager#${deviceName}";
+        };
       }
     ];
-  }
+  })

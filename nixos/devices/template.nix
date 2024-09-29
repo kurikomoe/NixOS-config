@@ -45,7 +45,7 @@ with customVars; {
 
     specialArgs = {
        inherit customVars repos inputs;
-    };
+    } // (inputs.specialArgs or {});
 
     modules = p.modules ++ [
       ../configuration.nix
