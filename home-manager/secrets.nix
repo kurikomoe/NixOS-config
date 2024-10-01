@@ -20,6 +20,10 @@ let
     "res/gh" = [
       "hosts.yml"
     ];
+
+    "res/nix" = [
+      "access-tokens"
+    ];
   };
 
   # Credit to chatgpt 4o ...

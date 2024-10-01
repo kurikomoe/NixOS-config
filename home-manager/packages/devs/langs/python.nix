@@ -11,9 +11,9 @@ in {
   # ];
 
   home.packages = with pkgs; [
-    python312
+    pipx
 
-    poetry
+    python312
 
     python312Packages.pysocks
   ];

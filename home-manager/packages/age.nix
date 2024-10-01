@@ -4,7 +4,9 @@ let
   home = config.home.homeDirectory;
   xdg_config = config.xdg.configHome;
 
-  res = "../res";
+  secret_file = filepath: {
+    ${filepath}.file = ../res/${filepath}.age;
+  };
 in
 {
   imports = [
@@ -18,25 +20,22 @@ in
       "${home}/.ssh/id_ed25519_age"
     ];
 
-    secrets = {
+    secrets = {}
       # ----------------------------------------------------------
-      "gnupg/private.pgp".file = ../res/gnupg/private.pgp.age;
-      "gnupg/public.pgp".file = ../res/gnupg/public.pgp.age;
-
+      // secret_file("gnupg/private.pgp")
+      // secret_file("gnupg/public.pgp")
       # ----------------------------------------------------------
-      "ssh/config".file = ../res/ssh/config.age;
-
-      "ssh/id_rsa".file = ../res/ssh/id_rsa.age;
-      "ssh/id_rsa.pub".file = ../res/ssh/id_rsa.pub.age;
-
-      "ssh/id_ed25519".file = ../res/ssh/id_ed25519.age;
-      "ssh/id_ed25519.pub".file = ../res/ssh/id_ed25519.pub.age;
-
-      "ssh/id_ed25519_age.pub".file = ../res/ssh/id_ed25519_age.pub.age;
-
+      // secret_file("ssh/config")
+      // secret_file("ssh/id_rsa")
+      // secret_file("ssh/id_rsa.pub")
+      // secret_file("ssh/id_ed25519")
+      // secret_file("ssh/id_ed25519.pub")
+      // secret_file("ssh/id_ed25519_age.pub")
       # ----------------------------------------------------------
-      "gh/hosts.yml".file = ../res/gh/hosts.yml.age;
-    };
+      // secret_file("gh/hosts.yml")
+      # ----------------------------------------------------------
+      // secret_file("nix/access-tokens")
+    ;
   };
 
   # https://github.com/ryantm/agenix/issues/50#issuecomment-1926893522

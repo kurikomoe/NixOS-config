@@ -1,12 +1,11 @@
-{ config, pkgs, inputs, customVars, ... }:
+{ config, pkgs, inputs, lib, customVars, ... }:
 let
   configDir = "${config.xdg.configHome}";
   ghConfigDir = "${configDir}/gh";
   gitConfigDir = "${configDir}/git";
-
   gitExtraConfigPath = "${gitConfigDir}/config_extra";
-in {
 
+in {
   programs = {
     git = {
       enable = true;

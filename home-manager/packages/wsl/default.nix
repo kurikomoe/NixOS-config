@@ -1,21 +1,25 @@
 p@{ config, lib, customVars, ... }:
 
 let
+  buildSymlinkSrc = config.lib.file.mkOutOfStoreSymlink;
+
   mkBinWinAbs = {name, src, isExecutable ? false}: {
     "/home/${customVars.username}/.local/bin.win/${name}" = {
-      source = config.lib.file.mkOutOfStoreSymlink src;
+      source = buildSymlinkSrc src;
       executable = isExecutable;
     };
   };
 
   mkBinWinRel = {name, src, isExecutable ? false}: {
     "/home/${customVars.username}/.local/bin.win/${name}" = {
-      source = config.lib.file.mkOutOfStoreSymlink ./${src};
+      source = buildSymlinkSrc ./${src};
       executable = isExecutable;
     };
   };
 
-  file_list = {}
+  file_list = {
+    "home/Downloads".source = buildSymlinkSrc /mnt/c/Users/Kuriko/Downloads;
+  }
     # folders
     // (mkBinWinAbs { name = "shims_dir"; src = "/mnt/c/Users/Kuriko/scoop/shims"; })
     // (mkBinWinAbs { name = "cargo_dir"; src = "/mnt/w/@Packages/cargo/bin"; })

@@ -95,7 +95,12 @@ with versionMap.${currentVersion};
         home.homeDirectory = homeDirectory;
 
         nix.package = pkgs.nix;
-        nix.settings = utils._commonNixPkgsConfig.settings;
+        nix.settings = utils._commonNixPkgsConfig.settings // { };
+
+        # https://github.com/NixOS/nix/issues/6536#issuecomment-1254858889
+        nix.extraOptions = ''
+          !include ${config.age.secrets."nix/access-tokens".path}
+        '';
 
         nixpkgs.config.allowUnfree = true;
 
@@ -116,6 +121,8 @@ with versionMap.${currentVersion};
           hms = "home-manager --flake '${config.home.homeDirectory}/.nixos/home-manager#${deviceName}' switch";
           hmsdr = "home-manager --flake '${config.home.homeDirectory}/.nixos/home-manager#${deviceName}' switch --dry-run";
           hmcd = lib.mkDefault "cd '${config.xdg.configHome}/home-manager'";
+
+          up = lib.mkDefault "nix flake update --flake'${config.xdg.configHome}/home-manager'";
 
           nxsearch = lib.mkDefault "nix search nixpkgs";
         };

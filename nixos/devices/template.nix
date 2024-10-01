@@ -53,7 +53,7 @@ with customVars; {
       # -------------- basic settings ----------------
       {
         nix.package = pkgs.nix;
-        nix.settings = utils._commonNixPkgsConfig.settings;
+        nix.settings = utils._commonNixPkgsConfig.settings // { };
         nixpkgs.config.allowUnfree = true;
       }
 
