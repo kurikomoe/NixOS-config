@@ -350,7 +350,7 @@
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 315532800,
-        "narHash": "sha256-LG89Jkc5kbPx3OqYBqO1trbDt1wALu47cCXAx+xUDvo=",
+        "narHash": "sha256-1k4C3fY0TlofB3s2Oke0EMB2AftWNhN4NN+C9xA9wZM=",
         "type": "tarball",
         "url": "https://mirrors.ustc.edu.cn/nix-channels/nixpkgs-unstable/nixexprs.tar.xz"
       },
@@ -391,8 +391,8 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1727565267,
-        "narHash": "sha256-MFF1yV9+nTKCGGlMXWBdjZaOLAHcF3s33EFKIj0H5is=",
+        "lastModified": 1727776854,
+        "narHash": "sha256-9b+CsXlRoZwZ5dCktnnt2G3hz/5CbggClBP98EoY8Tg=",
         "type": "tarball",
         "url": "https://mirrors.ustc.edu.cn/nix-channels/nixos-24.05/nixexprs.tar.xz"
       },
@@ -403,11 +403,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1727794543,
-        "narHash": "sha256-dWPZenY43NgdJJoHx5R+FHaex1myjHjYZhT+MtqchnI=",
+        "lastModified": 1727808630,
+        "narHash": "sha256-kY2COV32KqzauYHnmzMT6MRf1zV2YJFuZY0PTTsI8UY=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "898b7e7c13cac7c4e80ee3dd44acac8002a18979",
+        "rev": "c4f890b65647f729b180a554f71e773c255ec1e4",
         "type": "github"
       },
       "original": {
