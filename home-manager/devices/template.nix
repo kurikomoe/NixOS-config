@@ -123,11 +123,13 @@ with versionMap.${currentVersion};
           hmcd = lib.mkDefault "cd '${config.xdg.configHome}/home-manager'";
 
           nixup = lib.mkDefault ''
+            set -ex;
             sudo true;
-            nix flake update '${config.home.homeDirectory}/.nixos/home-manager';
-            nix flake update '${config.home.homeDirectory}/.nixos/nixos';
-            sudo nixos-rebuild --flake '${config.home.homeDirectory}/.nixos/nixos' switch;
-            home-manager --flake '${config.home.homeDirectory}/.nixos/home-manager#${deviceName}' switch;
+            nix flake update "${config.home.homeDirectory}/.nixos/home-manager";
+            nix flake update "${config.home.homeDirectory}/.nixos/nixos";
+            sudo nixos-rebuild --flake "${config.home.homeDirectory}/.nixos/nixos" switch;
+            home-manager --flake "${config.home.homeDirectory}/.nixos/home-manager\#${deviceName}" switch;
+            true;
           '';
 
           nxsearch = lib.mkDefault "nix search nixpkgs";
