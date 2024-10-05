@@ -53,7 +53,15 @@ with customVars; {
       # -------------- basic settings ----------------
       ({config, lib, ... }: {
         nix.package = pkgs.nix;
+
         nix.settings = utils._commonNixPkgsConfig.settings // { };
+
+        nix.gc = lib.mkDefault {
+          persistent = true;
+          automatic = true;
+          dates = "weekly";
+        };
+
         nixpkgs.config.allowUnfree = true;
 
         environment.etc."current-system-packages".text =

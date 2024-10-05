@@ -18,6 +18,8 @@ in {
       enable = true;
       enableSshSupport = true;
       pinentryPackage = pkgs.pinentry-tty;
+      defaultCacheTtl = 7200;
+      defaultCacheTtlSsh = 7200;
     };
   };
 

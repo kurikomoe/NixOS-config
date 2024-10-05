@@ -96,6 +96,10 @@ with versionMap.${currentVersion};
 
         nix.package = pkgs.nix;
         nix.settings = utils._commonNixPkgsConfig.settings // { };
+        nix.gc = lib.mkDefault {
+          automatic = true;
+          frequency = "weekly";
+        };
 
         # https://github.com/NixOS/nix/issues/6536#issuecomment-1254858889
         nix.extraOptions = ''
@@ -131,18 +135,19 @@ with versionMap.${currentVersion};
           hmsdr = "home-manager --flake '${config.home.homeDirectory}/.nixos/home-manager#${deviceName}' switch --dry-run";
           hmcd = lib.mkDefault "cd '${config.xdg.configHome}/home-manager'";
 
-          nixup = lib.mkDefault ''
-            set -ex;
+          nixup = ''
             sudo true;
-            nix flake update "${config.home.homeDirectory}/.nixos/home-manager";
             nix flake update "${config.home.homeDirectory}/.nixos/nixos";
-            sudo nixos-rebuild --flake "${config.home.homeDirectory}/.nixos/nixos" switch --dry-run;
-            home-manager --flake "${config.home.homeDirectory}/.nixos/home-manager\#${deviceName}" switch --dry-run;
+            nix flake update "${config.home.homeDirectory}/.nixos/home-manager";
+
+            sudo nixos-rebuild --flake "${config.home.homeDirectory}/.nixos/nixos" test;
+            home-manager --flake "${config.home.homeDirectory}/.nixos/home-manager#${deviceName}" switch --dry-run;
+
             sudo nixos-rebuild --flake "${config.home.homeDirectory}/.nixos/nixos" switch;
-            home-manager --flake "${config.home.homeDirectory}/.nixos/home-manager\#${deviceName}" switch;
+            home-manager --flake "${config.home.homeDirectory}/.nixos/home-manager#${deviceName}" switch;
           '';
 
-          nixgc = lib.mkDefault ''
+          nixgc = ''
             sudo nix-collect-garbage --delete-older-than 7d
             nix-collect-garbage --delete-older-than 7d
           '';
