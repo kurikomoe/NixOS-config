@@ -142,6 +142,11 @@ with versionMap.${currentVersion};
             home-manager --flake "${config.home.homeDirectory}/.nixos/home-manager\#${deviceName}" switch;
           '';
 
+          nixgc = lib.mkDefault ''
+            sudo nix-collect-garbage --delete-older-than 7d
+            nix-collect-garbage --delete-older-than 7d
+          '';
+
           nxsearch = lib.mkDefault "nix search nixpkgs";
         };
 
