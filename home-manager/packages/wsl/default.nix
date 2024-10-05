@@ -18,7 +18,7 @@ let
   };
 
   file_list = {
-    "home/Downloads".source = buildSymlinkSrc /mnt/c/Users/Kuriko/Downloads;
+    "Downloads".source = buildSymlinkSrc /mnt/c/Users/Kuriko/Downloads;
   }
     # folders
     // (mkBinWinAbs { name = "shims_dir"; src = "/mnt/c/Users/Kuriko/scoop/shims"; })

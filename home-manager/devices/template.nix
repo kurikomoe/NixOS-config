@@ -106,14 +106,23 @@ with versionMap.${currentVersion};
 
         xdg.enable = true;
 
-        home.sessionVariables = {
-          EDITOR = lib.mkDefault "nvim";
-        };
+        home.file."${config.xdg.configHome}/current-home-packages".text =
+          let
+            packages = builtins.map (p: "${p.name}") config.home.packages;
+            sortedUnique = builtins.sort builtins.lessThan (lib.lists.unique packages);
+            formatted = builtins.concatStringsSep "\n" sortedUnique;
+          in
+            formatted;
+
 
         home.packages = with pkgs; [
           (lib.lowPrio vim)
           (lib.lowPrio neovim)
         ] ++ (p.packages or []);
+
+        home.sessionVariables = {
+          EDITOR = lib.mkDefault "nvim";
+        };
 
         home.shellAliases = {
           hm = lib.mkDefault "home-manager";
@@ -127,9 +136,10 @@ with versionMap.${currentVersion};
             sudo true;
             nix flake update "${config.home.homeDirectory}/.nixos/home-manager";
             nix flake update "${config.home.homeDirectory}/.nixos/nixos";
+            sudo nixos-rebuild --flake "${config.home.homeDirectory}/.nixos/nixos" switch --dry-run;
+            home-manager --flake "${config.home.homeDirectory}/.nixos/home-manager\#${deviceName}" switch --dry-run;
             sudo nixos-rebuild --flake "${config.home.homeDirectory}/.nixos/nixos" switch;
             home-manager --flake "${config.home.homeDirectory}/.nixos/home-manager\#${deviceName}" switch;
-            true;
           '';
 
           nxsearch = lib.mkDefault "nix search nixpkgs";
