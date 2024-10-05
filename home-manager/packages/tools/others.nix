@@ -17,6 +17,8 @@ in {
     fend
     ripgrep  # search tools
 
+    file
+
     # media
     yt-dlp
     ffmpeg_7-full
