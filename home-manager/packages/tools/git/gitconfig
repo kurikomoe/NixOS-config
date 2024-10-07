@@ -11,4 +11,5 @@
 	helper = !/usr/bin/env gh auth git-credential
 [oh-my-zsh]
 	hide-dirty = 1
-
+[pull]
+	ff = only

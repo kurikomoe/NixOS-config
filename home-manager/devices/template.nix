@@ -135,16 +135,30 @@ with versionMap.${currentVersion};
           hmsdr = "home-manager --flake '${config.home.homeDirectory}/.nixos/home-manager#${deviceName}' switch --dry-run";
           hmcd = lib.mkDefault "cd '${config.xdg.configHome}/home-manager'";
 
+          nixdiff = ''
+            echo ======= Current System Updates ==========
+            nix store diff-closures /var/run/current-system \
+              (find /nix/var/nix/profiles -name "system-*-link" | sort | tail -n2 | head -n1)
+
+            echo ======= Current Home Manager Updates ==========
+            nix store diff-closures ${config.home.homeDirectory}/.local/state/nix/profiles/home-manager \
+              (find ${config.home.homeDirectory}/.local/state/nix/profiles -name "home-manager-*-link" | sort | tail -n2 | head -n1)
+            nix store diff-closures ${config.home.homeDirectory}/.local/state/nix/profiles/profile \
+              (find ${config.home.homeDirectory}/.local/state/nix/profiles -name "profile-*-link" | sort | tail -n2 | head -n1)
+
+            echo "============= DONE ================="
+          '';
+
           nixup = ''
             sudo true;
             nix flake update "${config.home.homeDirectory}/.nixos/nixos";
             nix flake update "${config.home.homeDirectory}/.nixos/home-manager";
 
-            sudo nixos-rebuild --flake "${config.home.homeDirectory}/.nixos/nixos" test;
-            home-manager --flake "${config.home.homeDirectory}/.nixos/home-manager#${deviceName}" switch --dry-run;
-
             sudo nixos-rebuild --flake "${config.home.homeDirectory}/.nixos/nixos" switch;
             home-manager --flake "${config.home.homeDirectory}/.nixos/home-manager#${deviceName}" switch;
+
+            nixdiff;
+            echo "============= DONE ================="
           '';
 
           nixgc = ''

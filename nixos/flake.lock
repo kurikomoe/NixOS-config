@@ -290,11 +290,11 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1727693804,
-        "narHash": "sha256-Qwd+BzauhSXdtiL172wkp8JYJhe2BXyXkyWqPexytME=",
+        "lastModified": 1728137418,
+        "narHash": "sha256-OvIB2bBulVAb3wdRAOdlGD7P/3lE8WoJ1vG0rFrdDWg=",
         "owner": "nix-community",
         "repo": "NixOS-WSL",
-        "rev": "acb21a72156c5b6e1aa607b9adcbac592bd60862",
+        "rev": "31a18ceaeac81e75d10b05ab0dfb4fcc79d4ed1a",
         "type": "github"
       },
       "original": {
@@ -335,7 +335,7 @@
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 315532800,
-        "narHash": "sha256-4xpElPexWQzWudeHvdXR02/sRRa10nObBV/nbBB6GfM=",
+        "narHash": "sha256-AwQn/5PeUxAxmu/4bll/VF1sXf24pYBOv0MGUu2yHZI=",
         "type": "tarball",
         "url": "https://mirrors.ustc.edu.cn/nix-channels/nixpkgs-unstable/nixexprs.tar.xz"
       },
@@ -392,8 +392,8 @@
     },
     "nixpkgs_5": {
       "locked": {
-        "lastModified": 1727994327,
-        "narHash": "sha256-WMkuhfbbJL7ZqGtR93wCUxkiLwgujlqTH737FE/DOek=",
+        "lastModified": 1728120084,
+        "narHash": "sha256-A7eXU2HHgoB+kgHWhMZUd3Z6eiSDlgByIn/KaZ3R/Bw=",
         "type": "tarball",
         "url": "https://mirrors.ustc.edu.cn/nix-channels/nixos-24.05/nixexprs.tar.xz"
       },
@@ -404,11 +404,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1728105690,
-        "narHash": "sha256-lvrJBBnvhzr/RVfU5uoL+jlEZDnaqcl9LRaGypTr4qQ=",
+        "lastModified": 1728181185,
+        "narHash": "sha256-DGPWY6zCPOZMaFQBv7nR/AHvKyuPYhMQMEf59Da71jM=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "c618676f7584437c78c91561baf50281181de20c",
+        "rev": "32e6c482d09d92ef4b27a5b713b5b17a6c7b2b6b",
         "type": "github"
       },
       "original": {
