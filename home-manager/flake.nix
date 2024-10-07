@@ -56,17 +56,22 @@
 
 # ---------------------------------------------------------------------------
 
-outputs = inputs@{ self, flake-parts, ... }:
+outputs = inputs@{ nixpkgs, self, flake-parts, ... }:
+  let
+    lib = nixpkgs.lib;
 
-let
-  devices = [
-    ./devices/KurikoG14.nix
-    ./devices/KurikoArch.nix
-  ];
-in
-  builtins.foldl'
-  (acc: device: acc // (import device {
-    inherit inputs;
-    root = "${self}";
-  })) {} devices;
+    devices = [
+      ./devices/KurikoG14.nix
+      ./devices/KurikoArch.nix
+    ];
+
+    outputs = builtins.foldl'
+    (acc: device:
+      (lib.recursiveUpdate acc (import device {
+        inherit inputs;
+        root = "${self}";
+      }))
+    )
+    {} devices;
+  in outputs;
 }

@@ -19,7 +19,6 @@ let
     homeDirectory = /home/${username};
   };
 
-in let
   template = import ./template.nix;
   utils = import ./utils.nix { inherit customVars; };
   customNixPkgsImport = utils.customNixPkgsImport;
@@ -31,8 +30,7 @@ in let
     };
   };
 
-in
-  template {
+  config = template (with customVars; {
     inherit inputs customVars repos root;
 
     stateVersion = "24.05";
@@ -55,4 +53,7 @@ in
         ];
       })
     ];
-  }
+  });
+
+in
+  config

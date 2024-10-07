@@ -39,10 +39,7 @@ let
     inherit pkgs-stable pkgs-unstable pkgs-nur;
   };
 
-in
-with customVars; {
-  nixosConfigurations.${hostName} = nixpkgs.lib.nixosSystem {
-
+  config = nixpkgs.lib.nixosSystem {
     specialArgs = {
        inherit customVars repos inputs;
     } // (inputs.specialArgs or {});
@@ -71,6 +68,10 @@ with customVars; {
             formatted = builtins.concatStringsSep "\n" sortedUnique;
           in
             formatted;
+
+          environment.systemPackages = with pkgs; [
+            sshfs
+          ];
       })
 
       # # -------------- enable nur ----------------
@@ -95,4 +96,6 @@ with customVars; {
       #}
     ];
   };
+in {
+  nixosConfigurations.${customVars.hostName} = config;
 }

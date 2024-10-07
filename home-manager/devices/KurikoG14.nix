@@ -31,8 +31,7 @@ in let
     };
   };
 
-in
-  template (with customVars; {
+  config = template (with customVars; {
     inherit inputs customVars repos root;
     stateVersion = "24.05";
 
@@ -63,4 +62,6 @@ in
         };
       })
     ];
-  })
+  });
+
+in config

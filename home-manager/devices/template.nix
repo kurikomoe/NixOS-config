@@ -36,6 +36,8 @@ let
   };
 
   nixpkgs = versionMap.${customVars.currentVersion}.nixpkgs;
+  lib = nixpkgs.lib
+
   agenix = inputs.agenix;
 
   # -------------- pkgs versions ------------------
@@ -50,9 +52,9 @@ let
     nurpkgs = customNixPkgsImport versionMap."unstable".nixpkgs extraNixPkgsOptions;
   };
 
-  repos = {
+  repos = lib.recursiveUpdate {
     inherit pkgs-stable pkgs-unstable pkgs-nur;
-  } // p.repos;
+  } p.repos;
 
 in
 with customVars;
@@ -95,7 +97,7 @@ with versionMap.${currentVersion};
         home.homeDirectory = homeDirectory;
 
         nix.package = pkgs.nix;
-        nix.settings = utils._commonNixPkgsConfig.settings // { };
+        nix.settings = lib.recursiveUpdate utils._commonNixPkgsConfig.settings { };
         nix.gc = lib.mkDefault {
           automatic = true;
           frequency = "weekly";
