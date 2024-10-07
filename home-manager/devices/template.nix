@@ -36,7 +36,7 @@ let
   };
 
   nixpkgs = versionMap.${customVars.currentVersion}.nixpkgs;
-  lib = nixpkgs.lib
+  lib = nixpkgs.lib;
 
   agenix = inputs.agenix;
 
