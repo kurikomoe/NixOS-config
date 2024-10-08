@@ -6,9 +6,14 @@ let
   gitExtraConfigPath = "${gitConfigDir}/config_extra";
 
 in {
+  home.packages = with pkgs; [
+    git-lfs
+  ];
+
   programs = {
     git = {
       enable = true;
+      lfs.enable = true;
       userName = customVars.usernameFull;
       userEmail = customVars.userEmail;
       signing = {
