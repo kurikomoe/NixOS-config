@@ -55,11 +55,11 @@
         "rust-analyzer-src": "rust-analyzer-src"
       },
       "locked": {
-        "lastModified": 1728282832,
-        "narHash": "sha256-I7AbcwGggf+CHqpyd/9PiAjpIBGTGx5woYHqtwxaV7I=",
+        "lastModified": 1728369208,
+        "narHash": "sha256-5B1ugdw1apI/eW6g0eDvC0xXX/aSQwbE/uld62TmNG8=",
         "owner": "nix-community",
         "repo": "fenix",
-        "rev": "1ec71be1f4b8f3105c5d38da339cb061fefc43f4",
+        "rev": "1938b54a55c1cab94be7b9d8dbaf58007a607e24",
         "type": "github"
       },
       "original": {
@@ -370,18 +370,14 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1728018373,
-        "narHash": "sha256-NOiTvBbRLIOe5F6RbHaAh6++BNjsb149fGZd1T4+KBg=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "bc947f541ae55e999ffdb4013441347d83b00feb",
-        "type": "github"
+        "lastModified": 315532800,
+        "narHash": "sha256-XDeiICDq8w4amENJXJIanhbB5zOxdiTWrgRiYZC33AQ=",
+        "type": "tarball",
+        "url": "https://mirrors.ustc.edu.cn/nix-channels/nixpkgs-unstable/nixexprs.tar.xz"
       },
       "original": {
-        "owner": "nixos",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://mirrors.ustc.edu.cn/nix-channels/nixpkgs-unstable/nixexprs.tar.xz"
       }
     },
     "nixpkgs_2": {
@@ -416,27 +412,23 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1728193676,
-        "narHash": "sha256-PbDWAIjKJdlVg+qQRhzdSor04bAPApDqIv2DofTyynk=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "ecbc1ca8ffd6aea8372ad16be9ebbb39889e55b6",
-        "type": "github"
+        "lastModified": 1728225742,
+        "narHash": "sha256-lQkWc6oBdulJIcKvca47JJp8lzC7qZ2PKelJ1E7YIvs=",
+        "type": "tarball",
+        "url": "https://mirrors.ustc.edu.cn/nix-channels/nixos-24.05/nixexprs.tar.xz"
       },
       "original": {
-        "owner": "nixos",
-        "ref": "nixos-24.05",
-        "repo": "nixpkgs",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://mirrors.ustc.edu.cn/nix-channels/nixos-24.05/nixexprs.tar.xz"
       }
     },
     "nur": {
       "locked": {
-        "lastModified": 1728353424,
-        "narHash": "sha256-iUsjMsb3t9pD7WtzJ/iXqjuuVmkkN5ama9GBXEoqPzk=",
+        "lastModified": 1728364679,
+        "narHash": "sha256-tpzex6AOMILs4HfIaBTITa1tzmjLrqysYbOPcQF/vuA=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "279fa31a00899275ebd91ccbfb4c2faa5840a1e9",
+        "rev": "26e1a9f8a343114d9504d1e241e620a7f8a4ebbb",
         "type": "github"
       },
       "original": {

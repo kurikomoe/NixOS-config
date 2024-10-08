@@ -36,6 +36,8 @@ let
   };
 
   nixpkgs = versionMap.${customVars.currentVersion}.nixpkgs;
+  home-manager = versionMap.${customVars.currentVersion}.home-manager;
+
   lib = nixpkgs.lib;
 
   agenix = inputs.agenix;
