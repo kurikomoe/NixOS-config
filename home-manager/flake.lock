@@ -47,6 +47,27 @@
         "type": "github"
       }
     },
+    "fenix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "rust-analyzer-src": "rust-analyzer-src"
+      },
+      "locked": {
+        "lastModified": 1728282832,
+        "narHash": "sha256-I7AbcwGggf+CHqpyd/9PiAjpIBGTGx5woYHqtwxaV7I=",
+        "owner": "nix-community",
+        "repo": "fenix",
+        "rev": "1ec71be1f4b8f3105c5d38da339cb061fefc43f4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "fenix",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "locked": {
         "lastModified": 1696426674,
@@ -176,11 +197,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1728306985,
-        "narHash": "sha256-l/KpcWTv2SjxCnqFs5GYhvjeVYd40WQV4/F2+w9btd4=",
+        "lastModified": 1728337164,
+        "narHash": "sha256-VdRTjJFyq4Q9U7Z/UoC2Q5jK8vSo6E86lHc2OanXtvc=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "3ac39b2a8b7cbfc0f96628d8a84867c885bc988b",
+        "rev": "038630363e7de57c36c417fd2f5d7c14773403e4",
         "type": "github"
       },
       "original": {
@@ -411,11 +432,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1728319373,
-        "narHash": "sha256-Q7FT3xyh8hRmY+hTDDARnRQIpvwQRubJtNtc0nnr6hk=",
+        "lastModified": 1728353424,
+        "narHash": "sha256-iUsjMsb3t9pD7WtzJ/iXqjuuVmkkN5ama9GBXEoqPzk=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "bcb0f479ef6f920199729bcaff48ff78c423eb78",
+        "rev": "279fa31a00899275ebd91ccbfb4c2faa5840a1e9",
         "type": "github"
       },
       "original": {
@@ -427,6 +448,7 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
+        "fenix": "fenix",
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
         "home-manager-unstable": "home-manager-unstable",
@@ -440,6 +462,23 @@
         "nur": "nur",
         "tmux-current-pane-hostname": "tmux-current-pane-hostname",
         "tmux-themepack": "tmux-themepack"
+      }
+    },
+    "rust-analyzer-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1728249780,
+        "narHash": "sha256-J269DvCI5dzBmPrXhAAtj566qt0b22TJtF3TIK+tMsI=",
+        "owner": "rust-lang",
+        "repo": "rust-analyzer",
+        "rev": "2b750da1a1a2c1d2c70896108d7096089842d877",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rust-lang",
+        "ref": "nightly",
+        "repo": "rust-analyzer",
+        "type": "github"
       }
     },
     "systems": {

@@ -77,7 +77,7 @@ with versionMap.${currentVersion};
         home.packages = [ agenix.packages.${system}.default ];
       }
 
-      # -------------- enable nur ----------------
+      # -------------- enable nur & others overlays ----------------
       {
         # This should be safe, since nur use username as namespace.
         nixpkgs.overlays = [ inputs.nur.overlay ];

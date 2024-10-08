@@ -17,6 +17,7 @@
 
     nur.url = "github:nix-community/NUR";
 
+    # ------------------- Core inputs -------------------
     home-manager = {
       url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -32,6 +33,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
+
+    # ----------------- rust -----------------
+    fenix = {
+      url = "github:nix-community/fenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # ------------------- utils ------------------
 
     flake-parts.url = "github:hercules-ci/flake-parts";
 
