@@ -52,26 +52,23 @@ let
         nix.package = pkgs.nix;
 
         nix.settings = utils._commonNixPkgsConfig.settings // { };
+        environment.systemPackages = with pkgs; [
+          openssl
+          pkg-config
 
-        nix.gc = lib.mkDefault {
-          persistent = true;
-          automatic = true;
-          dates = "weekly";
-        };
+          home-manager
+          binutils
+          neovim
+          vim
+          wget
+          curl
+          htop
+          which
+          git
 
-        nixpkgs.config.allowUnfree = true;
-
-        environment.etc."current-system-packages".text =
-          let
-            packages = builtins.map (p: "${p.name}") config.environment.systemPackages;
-            sortedUnique = builtins.sort builtins.lessThan (pkgs.lib.lists.unique packages);
-            formatted = builtins.concatStringsSep "\n" sortedUnique;
-          in
-            formatted;
-
-          environment.systemPackages = with pkgs; [
-            sshfs
-          ];
+          inputs.nix-alien.packages.${system}.nix-alien
+          # inputs.agenix.packages.${system}.default
+        ];
       })
 
       # # -------------- enable nur ----------------
@@ -82,7 +79,7 @@ let
 
       # agenix.nixosModules.default
 
-      #inputs.home-manager.nixosModules.home-manager {
+      # inputs.home-manager.nixosModules.home-manager {
       #   home-manager.useGlobalPkgs = true;
       #   home-manager.useUserPackages = true;
 
@@ -93,7 +90,7 @@ let
       #     root = "${self}";
       #     inputs = self.inputs;
       #   };
-      #}
+      # }
     ];
   };
 in {

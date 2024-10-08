@@ -50,24 +50,32 @@ p@{ config, lib, pkgs, ... }:
     allowReboot = false;
   };
 
+  nix.gc = lib.mkDefault {
+    persistent = true;
+    automatic = true;
+    dates = "weekly";
+  };
+
   nixpkgs.config.allowUnfree = true;
 
-  environment.variables.EDITOR = "nvim";
+  environment.etc."current-system-packages".text =
+    let
+      packages = builtins.map (p: "${p.name}") config.environment.systemPackages;
+      sortedUnique = builtins.sort builtins.lessThan (pkgs.lib.lists.unique packages);
+      formatted = builtins.concatStringsSep "\n" sortedUnique;
+    in
+      formatted;
+
+  environment.variables.EDITOR = "vim";
   environment.systemPackages = with pkgs; [
     home-manager
     binutils
     vim
-    neovim
     wget
     curl
     htop
     which
     git
-
-    khronos-ocl-icd-loader
-    ocl-icd
-    intel-ocl
-    intel-compute-runtime
   ];
 
   programs = {

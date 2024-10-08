@@ -58,19 +58,16 @@ in
         };
 
         environment.systemPackages = with pkgs; [
+          sshfs
           steam-run
 
-          openssl
-          pkg-config
-
-          inputs.nix-alien.packages.${system}.nix-alien
-
-          # inputs.agenix.packages.${system}.default
+          khronos-ocl-icd-loader
+          ocl-icd
+          intel-ocl
+          intel-compute-runtime
 
           docker
           docker-compose
-
-          pinentry-all
         ];
 
         virtualisation.docker.enable = true;
