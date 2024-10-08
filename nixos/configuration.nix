@@ -50,10 +50,13 @@ p@{ config, lib, pkgs, ... }:
     allowReboot = false;
   };
 
+  nix.settings.auto-optimise-store = true;
+
   nix.gc = lib.mkDefault {
     persistent = true;
     automatic = true;
     dates = "weekly";
+    options = "--delete-older-than 14d";
   };
 
   nixpkgs.config.allowUnfree = true;
