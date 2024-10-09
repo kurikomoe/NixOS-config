@@ -1,6 +1,14 @@
-{ config, root, pkgs, ... }:
+{ inputs, config, root, pkgs, lib, ... }:
 let
+  # omnisharp-vim-plugin = pkgs.vimUtils.buildVimPlugin {
+  #   name = "omnisharp-vim";
+  #   src = inputs.omnisharp-vim;
+  # };
+
   vimPlugins = with pkgs.vimPlugins; [
+    coc-nvim
+    nvim-lspconfig
+
     ctrlp-vim
     vim-airline
     vim-airline-themes
@@ -27,19 +35,37 @@ let
     vim-jsbeautify
     vim-polyglot
 
-    coc-go
-    coc-sh
+    # not working for now
+    # omnisharp-vim-plugin
+
+    coc-ultisnips
+    coc-highlight
+    coc-yank
+    coc-prettier
+    coc-fzf
+
     coc-json
     coc-yaml
     coc-toml
-    coc-clangd
+
+    coc-tabnine
     coc-cmake
+    coc-git
+
+    coc-go
+    coc-sh
+    coc-clangd
     coc-rust-analyzer
-    coc-ultisnips
     coc-java
+    coc-lua
+    coc-css
+    coc-html
+    coc-pairs
+    coc-python
   ];
 
 in {
+  # neovim deps
   imports = [
     "${root}/packages/devs/langs/python.nix"
     "${root}/packages/devs/langs/ruby.nix"
@@ -49,10 +75,10 @@ in {
   ];
 
   xdg.configFile = {
-    nvim = {
-      source = ./nvim;
-      recursive = true;
-    };
+    # nvim = {
+    #   source = ./nvim;
+    #   recursive = true;
+    # };
     vim = {
       source = ./nvim/init.vim;
     };
@@ -60,7 +86,14 @@ in {
 
   home.packages = with pkgs; [
     universal-ctags
-    xclip
+    xclip                # Clipboard support
+
+    csharp-ls
+  ];
+
+  # for omnisharp-vim to find the executable
+  home.sessionPath = [
+    "$HOME/.cache/omnisharp-vim/omnisharp-roslyn"
   ];
 
   programs.neovim = {
@@ -68,7 +101,23 @@ in {
     viAlias = true;
     vimAlias = true;
     defaultEditor = true;
+    extraConfig = (builtins.readFile ./nvim/init.vim) + '';
+      " set log dir to avoid write into /nix
+      " let g:OmniSharp_log_dir = "$HOME/.cache/omnisharp-vim"
+      " let g:OmniSharp_server_use_mono = 1
+
+      " Make <CR> to accept selected completion item or notify coc.nvim to format
+      " <C-g>u breaks current undo, please make your own choice
+      inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                                    \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+    '';
+    extraLuaConfig = ''
+      require('lspconfig').csharp_ls.setup({})
+    '';
     plugins = vimPlugins;
+    coc = {
+      enable = true;
+    };
   };
 
   programs.vim = {

@@ -61,6 +61,12 @@
 
     # -------------------- nix search --------------------
     nix-search.url = github:diamondburned/nix-search;
+
+    # -------------------- vim plugins --------------------
+    # omnisharp-vim = {
+    #   url = "github:OmniSharp/omnisharp-vim";
+    #   flake = false;
+    # };
   };
 
 # ---------------------------------------------------------------------------
