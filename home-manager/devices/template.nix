@@ -145,10 +145,12 @@ with versionMap.${currentVersion};
               (find /nix/var/nix/profiles -name "system-*-link" | sort | tail -n2 | head -n1)
 
             echo ======= Current Home Manager Updates ==========
-            nix store diff-closures ${config.home.homeDirectory}/.local/state/nix/profiles/home-manager \
-              (find ${config.home.homeDirectory}/.local/state/nix/profiles -name "home-manager-*-link" | sort | tail -n2 | head -n1)
-            nix store diff-closures ${config.home.homeDirectory}/.local/state/nix/profiles/profile \
-              (find ${config.home.homeDirectory}/.local/state/nix/profiles -name "profile-*-link" | sort | tail -n2 | head -n1)
+            nix store diff-closures  \
+              (find ${config.home.homeDirectory}/.local/state/nix/profiles -name "home-manager-*-link" | sort | tail -n2 | head -n1) \
+              ${config.home.homeDirectory}/.local/state/nix/profiles/home-manager
+            nix store diff-closures \
+              (find ${config.home.homeDirectory}/.local/state/nix/profiles -name "profile-*-link" | sort | tail -n2 | head -n1) \
+              ${config.home.homeDirectory}/.local/state/nix/profiles/profile
 
             echo "============= DONE ================="
           '';
