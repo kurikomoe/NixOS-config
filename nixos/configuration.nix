@@ -25,6 +25,8 @@ p@{ config, lib, pkgs, ... }:
   ];
 
   nix.settings = {
+    keep-outputs = true;
+    auto-optimise-store = true;
     experimental-features = [ "nix-command" "flakes" ];
     trusted-substituters = [
       https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store
@@ -49,8 +51,6 @@ p@{ config, lib, pkgs, ... }:
     enable = true;
     allowReboot = false;
   };
-
-  nix.settings.auto-optimise-store = true;
 
   nix.gc = lib.mkDefault {
     persistent = true;

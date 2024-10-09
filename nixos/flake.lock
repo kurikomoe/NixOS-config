@@ -392,8 +392,8 @@
     },
     "nixpkgs_5": {
       "locked": {
-        "lastModified": 1728225742,
-        "narHash": "sha256-lQkWc6oBdulJIcKvca47JJp8lzC7qZ2PKelJ1E7YIvs=",
+        "lastModified": 1728423754,
+        "narHash": "sha256-NVFDvotq4vDUD5nrei69vqtzSc9P2eM2noauROfPn30=",
         "type": "tarball",
         "url": "https://mirrors.ustc.edu.cn/nix-channels/nixos-24.05/nixexprs.tar.xz"
       },
@@ -404,11 +404,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1728442753,
-        "narHash": "sha256-50IC3QjX9IyBlhmTL4EtvP2WQ1X71p1gL2h1lgtfLIk=",
+        "lastModified": 1728490142,
+        "narHash": "sha256-5iIn7eiCYNq9eWhUAiXDHd3vkA4UCCruU9BEOP3FzfA=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "defa1e6fce60c70ffa26c5863df642f7429581b5",
+        "rev": "2a8c9d69e204ac6991449a12d69f748f60bb794c",
         "type": "github"
       },
       "original": {

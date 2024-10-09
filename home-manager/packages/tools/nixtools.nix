@@ -47,8 +47,8 @@ with customVars; {
     '';
 
     nixadd = ''
-      sudo mkdir -p /nix/var/nix/gcroots/per-user/$USER;
-      sudo chown $USER /nix/var/nix/gcroots/per-user/$USER;
+      test -O /nix/var/nix/gcroots/per-user/$USER ||
+        sudo -u$USER mkdir -p /nix/var/nix/gcroots/per-user/$USER;
       mkdir -p /nix/var/nix/gcroots/per-user/$USER/$PWD;
       ln -sf $PWD /nix/var/nix/gcroots/per-user/$USER/$PWD/;
     '';
