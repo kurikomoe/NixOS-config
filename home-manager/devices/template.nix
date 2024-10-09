@@ -85,15 +85,12 @@ with versionMap.${currentVersion};
         nixpkgs.overlays = [ inputs.nur.overlay ];
         home.packages = [ ];
       }
-      # ------------- others -------------
-      {
-        home.packages = [
-          # inputs.nix-search.packages.${system}.default
-          pkgs.nix-search-cli
-        ];
-      }
       # ------------ user nix settings --------------------
       ({config, inputs, lib, ... }: {
+        imports = [
+          ../packages/tools/nixtools.nix
+        ];
+
         home.stateVersion = stateVersion;
         home.username = username;
         home.homeDirectory = homeDirectory;
@@ -130,49 +127,6 @@ with versionMap.${currentVersion};
 
         home.sessionVariables = {
           EDITOR = lib.mkDefault "nvim";
-        };
-
-        home.shellAliases = {
-          hm = lib.mkDefault "home-manager";
-          hme = lib.mkDefault "$EDITOR '${config.xdg.configHome}/home-manager'";
-          hms = "home-manager --flake '${config.home.homeDirectory}/.nixos/home-manager#${deviceName}' switch";
-          hmsdr = "home-manager --flake '${config.home.homeDirectory}/.nixos/home-manager#${deviceName}' switch --dry-run";
-          hmcd = lib.mkDefault "cd '${config.xdg.configHome}/home-manager'";
-
-          nixdiff = ''
-            echo ======= Current System Updates ==========
-            nix store diff-closures /var/run/current-system \
-              (find /nix/var/nix/profiles -name "system-*-link" | sort | tail -n2 | head -n1)
-
-            echo ======= Current Home Manager Updates ==========
-            nix store diff-closures  \
-              (find ${config.home.homeDirectory}/.local/state/nix/profiles -name "home-manager-*-link" | sort | tail -n2 | head -n1) \
-              ${config.home.homeDirectory}/.local/state/nix/profiles/home-manager
-            nix store diff-closures \
-              (find ${config.home.homeDirectory}/.local/state/nix/profiles -name "profile-*-link" | sort | tail -n2 | head -n1) \
-              ${config.home.homeDirectory}/.local/state/nix/profiles/profile
-
-            echo "============= DONE ================="
-          '';
-
-          nixup = ''
-            sudo true;
-            nix flake update "${config.home.homeDirectory}/.nixos/nixos";
-            nix flake update "${config.home.homeDirectory}/.nixos/home-manager";
-
-            sudo nixos-rebuild --flake "${config.home.homeDirectory}/.nixos/nixos" switch;
-            home-manager --flake "${config.home.homeDirectory}/.nixos/home-manager#${deviceName}" switch;
-
-            nixdiff;
-            echo "============= DONE ================="
-          '';
-
-          nixgc = ''
-            sudo nix-collect-garbage --delete-older-than 7d
-            nix-collect-garbage --delete-older-than 7d
-          '';
-
-          nxsearch = lib.mkDefault "nix search nixpkgs";
         };
 
         programs = lib.mkDefault {

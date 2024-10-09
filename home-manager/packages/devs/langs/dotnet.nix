@@ -12,6 +12,10 @@ in {
     dotnetPackages.Nuget
   ];
 
+  home.sessionPath = [
+    "$HOME/.dotnet/tools"
+  ];
+
   home.sessionVariables = {
     DOTNET_ROOT = "${pkg_dotnet}";
   };
