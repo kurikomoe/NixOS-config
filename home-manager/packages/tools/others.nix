@@ -41,5 +41,8 @@ in {
     # others
     macchina
     topgrade
+
+    # provide lddtree command for better ldd experience
+    pax-utils
   ];
 }

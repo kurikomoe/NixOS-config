@@ -1,7 +1,7 @@
 p@{ pkgs, inputs, repos, lib, ... }:
 
 let
-  pkg_dotnet = pkgs.dotnet-sdk_8;
+  pkg_dotnet = pkgs.dotnetCorePackages.sdk_9_0;
 
 in {
 

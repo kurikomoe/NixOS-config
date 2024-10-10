@@ -46,7 +46,7 @@ with customVars; {
         nix-collect-garbage --delete-older-than 7d
     '';
 
-    nixadd = ''
+    nixkeep = ''
       test -O /nix/var/nix/gcroots/per-user/$USER ||
         sudo -u$USER mkdir -p /nix/var/nix/gcroots/per-user/$USER;
       mkdir -p /nix/var/nix/gcroots/per-user/$USER/$PWD;
