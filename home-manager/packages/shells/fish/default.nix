@@ -30,6 +30,8 @@ in
     fish = {
       enable = true;
       shellInit = ''
+        # in milliseconds
+        set fish_command_timer_min_cmd_duration 15000;
         source ${fish-command-timer.src}/fish_command_timer.fish;
 
         # set fish_prompt_pwd_dir_length 0
