@@ -1,5 +1,11 @@
 p@{ root, inputs, pkgs, lib, nixpkgs, ... }:
 let
+  fish-command-timer = pkgs.fishPlugins.buildFishPlugin {
+    pname = "fish-command-timer";
+    version = "unstable";
+    src = inputs.fish-command-timer;
+  };
+
   myShellInit = builtins.readFile ./shell_init.fish;
 in
 {
@@ -24,6 +30,8 @@ in
     fish = {
       enable = true;
       shellInit = ''
+        source ${fish-command-timer.src}/fish_command_timer.fish;
+
         # set fish_prompt_pwd_dir_length 0
 
         # function postexec_test --on-event fish_postexec

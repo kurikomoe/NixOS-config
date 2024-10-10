@@ -67,6 +67,12 @@
     #   url = "github:OmniSharp/omnisharp-vim";
     #   flake = false;
     # };
+
+    # -------------------- fish plugins --------------------
+    fish-command-timer = {
+      url = "github:jichu4n/fish-command-timer";
+      flake = false;
+    };
   };
 
 # ---------------------------------------------------------------------------
