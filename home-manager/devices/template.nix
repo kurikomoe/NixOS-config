@@ -14,7 +14,7 @@ p@{
   modules ? [],
   repos ? {},
   extraNixPkgsOptions ? {},
-  stateVersion,
+  stateVersion ? "24.05",
   ...
 }:
 

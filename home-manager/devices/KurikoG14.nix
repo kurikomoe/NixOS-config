@@ -32,7 +32,9 @@ in let
   };
 
   config = template (with customVars; {
-    inherit inputs customVars repos root;
+    inherit inputs root customVars;
+    inherit repos;
+
     stateVersion = "24.05";
 
     extraNixPkgsOptions = {
@@ -55,11 +57,6 @@ in let
 
           ../packages/libs/cuda.nix
         ];
-
-        home.shellAliases = {
-          hms = "home-manager --flake '${config.home.homeDirectory}/.nixos/home-manager#${deviceName}' switch";
-          hmsd = "home-manager --flake '${config.home.homeDirectory}/.nixos/home-manager#${deviceName}' switch --dry-run";
-        };
       })
     ];
   });
