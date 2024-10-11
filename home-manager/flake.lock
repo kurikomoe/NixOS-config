@@ -81,7 +81,39 @@
         "type": "github"
       }
     },
-    "fish-command-timer": {
+    "fishPlugin-autopair": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1656950411,
+        "narHash": "sha256-qt3t1iKRRNuiLWiVoiAYOu+9E7jsyECyIqZJ/oRIT1A=",
+        "owner": "jorgebucaran",
+        "repo": "autopair.fish",
+        "rev": "4d1752ff5b39819ab58d7337c69220342e9de0e2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jorgebucaran",
+        "repo": "autopair.fish",
+        "type": "github"
+      }
+    },
+    "fishPlugin-fish-abbreviation-tips": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1674487577,
+        "narHash": "sha256-F1t81VliD+v6WEWqj1c1ehFBXzqLyumx5vV46s/FZRU=",
+        "owner": "Gazorby",
+        "repo": "fish-abbreviation-tips",
+        "rev": "8ed76a62bb044ba4ad8e3e6832640178880df485",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Gazorby",
+        "repo": "fish-abbreviation-tips",
+        "type": "github"
+      }
+    },
+    "fishPlugin-fish-command-timer": {
       "flake": false,
       "locked": {
         "lastModified": 1652766284,
@@ -94,6 +126,54 @@
       "original": {
         "owner": "jichu4n",
         "repo": "fish-command-timer",
+        "type": "github"
+      }
+    },
+    "fishPlugin-fish-ssh-agent": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1605087262,
+        "narHash": "sha256-e94Sd1GSUAxwLVVo5yR6msq0jZLOn2m+JZJ6mvwQdLs=",
+        "owner": "danhper",
+        "repo": "fish-ssh-agent",
+        "rev": "fd70a2afdd03caf9bf609746bf6b993b9e83be57",
+        "type": "github"
+      },
+      "original": {
+        "owner": "danhper",
+        "repo": "fish-ssh-agent",
+        "type": "github"
+      }
+    },
+    "fishPlugin-puffer-fish": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1709511829,
+        "narHash": "sha256-2niYj0NLfmVIQguuGTA7RrPIcorJEPkxhH6Dhcy+6Bk=",
+        "owner": "nickeb96",
+        "repo": "puffer-fish",
+        "rev": "12d062eae0ad24f4ec20593be845ac30cd4b5923",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nickeb96",
+        "repo": "puffer-fish",
+        "type": "github"
+      }
+    },
+    "fishPlugin-replay": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1719805987,
+        "narHash": "sha256-TzQ97h9tBRUg+A7DSKeTBWLQuThicbu19DHMwkmUXdg=",
+        "owner": "jorgebucaran",
+        "repo": "replay.fish",
+        "rev": "d2ecacd3fe7126e822ce8918389f3ad93b14c86c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jorgebucaran",
+        "repo": "replay.fish",
         "type": "github"
       }
     },
@@ -471,7 +551,12 @@
         "agenix": "agenix",
         "autojump-rs": "autojump-rs",
         "fenix": "fenix",
-        "fish-command-timer": "fish-command-timer",
+        "fishPlugin-autopair": "fishPlugin-autopair",
+        "fishPlugin-fish-abbreviation-tips": "fishPlugin-fish-abbreviation-tips",
+        "fishPlugin-fish-command-timer": "fishPlugin-fish-command-timer",
+        "fishPlugin-fish-ssh-agent": "fishPlugin-fish-ssh-agent",
+        "fishPlugin-puffer-fish": "fishPlugin-puffer-fish",
+        "fishPlugin-replay": "fishPlugin-replay",
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
         "home-manager-unstable": "home-manager-unstable",

@@ -453,7 +453,7 @@ let g:OmniSharp_log_dir = "$HOME/.cache/omnisharp-vim"
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-set clipboard+=unnamedplus
+" set clipboard+=unnamedplus
 
 
 " 应该放在最最最后的代码

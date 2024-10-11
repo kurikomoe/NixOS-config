@@ -67,16 +67,19 @@
     #   flake = false;
     # };
 
-    # -------------------- fish plugins --------------------
-    fish-command-timer = {
-      url = "github:jichu4n/fish-command-timer";
-      flake = false;
-    };
-
+    # ------------------ common shell plugins --------------
     autojump-rs = {
       url = "https://github.com/xen0n/autojump-rs/releases/latest/download/autojump-x86_64-unknown-linux-musl.tar.gz";
       flake = false;
     };
+
+    # -------------------- fish plugins --------------------
+    fishPlugin-fish-command-timer = { url = "github:jichu4n/fish-command-timer"; flake = false; };
+    fishPlugin-replay = { url = "github:jorgebucaran/replay.fish"; flake = false; };
+    fishPlugin-fish-ssh-agent = { url = "github:danhper/fish-ssh-agent"; flake = false; };
+    fishPlugin-autopair = { url = "github:jorgebucaran/autopair.fish"; flake = false; };
+    fishPlugin-puffer-fish = { url = "github:nickeb96/puffer-fish"; flake = false; };
+    fishPlugin-fish-abbreviation-tips = { url = "github:Gazorby/fish-abbreviation-tips"; flake = false; };
   };
 
 # ---------------------------------------------------------------------------
