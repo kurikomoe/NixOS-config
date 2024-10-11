@@ -27,14 +27,6 @@ in {
     rclone
     rsync
 
-    # git
-    git
-    gh
-
-    # network
-    lsof
-    iftop
-
     # diskio
     iotop
 

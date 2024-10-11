@@ -15,6 +15,7 @@
     ./direnv.nix
     ./vscode.nix
 
+    ./network.nix
 
     ./others.nix
   ];
