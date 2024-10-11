@@ -95,6 +95,10 @@ with versionMap.${currentVersion};
         home.username = username;
         home.homeDirectory = homeDirectory;
 
+        news = {
+          display = "show";
+        };
+
         nix.package = pkgs.nix;
         nix.settings = lib.recursiveUpdate utils._commonNixPkgsConfig.settings { };
         nix.gc = lib.mkDefault {
