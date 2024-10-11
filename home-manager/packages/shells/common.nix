@@ -2,6 +2,17 @@
 
 p@{ root, inputs, pkgs, lib, nixpkgs, ... }:
 let
+  autojump-rs = pkgs.stdenv.mkDerivation {
+    name = "autojump-rs";
+    src = inputs.autojump-rs;
+    unpackPhase = ":";
+    nativeBuildInputs = with pkgs; [ gzip ];
+    installPhase = ''
+      mkdir -p "$out/bin";
+      cp $src "$out/bin/autojump";
+      chmod +x "$out/bin/autojump";
+    '';
+  };
 
 in
 {
@@ -9,7 +20,10 @@ in
     "${root}/packages/devs/common.nix"
   ];
 
-  home.packages = with pkgs; [];
+  home.packages = with pkgs; [
+    # replace vanilla autojump with autojump-rs
+    (lib.hiPrio autojump-rs)
+  ];
 
   home.sessionPath = [
     "$HOME/.local/bin"
@@ -18,13 +32,16 @@ in
 
   home.shellAliases = {
     # Others
-    j = "z";
+    # j = "z";
   };
 
   programs = {
     dircolors = {
       enable = true;
       extraConfig = builtins.readFile ./common_data/dir_colors;
+    };
+    autojump = {
+      enable = true;
     };
     zoxide = {
       enable = true;

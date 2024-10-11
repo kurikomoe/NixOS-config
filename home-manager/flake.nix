@@ -41,7 +41,6 @@
     };
 
     # ------------------- utils ------------------
-
     flake-parts.url = "github:hercules-ci/flake-parts";
 
     # --------------------- Third Party inputs ---------------------
@@ -71,6 +70,11 @@
     # -------------------- fish plugins --------------------
     fish-command-timer = {
       url = "github:jichu4n/fish-command-timer";
+      flake = false;
+    };
+
+    autojump-rs = {
+      url = "https://github.com/xen0n/autojump-rs/releases/latest/download/autojump-x86_64-unknown-linux-musl.tar.gz";
       flake = false;
     };
   };

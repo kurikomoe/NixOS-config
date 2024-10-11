@@ -6,5 +6,6 @@ in {
   home.packages = with pkgs; [
     jdk
     kotlin
+    kotlin-native
   ];
 }

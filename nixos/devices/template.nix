@@ -66,6 +66,8 @@ let
           which
           git
 
+          tzdata
+
           inputs.nix-alien.packages.${system}.nix-alien
           # inputs.agenix.packages.${system}.default
         ];

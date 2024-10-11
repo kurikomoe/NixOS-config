@@ -27,6 +27,11 @@ in
       enableFishIntegration = true;
     };
 
+    autojump = {
+      enable = true;
+      enableFishIntegration = true;
+    };
+
     fish = {
       enable = true;
       shellInit = ''
