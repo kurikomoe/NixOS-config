@@ -14,6 +14,7 @@ with customVars; {
     hmcd = lib.mkDefault "cd '${config.xdg.configHome}/home-manager'";
 
     nixdiff = ''
+      set -e
       echo ======= Current System Updates ==========
       nix store diff-closures /var/run/current-system \
         (find /nix/var/nix/profiles -name "system-*-link" | sort | tail -n2 | head -n1)
@@ -30,6 +31,7 @@ with customVars; {
     '';
 
     nixup = ''
+      set -e
       sudo true;
       nix flake update "${config.home.homeDirectory}/.nixos/nixos";
       nix flake update "${config.home.homeDirectory}/.nixos/home-manager";
@@ -42,8 +44,9 @@ with customVars; {
     '';
 
     nixgc = ''
-        sudo nix-collect-garbage --delete-older-than 7d
-        nix-collect-garbage --delete-older-than 7d
+      set -e
+      sudo nix-collect-garbage --delete-older-than 7d
+      nix-collect-garbage --delete-older-than 7d
     '';
 
     nixkeep = ''

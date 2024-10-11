@@ -35,6 +35,7 @@ in
       // secret_file("gh/hosts.yml")
       # ----------------------------------------------------------
       // secret_file("nix/access-tokens")
+      // secret_file("nix/cachix.nix.conf")
     ;
   };
 

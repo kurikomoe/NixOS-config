@@ -23,6 +23,7 @@ let
 
     "res/nix" = [
       "access-tokens"
+      "cachix.nix.conf"
     ];
   };
 

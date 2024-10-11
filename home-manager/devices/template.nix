@@ -105,6 +105,7 @@ with versionMap.${currentVersion};
         # https://github.com/NixOS/nix/issues/6536#issuecomment-1254858889
         nix.extraOptions = ''
           !include ${config.age.secrets."nix/access-tokens".path}
+          !include ${config.age.secrets."nix/cachix.nix.conf".path}
         '';
 
         nixpkgs.config.allowUnfree = true;
