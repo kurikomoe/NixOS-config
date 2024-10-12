@@ -29,6 +29,7 @@ let
     // (mkBinWinAbs { name = "clip.exe"; src = "/mnt/c/Windows/System32/clip.exe"; })
     // (mkBinWinAbs { name = "typora"; src = "/mnt/c/Windows/System32/clip.exe"; })
     // (mkBinWinAbs { name = "wsl.exe"; src = "/mnt/c/Windows/System32/wsl.exe"; })
+    // (mkBinWinRel { name = "wsl"; src = "wsl.exe"; })
     // (mkBinWinAbs {
       name = "code";
       src = "/mnt/c/Users/Kuriko/AppData/Local/Programs/Microsoft VS Code/bin/code";

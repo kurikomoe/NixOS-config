@@ -10,6 +10,7 @@ let
       "${cairo.dev}/lib/pkgconfig"
       "${pango.dev}/lib/pkgconfig"
       "${harfbuzz.dev}/lib/pkgconfig"
+      "${zlib.dev}/lib/pkgconfig"
     ]);
 in {
   imports = [
@@ -31,7 +32,7 @@ in {
     pango
     webkitgtk_4_1
     webkitgtk_4_1.dev
-    libz
+    zlib
 
     # executable
     cargo-tauri
@@ -39,5 +40,7 @@ in {
 
   home.sessionVariablesExtra = ''
     export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:${PKG_CONFIG_PATH};
+    export LIBRARY_PATH=${pkgs.zlib}/lib;
+    export LD_LIBRARY_PATH=${pkgs.zlib}/lib;
   '';
 }

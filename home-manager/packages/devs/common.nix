@@ -8,7 +8,7 @@ in {
     "${root}/packages/libs/musl.nix"
 
     ./buildsystems.nix
-    ./frameworks/tauri.nix
+    # ./frameworks/tauri.nix
   ];
 
   home.packages = with pkgs; [
