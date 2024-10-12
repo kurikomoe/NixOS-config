@@ -1,7 +1,23 @@
-p@{ config, lib, customVars, ... }:
+{ config, lib, pkgs, customVars, ... } @ inputs:
 
 let
   buildSymlinkSrc = config.lib.file.mkOutOfStoreSymlink;
+
+  mount-all = pkgs.writeShellScriptBin "mount-all" ''
+    #!/usr/bin/env bash
+    sudo true
+
+    wsl.exe -d NixOS --mount --vhd "W:/@Packages/WSL/LinuxProjects.vhdx" --bare
+
+    sleep 1
+    for i in `seq 1 10`; do
+      sudo mount -a;
+      if [[ $? == 0 ]]; then
+        break
+      fi
+      sleep 1;
+    done
+  '';
 
   mkBinWinAbs = {name, src, isExecutable ? false}: {
     "/home/${customVars.username}/.local/bin.win/${name}" = {
@@ -41,11 +57,15 @@ let
     // (mkBinWinRel { name = "git.exe"; src = "shims_dir/git.exe"; })
   ;
 in {
+  home.packages = with pkgs; [
+    mount-all
+  ];
+
   home.file = file_list // {
-    ".local/bin/mount-all" = {
-      source = ./mount-all;
-      executable = true;
-    };
+    # ".local/bin/mount-all" = {
+    #   source = ./mount-all;
+    #   executable = true;
+    # };
   };
 
   home.shellAliases = {
