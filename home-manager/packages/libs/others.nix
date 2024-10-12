@@ -1,7 +1,6 @@
 { pkgs, input, ... }:
 
 {
-
   home.packages = with pkgs; [
     abseil-cpp
     gtest

@@ -6,6 +6,8 @@ in {
   imports = [
     ./wsl
 
+    ./libs/openssl.nix
+
     ./shells/fish
 
     ./devs/common.nix
