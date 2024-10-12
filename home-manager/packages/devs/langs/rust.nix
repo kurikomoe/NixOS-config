@@ -12,13 +12,6 @@ in {
   nixpkgs.overlays = [ inputs.fenix.overlays.default ];
 
   home.packages = with pkgs; [
-    # (fenix.complete.withComponents [
-    #   "cargo"
-    #   "clippy"
-    #   "rust-src"
-    #   "rustc"
-    #   "rustfmt"
-    # ])
     rustup
     repos.pkgs-unstable.bacon
   ];
@@ -33,3 +26,13 @@ in {
     run ${pkgs.rustup}/bin/rustup +nightly component add rust-analyzer;
   '';
 }
+
+# --------- code snippets -------------
+# fenix should be used in side projects to keep the toolchains versioned
+# (fenix.complete.withComponents [
+#   "cargo"
+#   "clippy"
+#   "rust-src"
+#   "rustc"
+#   "rustfmt"
+# ])

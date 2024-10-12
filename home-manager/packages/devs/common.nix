@@ -5,6 +5,7 @@ let
 in {
   imports = [
     ./buildsystems.nix
+    ./frameworks/tauri.nix
   ];
 
   home.packages = with pkgs; [
