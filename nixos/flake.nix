@@ -46,13 +46,49 @@
   # Outputs
   outputs = inputs@{ self, flake-parts, nixpkgs, ... }:
   let
+    # setup pkgs here to avoid duplications in each device.
+    # ----------------- helper functions ------------------
     lib = nixpkgs.lib;
+    utils = import ../common/utils.nix { };
+    cImport = utils.customNixPkgsImport;
+
+    # -------------- pkgs versions ------------------
+    versionMap = {
+      "stable" = {
+        nixpkgs = inputs.nixpkgs;
+      };
+      "unstable" = {
+        nixpkgs = inputs.nixpkgs-unstable;
+      };
+    };
+
+    allRepos = {
+      "x86_64-linux" = rec {
+        pkgs-stable = cImport inputs.nixpkgs {};
+        pkgs-unstable = cImport inputs.nixpkgs-unstable {};
+
+        pkgs-nur = import inputs.nur {
+          pkgs = pkgs-stable;
+          nurpkgs = pkgs-unstable;
+        };
+
+        cuda = {
+          "12.2" = cImport inputs.nixpkgs-cuda-12_2 { cudaSupport = true; };
+          "12.4" = cImport inputs.nixpkgs-cuda-12_4 { cudaSupport = true; };
+        };
+      };
+    };
 
     devices = [
       devices/KurikoG14.nix
     ];
   in
     builtins.foldl'
-      (acc: device: lib.recursiveUpdate acc (import device { inherit inputs; })) {} devices;
+      (acc: device:
+        lib.recursiveUpdate acc (import device {
+          inherit inputs allRepos versionMap;
+          root = self;
+        })
+      )
+      {} devices;
 }
-

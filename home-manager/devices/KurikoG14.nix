@@ -1,4 +1,4 @@
-{ inputs, root, ... }:
+{ inputs, root, allRepos, versionMap, ... }:
 
 let
   # -------------- custom variables --------------------
@@ -6,7 +6,8 @@ let
 
   customVars = rec {
     inherit system;
-    currentVersion = "stable";
+
+    version = "stable";
 
     deviceName = "KurikoG14";
 
@@ -19,21 +20,12 @@ let
     homeDirectory = /home/${username};
   };
 
-in let
+  repos = allRepos.${system};
+
   template = import ./template.nix;
-  utils = import ./utils.nix { inherit customVars; };
-  customNixPkgsImport = utils.customNixPkgsImport;
-
-  repos = {
-    cuda = {
-      "12.2" = customNixPkgsImport inputs.nixpkgs-cuda-12_2 { cudaSupport = true; };
-      "12.4" = customNixPkgsImport inputs.nixpkgs-cuda-12_4 { cudaSupport = true; };
-    };
-  };
-
-  config = template (with customVars; {
-    inherit inputs root customVars;
-    inherit repos;
+in
+  template (with customVars; {
+    inherit inputs root customVars versionMap repos;
 
     stateVersion = "24.05";
 
@@ -59,6 +51,4 @@ in let
         ];
       })
     ];
-  });
-
-in config
+  })

@@ -5,6 +5,7 @@ let
   nixtools = with customVars; [
     (pkgs.writeShellScriptBin "nixup" ''
       #!/usr/bin/env bash
+      set -e
       sudo true;
       nix flake update "$HOME/.nixos/nixos";
       nix flake update "$HOME/.nixos/home-manager";
@@ -17,6 +18,7 @@ let
 
     (pkgs.writeShellScriptBin "nixdiff" ''
       #!/usr/bin/env bash
+      set -e
       echo ======= Current System Updates ==========
       nix store diff-closures /var/run/current-system \
         $(find /nix/var/nix/profiles -name "system-*-link" | sort | tail -n2 | head -n1)
@@ -32,12 +34,14 @@ let
 
     (pkgs.writeShellScriptBin "nixgc" ''
       #!/usr/bin/env bash
+      set -e
       sudo nix-collect-garbage --delete-older-than 7d
       nix-collect-garbage --delete-older-than 7d
     '')
 
     (pkgs.writeShellScriptBin "nixkeep" ''
       #!/usr/bin/env bash
+      set -e
       test -O /nix/var/nix/gcroots/per-user/$USER ||
       sudo -u$USER mkdir -p /nix/var/nix/gcroots/per-user/$USER;
       mkdir -p /nix/var/nix/gcroots/per-user/$USER/$PWD;

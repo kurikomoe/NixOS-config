@@ -1,47 +1,26 @@
 p@{
   inputs,
+  root,
   customVars,
-  repos ? {},
+  versionMap,
+  repos,
   modules ? [],
   ...
 }:
 
 let
-  # ----------------- helper functions ------------------
-  utils = import ./utils.nix { inherit customVars; };
-  customNixPkgsImport = utils.customNixPkgsImport;
+  system = customVars.system;
+  utils = import ../../common/utils.nix { inherit system; };
 
-  # ----------------- reimport inputs ------------------
-  versionMap = {
-    "stable" = {
-      nixpkgs = inputs.nixpkgs;
-    };
-    "unstable" = {
-      nixpkgs = inputs.nixpkgs-unstable;
-    };
-  };
+  version = customVars.version;
 
-  nixpkgs = versionMap.${customVars.currentVersion}.nixpkgs;
+  nixpkgs = versionMap.${version}.nixpkgs;
+  pkgs = repos."pkgs-${version}";
 
-  # -------------- pkgs versions ------------------
-  pkgs = customNixPkgsImport nixpkgs {};
-
-  pkgs-stable = customNixPkgsImport versionMap."stable".nixpkgs {};
-
-  pkgs-unstable = customNixPkgsImport versionMap."unstable".nixpkgs {};
-
-  pkgs-nur = import inputs.nur {
-    inherit pkgs;
-    nurpkgs = customNixPkgsImport versionMap."unstable".nixpkgs {};
-  };
-
-  repos = p.repos // {
-    inherit pkgs-stable pkgs-unstable pkgs-nur;
-  };
-
-  config = nixpkgs.lib.nixosSystem {
+in with customVars; {
+  nixosConfigurations.${hostName} = nixpkgs.lib.nixosSystem {
     specialArgs = {
-       inherit customVars repos inputs;
+      inherit customVars repos inputs;
     } // (inputs.specialArgs or {});
 
     modules = p.modules ++ [
@@ -95,6 +74,4 @@ let
       # }
     ];
   };
-in {
-  nixosConfigurations.${customVars.hostName} = config;
 }

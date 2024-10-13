@@ -1,4 +1,4 @@
-{ inputs, root, ... }:
+{ inputs, root, allRepos, versionMap, ... }:
 
 let
   # -------------- custom variables --------------------
@@ -19,27 +19,19 @@ let
     homeDirectory = /home/${username};
   };
 
+  repos = allRepos.${system};
+
   template = import ./template.nix;
-  utils = import ./utils.nix { inherit customVars; };
-  customNixPkgsImport = utils.customNixPkgsImport;
 
-  repos = {
-    cuda = {
-      "12.2" = customNixPkgsImport inputs.nixpkgs-cuda-12_2 {};
-      "12.4" = customNixPkgsImport inputs.nixpkgs-cuda-12_4 {};
-    };
-  };
-
-  config = template (with customVars; {
-    inherit inputs customVars repos root;
+in
+  template (with customVars; {
+    inherit inputs root customVars versionMap repos;
 
     stateVersion = "24.05";
 
     modules = [
       ({inputs, lib, pkgs, ... }: {
         imports = [
-          # ../packages/wsl
-
           ../packages/shells/fish
 
           ../packages/devs/common.nix
@@ -53,7 +45,4 @@ let
         ];
       })
     ];
-  });
-
-in
-  config
+  })

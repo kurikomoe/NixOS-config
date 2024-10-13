@@ -1,67 +1,27 @@
-# customVars = {
-#   deviceName
-#   userName
-#   userNameFull
-#   userEmail
-#   homeDirectory
-#   currentVersion
-# }
-
-p@{
+{
   inputs,
   root,
   customVars,
+  versionMap,
+  repos,
   modules ? [],
-  repos ? {},
   extraNixPkgsOptions ? {},
   stateVersion ? "24.05",
   ...
-}:
+}@p:
 
 let
-  # ----------------- helper functions ------------------
-  utils = import ./utils.nix { inherit customVars; };
-  customNixPkgsImport = utils.customNixPkgsImport;
+  system = customVars.system;
+  utils = import ../../common/utils.nix { inherit system; };
 
-  # ----------------- reimport inputs ------------------
-  versionMap = {
-    "stable" = {
-      nixpkgs = inputs.nixpkgs;
-      home-manager = inputs.home-manager;
-    };
-    "unstable" = {
-      nixpkgs = inputs.nixpkgs-unstable;
-      home-manager = inputs.home-manager-unstable;
-    };
-  };
+  version = customVars.version;
 
-  nixpkgs = versionMap.${customVars.currentVersion}.nixpkgs;
-  home-manager = versionMap.${customVars.currentVersion}.home-manager;
+  nixpkgs = versionMap.${version}.nixpkgs;
+  home-manager = versionMap.${version}.home-manager;
 
-  lib = nixpkgs.lib;
+  pkgs = repos."pkgs-${version}";
 
-  agenix = inputs.agenix;
-
-  # -------------- pkgs versions ------------------
-  pkgs = customNixPkgsImport nixpkgs extraNixPkgsOptions;
-
-  pkgs-stable = customNixPkgsImport versionMap."stable".nixpkgs extraNixPkgsOptions;
-
-  pkgs-unstable = customNixPkgsImport versionMap."unstable".nixpkgs extraNixPkgsOptions;
-
-  pkgs-nur = import inputs.nur {
-    inherit pkgs;
-    nurpkgs = customNixPkgsImport versionMap."unstable".nixpkgs extraNixPkgsOptions;
-  };
-
-  repos = lib.recursiveUpdate {
-    inherit pkgs-stable pkgs-unstable pkgs-nur;
-  } p.repos;
-
-in
-with customVars;
-with versionMap.${currentVersion};
-{
+in with customVars; {
   homeConfigurations.${deviceName} = home-manager.lib.homeManagerConfiguration {
     inherit pkgs;
 
@@ -76,7 +36,7 @@ with versionMap.${currentVersion};
       # -------------- load agenix secrets ----------------
       {
         imports = [ ../packages/age.nix ];
-        home.packages = [ agenix.packages.${system}.default ];
+        home.packages = [ inputs.agenix.packages.${system}.default ];
       }
 
       # -------------- enable nur & others overlays ----------------

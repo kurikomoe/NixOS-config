@@ -3,11 +3,11 @@
 
   inputs = {
     # --------------------- Main inputs ---------------------
-    # nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-24.05";
-    # nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    nixpkgs.url = "https://mirrors.ustc.edu.cn/nix-channels/nixos-24.05/nixexprs.tar.xz";
-    nixpkgs-unstable.url = "https://mirrors.ustc.edu.cn/nix-channels/nixpkgs-unstable/nixexprs.tar.xz";
+    # nixpkgs.url = "https://mirrors.ustc.edu.cn/nix-channels/nixos-24.05/nixexprs.tar.xz";
+    # nixpkgs-unstable.url = "https://mirrors.ustc.edu.cn/nix-channels/nixpkgs-unstable/nixexprs.tar.xz";
 
     # nixpkgs.url = "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/nixos-24.05/nixexprs.tar.xz";
     # nixpkgs-unstable.url = "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/nixpkgs-unstable/nixexprs.tar.xz";
@@ -84,22 +84,56 @@
 
 # ---------------------------------------------------------------------------
 
-outputs = inputs@{ nixpkgs, self, flake-parts, ... }:
+outputs = inputs@{ self, nixpkgs, flake-parts, ... }:
   let
+    # setup pkgs here to avoid duplications in each device.
+    # ----------------- helper functions ------------------
     lib = nixpkgs.lib;
+    utils = import ../common/utils.nix { };
+    cImport = utils.customNixPkgsImport;
+
+    # -------------- pkgs versions ------------------
+    versionMap = {
+      "stable" = {
+        nixpkgs = inputs.nixpkgs;
+        home-manager = inputs.home-manager;
+      };
+      "unstable" = {
+        nixpkgs = inputs.nixpkgs-unstable;
+        home-manager = inputs.home-manager-unstable;
+      };
+    };
+
+    allRepos = {
+      "x86_64-linux" = rec {
+        pkgs-stable = cImport inputs.nixpkgs {};
+        pkgs-unstable = cImport inputs.nixpkgs-unstable {};
+
+        pkgs-nur = import inputs.nur {
+          pkgs = pkgs-stable;
+          nurpkgs = pkgs-unstable;
+        };
+
+        agenix = import inputs.agenix { system = "x86_64-linux"; };
+
+        cuda = {
+          "12.2" = cImport inputs.nixpkgs-cuda-12_2 { cudaSupport = true; };
+          "12.4" = cImport inputs.nixpkgs-cuda-12_4 { cudaSupport = true; };
+        };
+      };
+    };
 
     devices = [
       ./devices/KurikoG14.nix
       ./devices/KurikoArch.nix
     ];
 
-    outputs = builtins.foldl'
+  in builtins.foldl'
     (acc: device:
       (lib.recursiveUpdate acc (import device {
-        inherit inputs;
-        root = "${self}";
+        inherit inputs allRepos versionMap;
+        root = self;
       }))
     )
     {} devices;
-  in outputs;
 }

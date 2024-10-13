@@ -1,4 +1,4 @@
-p@{ inputs, ... }:
+{ inputs, root, allRepos, versionMap, ... }:
 
 let
   # -------------- custom variables --------------------
@@ -7,25 +7,20 @@ let
   customVars = rec {
     inherit system;
 
-    currentVersion = "stable";
+    version = "stable";
 
     hostName = "KurikoNixOS";
 
     username = "kuriko";
   };
 
-  utils = import ./utils.nix { inherit customVars; };
-  customNixPkgsImport = utils.customNixPkgsImport;
+  repos = allRepos.${system};
 
-  repos = {
-    cuda = {
-      "12.2" = customNixPkgsImport inputs.nixpkgs-cuda-12_2 { };
-    };
-  };
+  template = import ./template.nix;
 
 in
-  import ./template.nix (with customVars; {
-    inherit inputs customVars repos;
+  template (with customVars; {
+    inherit inputs root customVars versionMap repos;
 
     modules = [
       inputs.nixos-wsl.nixosModules.default {

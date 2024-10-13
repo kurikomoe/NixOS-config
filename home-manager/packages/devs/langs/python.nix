@@ -6,8 +6,8 @@ in {
   # use latest python
   nixpkgs.overlays = [
     (final: prev: {
-      python3 = repos.pkgs-unstable.python311;
-      python3Packages = repos.pkgs-unstable.python311Packages;
+      python3 = pkgs.python311;
+      python3Packages = pkgs.python311Packages;
     })
   ];
 

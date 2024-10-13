@@ -1,9 +1,11 @@
-{ customVars, ... }:
+inputs@{
+  system ? "x86_64-linux",
+  ...
+}:
 let
   _commonNixPkgsConfig = {
     allowUnfree = true;
     settings = rec {
-      trusted-users = [ customVars.username ];
       substituters = [
         https://mirrors.ustc.edu.cn/nix-channels/store
         https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store
@@ -20,9 +22,10 @@ let
   };
 
   customNixPkgsImport = pkgSrc: extraConfig: import pkgSrc {
-    system = customVars.system;
+    system = system;
     config = _commonNixPkgsConfig;
   } // extraConfig;
+
 in
 {
   inherit customNixPkgsImport _commonNixPkgsConfig;
