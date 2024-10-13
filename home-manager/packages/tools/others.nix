@@ -17,6 +17,8 @@ in {
     fend
     ripgrep  # search tools
 
+    jq
+
     file
 
     # media

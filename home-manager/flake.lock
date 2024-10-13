@@ -68,11 +68,11 @@
         "rust-analyzer-src": "rust-analyzer-src"
       },
       "locked": {
-        "lastModified": 1728628307,
-        "narHash": "sha256-GRMRHZyU+R0RqKPFFgi7BBMDIRFPnHaAhOIxlqyvbZQ=",
+        "lastModified": 1728714564,
+        "narHash": "sha256-CciuT/8HI/BR+y+W2/FyHRDpchbKQ9wA8ABJiio0CE8=",
         "owner": "nix-community",
         "repo": "fenix",
-        "rev": "b0a014d5b9dba793ebc205bcf12a93b5f6a4c66c",
+        "rev": "ea96690b28eb5a859d28bcf02887a26e3854e4f3",
         "type": "github"
       },
       "original": {
@@ -306,11 +306,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1728650932,
-        "narHash": "sha256-mGKzqdsRyLnGNl6WjEr7+sghGgBtYHhJQ4mjpgRTCsU=",
+        "lastModified": 1728726232,
+        "narHash": "sha256-8ZWr1HpciQsrFjvPMvZl0W+b0dilZOqXPoKa2Ux36bc=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "65ae9c147349829d3df0222151f53f79821c5134",
+        "rev": "d57112db877f07387ce7104b5ac346ede556d2d7",
         "type": "github"
       },
       "original": {
@@ -521,8 +521,8 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1728552534,
-        "narHash": "sha256-wXsVdeRfguqtI2jy+mNOBmI/hg3JIq/gMH10FEhhJu4=",
+        "lastModified": 1728695419,
+        "narHash": "sha256-JCdZsQJaJjs5IYkWsBRxvAA+QGcZkGnwqk0Rh0PcbBc=",
         "type": "tarball",
         "url": "https://mirrors.ustc.edu.cn/nix-channels/nixos-24.05/nixexprs.tar.xz"
       },
@@ -533,11 +533,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1728651561,
-        "narHash": "sha256-frGTB08PmPjZtiNb1BsRBvMm5FIbQEXEj3OPgUDjmEI=",
+        "lastModified": 1728785509,
+        "narHash": "sha256-c8g+7Sxi/4E4gOUcCD+38SkUUiKu3tFoa3iuszBm2Xw=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "08e6b3f66a3c92c073cb2ee5ce641c6454cbf43a",
+        "rev": "b7357bb20c8d3fe1ac80ffcadce8aaa012a7d2b8",
         "type": "github"
       },
       "original": {

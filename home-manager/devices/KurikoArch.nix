@@ -6,7 +6,7 @@ let
 
   customVars = rec {
     inherit system;
-    currentVersion = "unstable";
+    currentVersion = "stable";
 
     hostName = "KurikoArch";
     deviceName = hostName;
