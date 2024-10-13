@@ -19,6 +19,8 @@ in {
 
     killall
 
+    ncdu
+
     jq
 
     file

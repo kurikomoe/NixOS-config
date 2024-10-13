@@ -30,7 +30,10 @@ in with customVars; {
       ({config, lib, ... }: {
         nix.package = pkgs.nix;
 
-        nix.settings = utils._commonNixPkgsConfig.settings // { };
+        nix.settings = utils._commonNixPkgsConfig.settings // {
+          trusted-users = [ username ];
+        };
+
         environment.systemPackages = with pkgs; [
           openssl
           pkg-config

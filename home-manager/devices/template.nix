@@ -60,7 +60,10 @@ in with customVars; {
         };
 
         nix.package = pkgs.nix;
-        nix.settings = lib.recursiveUpdate utils._commonNixPkgsConfig.settings { };
+        nix.settings = lib.recursiveUpdate utils._commonNixPkgsConfig.settings {
+          trusted-users = [ username ];
+        };
+
         nix.gc = lib.mkDefault {
           automatic = true;
           frequency = "weekly";
@@ -72,7 +75,9 @@ in with customVars; {
           !include ${config.age.secrets."nix/cachix.nix.conf".path}
         '';
 
-        nixpkgs.config.allowUnfree = true;
+        nixpkgs.config = {
+          allowUnfree = true;
+        };
 
         xdg.enable = true;
 
