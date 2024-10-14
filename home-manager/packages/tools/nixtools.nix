@@ -53,10 +53,10 @@ in with customVars; {
 
   home.shellAliases = {
     hm = lib.mkDefault "home-manager";
-    hme = lib.mkDefault "$EDITOR '${config.xdg.configHome}/home-manager'";
-    hms = lib.mkDefault "home-manager --flake '${config.home.homeDirectory}/.nixos/home-manager#${deviceName}' switch";
-    hmsdr = lib.mkDefault "home-manager --flake '${config.home.homeDirectory}/.nixos/home-manager#${deviceName}' switch --dry-run";
-    hmcd = lib.mkDefault "cd '${config.xdg.configHome}/home-manager'";
+    hme = lib.mkDefault "$EDITOR '${home}/home-manager'";
+    hms = lib.mkDefault "home-manager --flake '${home}/.nixos/home-manager#${deviceName}' switch";
+    hmsdr = lib.mkDefault "home-manager --flake '${home}/.nixos/home-manager#${deviceName}' switch --dry-run";
+    hmcd = lib.mkDefault "cd '${home}/home-manager'";
     nxsearch = lib.mkDefault "nix search nixpkgs";
   };
 }

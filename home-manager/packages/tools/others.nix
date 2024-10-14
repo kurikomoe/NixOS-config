@@ -6,7 +6,6 @@ in {
 
   home.packages = with pkgs; [
     # Terminals
-    aria2
     wget
     curl
     htop
@@ -16,6 +15,7 @@ in {
     fd       # find
     fend
     ripgrep  # search tools
+    file
 
     killall
 
@@ -23,7 +23,14 @@ in {
 
     jq
 
-    file
+
+    # network
+    dig
+    lsof
+    iftop
+
+    caddy
+    aria2
 
     # media
     yt-dlp

@@ -5,5 +5,8 @@
     dig
     lsof
     iftop
-  ];
+
+    caddy
+    aria2
+];
 }

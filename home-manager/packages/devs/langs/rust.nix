@@ -21,9 +21,7 @@ in {
   ];
 
   home.activation.rustInit = lib.hm.dag.entryAfter ["installPackages"] ''
-    run ${pkgs.rustup}/bin/rustup install stable;
-    run ${pkgs.rustup}/bin/rustup install nightly;
-    run ${pkgs.rustup}/bin/rustup +nightly component add rust-analyzer;
+    run ${pkgs.rustup}/bin/rustup install stable nightly;
   '';
 }
 
