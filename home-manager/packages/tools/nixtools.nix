@@ -9,8 +9,8 @@ let
       nix flake update "$HOME/.nixos/nixos";
       nix flake update "$HOME/.nixos/home-manager";
 
-      sudo nixos-rebuild --flake "$HOME/.nixos/nixos#${deviceName}" switch;
-      home-manager --flake "$HOME/.nixos/home-manager#${deviceName}" switch;
+      sudo nixos-rebuild --flake "$HOME/.nixos/nixos#${deviceName}.${hostName}" switch;
+      home-manager --flake "$HOME/.nixos/home-manager#${deviceName}.${username}" switch;
 
       nixdiff;
     '')
@@ -54,8 +54,8 @@ in with customVars; {
   home.shellAliases = {
     hm = lib.mkDefault "home-manager";
     hme = lib.mkDefault "$EDITOR '${home}/home-manager'";
-    hms = lib.mkDefault "home-manager --flake '${home}/.nixos/home-manager#${deviceName}' switch";
-    hmsdr = lib.mkDefault "home-manager --flake '${home}/.nixos/home-manager#${deviceName}' switch --dry-run";
+    hms = lib.mkDefault "home-manager --flake '${home}/.nixos/home-manager#${deviceName}.${username}' switch";
+    hmsdr = lib.mkDefault "home-manager --flake '${home}/.nixos/home-manager#${deviceName}.${username}' switch --dry-run";
     hmcd = lib.mkDefault "cd '${home}/home-manager'";
     nxsearch = lib.mkDefault "nix search nixpkgs";
   };

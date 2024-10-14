@@ -22,7 +22,7 @@ let
   pkgs = repos."pkgs-${version}";
 
 in with customVars; {
-  homeConfigurations.${deviceName} = home-manager.lib.homeManagerConfiguration {
+  homeConfigurations."${deviceName}.${username}" = home-manager.lib.homeManagerConfiguration {
     inherit pkgs;
 
     extraSpecialArgs = {

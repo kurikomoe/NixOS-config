@@ -9,6 +9,8 @@ let
 
     version = "stable";
 
+    deviceName = "KurikoG14";
+
     hostName = "KurikoNixOS";
 
     username = "kuriko";

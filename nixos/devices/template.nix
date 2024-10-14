@@ -18,7 +18,7 @@ let
   pkgs = repos."pkgs-${version}";
 
 in with customVars; {
-  nixosConfigurations.${hostName} = nixpkgs.lib.nixosSystem {
+  nixosConfigurations."${deviceName}.${hostName}" = nixpkgs.lib.nixosSystem {
     specialArgs = {
       inherit customVars repos inputs;
     } // (inputs.specialArgs or {});
