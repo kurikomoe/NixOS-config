@@ -1,14 +1,25 @@
 p@{ pkgs, inputs, ... }:
 
 let
-
+  PNPM_HOME = "$HOME/.local/opt/pnpm";
 in {
   home.packages = with pkgs; [
     nodejs_22
-    bun
     deno
 
-    pnpm
+    bun
+
     yarn
+    pnpm
   ];
+
+  home = {
+    sessionVariables = {
+      inherit PNPM_HOME;
+    };
+    sessionPath = [
+      "${PNPM_HOME}"
+    ];
+  };
+
 }

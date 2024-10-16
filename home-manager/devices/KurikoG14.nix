@@ -48,6 +48,8 @@ in
           ../packages/libs/others.nix
 
           ../packages/libs/cuda.nix
+
+          ../packages/apps/db/mongodb.nix
         ];
       })
     ];
