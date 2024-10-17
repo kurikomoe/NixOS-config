@@ -49,7 +49,11 @@ in
 
           ../packages/libs/cuda.nix
 
+          # ../packages/apps/podman.nix
           ../packages/apps/db/mongodb.nix
+        ];
+
+        home.packages = with pkgs; [
         ];
       })
     ];

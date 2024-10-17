@@ -18,7 +18,7 @@ let
   pkgs = repos."pkgs-${version}";
 
 in with customVars; {
-  nixosConfigurations."${deviceName}.${hostName}" = nixpkgs.lib.nixosSystem {
+  nixosConfigurations."${hostName}" = nixpkgs.lib.nixosSystem {
     specialArgs = {
       inherit customVars repos inputs;
     } // (inputs.specialArgs or {});
@@ -53,6 +53,8 @@ in with customVars; {
           inputs.nix-alien.packages.${system}.nix-alien
           # inputs.agenix.packages.${system}.default
         ];
+
+        programs.nix-ld.enable = true;
       })
 
       # # -------------- enable nur ----------------

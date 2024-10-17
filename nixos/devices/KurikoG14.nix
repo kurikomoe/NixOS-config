@@ -46,6 +46,7 @@ in
         users.users.${username} = {
           shell = pkgs.fish;
           extraGroups = [ "docker" ];
+          linger = true;
         };
 
         networking.hostName = hostName;
@@ -63,11 +64,38 @@ in
           intel-ocl
           intel-compute-runtime
 
-          docker
+          # docker
+
+          dive # look into docker image layers
+          podman-tui # status of containers in the terminal
           docker-compose
         ];
 
-        virtualisation.docker.enable = true;
+        # hardware.graphics.enable32Bit = true;
+        # hardware.nvidia-container-toolkit.enable = true;
+        virtualisation = {
+          # docker = {
+          #   enable = true;
+          #   enableNvidia = true;
+          #   autoPrune.enable = true;
+          # };
+
+          # oci-containers ={
+          #   backend = "podman";
+          #   containers = {
+          #     container-name = {
+          #       image = "container-image";
+          #       autoStart = true;
+          #       ports = [ "127.0.0.1:1234:1234" ];
+          #     };
+          #   };
+          # };
+
+          podman = {
+            enable = true;
+            autoPrune.enable = true;
+          };
+        };
 
         services = {
           openssh = {

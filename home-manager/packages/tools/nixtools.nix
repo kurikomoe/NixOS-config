@@ -9,7 +9,7 @@ let
       nix flake update "$HOME/.nixos/nixos";
       nix flake update "$HOME/.nixos/home-manager";
 
-      sudo nixos-rebuild --flake "$HOME/.nixos/nixos#${deviceName}.${hostName}" switch;
+      sudo nixos-rebuild --flake "$HOME/.nixos/nixos#${hostName}" switch;
       home-manager --flake "$HOME/.nixos/home-manager#${deviceName}.${username}" switch;
 
       nixdiff;
