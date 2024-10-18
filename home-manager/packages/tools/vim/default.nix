@@ -75,14 +75,16 @@ in {
   ];
 
   xdg.configFile = {
-    # nvim = {
-    #   source = ./nvim;
-    #   recursive = true;
-    # };
     vim = {
       source = ./nvim/init.vim;
     };
   };
+
+  # home.file = {
+  #   "${config.xdg.configHome}/nvim/coc-settings.json" = {
+  #     source = ./nvim/coc-settings.json;
+  #   };
+  # };
 
   home.packages = with pkgs; [
     universal-ctags
@@ -117,6 +119,7 @@ in {
     plugins = vimPlugins;
     coc = {
       enable = true;
+      settings = lib.importJSON ./nvim/coc-settings.json;
     };
   };
 

@@ -3,4 +3,6 @@
   "zig.startUpMessage": true,
   "zig.path": "zls",
   "zig.debugLog": false,
+
+  "rust-analyzer.check.overrideCommand": "clippy"
 }
