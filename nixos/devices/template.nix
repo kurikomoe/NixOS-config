@@ -28,6 +28,8 @@ in with customVars; {
 
       # -------------- basic settings ----------------
       ({config, lib, ... }: {
+        boot.tmp.useTmpfs = true;
+
         nix.package = pkgs.nix;
 
         nix.settings = utils._commonNixPkgsConfig.settings // {

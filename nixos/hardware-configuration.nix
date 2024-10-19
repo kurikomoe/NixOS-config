@@ -11,9 +11,18 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/home/kuriko/Projects" =
-    { device = "/dev/disk/by-uuid/59eb1b70-d82d-4d62-9622-284d1515f849";
-    fsType = "ext4";
+  fileSystems = {
+    "/home/kuriko/Projects" = {
+      device = "/dev/disk/by-uuid/59eb1b70-d82d-4d62-9622-284d1515f849";
+      fsType = "ext4";
+      options = [ "noatime" "nofail" ];
+    };
+
+    # "/tmp/.X11-unix" = {
+    #   device = "/mnt/wslg/.X11-unix";
+    #   fsType = "bind";
+    #   options = [ "nofail" ];
+    # };
   };
 
   hardware.graphics = {
