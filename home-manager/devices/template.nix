@@ -91,12 +91,16 @@ in with customVars; {
 
 
         home.packages = with pkgs; [
+          stdenv.cc.cc.lib
           (lib.lowPrio vim)
           (lib.lowPrio neovim)
         ] ++ (p.packages or []);
 
         home.sessionVariables = {
           EDITOR = lib.mkDefault "nvim";
+          LD_LIBRARY_PATH = lib.makeLibraryPath [
+            pkgs.stdenv.cc.cc.lib
+          ];
         };
 
         programs = lib.mkDefault {
