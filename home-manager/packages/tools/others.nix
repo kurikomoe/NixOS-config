@@ -23,6 +23,8 @@ in {
 
     jq
 
+    dos2unix
+
 
     # network
     dig

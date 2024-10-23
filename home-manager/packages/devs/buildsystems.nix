@@ -11,6 +11,8 @@ in {
     gnumake
     meson
 
+    automake
+
     pkg-config
     llvmPackages.bintools
 

@@ -54,6 +54,7 @@ let
     // (mkBinWinRel { name = "explorer"; src = "explorer.exe"; })
     // (mkBinWinRel { name = "pwsh.exe"; src = "shims_dir/pwsh.exe"; })
     // (mkBinWinRel { name = "pwsh"; src = "pwsh.exe"; })
+    // (mkBinWinRel { name = "nu.exe"; src = "shims_dir/nu.exe"; })
     // (mkBinWinRel { name = "git.exe"; src = "shims_dir/git.exe"; })
   ;
 in {
