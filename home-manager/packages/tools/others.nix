@@ -9,6 +9,7 @@ in {
     wget
     curl
     htop
+    gtop
     tree
     which
     dust     # du-dust

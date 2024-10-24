@@ -16,6 +16,8 @@ in {
   home.packages = with pkgs; [
     pipx
 
+    pylint
+
     (python3.withPackages (py-pkgs: with py-pkgs; [
       pysocks
       requests

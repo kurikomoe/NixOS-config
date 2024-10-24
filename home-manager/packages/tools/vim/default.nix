@@ -61,7 +61,7 @@ let
     coc-css
     coc-html
     coc-pairs
-    coc-python
+    coc-pyright
   ];
 
 in {
