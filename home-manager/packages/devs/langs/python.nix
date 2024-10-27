@@ -1,7 +1,7 @@
 p@{ pkgs, inputs, repos, ... }:
 
 let
-  python3 = pkgs.python311;
+  python3 = pkgs.python312;
 
 in {
   # use latest python
@@ -19,7 +19,30 @@ in {
     pylint
 
     (python3.withPackages (py-pkgs: with py-pkgs; [
+      xlsxwriter
+      python-docx
+      pyyaml
+
+      pytz
+      more-itertools
+
+      coloredlogs
+
+      pillow
+      pandas
+      numpy
+      seaborn
+      matplotlib
+      scipy
+      tqdm
+
+      pydantic
+
       pysocks
+      aiohttp
+      fastapi
+      hypercorn
+      uvicorn
       requests
       beautifulsoup4
     ]))

@@ -26,6 +26,7 @@ in {
 
     dos2unix
 
+    asciinema # record terminal
 
     # network
     dig
