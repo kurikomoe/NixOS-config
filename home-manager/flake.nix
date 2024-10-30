@@ -80,6 +80,7 @@
     fishPlugin-autopair = { url = "github:jorgebucaran/autopair.fish"; flake = false; };
     fishPlugin-puffer-fish = { url = "github:nickeb96/puffer-fish"; flake = false; };
     fishPlugin-fish-abbreviation-tips = { url = "github:Gazorby/fish-abbreviation-tips"; flake = false; };
+    fishPlugin-theme-dracula = { url = "github:dracula/fish"; flake = false; };
   };
 
 # ---------------------------------------------------------------------------

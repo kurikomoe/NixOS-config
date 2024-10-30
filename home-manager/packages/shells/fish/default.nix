@@ -36,6 +36,12 @@ let
     src = inputs.fishPlugin-fish-abbreviation-tips;
   };
 
+  theme-dracula = pkgs.fishPlugins.buildFishPlugin {
+    pname = "theme-dracula";
+    version = "unstable";
+    src = inputs.fishPlugin-theme-dracula;
+  };
+
   myShellInit = builtins.readFile ./shell_init.fish;
 in
 {
@@ -83,8 +89,11 @@ in
         { name = "async-prompt"; src = async-prompt.src; }
         { name = "sponge"; src = sponge.src; }
         { name = "humantime-fish"; src = humantime-fish.src; }
+
         # { name = "pure"; src = pure.src; }
         # { name = "git-abbr"; src = git-abbr.src; }
+
+        { name = "theme-dracula"; src = theme-dracula.src; }
       ];
     };
 

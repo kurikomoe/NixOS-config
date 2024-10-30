@@ -68,11 +68,11 @@
         "rust-analyzer-src": "rust-analyzer-src"
       },
       "locked": {
-        "lastModified": 1730010749,
-        "narHash": "sha256-UBckyKItSD0z50+3YQOqfOuyvUI7UjPHiLbOPFUolqo=",
+        "lastModified": 1730183653,
+        "narHash": "sha256-dcJGcoDgNBxTagW8kECwBKsRBA1ZITtQ+p3N6KHg5ps=",
         "owner": "nix-community",
         "repo": "fenix",
-        "rev": "5fa09829e74070c1e83b2aaa50b71bbc6da3f37c",
+        "rev": "dc19afc39af5f5e69fca78ebae59170e61017df8",
         "type": "github"
       },
       "original": {
@@ -174,6 +174,22 @@
       "original": {
         "owner": "jorgebucaran",
         "repo": "replay.fish",
+        "type": "github"
+      }
+    },
+    "fishPlugin-theme-dracula": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1687538751,
+        "narHash": "sha256-Hyq4EfSmWmxwCYhp3O8agr7VWFAflcUe8BUKh50fNfY=",
+        "owner": "dracula",
+        "repo": "fish",
+        "rev": "269cd7d76d5104fdc2721db7b8848f6224bdf554",
+        "type": "github"
+      },
+      "original": {
+        "owner": "dracula",
+        "repo": "fish",
         "type": "github"
       }
     },
@@ -525,11 +541,11 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1729973466,
-        "narHash": "sha256-knnVBGfTCZlQgxY1SgH0vn2OyehH9ykfF8geZgS95bk=",
+        "lastModified": 1730137625,
+        "narHash": "sha256-9z8oOgFZiaguj+bbi3k4QhAD6JabWrnv7fscC/mt0KE=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "cd3e8833d70618c4eea8df06f95b364b016d4950",
+        "rev": "64b80bfb316b57cdb8919a9110ef63393d74382a",
         "type": "github"
       },
       "original": {
@@ -541,11 +557,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1730078284,
-        "narHash": "sha256-/TMWxpqoV4lJfjCthN7njB2enftIxyUG386Fmkh1Yuw=",
+        "lastModified": 1730271065,
+        "narHash": "sha256-EJJhMuTrkAv+cMmHo7fDyNrj5NCB0k/IhV14U2aJTX4=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "9491e71b09e8886fc9a6380f57d3adcbcc208413",
+        "rev": "4f51380b183157a611b7e87d1286cca0930c850f",
         "type": "github"
       },
       "original": {
@@ -565,6 +581,7 @@
         "fishPlugin-fish-ssh-agent": "fishPlugin-fish-ssh-agent",
         "fishPlugin-puffer-fish": "fishPlugin-puffer-fish",
         "fishPlugin-replay": "fishPlugin-replay",
+        "fishPlugin-theme-dracula": "fishPlugin-theme-dracula",
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
         "home-manager-unstable": "home-manager-unstable",
@@ -583,11 +600,11 @@
     "rust-analyzer-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1729923686,
-        "narHash": "sha256-Tc+5E/UmjpXlYGQQ6X2nGDv6J6VQgZ+pVOJLcNCIVQc=",
+        "lastModified": 1730123801,
+        "narHash": "sha256-11FMcPraLSKuvfFF4OzmKWSKE5zXAzFqZOi3k/8/HFg=",
         "owner": "rust-lang",
         "repo": "rust-analyzer",
-        "rev": "26d2fbaef2d68a2fccf55d725915188c2634439a",
+        "rev": "cf8f950baab30f335917b177536d2d73e0aaa1ae",
         "type": "github"
       },
       "original": {
