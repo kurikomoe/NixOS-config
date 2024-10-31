@@ -36,7 +36,11 @@ in {
   };
 
   home.shellAliases = {
-    ssh = "ssh -F ~/.ssh/config";
+    ssh = "/usr/bin/ssh -F ~/.ssh/config";
+  };
+
+  home.sessionVariables = {
+    GIT_SSH_COMMAND="/usr/bin/ssh -F ~/.ssh/config";
   };
 
   services = {
