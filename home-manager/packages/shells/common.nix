@@ -9,7 +9,7 @@ let
     nativeBuildInputs = with pkgs; [ gzip ];
     installPhase = ''
       mkdir -p "$out/bin";
-      cp $src "$out/bin/autojump";
+      cp $src/autojump "$out/bin/autojump";
       chmod +x "$out/bin/autojump";
     '';
   };
