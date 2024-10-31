@@ -7,7 +7,8 @@ let
     #!/usr/bin/env bash
     sudo true
 
-    wsl.exe -d NixOS --mount --vhd "W:/@Packages/WSL/LinuxProjects.vhdx" --bare
+    # wsl.exe -d NixOS --mount --vhd "W:/@Packages/WSL/LinuxProjects.vhdx" --bare
+    wsl.exe -d NixOS --mount --vhd "D:/Data/WSL/LinuxProjects.vhdx" --bare
 
     sleep 1
     for i in `seq 1 10`; do
@@ -56,6 +57,8 @@ let
     // (mkBinWinRel { name = "pwsh"; src = "pwsh.exe"; })
     // (mkBinWinRel { name = "nu.exe"; src = "shims_dir/nu.exe"; })
     // (mkBinWinRel { name = "git.exe"; src = "shims_dir/git.exe"; })
+    // (mkBinWinRel { name = "op.exe"; src = "shims_dir/op.exe"; })
+    // (mkBinWinRel { name = "op"; src = "op.exe"; })
   ;
 in {
   home.packages = with pkgs; [
