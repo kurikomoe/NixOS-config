@@ -42,6 +42,7 @@ in
       // secret_file("gnupg/public.pgp")
       # ----------------------------------------------------------
       // secret_file("ssh/config")
+      // secret_file("ssh/config-iprc")
       // secret_file("ssh/id_rsa")
       // secret_file("ssh/id_rsa.pub")
       // secret_file("ssh/id_ed25519")

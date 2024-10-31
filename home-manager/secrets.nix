@@ -10,6 +10,8 @@ let
 
     "res/ssh" = [
       "config"
+      "config-iprc"
+
       "id_rsa"
       "id_rsa.pub"
       "id_ed25519"
