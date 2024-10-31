@@ -69,7 +69,7 @@
 
     # ------------------ common shell plugins --------------
     autojump-rs = {
-      url = "https://github.com/xen0n/autojump-rs/releases/latest/download/autojump-x86_64-unknown-linux-musl.tar.gz";
+      url = "https://github.com/xen0n/autojump-rs/releases/tag/0.5.1/download/autojump-x86_64-unknown-linux-musl.tar.gz";
       flake = false;
     };
 
