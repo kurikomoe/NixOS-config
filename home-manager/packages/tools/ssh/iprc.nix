@@ -35,6 +35,10 @@ in {
     };
   };
 
+  home.shellAliases = {
+    ssh = "ssh -F ~/.ssh/config";
+  };
+
   services = {
     ssh-agent.enable = true;
   };

@@ -127,6 +127,7 @@ outputs = inputs@{ self, nixpkgs, flake-parts, ... }:
     devices = [
       ./devices/KurikoG14.nix
       ./devices/KurikoArch.nix
+      ./devices/_iprc.nix
     ];
 
   in builtins.foldl'
