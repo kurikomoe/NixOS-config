@@ -5,7 +5,7 @@ let
 in {
   imports = [
     "${root}/packages/libs/openssl.nix"
-    "${root}/packages/libs/musl.nix"
+    # "${root}/packages/libs/musl.nix"
 
     ./buildsystems.nix
     # ./frameworks/tauri.nix

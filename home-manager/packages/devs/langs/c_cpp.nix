@@ -12,8 +12,7 @@ in {
     # gcc
     (hiPrio gcc)
     # gcc_multi
-
-    musl
+    # musl
 
     # llvm
     clang

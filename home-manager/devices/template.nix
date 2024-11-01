@@ -98,9 +98,11 @@ in with customVars; {
 
         home.sessionVariables = {
           EDITOR = lib.mkDefault "nvim";
-          LD_LIBRARY_PATH = lib.makeLibraryPath [
-            pkgs.stdenv.cc.cc.lib
-          ];
+
+          # This is problematic
+          # LD_LIBRARY_PATH = lib.makeLibraryPath [
+          #   pkgs.stdenv.cc.cc.lib
+          # ];
         };
 
         programs = lib.mkDefault {
