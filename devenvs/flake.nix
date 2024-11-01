@@ -1,5 +1,5 @@
 {
-  description = "Kuriko's Rust Template";
+  description = "Kuriko's Default Template";
 
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";

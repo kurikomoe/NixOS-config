@@ -17,6 +17,9 @@ in {
   home.packages = with pkgs; [
     p7zip
     autossh
+    sshpass
+    expect
+    mosh
   ];
 
   age.secrets = age_secrets_filelist;
