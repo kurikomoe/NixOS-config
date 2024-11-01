@@ -15,6 +15,8 @@
     nixpkgs-cuda-12_4.url = "github:nixos/nixpkgs/5ed627539ac84809c78b2dd6d26a5cebeb5ae269";
     nixpkgs-cuda-12_2.url = "github:nixos/nixpkgs/0cb2fd7c59fed0cd82ef858cbcbdb552b9a33465";
 
+    nixpkgs-glibc-2_35-224.url = "github:nixos/nixpkgs/nixos-22.11";
+
     nur.url = "github:nix-community/NUR";
 
     # ------------------- Core inputs -------------------
@@ -26,6 +28,11 @@
     home-manager-unstable = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
+    home-manager-glibc-2_35-224 = {
+      url = "github:nix-community/home-manager/release-22.11";
+      inputs.nixpkgs.follows = "nixpkgs-glibc-2_35-224";
     };
 
     agenix = {
@@ -103,12 +110,17 @@ outputs = inputs@{ self, nixpkgs, flake-parts, ... }:
         nixpkgs = inputs.nixpkgs-unstable;
         home-manager = inputs.home-manager-unstable;
       };
+      "iprc" = {
+        nixpkgs = inputs.nixpkgs-glibc-2_35-224;
+        home-manager = inputs.home-manager-glibc-2_35-224;
+      };
     };
 
     allRepos = {
       "x86_64-linux" = rec {
         pkgs-stable = cImport inputs.nixpkgs {};
         pkgs-unstable = cImport inputs.nixpkgs-unstable {};
+        pkgs-iprc = cImport inputs.nixpkgs-glibc-2_35-224 {};
 
         pkgs-nur = import inputs.nur {
           pkgs = pkgs-stable;
