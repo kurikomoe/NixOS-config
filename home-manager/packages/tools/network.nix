@@ -6,7 +6,7 @@
     lsof
     iftop
 
-    proxychains-ng
+    # proxychains-ng
 
     caddy
     aria2

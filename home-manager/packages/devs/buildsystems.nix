@@ -12,6 +12,7 @@ in {
     meson
 
     automake
+    libtool
 
     pkg-config
     llvmPackages.bintools
