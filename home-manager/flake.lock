@@ -29,7 +29,7 @@
       "flake": false,
       "locked": {
         "lastModified": 1672629524,
-        "narHash": "sha256-frq7UPaZe4RCSkMN+JuIw3cZdzneGBaiC3BGevw2QV8=",
+        "narHash": "sha256-wEdJQ9KHljCuJNYd5J15HYbtHW3d9aI5eBePdBBZaYQ=",
         "type": "tarball",
         "url": "https://github.com/xen0n/autojump-rs/releases/download/0.5.1/autojump-x86_64-unknown-linux-musl.tar.gz"
       },
@@ -315,6 +315,28 @@
         "type": "github"
       }
     },
+    "home-manager-glibc-2_35-224": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-glibc-2_35-224"
+        ],
+        "utils": "utils"
+      },
+      "locked": {
+        "lastModified": 1685325875,
+        "narHash": "sha256-tevlLIMPeVNNYPd9UgjHApAUoFAnw9iohqUyj+LPp88=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "b372d7f8d5518aaba8a4058a453957460481afbc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "ref": "release-22.11",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
     "home-manager-unstable": {
       "inputs": {
         "nixpkgs": [
@@ -481,6 +503,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-glibc-2_35-224": {
+      "locked": {
+        "lastModified": 1688392541,
+        "narHash": "sha256-lHrKvEkCPTUO+7tPfjIcb7Trk6k31rz18vkyqmkeJfY=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "ea4c80b39be4c09702b0cb3b42eab59e2ba4f24b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-22.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-lib": {
       "locked": {
         "lastModified": 1727825735,
@@ -557,11 +595,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1730464205,
-        "narHash": "sha256-J8dDwKgRXrS6Jfija3Fu/UhsjtESq7LVc6rSd3TCRzc=",
+        "lastModified": 1730472538,
+        "narHash": "sha256-3m4OVGKsbPzMlnS0gVptIZBRlxgqQz+WhfwT+rT823Y=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "0cec4b96fa9a9f3b348439ede1fd5ef46593b966",
+        "rev": "52c21ec8fde46366b1a5555e18d854ee18012ac8",
         "type": "github"
       },
       "original": {
@@ -584,6 +622,7 @@
         "fishPlugin-theme-dracula": "fishPlugin-theme-dracula",
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
+        "home-manager-glibc-2_35-224": "home-manager-glibc-2_35-224",
         "home-manager-unstable": "home-manager-unstable",
         "nix-alien": "nix-alien",
         "nix-search": "nix-search",
@@ -591,6 +630,7 @@
         "nixpkgs": "nixpkgs_4",
         "nixpkgs-cuda-12_2": "nixpkgs-cuda-12_2",
         "nixpkgs-cuda-12_4": "nixpkgs-cuda-12_4",
+        "nixpkgs-glibc-2_35-224": "nixpkgs-glibc-2_35-224",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nur": "nur",
         "tmux-current-pane-hostname": "tmux-current-pane-hostname",
@@ -705,6 +745,21 @@
         "owner": "jimeh",
         "ref": "master",
         "repo": "tmux-themepack",
+        "type": "github"
+      }
+    },
+    "utils": {
+      "locked": {
+        "lastModified": 1667395993,
+        "narHash": "sha256-nuEHfE/LcWyuSWnS8t12N1wc105Qtau+/OdUAjtQ0rA=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "5aed5285a952e0b949eb3ba02c12fa4fcfef535f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
         "type": "github"
       }
     }
