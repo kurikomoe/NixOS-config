@@ -6,8 +6,8 @@ let
     (pkgs.writeShellScriptBin "nixup" ''
       set -e
       sudo true;
-      nix flake update "$HOME/.nixos/nixos";
-      nix flake update "$HOME/.nixos/home-manager";
+      nix flake update --flake "$HOME/.nixos/nixos";
+      nix flake update --flake "$HOME/.nixos/home-manager";
 
       sudo nixos-rebuild --flake "$HOME/.nixos/nixos#${hostName}" switch;
       home-manager --flake "$HOME/.nixos/home-manager#${deviceName}.${username}" switch;

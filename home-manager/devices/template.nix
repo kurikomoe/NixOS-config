@@ -91,6 +91,8 @@ in with customVars; {
 
 
         home.packages = with pkgs; [
+          gnutar
+
           stdenv.cc.cc.lib
           (lib.lowPrio vim)
           (lib.lowPrio neovim)

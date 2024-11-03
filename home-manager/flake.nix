@@ -76,8 +76,8 @@
 
     # ------------------ common shell plugins --------------
     autojump-rs = {
+      type = "tarball";
       url = "https://github.com/xen0n/autojump-rs/releases/download/0.5.1/autojump-x86_64-unknown-linux-musl.tar.gz";
-      flake = false;
     };
 
     # -------------------- fish plugins --------------------
@@ -139,7 +139,7 @@ outputs = inputs@{ self, nixpkgs, flake-parts, ... }:
     devices = [
       ./devices/KurikoG14.nix
       ./devices/KurikoArch.nix
-      ./devices/_iprc.nix
+      ./devices/iprc.nix
     ];
 
   in builtins.foldl'
