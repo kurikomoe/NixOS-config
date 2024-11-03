@@ -34,7 +34,7 @@ in
     };
 
     modules = [
-      ({config, inputs, lib, pkgs, ...}: {
+      ({config, inputs, lib, pkgs, repos, ...}: {
         imports = [
           ../packages/wsl
 
@@ -54,6 +54,8 @@ in
         ];
 
         home.packages = with pkgs; [
+          # repos.pkgs-unstable.zed-editor
+          xorg.xeyes
         ];
       })
     ];
