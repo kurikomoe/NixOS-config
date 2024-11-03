@@ -65,18 +65,22 @@ in
           intel-compute-runtime
 
           # docker
-
           dive # look into docker image layers
           podman-tui # status of containers in the terminal
           docker-compose
         ];
 
-        # hardware.graphics.enable32Bit = true;
+        # cannot enable on wsl, it will invoke building kernel
         # hardware.nvidia-container-toolkit.enable = true;
+
         virtualisation = {
-          # docker = {
+          docker = {
+            enable = true;
+            autoPrune.enable = true;
+          };
+
+          # podman = {
           #   enable = true;
-          #   enableNvidia = true;
           #   autoPrune.enable = true;
           # };
 
@@ -90,11 +94,6 @@ in
           #     };
           #   };
           # };
-
-          podman = {
-            enable = true;
-            autoPrune.enable = true;
-          };
         };
 
         services = {
