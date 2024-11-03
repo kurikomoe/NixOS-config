@@ -13,6 +13,9 @@ in {
 
     automake
     libtool
+    gnum4
+    autogen
+    autoreconfHook
 
     pkg-config
     llvmPackages.bintools

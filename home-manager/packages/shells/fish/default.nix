@@ -87,8 +87,10 @@ in
         { name = "replay"; src = replay.src; }
         { name = "fish-ssh-agent"; src = fish-ssh-agent.src; }
         { name = "async-prompt"; src = async-prompt.src; }
-        { name = "sponge"; src = sponge.src; }
         { name = "humantime-fish"; src = humantime-fish.src; }
+
+        # disable this since it grep out failed commands
+        # { name = "sponge"; src = sponge.src; }
 
         # { name = "pure"; src = pure.src; }
         # { name = "git-abbr"; src = git-abbr.src; }

@@ -1,7 +1,7 @@
 { root, pkgs, inputs, config, lib, ... }:
 
 let
-  utils = import "${root}/packages/utils.nix";
+  age_helper = import "${root}/../common/age-helper.nix";
 
   files = {
     "ssh/config" = ".ssh/data/config";
@@ -11,7 +11,7 @@ let
     "ssh/id_ed25519.pub" = ".ssh/id_ed25519.pub";
   };
 
-  age_secrets_filelist = utils.buildAgeSecretsFileList files;
+  age_secrets_filelist = age_helper.buildAgeSecretsFileList files;
 
 in {
   home.packages = with pkgs; [
