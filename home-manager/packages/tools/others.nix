@@ -18,6 +18,7 @@ in {
     ripgrep  # search tools
     file
 
+    util-linux
     killall
 
     ncdu

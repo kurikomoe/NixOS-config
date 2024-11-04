@@ -32,24 +32,4 @@ let
   };
 
 in final
-# {
-#   imports = [
-#     ./default.nix
-#   ];
-#
-#   age.secrets = age_secrets_filelist;
-#
-#   home.packages = with pkgs; [
-#     p7zip
-#     autossh
-#   ];
-#
-#   home.shellAliases = {
-#     ssh = "/usr/bin/ssh -F ~/.ssh/config";
-#   };
-#
-#   home.sessionVariables = {
-#     GIT_SSH_COMMAND="/usr/bin/ssh -F ~/.ssh/config";
-#   };
-# }
 
