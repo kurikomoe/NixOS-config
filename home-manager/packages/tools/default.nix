@@ -18,5 +18,7 @@
     ./network.nix
 
     ./others.nix
+
+    ./sys.nix
   ];
 }
