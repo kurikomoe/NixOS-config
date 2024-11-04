@@ -17,6 +17,8 @@
 
     nixpkgs-glibc-2_35-224.url = "github:nixos/nixpkgs/nixos-22.11";
 
+    nixpkgs-nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+
     nur.url = "github:nix-community/NUR";
 
     # ------------------- Core inputs -------------------
@@ -111,16 +113,17 @@ outputs = inputs@{ self, nixpkgs, flake-parts, ... }:
         home-manager = inputs.home-manager-unstable;
       };
       "iprc" = {
-        nixpkgs = inputs.nixpkgs-glibc-2_35-224;
-        home-manager = inputs.home-manager-glibc-2_35-224;
+        nixpkgs = inputs.nixpkgs-nixpkgs;
+        home-manager = inputs.home-manager-unstable;
       };
     };
 
     allRepos = {
       "x86_64-linux" = rec {
-        pkgs-stable = cImport inputs.nixpkgs {};
-        pkgs-unstable = cImport inputs.nixpkgs-unstable {};
-        pkgs-iprc = cImport inputs.nixpkgs-glibc-2_35-224 {};
+        pkgs-stable = cImport versionMap.stable.nixpkgs {};
+        pkgs-unstable = cImport versionMap.unstable.nixpkgs {};
+
+        pkgs-iprc = cImport versionMap.iprc.nixpkgs {};
 
         pkgs-nur = import inputs.nur {
           pkgs = pkgs-stable;
