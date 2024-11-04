@@ -9,6 +9,7 @@ in {
     ./zig.nix
 
     ./python.nix
+    ./julia.nix
 
     ./golang.nix
 
