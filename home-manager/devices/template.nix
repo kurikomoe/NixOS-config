@@ -94,6 +94,7 @@ in with customVars; {
           gnutar
 
           stdenv.cc.cc.lib
+
           (lib.lowPrio vim)
           (lib.lowPrio neovim)
         ] ++ (p.packages or []);

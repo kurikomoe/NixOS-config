@@ -79,6 +79,7 @@
     # ------------------ common shell plugins --------------
     autojump-rs = {
       type = "tarball";
+      flake = false;
       url = "https://github.com/xen0n/autojump-rs/releases/download/0.5.1/autojump-x86_64-unknown-linux-musl.tar.gz";
     };
 
