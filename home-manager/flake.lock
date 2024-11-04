@@ -29,7 +29,7 @@
       "flake": false,
       "locked": {
         "lastModified": 1672629524,
-        "narHash": "sha256-frq7UPaZe4RCSkMN+JuIw3cZdzneGBaiC3BGevw2QV8=",
+        "narHash": "sha256-wEdJQ9KHljCuJNYd5J15HYbtHW3d9aI5eBePdBBZaYQ=",
         "type": "tarball",
         "url": "https://github.com/xen0n/autojump-rs/releases/download/0.5.1/autojump-x86_64-unknown-linux-musl.tar.gz"
       },
@@ -611,11 +611,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1730705723,
-        "narHash": "sha256-quH7t4kVJRHdztr9n362k8DM1VGDfzW5nO+wsBsvtG0=",
+        "lastModified": 1730708002,
+        "narHash": "sha256-I57tjJe+Yo2xLW1jSmOFFCf8Wk8Wr0hpoFGfPMTjhTs=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "6c339fda9e3b3926672748f5c48fc3fd1b6746c4",
+        "rev": "6720812cce88e6bcd4fd20a081d2c48303e0388c",
         "type": "github"
       },
       "original": {

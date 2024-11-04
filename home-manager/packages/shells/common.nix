@@ -6,13 +6,10 @@ let
     name = "autojump-rs";
     src = inputs.autojump-rs;
     unpackPhase = ":";
-    nativeBuildInputs = with pkgs; [ gzip ];
+    nativeBuildInputs = with pkgs; [ gnutar gzip ];
     installPhase = ''
       mkdir -p "$out/bin";
-      # strange error, on nixos the autojump is $src
-      # but on iprc the autoujump is located at $src/autojump
-      test -f $src/autojump && cp $src/autojump "$out/bin/autojump";
-      test -f $src && cp $src "$out/bin/autojump";
+      cp $src/autojump "$out/bin/autojump";
       chmod +x "$out/bin/autojump";
     '';
   };

@@ -7,7 +7,7 @@ let
   customVars = rec {
     inherit system;
 
-    version = "stable";
+    version = "unstable";
 
     deviceName = "KurikoG14";
 

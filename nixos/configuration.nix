@@ -98,7 +98,8 @@ p@{ config, lib, pkgs, ... }:
   time.timeZone = "Asia/Shanghai";
 
   services = {
-    automatic-timezoned.enable = true;
+    # conflic with time.timeZone
+    # automatic-timezoned.enable = true;
   };
 
   users.defaultUserShell = pkgs.zsh;
