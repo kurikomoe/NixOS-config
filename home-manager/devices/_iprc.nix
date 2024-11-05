@@ -20,25 +20,30 @@ in
     modules = [
       ({config, inputs, nixpkgs, lib, pkgs, ...}: let
 
-        nixup = with customVars; (pkgs.writeShellScriptBin "nixup"
-        ''
-            nix flake update --flake "$HOME/.nixos/home-manager";
-            home-manager --flake "$HOME/.nixos/home-manager#${deviceName}.${username}" switch;
-            nixdiff;
-        '');
+        shellScripts = with pkgs; [
+         (pkgs.writeShellScriptBin "nixup"
+          ''
+              nix flake update --flake "$HOME/.nixos/home-manager";
+              home-manager --flake "$HOME/.nixos/home-manager#${deviceName}.${username}" switch;
+              nixdiff;
+          '')
 
+          (pkgs.writeShellScriptBin "nixdiff"
+          ''
+            echo ======= Current Home Manager Updates ==========
+            nix store diff-closures \
+              $(find $HOME/.local/state/nix/profiles -name "home-manager-*-link" | sort | tail -n2 | head -n1) \
+              $HOME/.local/state/nix/profiles/home-manager
+            nix store diff-closures \
+              $(find $HOME/.local/state/nix/profiles -name "profile-*-link" | sort | tail -n2 | head -n1) \
+              $HOME/.local/state/nix/profiles/profile
+          '')
 
-        nixdiff = with customVars; (pkgs.writeShellScriptBin "nixdiff"
-        ''
-          echo ======= Current Home Manager Updates ==========
-          nix store diff-closures \
-            $(find $HOME/.local/state/nix/profiles -name "home-manager-*-link" | sort | tail -n2 | head -n1) \
-            $HOME/.local/state/nix/profiles/home-manager
-          nix store diff-closures \
-            $(find $HOME/.local/state/nix/profiles -name "profile-*-link" | sort | tail -n2 | head -n1) \
-            $HOME/.local/state/nix/profiles/profile
-        '');
-
+          (pkgs.writeShellScriptBin "git"
+          ''
+            fq ${pkgs.git}/bin/git $@
+          '')
+        ];
       in {
         imports = [
           ../packages/shells/fish
@@ -53,9 +58,12 @@ in
           ../packages/tools/tmux
           ../packages/tools/topgrade
           ../packages/tools/direnv.nix
-          ../packages/tools/vscode.nix
           ../packages/tools/network.nix
           ../packages/tools/others.nix
+
+          ../packages/tools/vscode.nix
+
+          ../packages/tools/proxychains.nix
 
           # ../packages/libs/others.nix
 
@@ -67,10 +75,8 @@ in
 
         home.packages = with pkgs; [
           # repos.pkgs-iprc.glibc
-          (lib.hiPrio nixup)
-          (lib.hiPrio nixdiff)
           podman
-        ];
+        ] ++ (map (e: (lib.hiPrio e)) shellScripts);
 
         # nixpkgs.overlays = [
         #   (final: prev: {
@@ -78,6 +84,7 @@ in
         #     libgcc = repos.pkgs-iprc.libgcc;
         #   })
         # ];
+
 
         home.sessionVariables = {
           PROXYSERVER = "127.0.0.1:8891";

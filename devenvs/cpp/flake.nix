@@ -36,6 +36,7 @@
       in {
         devenv.shells.default = {
           packages = with pkgs; [
+            # requirements
             pkg-config
             stdenv.cc.cc.lib
 
@@ -46,8 +47,12 @@
             # intel-isal
             nasm
 
-            just
+            # baseline test
+            rocksdb
+            redis
 
+            # tools
+            just
             hello
           ];
 
