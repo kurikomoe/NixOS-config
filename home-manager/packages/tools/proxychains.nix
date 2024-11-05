@@ -1,11 +1,16 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  proxy ? "http 127.0.0.1 8890",
+  ...
+}:
 
 let
   proxychains_ng_conf = "${config.xdg.configHome}/proxychains.conf";
 
   proxychains_ng_conf_txt = ''
     [ProxyList]
-    http 127.0.0.1 8891
+    ${proxy}
   '';
 
   fq = (pkgs.writeShellScriptBin "fq" ''

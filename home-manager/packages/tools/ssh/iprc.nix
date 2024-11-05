@@ -13,23 +13,24 @@ let
 
   age_secrets_filelist = age_helper.buildAgeSecretsFileList files;
 
+  shellScripts = with pkgs; [
+    (pkgs.writeShellScriptBin "ssh"
+    ''
+      LD_PRELOAD=/usr/lib64/libnss_ldap.so.2 \
+        ${pkgs.openssh}/bin/ssh -F ~/.ssh/config $@
+    '')
+  ];
+
   default = (import ./default.nix) inputs;
 
-  final = default // {
+in default // {
     age.secrets = age_secrets_filelist;
 
     home.packages = with pkgs; [
       autossh
-    ];
+      openssh
+    ] ++ (map (e: (lib.hiPrio e)) shellScripts);
 
-    home.shellAliases = {
-      ssh = "/usr/bin/ssh -F ~/.ssh/config";
-    };
-
-    home.sessionVariables = {
-      GIT_SSH_COMMAND="/usr/bin/ssh -F ~/.ssh/config";
-    };
-  };
-
-in final
+    home.sessionVariables = { };
+  }
 

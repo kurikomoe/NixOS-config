@@ -6,6 +6,7 @@
   repos,
   modules ? [],
   extraNixPkgsOptions ? {},
+  extraSpecialArgs ? {},
   stateVersion ? "24.05",
   ...
 }@p:
@@ -30,7 +31,7 @@ in with customVars; {
 
       # locked pkgs
       inherit repos;
-    };
+    } // extraSpecialArgs;
 
     modules = p.modules ++ [
       # -------------- load agenix secrets ----------------

@@ -17,9 +17,15 @@ in
       cudaSupport = true;
     };
 
-    modules = [
-      ({config, inputs, nixpkgs, lib, pkgs, ...}: let
+    extraSpecialArgs = {
+      # for proxychains
+      proxy="http 127.0.0.1 8891";
+    };
 
+    modules = [
+      ({config, inputs, nixpkgs, lib, pkgs, ...}:
+
+      let
         shellScripts = with pkgs; [
          (pkgs.writeShellScriptBin "nixup"
           ''
@@ -41,7 +47,9 @@ in
 
           (pkgs.writeShellScriptBin "git"
           ''
-            fq ${pkgs.git}/bin/git $@
+            LD_PRELOAD=/usr/lib64/libnss_ldap.so.2 \
+              GIT_SSH_COMMAND="${pkgs.openssh}/bin/ssh -F ~/.ssh/config" \
+              fq ${pkgs.git}/bin/git $@
           '')
         ];
       in {
@@ -66,7 +74,6 @@ in
           ../packages/tools/proxychains.nix
 
           # ../packages/libs/others.nix
-
           # ../packages/wsl
           # ../packages/libs/cuda.nix
           # ../packages/apps/podman.nix

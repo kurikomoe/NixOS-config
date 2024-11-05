@@ -9,22 +9,21 @@ in {
     wget
     curl
     htop
-    gtop
+    less
     tree
     which
+    util-linux
+    killall
+
+    gtop
     dust     # du-dust
     fd       # find
     fend
     ripgrep  # search tools
     file
 
-    util-linux
-    killall
-
     ncdu
-
     jq
-
     dos2unix
 
     asciinema # record terminal
@@ -33,6 +32,10 @@ in {
     dig
     lsof
     iftop
+    nettools
+    tcpdump
+    traceroute
+    mtr
 
     caddy
     aria2
