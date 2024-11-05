@@ -26,6 +26,19 @@ in
             home-manager --flake "$HOME/.nixos/home-manager#${deviceName}.${username}" switch;
             nixdiff;
         '');
+
+
+        nixdiff = with customVars; (pkgs.writeShellScriptBin "nixdiff"
+        ''
+          echo ======= Current Home Manager Updates ==========
+          nix store diff-closures \
+            $(find $HOME/.local/state/nix/profiles -name "home-manager-*-link" | sort | tail -n2 | head -n1) \
+            $HOME/.local/state/nix/profiles/home-manager
+          nix store diff-closures \
+            $(find $HOME/.local/state/nix/profiles -name "profile-*-link" | sort | tail -n2 | head -n1) \
+            $HOME/.local/state/nix/profiles/profile
+        '');
+
       in {
         imports = [
           ../packages/shells/fish
@@ -55,6 +68,7 @@ in
         home.packages = with pkgs; [
           # repos.pkgs-iprc.glibc
           (lib.hiPrio nixup)
+          (lib.hiPrio nixdiff)
           podman
         ];
 
