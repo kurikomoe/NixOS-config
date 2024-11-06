@@ -15,6 +15,7 @@ in {
     util-linux
     killall
 
+    glances
     gtop
     dust     # du-dust
     fd       # find
