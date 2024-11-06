@@ -84,12 +84,13 @@ p@{ config, lib, pkgs, ... }:
     nix-ld = {
       enable = true;
       libraries = with pkgs; [
-        stdenv.cc.cc
+        stdenv.cc.cc.lib
+        pkg-config
         zlib
         icu
         openssl
-        curl
-      ] ++ (pkgs.steam-run.fhsenv.args.multiPkgs pkgs);
+      # ];
+      ] ++ (pkgs.steam.args.multiPkgs pkgs);
     };
     zsh.enable = true;
     fish.enable = true;
