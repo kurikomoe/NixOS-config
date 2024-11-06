@@ -83,6 +83,9 @@ in
         home.packages = with pkgs; [
           # repos.pkgs-iprc.glibc
           podman
+
+          nss_ldap
+          nss
         ] ++ (map (e: (lib.hiPrio e)) shellScripts);
 
         # nixpkgs.overlays = [

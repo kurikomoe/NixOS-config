@@ -114,8 +114,8 @@ outputs = inputs@{ self, nixpkgs, flake-parts, ... }:
         home-manager = inputs.home-manager-unstable;
       };
       "iprc" = {
-        nixpkgs = inputs.nixpkgs-nixpkgs;
-        home-manager = inputs.home-manager-unstable;
+        nixpkgs = inputs.nixpkgs;
+        home-manager = inputs.home-manager;
       };
     };
 
