@@ -45,5 +45,12 @@ in {
     devenv
     direnv
     cachix
+
+    gdb
   ];
+
+  xdg.configFile."gdb/gdbinit".text = ''
+    set debuginfod enabled on
+    set auto-load safe-path /
+  '';
 }
