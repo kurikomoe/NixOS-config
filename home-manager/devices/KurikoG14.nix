@@ -51,10 +51,14 @@ in
 
           # ../packages/apps/podman.nix
           ../packages/apps/db/mongodb.nix
+
+          ../packages/gui/fonts.nix
+          ../packages/gui/browsers
+          ../packages/gui/jetbrains.nix
         ];
 
         home.packages = with pkgs; [
-          # repos.pkgs-unstable.zed-editor
+          # Test gui
           xorg.xeyes
         ];
       })

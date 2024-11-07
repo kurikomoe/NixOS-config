@@ -13,7 +13,7 @@
     ./topgrade
 
     ./direnv.nix
-    ./vscode.nix
+    ./vscode-server.nix
 
     ./network.nix
 

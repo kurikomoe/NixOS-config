@@ -1,0 +1,8 @@
+{ ... }:
+
+{
+  imports = [
+    ./edge.nix
+    ./firefox
+  ];
+}
