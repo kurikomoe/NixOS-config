@@ -69,7 +69,7 @@ in
           ../packages/tools/network.nix
           ../packages/tools/others.nix
 
-          ../packages/tools/vscode.nix
+          ../packages/tools/vscode-server.nix
 
           ../packages/tools/proxychains.nix
 
