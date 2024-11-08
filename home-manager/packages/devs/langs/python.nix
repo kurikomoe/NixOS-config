@@ -19,6 +19,8 @@ in {
     pylint
 
     (python3.withPackages (py-pkgs: with py-pkgs; [
+      pexpect
+
       xlsxwriter
       python-docx
       pyyaml
