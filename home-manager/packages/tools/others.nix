@@ -15,6 +15,11 @@ in {
     util-linux
     killall
 
+    # hardwares
+    pciutils
+    usbutils
+    ethtool
+
     glances
     gtop
     dust     # du-dust
