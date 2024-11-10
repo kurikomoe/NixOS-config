@@ -63,6 +63,7 @@ in with customVars; {
         nix.package = pkgs.nix;
         nix.settings = lib.recursiveUpdate utils._commonNixPkgsConfig.settings {
           trusted-users = [ username ];
+          sandbox = true;
         };
 
         nix.gc = lib.mkDefault {
