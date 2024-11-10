@@ -1,4 +1,4 @@
-p@{ inputs, pkgs, ... }:
+p@{ inputs, pkgs, root, ... }:
 
 {
   imports = [
@@ -6,7 +6,9 @@ p@{ inputs, pkgs, ... }:
   ];
 
   home.packages = with pkgs; [
-    devcontainer
+    # wait for fix
+    # devcontainer
+    (pkgs.callPackage "${root}/packages/customs/devcontainer.nix" {})
   ];
 
   services.vscode-server = {
