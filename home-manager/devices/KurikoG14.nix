@@ -60,6 +60,8 @@ in
         home.packages = with pkgs; [
           # Test gui
           xorg.xeyes
+          mesa-demos
+          vulkan-tools
         ];
       })
     ];

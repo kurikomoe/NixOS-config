@@ -12,7 +12,7 @@ p@{ inputs, pkgs, root, ... }:
   ];
 
   services.vscode-server = {
-    enableFHS = false;
+    # enableFHS = false;
     enable = true;
   };
 }

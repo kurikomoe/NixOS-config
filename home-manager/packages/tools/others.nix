@@ -20,6 +20,8 @@ in {
     usbutils
     ethtool
 
+    kmod
+
     glances
     gtop
     dust     # du-dust
@@ -27,6 +29,9 @@ in {
     fend
     ripgrep  # search tools
     file
+    mlocate
+
+    libva-utils
 
     ncdu
     jq

@@ -2,8 +2,29 @@
 # and may be overwritten by future invocations.  Please make changes
 # to /etc/nixos/configuration.nix instead.
 { config, lib, pkgs, modulesPath, ... }:
-
-{
+let
+  mesa_new = pkgs.mesa;
+  # mesa_new = pkgs.mesa.overrideAttrs (oldAttrs: {
+  #   haveDozen = true;
+  #   mesonFlags = oldAttrs.mesonFlags ++ [
+  #     (lib.mesonOption "gallium-drivers" (lib.concatStringsSep "," [
+  #       "d3d12" # WSL emulated GPU (aka Dozen)
+  #       "nouveau" # Nvidia
+  #       "radeonsi" # new AMD (GCN+)
+  #       "swrast" # software renderer (aka LLVMPipe)
+  #       "svga" # VMWare virtualized GPU
+  #       "virgl" # QEMU virtualized GPU (aka VirGL)
+  #       "zink" # generic OpenGL over Vulkan, experimental
+  #     ]))
+  #     (lib.mesonOption "vulkan-drivers" (lib.concatStringsSep "," [
+  #       "amd" # AMD (aka RADV)
+  #       "microsoft-experimental" # WSL virtualized GPU (aka DZN/Dozen)
+  #       "nouveau" # Nouveau (aka NVK)
+  #       "swrast" # software renderer (aka Lavapipe)
+  #     ]))
+  #   ];
+  # });
+in {
   imports = [ ];
 
   boot.initrd.availableKernelModules = [ ];
@@ -25,15 +46,25 @@
     # };
   };
 
-  hardware.graphics = {
-    enable = true;
-    extraPackages = with pkgs; [
-      ocl-icd
-      intel-ocl
-      intel-compute-runtime
-      # (lib.LowPrio khronos-ocl-icd-loader)
-    ];
-  };
+  # hardware.graphics = {
+  #   enable = true;
+  #   extraPackages = with pkgs; [
+  #     # mesa_new.drivers
+  #
+  #     # nvidia-vaapi-driver
+  #     # intel-vaapi-driver
+  #     # amdvlk
+  #     #
+  #     # khronos-ocl-icd-loader
+  #     # intel-ocl
+  #     # intel-compute-runtime
+  #     # vaapiIntel
+  #     # vaapiVdpau
+  #     # libvdpau-va-gl
+  #
+  #     # ocl-icd
+  #   ];
+  # };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }

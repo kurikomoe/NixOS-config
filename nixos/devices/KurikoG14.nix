@@ -40,7 +40,14 @@ in
           wsl.wslConf.user.default = username;
       }
 
-      ({ pkgs, ... }: {
+      ({ pkgs, lib, ... }: let
+        # mesa_new = pkgs.mesa.overrideAttrs (oldAttrs: rec {
+        #   mesonFlags = oldAttrs.mesonFlags ++ [
+        #     (lib.mesonEnable "gallium-va" true)
+        #     (lib.mesonEnable "microsoft-clc" true)
+        #   ];
+        # });
+      in {
         users.defaultUserShell = pkgs.zsh;
 
         users.users.${username} = {
@@ -53,16 +60,14 @@ in
 
         environment.variables = {
           LD_LIBRARY_PATH = "/usr/lib/wsl/lib";
+          MESA_D3D12_DEFAULT_ADAPTER_NAME = "NVIDIA";
         };
 
         environment.systemPackages = with pkgs; [
           sshfs
           steam-run
 
-          khronos-ocl-icd-loader
-          ocl-icd
-          intel-ocl
-          intel-compute-runtime
+          libva
 
           # docker
           dive # look into docker image layers
