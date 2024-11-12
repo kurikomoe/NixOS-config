@@ -4,14 +4,17 @@
     pwndbg.url = "github:pwndbg/pwndbg";
   };
 
-  outputs = inputs@{ flake-parts, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; } {
+  outputs = inputs @ {flake-parts, ...}:
+    flake-parts.lib.mkFlake {inherit inputs;} {
       inputs = [
-
       ];
 
-      perSystem = { inputs', pkgs, system, ... }: {
-
+      perSystem = {
+        inputs',
+        pkgs,
+        system,
+        ...
+      }: {
       };
     };
 }

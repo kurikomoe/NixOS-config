@@ -18,21 +18,26 @@
     extra-substituters = "https://devenv.cachix.org";
   };
 
-  outputs = inputs@{ flake-parts, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; } {
+  outputs = inputs @ {flake-parts, ...}:
+    flake-parts.lib.mkFlake {inherit inputs;} {
       imports = [
         inputs.devenv.flakeModule
       ];
 
-      systems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin" ];
+      systems = ["x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin"];
 
-      perSystem = { config, self', inputs', system, ... }: let
+      perSystem = {
+        config,
+        self',
+        inputs',
+        system,
+        ...
+      }: let
         pkgs = import inputs.nixpkgs {
           inherit system;
           config.allowUnfree = true;
-          overlays = [ ];
+          overlays = [];
         };
-
       in {
         devenv.shells.default = {
           packages = with pkgs; [
@@ -45,12 +50,11 @@
 
           processes.hello.exec = "hello";
 
-          pre-commit.hooks = { };
+          pre-commit.hooks = {};
           cachix.push = "kurikomoe";
         };
-
       };
 
-      flake = { };
+      flake = {};
     };
 }

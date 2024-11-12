@@ -13,47 +13,50 @@
     extra-substituters = "https://devenv.cachix.org";
   };
 
-  outputs = { self, nixpkgs, devenv, systems, ... } @ inputs:
-    let
-      forEachSystem = nixpkgs.lib.genAttrs (import systems);
-    in
-    {
-      packages = forEachSystem (system: {
-        devenv-up = self.devShells.${system}.default.config.procfileScript;
-      });
+  outputs = {
+    self,
+    nixpkgs,
+    devenv,
+    systems,
+    ...
+  } @ inputs: let
+    forEachSystem = nixpkgs.lib.genAttrs (import systems);
+  in {
+    packages = forEachSystem (system: {
+      devenv-up = self.devShells.${system}.default.config.procfileScript;
+    });
 
-      devShells = forEachSystem
-        (system:
-          let
-            pkgs = nixpkgs.legacyPackages.${system};
-          in
-          {
-            default = devenv.lib.mkShell {
-              inherit inputs pkgs;
-              modules = [
-                {
-                  packages = with pkgs; [
-                    hello
-                  ];
-
-                  languages.javascript = {
-                    enable = true;
-                    bun.enable = true;
-                  };
-
-                  languages.python = {
-                    enable = true;
-                    poetry.enable = true;
-                  };
-
-                  enterShell = ''
-                    hello
-                  '';
-
-                  processes.hello.exec = "hello";
-                }
+    devShells =
+      forEachSystem
+      (system: let
+        pkgs = nixpkgs.legacyPackages.${system};
+      in {
+        default = devenv.lib.mkShell {
+          inherit inputs pkgs;
+          modules = [
+            {
+              packages = with pkgs; [
+                hello
               ];
-            };
-          });
-    };
+
+              languages.javascript = {
+                enable = true;
+                bun.enable = true;
+              };
+
+              languages.python = {
+                enable = true;
+                poetry.enable = true;
+              };
+
+              enterShell = ''
+                hello
+              '';
+
+              processes.hello.exec = "hello";
+            }
+          ];
+        };
+      });
+  };
 }

@@ -1,8 +1,7 @@
-inputs@{
-  system ? "x86_64-linux",
+{
+  system,
   ...
-}:
-let
+}: let
   _commonNixPkgsConfig = {
     allowUnfree = true;
     settings = rec {
@@ -22,12 +21,14 @@ let
     };
   };
 
-  customNixPkgsImport = pkgSrc: extraConfig: import pkgSrc {
-    system = system;
-    config = _commonNixPkgsConfig;
-  } // extraConfig;
+  customNixPkgsImport = pkgSrc: extraConfig:
+    import pkgSrc {
+      system = system;
+      config = _commonNixPkgsConfig;
+    }
+    // extraConfig;
 
-in
-{
-  inherit customNixPkgsImport _commonNixPkgsConfig;
+  buildImports = root: xs: builtins.map (x: "${root}/${x}") xs;
+in {
+  inherit customNixPkgsImport _commonNixPkgsConfig buildImports;
 }

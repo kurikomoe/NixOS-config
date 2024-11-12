@@ -14,18 +14,23 @@
     extra-substituters = "https://devenv.cachix.org";
   };
 
-  outputs = { self, nixpkgs, devenv, systems, ... } @ inputs:
-    let
-      forEachSystem = nixpkgs.lib.genAttrs (import systems);
-    in
-    {
-      packages = forEachSystem (system: {
-        devenv-up = self.devShells.${system}.default.config.procfileScript;
+  outputs = {
+    self,
+    nixpkgs,
+    devenv,
+    systems,
+    ...
+  } @ inputs: let
+    forEachSystem = nixpkgs.lib.genAttrs (import systems);
+  in {
+    packages = forEachSystem (system: {
+      devenv-up = self.devShells.${system}.default.config.procfileScript;
 
-        helloworld = let
-            pkgs = nixpkgs.legacyPackages.${system};
-            lib = pkgs.lib;
-        in pkgs.stdenv.mkDerivation rec {
+      helloworld = let
+        pkgs = nixpkgs.legacyPackages.${system};
+        lib = pkgs.lib;
+      in
+        pkgs.stdenv.mkDerivation rec {
           pname = "helloworld";
           version = "1.0";
 
@@ -33,8 +38,8 @@
 
           # essential for build time
           env = {
-            DOTNET_ROOT="${pkgs.dotnetCorePackages.sdk_9_0}";
-            LD_LIBRARY_PATH="${lib.makeLibraryPath [ pkgs.icu ]}";
+            DOTNET_ROOT = "${pkgs.dotnetCorePackages.sdk_9_0}";
+            LD_LIBRARY_PATH = "${lib.makeLibraryPath [pkgs.icu]}";
           };
 
           # on build machine
@@ -72,43 +77,41 @@
             mainProgram = "helloworld";
           };
         };
-      });
+    });
 
-
-      devShells = forEachSystem
-        (system:
-          let
-            pkgs = nixpkgs.legacyPackages.${system};
-          in
-          {
-            default = devenv.lib.mkShell {
-              inherit inputs pkgs;
-              modules = [
-                {
-                  # https://devenv.sh/reference/options/
-                  packages = with pkgs; [
-                    hello
-                    clang
-                    zlib
-                  ];
-
-                  languages.dotnet = {
-                    enable = true;
-                    package = pkgs.dotnetCorePackages.sdk_9_0;
-                  };
-
-                  enterShell = ''
-                    hello
-                  '';
-
-                  processes.hello.exec = "hello";
-
-                  scripts.pack.exec = ''
-                    nix bundle --bundler github:ralismark/nix-appimage  .#helloworld --option sandbox false
-                  '';
-                }
+    devShells =
+      forEachSystem
+      (system: let
+        pkgs = nixpkgs.legacyPackages.${system};
+      in {
+        default = devenv.lib.mkShell {
+          inherit inputs pkgs;
+          modules = [
+            {
+              # https://devenv.sh/reference/options/
+              packages = with pkgs; [
+                hello
+                clang
+                zlib
               ];
-            };
-          });
-    };
+
+              languages.dotnet = {
+                enable = true;
+                package = pkgs.dotnetCorePackages.sdk_9_0;
+              };
+
+              enterShell = ''
+                hello
+              '';
+
+              processes.hello.exec = "hello";
+
+              scripts.pack.exec = ''
+                nix bundle --bundler github:ralismark/nix-appimage  .#helloworld --option sandbox false
+              '';
+            }
+          ];
+        };
+      });
+  };
 }

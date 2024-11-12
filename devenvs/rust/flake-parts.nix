@@ -18,9 +18,14 @@
     };
   };
 
-  outputs = inputs@{ self, flake-parts, nixpkgs, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; } {
-      flake = { };
+  outputs = inputs @ {
+    self,
+    flake-parts,
+    nixpkgs,
+    ...
+  }:
+    flake-parts.lib.mkFlake {inherit inputs;} {
+      flake = {};
 
       imports = [
         inputs.flake-root.flakeModule
@@ -28,28 +33,32 @@
         inputs.process-compose-flake.flakeModule
       ];
 
-      systems = [ "x86_64-linux" ];
+      systems = ["x86_64-linux"];
 
-      perSystem = { config, system, ... }: let
-        pkgs = (import nixpkgs {
+      perSystem = {
+        config,
+        system,
+        ...
+      }: let
+        pkgs = import nixpkgs {
           inherit system;
           overlays = [
             inputs.fenix.overlays.default
           ];
-        });
+        };
         lib = pkgs.lib;
 
         pkgs-static = pkgs.pkgsStatic;
 
         RUST_TARGET = "x86_64-unknown-linux-musl";
 
-        toolchain = (with pkgs.fenix; combine [
-          stable.rustc
-          stable.cargo
-          pkgs.fenix.targets.${RUST_TARGET}.stable.rust-std
-          pkgs.fenix.targets."x86_64-unknown-linux-gnu".stable.rust-std
-        ]);
-
+        toolchain = with pkgs.fenix;
+          combine [
+            stable.rustc
+            stable.cargo
+            pkgs.fenix.targets.${RUST_TARGET}.stable.rust-std
+            pkgs.fenix.targets."x86_64-unknown-linux-gnu".stable.rust-std
+          ];
       in {
         packages = rec {
           release = pkgs-static.rustPlatform.buildRustPackage rec {
@@ -59,7 +68,7 @@
 
             env = {
               inherit RUST_TARGET;
-              PKG_CONFIG_PATH="${pkgs-static.openssl.dev}/lib/pkgconfig";
+              PKG_CONFIG_PATH = "${pkgs-static.openssl.dev}/lib/pkgconfig";
             };
 
             nativeBuildInputs = with pkgs-static; [
@@ -76,51 +85,52 @@
             doCheck = false;
             buildType = "debug";
           });
-      };
+        };
 
-      devShells.default = pkgs-static.mkShell {
-        inputsFrom = [ config.mission-control.devShell ];
+        devShells.default = pkgs-static.mkShell {
+          inputsFrom = [config.mission-control.devShell];
 
-        inherit RUST_TARGET;
+          inherit RUST_TARGET;
 
-        CARGO_TARGET_X86_64_UNKNOWN_LINUX_MUSL_LINKER="${RUST_TARGET}-gcc";
+          CARGO_TARGET_X86_64_UNKNOWN_LINUX_MUSL_LINKER = "${RUST_TARGET}-gcc";
 
-        shellHook = ''
-        '';
-
-        buildInputs = [
-
-        ];
-
-        packages = with pkgs-static; [
-          openssl
-          pkg-config
-          musl
-          toolchain
-        ] ++ (with pkgs; [
-          # cargo-zigbuild
-        ]);
-      };
-
-      mission-control.scripts = {
-        build.exec = "cargo build --target=${RUST_TARGET};";
-        run.exec = "cargo run --target=${RUST_TARGET}";
-      };
-
-      process-compose.default = {
-        imports = [
-           inputs.services-flake.processComposeModules.default
-        ];
-
-        processes = {
-          ponysay.command = ''
-            while true; do
-              ${lib.getExe pkgs.ponysay} "Enjoy our sqlite-web demo!"
-              sleep 2
-            done
+          shellHook = ''
           '';
+
+          buildInputs = [
+          ];
+
+          packages = with pkgs-static;
+            [
+              openssl
+              pkg-config
+              musl
+              toolchain
+            ]
+            ++ (with pkgs; [
+              # cargo-zigbuild
+            ]);
+        };
+
+        mission-control.scripts = {
+          build.exec = "cargo build --target=${RUST_TARGET};";
+          run.exec = "cargo run --target=${RUST_TARGET}";
+        };
+
+        process-compose.default = {
+          imports = [
+            inputs.services-flake.processComposeModules.default
+          ];
+
+          processes = {
+            ponysay.command = ''
+              while true; do
+                ${lib.getExe pkgs.ponysay} "Enjoy our sqlite-web demo!"
+                sleep 2
+              done
+            '';
+          };
         };
       };
     };
-  };
 }

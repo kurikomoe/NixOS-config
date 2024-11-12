@@ -9,7 +9,7 @@
     devenv.inputs.nixpkgs.follows = "nixpkgs";
 
     nixpkgs-python.url = "github:cachix/nixpkgs-python";
-    nixpkgs-python.inputs = { nixpkgs.follows = "nixpkgs"; };
+    nixpkgs-python.inputs = {nixpkgs.follows = "nixpkgs";};
   };
 
   nixConfig = {
@@ -17,63 +17,66 @@
     extra-substituters = "https://devenv.cachix.org";
   };
 
-  outputs = { self, nixpkgs, devenv, systems, ... } @ inputs:
-    let
-      forEachSystem = nixpkgs.lib.genAttrs (import systems);
-    in
-    {
-      packages = forEachSystem (system: {
-        devenv-up = self.devShells.${system}.default.config.procfileScript;
-      });
+  outputs = {
+    self,
+    nixpkgs,
+    devenv,
+    systems,
+    ...
+  } @ inputs: let
+    forEachSystem = nixpkgs.lib.genAttrs (import systems);
+  in {
+    packages = forEachSystem (system: {
+      devenv-up = self.devShells.${system}.default.config.procfileScript;
+    });
 
-      devShells = forEachSystem (system:
-        let
-          pkgs = import nixpkgs {
-            inherit system;
-            config = {
-              allowUnfree = true;
-              # cudaSupport = true;
-              # cudnnSupport = true;
-            };
+    devShells = forEachSystem (
+      system: let
+        pkgs = import nixpkgs {
+          inherit system;
+          config = {
+            allowUnfree = true;
+            # cudaSupport = true;
+            # cudnnSupport = true;
           };
+        };
 
-          pkgs-nixos = import inputs.nixpkgs-nixos {
-            inherit system;
-            config = {
-              allowUnfree = true;
-              # cudaSupport = true;
-              # cudnnSupport = true;
-            };
+        pkgs-nixos = import inputs.nixpkgs-nixos {
+          inherit system;
+          config = {
+            allowUnfree = true;
+            # cudaSupport = true;
+            # cudnnSupport = true;
           };
-        in
-        {
-          default = devenv.lib.mkShell {
-            inherit inputs pkgs;
-            modules = [
-              {
-                # https://devenv.sh/reference/options/
-                packages = with pkgs; [
-                  hello
-                ];
+        };
+      in {
+        default = devenv.lib.mkShell {
+          inherit inputs pkgs;
+          modules = [
+            {
+              # https://devenv.sh/reference/options/
+              packages = with pkgs; [
+                hello
+              ];
 
-                enterShell = ''
-                  export BLUEARCHIVE=true;
-                  export LD_LIBRARY_PATH="${pkgs.stdenv.cc.cc.lib}/lib/"
-                '';
+              enterShell = ''
+                export BLUEARCHIVE=true;
+                export LD_LIBRARY_PATH="${pkgs.stdenv.cc.cc.lib}/lib/"
+              '';
 
-                languages.python = {
+              languages.python = {
+                enable = true;
+                package = pkgs.python3;
+                poetry = {
                   enable = true;
-                  package = pkgs.python3;
-                  poetry = {
-                    enable = true;
-                    activate.enable = true;
-                    install.enable = true;
-                  };
+                  activate.enable = true;
+                  install.enable = true;
                 };
-              }
-            ];
-          };
-        }
-      );
-    };
+              };
+            }
+          ];
+        };
+      }
+    );
+  };
 }

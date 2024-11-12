@@ -14,108 +14,119 @@
     extra-substituters = "https://devenv.cachix.org";
   };
 
-  outputs = { self, nixpkgs, devenv, flake-parts, ... } @ inputs:
+  outputs = {
+    self,
+    nixpkgs,
+    devenv,
+    flake-parts,
+    ...
+  } @ inputs:
+    flake-parts.lib.mkFlake {inherit inputs;} {
+      imports = [
+        inputs.devenv.flakeModule
+      ];
 
-  flake-parts.lib.mkFlake { inherit inputs; } {
-    imports = [
-      inputs.devenv.flakeModule
-    ];
+      systems = nixpkgs.lib.systems.flakeExposed;
 
-    systems = nixpkgs.lib.systems.flakeExposed;
+      perSystem = {
+        config,
+        self',
+        inputs',
+        pkgs,
+        system,
+        ...
+      }: let
+        pkgs = nixpkgs.legacyPackages.${system};
+        lib = pkgs.lib;
 
-    perSystem = {config, self', inputs', pkgs, system, ... }:
-    let
-      pkgs = nixpkgs.legacyPackages.${system};
-      lib = pkgs.lib;
+        dotnet_runtime = pkgs.dotnetCorePackages.dotnet_9.runtime;
+        dotnet_sdk = pkgs.dotnetCorePackages.dotnet_9.sdk;
 
-      dotnet_runtime = pkgs.dotnetCorePackages.dotnet_9.runtime;
-      dotnet_sdk = pkgs.dotnetCorePackages.dotnet_9.sdk;
+        name = "helloworld";
+      in {
+        packages = {
+          devenv-up = self.devShells.${system}.default.config.procfileScript;
 
-      name = "helloworld";
-    in {
-      packages = {
-        devenv-up = self.devShells.${system}.default.config.procfileScript;
+          default = pkgs.stdenv.mkDerivation rec {
+            inherit name;
+            pname = name;
 
-        default = pkgs.stdenv.mkDerivation rec {
-          inherit name;
-          pname = name;
+            version = "1.0";
 
-          version = "1.0";
+            src = ./.;
 
-          src = ./.;
-
-          # essential for build time
-          env = {
-            DOTNET_ROOT="${dotnet_sdk}";
-            LD_LIBRARY_PATH="${lib.makeLibraryPath [ pkgs.icu ]}";
-          };
-
-          # on build machine
-          nativeBuildInputs = with pkgs; [ ];
-
-          # packed into appimage
-          propagatedBuildInputs = with pkgs; [
-            icu
-          ];
-
-          # build time deps
-          buildInputs = with pkgs; [
-            dotnet_sdk
-            clang
-            zlib
-            icu
-          ];
-
-          buildPhase = ''
-            mkdir -p $out/bin/dotnet
-            dotnet publish -c Release
-          '';
-
-          installPhase = ''
-            install -Dm755 bin/Release/net9.0/linux-x64/publish/* $out/bin
-          '';
-
-          postFixup = ''
-            patchelf \
-              --set-rpath ${lib.makeLibraryPath propagatedBuildInputs} \
-              $out/bin/${name}
-          '';
-
-          meta = {
-            mainProgram = name;
-          };
-        };
-      };
-
-      devShells.default = devenv.lib.mkShell {
-        inherit inputs pkgs;
-        modules = [
-          {
-            # https://devenv.sh/reference/options/
-            packages = with pkgs; [
-              hello
-              clang
-              zlib
-            ];
-
-            languages.dotnet = {
-              enable = true;
-              package = dotnet_sdk;
+            # essential for build time
+            env = {
+              DOTNET_ROOT = "${dotnet_sdk}";
+              LD_LIBRARY_PATH = "${lib.makeLibraryPath [pkgs.icu]}";
             };
 
-            enterShell = ''
-              hello
+            # on build machine
+            nativeBuildInputs = with pkgs; [];
+
+            # packed into appimage
+            propagatedBuildInputs = with pkgs; [
+              icu
+            ];
+
+            # build time deps
+            buildInputs = with pkgs; [
+              dotnet_sdk
+              clang
+              zlib
+              icu
+            ];
+
+            buildPhase = ''
+              mkdir -p $out/bin/dotnet
+              dotnet publish -c Release
             '';
 
-            processes.hello.exec = "hello";
-
-            scripts.pack.exec = ''
-              echo sandbox is disabled for nupkg to update;
-              nix bundle --bundler github:ralismark/nix-appimage --option sandbox false;
+            installPhase = ''
+              install -Dm755 bin/Release/net9.0/linux-x64/publish/* $out/bin
             '';
-          }
-        ];
+
+            postFixup = ''
+              patchelf \
+                --set-rpath ${lib.makeLibraryPath propagatedBuildInputs} \
+                $out/bin/${name}
+            '';
+
+            meta = {
+              mainProgram = name;
+            };
+          };
+        };
+
+        devShells.default = devenv.lib.mkShell {
+          inherit inputs pkgs;
+          modules = [
+            {
+              # https://devenv.sh/reference/options/
+              packages = with pkgs; [
+                hello
+                clang
+                zlib
+              ];
+
+              languages.dotnet = {
+                enable = true;
+                package = dotnet_sdk;
+              };
+
+              enterShell = ''
+                hello
+              '';
+
+              processes.hello.exec = "hello";
+
+              scripts.pack.exec = ''
+                echo sandbox is disabled for nupkg to update;
+                nix bundle --bundler github:ralismark/nix-appimage --option sandbox false;
+              '';
+            }
+          ];
+        };
       };
     };
-  };
 }
