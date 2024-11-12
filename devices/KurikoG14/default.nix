@@ -68,7 +68,9 @@ in
             "./gui/browsers"
             "./gui/jetbrains.nix"
 
-            # "${root.hm-pkgs}/apps/podman.nix"
+            # "./apps/podman.nix"
+          ] ++ [
+
           ];
 
           home.packages = with pkgs; [

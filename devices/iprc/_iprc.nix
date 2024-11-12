@@ -76,7 +76,9 @@ in
               '')
           ];
         in {
-          imports = utils.buildImports root.hm-pkgs [
+          imports = [
+
+          ] ++ utils.buildImports root.hm-pkgs [
             "./shells/fish"
 
             "./devs/common.nix"

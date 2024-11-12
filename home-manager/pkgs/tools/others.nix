@@ -42,6 +42,8 @@ in {
     # network
     dig
     lsof
+    lshw
+    hwloc
     iftop
     nettools
     tcpdump
