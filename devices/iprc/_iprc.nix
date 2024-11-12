@@ -1,10 +1,16 @@
 # Partial iprc setup without sensitive infos
-{ inputs, root, allRepos, versionMap, customVars, ...  }:
-let
+{
+  inputs,
+  root,
+  allRepos,
+  versionMap,
+  customVars,
+  ...
+}: let
   # -------------- custom variables --------------------
   system = "x86_64-linux";
 
-  utils = import "${root.base}/common/utils.nix" {inherit system; };
+  utils = import "${root.base}/common/utils.nix" {inherit system;};
   repos = allRepos.${system};
 
   # =========== change this to switch version ===========
@@ -76,34 +82,35 @@ in
               '')
           ];
         in {
-          imports = [
+          imports =
+            [
+            ]
+            ++ utils.buildImports root.hm-pkgs [
+              "./shells/fish"
 
-          ] ++ utils.buildImports root.hm-pkgs [
-            "./shells/fish"
+              "./devs/common.nix"
+              "./devs/langs"
 
-            "./devs/common.nix"
-            "./devs/langs"
+              "./tools/ssh/iprc.nix"
+              "./tools/git"
+              "./tools/gnupg.nix"
+              "./tools/vim"
+              "./tools/tmux"
+              "./tools/topgrade"
+              "./tools/direnv.nix"
+              "./tools/network.nix"
+              "./tools/others.nix"
 
-            "./tools/ssh/iprc.nix"
-            "./tools/git"
-            "./tools/gnupg.nix"
-            "./tools/vim"
-            "./tools/tmux"
-            "./tools/topgrade"
-            "./tools/direnv.nix"
-            "./tools/network.nix"
-            "./tools/others.nix"
+              "./tools/vscode-server.nix"
 
-            "./tools/vscode-server.nix"
+              "./tools/proxychains.nix"
 
-            "./tools/proxychains.nix"
-
-            # ./libs/others.nix
-            # ./wsl
-            # ./libs/cuda.nix
-            # ./apps/podman.nix
-            # ./apps/db/mongodb.nix
-          ];
+              # ./libs/others.nix
+              # ./wsl
+              # ./libs/cuda.nix
+              # ./apps/podman.nix
+              # ./apps/db/mongodb.nix
+            ];
 
           home.packages = with pkgs;
             [

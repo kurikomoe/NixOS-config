@@ -26,6 +26,10 @@ in {
     # debugger
     gdb
 
+    # bug finder
+    valgrind
+    flawfinder
+
     # libs
     vcpkg
     boost

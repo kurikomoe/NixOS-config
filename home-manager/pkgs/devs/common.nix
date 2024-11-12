@@ -10,6 +10,7 @@ in {
     # "${root.hm-pkgs}/libs/musl.nix"
 
     ./buildsystems.nix
+    ./tools.nix
     # ./frameworks/tauri.nix
   ];
 

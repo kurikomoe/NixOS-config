@@ -1,6 +1,7 @@
 {
   config,
   inputs,
+  customVars,
   lib,
   root,
   pkgs,

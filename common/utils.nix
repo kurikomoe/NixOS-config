@@ -1,7 +1,4 @@
-{
-  system,
-  ...
-}: let
+{system, ...}: let
   _commonNixPkgsConfig = {
     allowUnfree = true;
     settings = rec {

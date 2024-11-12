@@ -26,6 +26,7 @@ in {
   home.packages = with pkgs; [
     # replace vanilla autojump with autojump-rs
     (lib.hiPrio autojump-rs)
+    fzf
   ];
 
   home.sessionPath = [

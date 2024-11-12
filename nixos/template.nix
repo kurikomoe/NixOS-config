@@ -7,7 +7,7 @@ p @ {
   ...
 }: let
   system = customVars.system;
-  utils = import "${root.base}/common/utils.nix" { inherit system; };
+  utils = import "${root.base}/common/utils.nix" {inherit system;};
 in
   with customVars; {
     specialArgs =
@@ -30,11 +30,12 @@ in
 
           nix = {
             package = pkgs.nix;
-            settings = utils._commonNixPkgsConfig.settings // {
-              trusted-users = [username];
-            };
+            settings =
+              utils._commonNixPkgsConfig.settings
+              // {
+                trusted-users = [username];
+              };
           };
-
 
           environment.systemPackages = with pkgs; [
             openssl

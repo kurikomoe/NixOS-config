@@ -58,7 +58,7 @@ in {
     # MESA_D3D12_DEFAULT_ADAPTER_NAME = "NVIDIA";
   };
 
-  environment.systemPackages = with pkgs; [ ];
+  environment.systemPackages = with pkgs; [];
 
   # wsl-utils enables this automatically
   # hardware.graphics = {

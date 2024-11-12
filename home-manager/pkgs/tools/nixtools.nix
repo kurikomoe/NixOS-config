@@ -12,8 +12,9 @@
     (pkgs.writeShellScriptBin "nixup" ''
       nix flake update --flake "$HOME/.nixos";
 
+      sudo nixos-rebuild --flake "$HOME/.nixos#${hostName}" dry-build;
       sudo nixos-rebuild --flake "$HOME/.nixos#${hostName}" switch;
-      home-manager --flake "$HOME/.nixos#${username}@${hostName}" switch;
+      # home-manager --flake "$HOME/.nixos#${username}@${hostName}" switch;
 
       nixdiff;
     '')

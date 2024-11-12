@@ -11,7 +11,7 @@
   ...
 } @ p: let
   system = customVars.system;
-  utils = import "${root.base}/common/utils.nix" { inherit system; };
+  utils = import "${root.base}/common/utils.nix" {inherit system;};
 in
   with customVars; {
     inherit pkgs;
@@ -52,15 +52,16 @@ in
           ];
 
           home.stateVersion = stateVersion;
-          home.username = username;
-          home.homeDirectory = homeDirectory;
+
+          home.username = lib.mkDefault username;
+          home.homeDirectory = lib.mkDefault homeDirectory;
 
           news = {
             display = "show";
           };
 
           nix = {
-            package = pkgs.nix;
+            package = lib.mkDefault pkgs.nix;
             gc = lib.mkDefault {
               automatic = true;
               frequency = "weekly";
