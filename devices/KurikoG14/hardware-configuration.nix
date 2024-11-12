@@ -8,7 +8,7 @@
   modulesPath,
   ...
 }: let
-  mesa_new = pkgs.mesa;
+  # mesa_new = pkgs.mesa;
   # mesa_new = pkgs.mesa.overrideAttrs (oldAttrs: {
   #   haveDozen = true;
   #   mesonFlags = oldAttrs.mesonFlags ++ [
@@ -51,15 +51,26 @@ in {
     # };
   };
 
+  environment.variables = {
+    # WSL libs need to find stdc++.so.6 and libssl.so to work
+    LD_LIBRARY_PATH = "/usr/lib/wsl/lib:${pkgs.stdenv.cc.cc.lib}/lib/:${pkgs.openssl.out}/lib";
+
+    # MESA_D3D12_DEFAULT_ADAPTER_NAME = "NVIDIA";
+  };
+
+  environment.systemPackages = with pkgs; [ ];
+
+  # wsl-utils enables this automatically
   # hardware.graphics = {
-  #   enable = true;
+  #   enable = false;
   #   extraPackages = with pkgs; [
-  #     # mesa_new.drivers
+  #     # mesa.drivers
+  #     # rocmPackages.clr.icd
   #
   #     # nvidia-vaapi-driver
   #     # intel-vaapi-driver
   #     # amdvlk
-  #     #
+  #
   #     # khronos-ocl-icd-loader
   #     # intel-ocl
   #     # intel-compute-runtime
