@@ -94,22 +94,24 @@
       ./configuration.nix
 
       # Also import home here
-      {
-        imports = [
-          home-manager.nixosModules.home-manager
-        ];
-
-        home-manager = {
-          # useGlobalPkgs = true;
-          # useUserPackages = true;
-
-          extraSpecialArgs = hm-template.extraSpecialArgs;
-
-          users.${username} = {
-            imports = hm-template.modules;
-          };
-        };
-      }
+      # No! this will cause problems:
+      # https://www.reddit.com/r/NixOS/comments/112ekgm/comment/j8jngb3/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+      # {
+      #   imports = [
+      #     home-manager.nixosModules.home-manager
+      #   ];
+      #
+      #   home-manager = {
+      #     # useGlobalPkgs = true;
+      #     # useUserPackages = true;
+      #
+      #     extraSpecialArgs = hm-template.extraSpecialArgs;
+      #
+      #     users.${username} = {
+      #       imports = hm-template.modules;
+      #     };
+      #   };
+      # }
 
       inputs.nixos-wsl.nixosModules.default {
         system.stateVersion = "24.05";
