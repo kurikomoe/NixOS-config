@@ -1,5 +1,5 @@
 # Partial iprc setup without sensitive infos
-{ inputs, root, allRepos, versionMap, cusomVars, ...  }:
+{ inputs, root, allRepos, versionMap, customVars, ...  }:
 let
   # -------------- custom variables --------------------
   system = "x86_64-linux";

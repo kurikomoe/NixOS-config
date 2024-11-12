@@ -145,11 +145,6 @@
       hm-pkgs = "${hm}/pkgs";
     };
 
-    devices = [
-      ./devices/KurikoG14
-      # ./devices/iprc
-    ];
-
     versionMap = {
       "stable" = {
         nixpkgs = inputs.nixpkgs;
@@ -184,6 +179,11 @@
         "12.4" = cImport inputs.nixpkgs-cuda-12_4 {cudaSupport = true;};
       };
     });
+
+    devices = [
+      ./devices/KurikoG14
+      ./devices/iprc
+    ];
   in
     builtins.foldl' (
       acc: device: (nixpkgs.lib.recursiveUpdate acc (import device {

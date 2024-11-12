@@ -5,7 +5,7 @@ inputs @ {
   lib,
   ...
 }: let
-  age_helper = import "${root}/../common/age-helper.nix";
+  age_helper = import "${root.base}/common/age-helper.nix";
 
   files = {
     "ssh/config-iprc" = ".ssh/data/config";
