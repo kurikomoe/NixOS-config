@@ -12,6 +12,8 @@ in {
     gnumake
     meson
 
+    scons
+
     automake
     libtool
     gnum4

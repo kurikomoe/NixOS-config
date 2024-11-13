@@ -85,11 +85,11 @@ p @ {
       enable = true;
       libraries = with pkgs;
         [
-          stdenv.cc.cc.lib
           pkg-config
+          stdenv.cc.cc.lib
+          openssl.out
           zlib
           icu
-          openssl
           # ];
         ]
         ++ (pkgs.steam.args.multiPkgs pkgs);

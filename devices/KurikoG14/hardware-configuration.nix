@@ -53,7 +53,8 @@ in {
 
   environment.variables = {
     # WSL libs need to find stdc++.so.6 and libssl.so to work
-    LD_LIBRARY_PATH = "/usr/lib/wsl/lib:${pkgs.stdenv.cc.cc.lib}/lib/:${pkgs.openssl.out}/lib";
+    LD_LIBRARY_PATH = "/usr/lib/wsl/lib";
+    # LD_LIBRARY_PATH = "/usr/lib/wsl/lib:${pkgs.stdenv.cc.cc.lib}/lib/:${pkgs.openssl.out}/lib";
 
     # MESA_D3D12_DEFAULT_ADAPTER_NAME = "NVIDIA";
   };

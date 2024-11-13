@@ -49,12 +49,7 @@
             autoreconfHook
             ninja
 
-            # intel-isal
-            nasm
-
-            # baseline test
-            rocksdb
-            redis
+            # libs
 
             # tools
             just
@@ -62,9 +57,6 @@
           ];
 
           enterShell = ''
-            # disable `as` to let intel-isal fallback to nasm
-            export AS=""
-            export HAVE_NASM='yes'
           '';
 
           pre-commit.hooks = {};

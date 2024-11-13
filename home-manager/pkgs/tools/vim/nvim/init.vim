@@ -91,7 +91,8 @@ hi SignatureMarkText ctermfg=3
 hi SignatureMarkerText ctermfg=10 ctermbg=242
 hi Comment ctermfg=2
 
-hi TabLine ctermfg=black ctermbg=255
+" hi TabLine ctermfg=black ctermbg=255
+hi TabLineSel ctermfg=black ctermbg=white
 
 hi TagbarHighlight  ctermfg=red cterm=None ctermbg=None
 
