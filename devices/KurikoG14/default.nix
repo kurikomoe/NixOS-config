@@ -113,7 +113,8 @@
       #   };
       # }
 
-      inputs.nixos-wsl.nixosModules.default {
+      inputs.nixos-wsl.nixosModules.default
+      {
         system.stateVersion = "24.05";
         wsl = {
           enable = true;
@@ -132,7 +133,12 @@
         };
       }
 
-      ({ pkgs, lib, config, ... }: let
+      ({
+        pkgs,
+        lib,
+        config,
+        ...
+      }: let
         new_mesa = pkgs.callPackage "${root.pkgs}/mesa.nix" {};
       in {
         users.defaultUserShell = pkgs.zsh;

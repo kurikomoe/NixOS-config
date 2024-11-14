@@ -20,9 +20,9 @@ p @ {
   #     # dotnet-sdk
   #   ];
   # };
-  combined-pkgs =
-    with repos.pkgs-unstable;
-    with dotnetCorePackages; combinePackages [
+  combined-pkgs = with repos.pkgs-unstable;
+  with dotnetCorePackages;
+    combinePackages [
       sdk_9_0
       sdk_8_0_3xx
       sdk_7_0_3xx

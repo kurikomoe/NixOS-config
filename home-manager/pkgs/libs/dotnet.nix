@@ -11,10 +11,9 @@
   #     dotnet-runtime
   #   ];
   # };
-
-  combined-runtime-pkgs =
-    with pkgs;
-    with dotnetCorePackages; combinePackages [
+  combined-runtime-pkgs = with pkgs;
+  with dotnetCorePackages;
+    combinePackages [
       dotnet_9.runtime
       dotnet_8.runtime
       dotnet-runtime_7

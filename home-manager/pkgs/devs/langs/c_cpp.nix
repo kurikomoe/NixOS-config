@@ -14,6 +14,9 @@ in {
     # gcc_multi
     # musl
 
+    flex
+    bison
+
     # llvm
     clang
     # clang_multi
@@ -29,6 +32,7 @@ in {
     # bug finder
     valgrind
     flawfinder
+    cppcheck
 
     # libs
     vcpkg

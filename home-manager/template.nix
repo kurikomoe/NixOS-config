@@ -61,7 +61,7 @@ in
           };
 
           nix = {
-            package = lib.mkDefault pkgs.nix;
+            package = lib.mkDefault repos.pkgs-unstable.nix;
             gc = lib.mkDefault {
               automatic = true;
               frequency = "weekly";

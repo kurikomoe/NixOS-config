@@ -29,7 +29,7 @@ in
           boot.tmp.useTmpfs = false;
 
           nix = {
-            package = pkgs.nix;
+            package = repos.pkgs-unstable.nix;
             settings =
               utils._commonNixPkgsConfig.settings
               // {
