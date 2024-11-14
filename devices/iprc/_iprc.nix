@@ -74,12 +74,12 @@ in
                   $HOME/.local/state/nix/profiles/profile
               '')
 
-            # (pkgs.writeShellScriptBin "git"
-            #   ''
-            #     LD_PRELOAD=/usr/lib64/libnss_ldap.so.2 \
-            #       GIT_SSH_COMMAND="${pkgs.openssh}/bin/ssh -F ~/.ssh/config" \
-            #       fq ${pkgs.git}/bin/git $@
-            #   '')
+            (pkgs.writeShellScriptBin "git"
+              ''
+                LD_PRELOAD=/usr/lib64/libnss_ldap.so.2 \
+                  GIT_SSH_COMMAND="${pkgs.openssh}/bin/ssh -F ~/.ssh/config" \
+                  ${pkgs.proxychains-helper}/bin/fq ${pkgs.git}/bin/git $@
+              '')
           ];
         in {
           imports =

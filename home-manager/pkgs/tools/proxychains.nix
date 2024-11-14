@@ -25,11 +25,18 @@
       -f ${proxychains_ng_conf} \
       $@
   '';
+
 in {
+  nixpkgs.overlays = [
+    (final: prev: {
+      proxychains-helper = fq;
+    })
+  ];
+
   home.file.${proxychains_ng_conf}.text = proxychains_ng_conf_txt;
 
   home.packages = with pkgs; [
     proxychains-ng
-    fq
+    proxychains-helper
   ];
 }
