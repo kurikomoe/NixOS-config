@@ -11,6 +11,7 @@
   nixtools = with customVars; [
     (pkgs.writeShellScriptBin "nixup" ''
       set -e
+      sudo true
       nix flake update --flake "$HOME/.nixos";
 
       # sudo nixos-rebuild --flake "$HOME/.nixos#${hostName}" dry-build;
