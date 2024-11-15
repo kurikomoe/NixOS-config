@@ -25,19 +25,6 @@
         "type": "github"
       }
     },
-    "autojump-rs": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1672629524,
-        "narHash": "sha256-wEdJQ9KHljCuJNYd5J15HYbtHW3d9aI5eBePdBBZaYQ=",
-        "type": "tarball",
-        "url": "https://github.com/xen0n/autojump-rs/releases/latest/download/autojump-x86_64-unknown-linux-musl.tar.gz"
-      },
-      "original": {
-        "type": "tarball",
-        "url": "https://github.com/xen0n/autojump-rs/releases/latest/download/autojump-x86_64-unknown-linux-musl.tar.gz"
-      }
-    },
     "darwin": {
       "inputs": {
         "nixpkgs": [
@@ -698,7 +685,6 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
-        "autojump-rs": "autojump-rs",
         "fenix": "fenix",
         "fishPlugin-autopair": "fishPlugin-autopair",
         "fishPlugin-fish-abbreviation-tips": "fishPlugin-fish-abbreviation-tips",

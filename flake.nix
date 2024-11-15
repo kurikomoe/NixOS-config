@@ -79,11 +79,12 @@
     # };
 
     # ------------------ common shell plugins --------------
-    autojump-rs = {
-      type = "tarball";
-      flake = false;
-      url = "https://github.com/xen0n/autojump-rs/releases/latest/download/autojump-x86_64-unknown-linux-musl.tar.gz";
-    };
+    # move to fetch
+    # autojump-rs = {
+    #   type = "tarball";
+    #   flake = false;
+    #   url = "https://github.com/xen0n/autojump-rs/releases/latest/download/autojump-x86_64-unknown-linux-musl.tar.gz";
+    # };
 
     # -------------------- fish plugins --------------------
     fishPlugin-fish-command-timer = {
@@ -182,12 +183,19 @@
     devices = [
       ./devices/KurikoG14
       ./devices/iprc
+      ./devices/KurikoArch
     ];
   in
     builtins.foldl' (
-      acc: device: (nixpkgs.lib.recursiveUpdate acc (import device {
-        inherit inputs root versionMap allRepos;
-      }))
+      acc: device: (nixpkgs.lib.recursiveUpdate acc (
+        let
+          config = if builtins.pathExists device then
+              import device {
+                inherit inputs root versionMap allRepos;
+              }
+            else {};
+        in config
+      ))
     )
     {
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);

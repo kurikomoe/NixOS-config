@@ -9,7 +9,10 @@ p @ {
 }: let
   autojump-rs = pkgs.stdenv.mkDerivation {
     name = "autojump-rs";
-    src = inputs.autojump-rs;
+    src = pkgs.fetchzip {
+      url = "https://github.com/xen0n/autojump-rs/releases/latest/download/autojump-x86_64-unknown-linux-musl.tar.gz";
+      hash = "sha256-wEdJQ9KHljCuJNYd5J15HYbtHW3d9aI5eBePdBBZaYQ=";
+    };
     unpackPhase = ":";
     nativeBuildInputs = with pkgs; [gnutar gzip];
     installPhase = ''

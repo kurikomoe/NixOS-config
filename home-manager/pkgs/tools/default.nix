@@ -1,6 +1,6 @@
 {
-  pkgs,
-  inputs,
+  lib,
+  topgrade ? true,
   ...
 }: {
   imports = [
@@ -12,7 +12,6 @@
     ./vim
 
     ./tmux
-    ./topgrade
 
     ./direnv.nix
     ./vscode-server.nix
@@ -22,5 +21,6 @@
     ./others.nix
 
     ./sys.nix
-  ];
+  ] ++ (lib.optional topgrade [./topgrade])
+  ;
 }
