@@ -47,6 +47,12 @@
       cudaSupport = true;
     };
 
+    extraSpecialArgs = {
+      koptions = {
+        topgrade.enable = true;
+      };
+    };
+
     modules = [
       ({pkgs, ...}: {
         imports =

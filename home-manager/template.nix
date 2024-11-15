@@ -22,6 +22,8 @@ in
 
         # locked pkgs
         inherit repos;
+
+        koptions = import ./options.nix;
       }
       // extraSpecialArgs;
 

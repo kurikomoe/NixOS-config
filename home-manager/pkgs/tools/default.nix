@@ -1,26 +1,27 @@
 {
   lib,
-  topgrade ? true,
+  koptions,
   ...
 }: {
-  imports = [
-    ./ssh
+  imports =
+    [
+      ./ssh
 
-    ./git
-    ./gnupg.nix
+      ./git
+      ./gnupg.nix
 
-    ./vim
+      ./vim
 
-    ./tmux
+      ./tmux
 
-    ./direnv.nix
-    ./vscode-server.nix
+      ./direnv.nix
+      ./vscode-server.nix
 
-    ./network.nix
+      ./network.nix
 
-    ./others.nix
+      ./others.nix
 
-    ./sys.nix
-  ] ++ (lib.optional topgrade [./topgrade])
-  ;
+      ./sys.nix
+    ]
+    ++ (lib.optional koptions.topgrade.enable ./topgrade);
 }

@@ -189,12 +189,15 @@
     builtins.foldl' (
       acc: device: (nixpkgs.lib.recursiveUpdate acc (
         let
-          config = if builtins.pathExists device then
+          config =
+            if builtins.pathExists device
+            then
               import device {
                 inherit inputs root versionMap allRepos;
               }
             else {};
-        in config
+        in
+          config
       ))
     )
     {

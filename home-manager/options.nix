@@ -1,0 +1,3 @@
+{
+  topgrade.enable = true;
+}

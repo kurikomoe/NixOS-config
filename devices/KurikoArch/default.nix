@@ -43,8 +43,14 @@
       cudaSupport = true;
     };
 
+    extraSpecialArgs = {
+      koptions = {
+        topgrade.enable = false;
+      };
+    };
+
     modules = [
-      (inputs@{pkgs, ...}: {
+      (inputs @ {pkgs, ...}: {
         imports =
           utils.buildImports root.hm-pkgs [
             "./shells/fish"
@@ -63,8 +69,9 @@
             "./gui/jetbrains.nix"
 
             # "./apps/podman.nix"
-          ] ++ [
-            (import ../../home-manager/pkgs/tools (inputs//{topgrade = false;}))
+          ]
+          ++ [
+            (import ../../home-manager/pkgs/tools (inputs // {topgrade = false;}))
           ];
 
         home.packages = with pkgs; [

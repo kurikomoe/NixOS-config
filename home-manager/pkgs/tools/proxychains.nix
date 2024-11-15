@@ -1,14 +1,14 @@
 {
   config,
   pkgs,
-  proxy ? "http 127.0.0.1 8890",
+  koptions,
   ...
 }: let
   proxychains_ng_conf = "${config.xdg.configHome}/proxychains.conf";
 
   proxychains_ng_conf_txt = ''
     [ProxyList]
-    ${proxy}
+    ${koptions.proxychains.proxy}
   '';
 
   fq = pkgs.writeShellScriptBin "fq" ''
@@ -25,7 +25,6 @@
       -f ${proxychains_ng_conf} \
       $@
   '';
-
 in {
   nixpkgs.overlays = [
     (final: prev: {

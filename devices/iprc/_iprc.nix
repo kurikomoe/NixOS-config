@@ -43,7 +43,7 @@ in
 
       extraSpecialArgs = {
         # for proxychains
-        proxy = "http 127.0.0.1 8891";
+        koptions.proxychains.proxy = "http 127.0.0.1 8891";
       };
 
       modules = [
