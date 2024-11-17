@@ -74,6 +74,8 @@
             (import ../../home-manager/pkgs/tools (inputs // {topgrade = false;}))
           ];
 
+        targets.genericLinux.enable = true;
+
         home.packages = with pkgs; [
           # Test gui
           xorg.xeyes

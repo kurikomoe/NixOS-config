@@ -129,6 +129,8 @@ in
           #   })
           # ];
 
+          targets.genericLinux.enable = true;
+
           home.sessionVariables = {
             PROXYSERVER = "127.0.0.1:8891";
             all_proxy = "http://$PROXYSERVER";
