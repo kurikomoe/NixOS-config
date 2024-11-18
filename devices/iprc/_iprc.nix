@@ -74,7 +74,7 @@ in
                   $HOME/.local/state/nix/profiles/profile
               '')
 
-            (pkgs.writeShellScriptBin "git"
+            (pkgs.writeShellScriptBin "fqgit"
               ''
                 LD_PRELOAD=/usr/lib64/libnss_ldap.so.2 \
                   GIT_SSH_COMMAND="${pkgs.openssh}/bin/ssh -F ~/.ssh/config" \
@@ -117,6 +117,10 @@ in
               # repos.pkgs-iprc.glibc
               podman
 
+              # tsocks
+              # adguardhome
+              dnsproxy
+
               nss_ldap
               nss
             ]
@@ -137,6 +141,7 @@ in
             http_proxy = "http://$PROXYSERVER";
             https_proxy = "http://$PROXYSERVER";
             socks_proxy = "socks5://$PROXYSERVER";
+            LD_PRELOAD="/usr/lib64/libnss_ldap.so.2";
           };
 
           programs = {
