@@ -190,7 +190,7 @@
       acc: device: (nixpkgs.lib.recursiveUpdate acc (
         let
           config =
-            if builtins.pathExists device
+            if builtins.pathExists "${device}/default.nix"
             then
               import device {
                 inherit inputs root versionMap allRepos;
