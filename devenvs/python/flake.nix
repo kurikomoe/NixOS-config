@@ -4,10 +4,10 @@
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
 
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
 
     devenv = {
-      url = "github:cachix/devenv";
+      url = "github:cachix/devenv/1.3.1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -17,50 +17,52 @@
     extra-substituters = "https://devenv.cachix.org";
   };
 
-  outputs = inputs @ {flake-parts, ...}:
-    flake-parts.lib.mkFlake {inherit inputs;} {
+  outputs = inputs @ { flake-parts, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         inputs.devenv.flakeModule
       ];
 
-      systems = ["x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin"];
+      systems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin" ];
 
-      perSystem = {
-        config,
-        self',
-        inputs',
-        system,
-        ...
-      }: let
-        pkgs = import inputs.nixpkgs {
-          inherit system;
-          config.allowUnfree = true;
-          overlays = [];
-        };
-      in {
-        devenv.shells.default = {
-          packages = with pkgs; [
-            poetry
-          ];
+      perSystem =
+        { config
+        , self'
+        , inputs'
+        , system
+        , ...
+        }:
+        let
+          pkgs = import inputs.nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+            overlays = [ ];
+          };
+        in
+        {
+          devenv.shells.default = {
+            packages = with pkgs; [
+              poetry
+            ];
 
-          enterShell = ''
+            enterShell = ''
 
           '';
 
-          languages.python = {
-            enable = true;
-            # package = pkgs.python312;
-            poetry = {
+            languages.python = {
               enable = true;
-              activate.enable = true;
+              # package = pkgs.python312;
+              poetry = {
+                enable = true;
+                activate.enable = true;
+              };
             };
+
+            pre-commit.hooks = { };
+            cachix.push = "kurikomoe";
           };
-
-          pre-commit.hooks = {};
-          cachix.push = "kurikomoe";
         };
-      };
 
-      flake = {};
+      flake = { };
     };
 }
