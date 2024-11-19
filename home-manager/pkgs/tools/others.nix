@@ -9,6 +9,7 @@ in {
     wget
     curl
     htop
+    nvtopPackages.full
     less
     tree
     which
@@ -70,5 +71,8 @@ in {
 
     # provide lddtree command for better ldd experience
     pax-utils
+
+    # nix tools
+    nix-output-monitor  # aka nom
   ];
 }
