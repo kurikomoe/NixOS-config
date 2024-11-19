@@ -122,98 +122,110 @@
 
   # ---------------------------------------------------------------------------
 
-  outputs = inputs @ {
-    self,
-    nixpkgs,
-    flake-parts,
-    ...
-  }: let
-    forAllSystems = nixpkgs.lib.genAttrs systems;
+  outputs =
+    inputs @ { self
+    , nixpkgs
+    , flake-parts
+    , ...
+    }:
+    let
+      forAllSystems = nixpkgs.lib.genAttrs systems;
 
-    systems = [
-      "x86_64-linux"
-      # "aarch64-linux"
-      # "aarch64-darwin"
-      # "x86_64-darwin"
-    ];
+      systems = [
+        "x86_64-linux"
+        # "aarch64-linux"
+        # "aarch64-darwin"
+        # "x86_64-darwin"
+      ];
 
-    root = rec {
-      base = self;
-      pkgs = "${self}/pkgs";
+      root = rec {
+        base = self;
+        pkgs = "${self}/pkgs";
 
-      os = "${self}/nixos";
-      os-pkgs = "${os}/pkgs";
+        os = "${self}/nixos";
+        os-pkgs = "${os}/pkgs";
 
-      hm = "${self}/home-manager";
-      hm-pkgs = "${hm}/pkgs";
-    };
-
-    versionMap = {
-      "stable" = {
-        nixpkgs = inputs.nixpkgs;
-        home-manager = inputs.home-manager;
-      };
-      "unstable" = {
-        nixpkgs = inputs.nixpkgs-unstable;
-        home-manager = inputs.home-manager-unstable;
-      };
-      "iprc" = {
-        nixpkgs = inputs.nixpkgs;
-        home-manager = inputs.home-manager;
-      };
-    };
-
-    allRepos = forAllSystems (system: let
-      utils = import "${root.base}/common/utils.nix" {inherit system;};
-      cImport = utils.customNixPkgsImport;
-    in rec {
-      pkgs-stable = cImport inputs.nixpkgs {};
-      pkgs-unstable = cImport inputs.nixpkgs-unstable {};
-
-      pkgs-nur = import inputs.nur {
-        pkgs = pkgs-stable;
-        nurpkgs = pkgs-unstable;
+        hm = "${self}/home-manager";
+        hm-pkgs = "${hm}/pkgs";
       };
 
-      agenix = import inputs.agenix {inherit system;};
-
-      cuda = {
-        "12.2" = cImport inputs.nixpkgs-cuda-12_2 {cudaSupport = true;};
-        "12.4" = cImport inputs.nixpkgs-cuda-12_4 {cudaSupport = true;};
-      };
-    });
-
-    devices = [
-      ./devices/KurikoG14
-      ./devices/iprc
-      ./devices/KurikoArch
-    ];
-  in
-    builtins.foldl' (
-      acc: device: (nixpkgs.lib.recursiveUpdate acc (
-        let
-          config =
-            if builtins.pathExists "${device}/default.nix"
-            then
-              import device {
-                inherit inputs root versionMap allRepos;
-              }
-            else {};
-        in
-          config
-      ))
-    )
-    {
-      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
-
-      checks = forAllSystems (system: {
-        pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
-          src = ./.;
-          hooks = {
-            nixpkgs-fmt.enable = true;
-          };
+      versionMap = {
+        "stable" = {
+          nixpkgs = inputs.nixpkgs;
+          home-manager = inputs.home-manager;
         };
-      });
-    }
-    devices;
+        "unstable" = {
+          nixpkgs = inputs.nixpkgs-unstable;
+          home-manager = inputs.home-manager-unstable;
+        };
+        "iprc" = {
+          nixpkgs = inputs.nixpkgs;
+          home-manager = inputs.home-manager;
+        };
+      };
+
+      allRepos = forAllSystems (system:
+        let
+          utils = import "${root.base}/common/utils.nix" { inherit system; };
+          cImport = utils.customNixPkgsImport;
+        in
+        rec {
+          pkgs-stable = cImport inputs.nixpkgs { };
+          pkgs-unstable = cImport inputs.nixpkgs-unstable { };
+
+          pkgs-nur = import inputs.nur {
+            pkgs = pkgs-stable;
+            nurpkgs = pkgs-unstable;
+          };
+
+          agenix = import inputs.agenix { inherit system; };
+
+          cuda = {
+            "12.2" = cImport inputs.nixpkgs-cuda-12_2 { cudaSupport = true; };
+            "12.4" = cImport inputs.nixpkgs-cuda-12_4 { cudaSupport = true; };
+          };
+        });
+
+      devices = [
+        ./devices/KurikoG14
+        ./devices/iprc
+        ./devices/KurikoArch
+      ];
+    in
+    builtins.foldl'
+      (
+        acc: device: (nixpkgs.lib.recursiveUpdate acc (
+          let
+            config =
+              if builtins.pathExists "${device}/default.nix"
+              then
+                import device
+                  {
+                    inherit inputs root versionMap allRepos;
+                  }
+              else { };
+          in
+          config
+        ))
+      )
+      {
+        formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
+
+        checks = forAllSystems (system: {
+          pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
+            src = ./.;
+            hooks = {
+              nixpkgs-fmt.enable = true;
+            };
+          };
+        });
+
+        devShells = forAllSystems (system: {
+          default = nixpkgs.legacyPackages.${system}.mkShell {
+            inherit (self.checks.${system}.pre-commit-check) shellHook;
+            buildInputs = self.checks.${system}.pre-commit-check.enabledPackages;
+          };
+        });
+      }
+      devices;
 }
