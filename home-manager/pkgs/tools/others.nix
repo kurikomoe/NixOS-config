@@ -73,6 +73,6 @@ in {
     pax-utils
 
     # nix tools
-    nix-output-monitor  # aka nom
+    nix-output-monitor # aka nom
   ];
 }

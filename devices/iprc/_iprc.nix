@@ -141,7 +141,7 @@ in
             http_proxy = "http://$PROXYSERVER";
             https_proxy = "http://$PROXYSERVER";
             socks_proxy = "socks5://$PROXYSERVER";
-            LD_PRELOAD="/usr/lib64/libnss_ldap.so.2";
+            LD_PRELOAD = "/usr/lib64/libnss_ldap.so.2";
           };
 
           programs = {

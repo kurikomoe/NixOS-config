@@ -1,12 +1,9 @@
-{ pkgs, ... }:
-
-let
-
+{pkgs, ...}: let
 in {
   home.packages = with pkgs; [
-    acpica-tools  # acpidump
-    mkvtoolnix    # dump mkv embl info
+    acpica-tools # acpidump
+    mkvtoolnix # dump mkv embl info
 
-    speedtest-cli  # speedtest
+    speedtest-cli # speedtest
   ];
 }

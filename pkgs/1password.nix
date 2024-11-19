@@ -14,7 +14,7 @@
     args = {
       inherit hash;
       url = "https://cache.agilebits.com/dist/1P/op2/pkg/v${version}/op_${srcPlatform}_v${version}.zip";
-      stripRoot=false;
+      stripRoot = false;
     };
   in
     fetchzip args;
@@ -25,19 +25,16 @@
 
   platforms = builtins.attrNames sources;
   mainProgram = "op";
-
 in
   stdenv.mkDerivation rec {
     inherit pname version;
 
-
     src =
-      if (builtins.elem system platforms) then
-        sources.${system}
-      else
-        throw "Source for ${pname} is not available for ${system}";
+      if (builtins.elem system platforms)
+      then sources.${system}
+      else throw "Source for ${pname} is not available for ${system}";
 
-    nativeBuildInputs = [ installShellFiles ] ++ lib.optional stdenv.isLinux autoPatchelfHook;
+    nativeBuildInputs = [installShellFiles] ++ lib.optional stdenv.isLinux autoPatchelfHook;
 
     buildInputs = [];
 
@@ -65,7 +62,7 @@ in
       description = "1Password command-line tool";
       homepage = "https://developer.1password.com/docs/cli/";
       downloadPage = "https://app-updates.agilebits.com/product_history/CLI2";
-      sourceProvenance = with sourceTypes; [ binaryNativeCode ];
+      sourceProvenance = with sourceTypes; [binaryNativeCode];
       license = licenses.unfree;
       inherit mainProgram platforms;
     };
