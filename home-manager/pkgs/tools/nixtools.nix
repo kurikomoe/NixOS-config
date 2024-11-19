@@ -9,16 +9,17 @@
   home = config.home.homeDirectory;
 
   nixtools = with customVars; [
-    (pkgs.writeShellScriptBin "nixup" ''
+    (pkgs.writeShellScriptBin "nixs" ''
       set -e
-      sudo true
-      nix flake update --flake "$HOME/.nixos";
-
-      # sudo nixos-rebuild --flake "$HOME/.nixos#${hostName}" dry-build;
+      # for nix 2.18
       sudo nixos-rebuild --flake "$HOME/.nixos#${hostName}" switch;
       home-manager --flake "$HOME/.nixos#${username}@${hostName}" switch;
-
       nixdiff;
+    '')
+
+    (pkgs.writeShellScriptBin "nixup" ''
+      nix flake update "$HOME/.nixos";
+      nixs
     '')
 
     (pkgs.writeShellScriptBin "nixdiff" ''
