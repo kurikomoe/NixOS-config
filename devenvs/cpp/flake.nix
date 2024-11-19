@@ -17,54 +17,52 @@
     extra-substituters = "https://devenv.cachix.org";
   };
 
-  outputs = inputs @ { flake-parts, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; } {
+  outputs = inputs @ {flake-parts, ...}:
+    flake-parts.lib.mkFlake {inherit inputs;} {
       imports = [
         inputs.devenv.flakeModule
       ];
 
-      systems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin" ];
+      systems = ["x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin"];
 
-      perSystem =
-        { config
-        , self'
-        , inputs'
-        , system
-        , ...
-        }:
-        let
-          pkgs = import inputs.nixpkgs {
-            inherit system;
-            config.allowUnfree = true;
-            overlays = [ ];
-          };
-        in
-        {
-          devenv.shells.default = {
-            packages = with pkgs; [
-              # requirements
-              pkg-config
-              stdenv.cc.cc.lib
+      perSystem = {
+        config,
+        self',
+        inputs',
+        system,
+        ...
+      }: let
+        pkgs = import inputs.nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+          overlays = [];
+        };
+      in {
+        devenv.shells.default = {
+          packages = with pkgs; [
+            # requirements
+            pkg-config
+            stdenv.cc.cc.lib
 
-              cmake
-              autoreconfHook
-              ninja
+            cmake
+            autoreconfHook
+            ninja
 
-              # libs
+            # libs
 
-              # tools
-              just
-              hello
-            ];
+            # tools
+            just
+            hello
+          ];
 
-            enterShell = ''
+          enterShell = ''
           '';
 
-            pre-commit.hooks = { };
-            cachix.push = "kurikomoe";
-          };
+          pre-commit.hooks = {};
+          cachix.push = "kurikomoe";
         };
+      };
 
-      flake = { };
+      flake = {};
     };
 }

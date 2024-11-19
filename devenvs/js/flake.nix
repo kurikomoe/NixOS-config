@@ -17,55 +17,53 @@
     extra-substituters = "https://devenv.cachix.org";
   };
 
-  outputs = inputs @ { flake-parts, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; } {
+  outputs = inputs @ {flake-parts, ...}:
+    flake-parts.lib.mkFlake {inherit inputs;} {
       imports = [
         inputs.devenv.flakeModule
       ];
 
-      systems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin" ];
+      systems = ["x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin"];
 
-      perSystem =
-        { config
-        , self'
-        , inputs'
-        , system
-        , ...
-        }:
-        let
-          pkgs = import inputs.nixpkgs {
-            inherit system;
-            config.allowUnfree = true;
-            overlays = [ ];
-          };
-        in
-        {
-          devenv.shells.default = {
-            packages = with pkgs; [
-              hello
-            ];
-
-            languages.javascript = {
-              enable = true;
-              bun.enable = true;
-            };
-
-            languages.python = {
-              enable = true;
-              poetry.enable = true;
-            };
-
-            enterShell = ''
-              hello
-            '';
-
-            processes.hello.exec = "hello";
-
-            pre-commit.hooks = { };
-            cachix.push = "kurikomoe";
-          };
+      perSystem = {
+        config,
+        self',
+        inputs',
+        system,
+        ...
+      }: let
+        pkgs = import inputs.nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+          overlays = [];
         };
+      in {
+        devenv.shells.default = {
+          packages = with pkgs; [
+            hello
+          ];
 
-      flake = { };
+          languages.javascript = {
+            enable = true;
+            bun.enable = true;
+          };
+
+          languages.python = {
+            enable = true;
+            poetry.enable = true;
+          };
+
+          enterShell = ''
+            hello
+          '';
+
+          processes.hello.exec = "hello";
+
+          pre-commit.hooks = {};
+          cachix.push = "kurikomoe";
+        };
+      };
+
+      flake = {};
     };
 }
