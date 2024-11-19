@@ -77,8 +77,6 @@
         targets.genericLinux.enable = true;
 
         home.packages = with pkgs; [
-          nix
-
           # Test gui
           xorg.xeyes
           mesa-demos

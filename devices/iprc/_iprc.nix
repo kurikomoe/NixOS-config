@@ -53,6 +53,7 @@ in
           nixpkgs,
           lib,
           pkgs,
+          repos,
           ...
         }: let
           shellScripts = with pkgs; [
@@ -115,6 +116,7 @@ in
           home.packages = with pkgs;
             [
               # repos.pkgs-iprc.glibc
+              (lib.hiPrio nix)
               podman
 
               # tsocks

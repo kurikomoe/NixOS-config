@@ -65,8 +65,8 @@ in
     home.shellAliases = {
       hm = lib.mkDefault "home-manager";
       hme = lib.mkDefault "$EDITOR '${home}/.nixos'";
-      hms = lib.mkDefault "home-manager --flake 'path:${home}/.nixos#${username}@${hostName}' switch";
-      hmsdr = lib.mkDefault "home-manager --flake 'path:${home}/.nixos#${username}@${hostName}' switch --dry-run";
+      hms = lib.mkDefault "home-manager --flake path:${home}/.nixos#${username}@${hostName} switch";
+      hmsdr = lib.mkDefault "home-manager --flake path:${home}/.nixos#${username}@${hostName} switch --dry-run";
       hmcd = lib.mkDefault "cd '${home}/.nixos/home-manager'";
       nxsearch = lib.mkDefault "nix search nixpkgs";
     };
