@@ -94,8 +94,6 @@ in
 
           home.packages = with pkgs;
             [
-              nix
-
               gnutar
 
               stdenv.cc.cc.lib
