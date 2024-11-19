@@ -18,6 +18,7 @@
     '')
 
     (pkgs.writeShellScriptBin "nixup" ''
+      sudo true
       nix flake update "$HOME/.nixos";
       nixs
     '')
