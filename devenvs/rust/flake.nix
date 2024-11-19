@@ -4,12 +4,12 @@
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
 
-    nixpkgs.url = "github:cachix/devenv-nixpkgs/rolling";
-    nixpkgs-nixos.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-devenv.url = "github:cachix/devenv-nixpkgs/rolling";
 
     devenv = {
       url = "github:cachix/devenv";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-devenv";
     };
 
     fenix.url = "github:nix-community/fenix";

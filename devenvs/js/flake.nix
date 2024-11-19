@@ -1,11 +1,16 @@
 {
+  description = "Kuriko's Default Template";
+
   inputs = {
-    nixpkgs.url = "github:cachix/devenv-nixpkgs/rolling";
+    flake-parts.url = "github:hercules-ci/flake-parts";
 
-    systems.url = "github:nix-systems/default";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-devenv.url = "github:cachix/devenv-nixpkgs/rolling";
 
-    devenv.url = "github:cachix/devenv";
-    devenv.inputs.nixpkgs.follows = "nixpkgs";
+    devenv = {
+      url = "github:cachix/devenv";
+      inputs.nixpkgs.follows = "nixpkgs-devenv";
+    };
   };
 
   nixConfig = {
@@ -13,50 +18,53 @@
     extra-substituters = "https://devenv.cachix.org";
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    devenv,
-    systems,
-    ...
-  } @ inputs: let
-    forEachSystem = nixpkgs.lib.genAttrs (import systems);
-  in {
-    packages = forEachSystem (system: {
-      devenv-up = self.devShells.${system}.default.config.procfileScript;
-    });
+  outputs = inputs @ {flake-parts, ...}:
+    flake-parts.lib.mkFlake {inherit inputs;} {
+      imports = [
+        inputs.devenv.flakeModule
+      ];
 
-    devShells =
-      forEachSystem
-      (system: let
-        pkgs = nixpkgs.legacyPackages.${system};
-      in {
-        default = devenv.lib.mkShell {
-          inherit inputs pkgs;
-          modules = [
-            {
-              packages = with pkgs; [
-                hello
-              ];
+      systems = ["x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin"];
 
-              languages.javascript = {
-                enable = true;
-                bun.enable = true;
-              };
-
-              languages.python = {
-                enable = true;
-                poetry.enable = true;
-              };
-
-              enterShell = ''
-                hello
-              '';
-
-              processes.hello.exec = "hello";
-            }
-          ];
+      perSystem = {
+        config,
+        self',
+        inputs',
+        system,
+        ...
+      }: let
+        pkgs = import inputs.nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+          overlays = [];
         };
-      });
-  };
+      in {
+        devenv.shells.default = {
+          packages = with pkgs; [
+            hello
+          ];
+
+          languages.javascript = {
+            enable = true;
+            bun.enable = true;
+          };
+
+          languages.python = {
+            enable = true;
+            poetry.enable = true;
+          };
+
+          enterShell = ''
+            hello
+          '';
+
+          processes.hello.exec = "hello";
+
+          pre-commit.hooks = {};
+          cachix.push = "kurikomoe";
+        };
+      };
+
+      flake = {};
+    };
 }

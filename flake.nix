@@ -21,6 +21,9 @@
 
     nur.url = "github:nix-community/NUR";
 
+    # -------------------- tools ------------------
+    pre-commit-hooks.url = "github:cachix/git-hooks.nix";
+
     # ------------------- Core inputs -------------------
     home-manager = {
       url = "github:nix-community/home-manager/release-24.05";
@@ -202,6 +205,15 @@
     )
     {
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
+
+      checks = forAllSystems (system: {
+        pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
+          src = ./.;
+          hooks = {
+            nixpkgs-fmt.enable = true;
+          };
+        };
+      });
     }
     devices;
 }

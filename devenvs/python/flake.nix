@@ -49,13 +49,14 @@
 
           languages.python = {
             enable = true;
-            package = pkgs.python312;
+            # package = pkgs.python312;
             poetry = {
               enable = true;
               activate.enable = true;
             };
           };
 
+          pre-commit.hooks = {};
           cachix.push = "kurikomoe";
         };
       };
