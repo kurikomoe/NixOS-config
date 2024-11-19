@@ -35,7 +35,7 @@ in {
     cppcheck
 
     # libs
-    vcpkg
-    boost
+    # vcpkg
+    # boost
   ];
 }
