@@ -84,14 +84,7 @@ p @ {
     nix-ld = {
       enable = true;
       libraries = with pkgs;
-        [
-          pkg-config
-          stdenv.cc.cc.lib
-          openssl.out
-          zlib
-          icu
-          # ];
-        ]
+        []
         ++ (pkgs.steam.args.multiPkgs pkgs);
     };
     zsh.enable = true;

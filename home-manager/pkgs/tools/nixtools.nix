@@ -19,7 +19,7 @@
 
     (pkgs.writeShellScriptBin "nixup" ''
       sudo true
-      nix flake update "$HOME/.nixos";
+      nix flake update --flake "$HOME/.nixos";
       nixs
     '')
 

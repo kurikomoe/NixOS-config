@@ -56,7 +56,16 @@ in
             inputs.nix-alien.packages.${system}.nix-alien
           ];
 
-          programs.nix-ld.enable = true;
+          programs = {
+            nix-ld = {
+              enable = true;
+              libraries = with pkgs;
+                []
+                ++ (pkgs.steam.args.multiPkgs pkgs);
+            };
+            zsh.enable = true;
+            fish.enable = true;
+          };
         })
 
         # # -------------- enable nur ----------------
