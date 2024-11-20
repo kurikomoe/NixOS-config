@@ -77,6 +77,9 @@
         targets.genericLinux.enable = true;
 
         home.packages = with pkgs; [
+          # overwrite the system nix
+          repos.pkgs-unstable.nix
+
           # Test gui
           xorg.xeyes
           mesa-demos
