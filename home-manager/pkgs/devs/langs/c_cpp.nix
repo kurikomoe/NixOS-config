@@ -34,8 +34,9 @@ in {
     flawfinder
     cppcheck
 
+    python311Packages.lizard
+
     # libs
-    # vcpkg
-    # boost
+    vcpkg
   ];
 }
