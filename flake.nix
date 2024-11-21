@@ -3,42 +3,38 @@
 
   inputs = {
     # --------------------- Main inputs ---------------------
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-
-    # nixpkgs.url = "https://mirrors.ustc.edu.cn/nix-channels/nixos-24.05/nixexprs.tar.xz";
-    # nixpkgs-unstable.url = "https://mirrors.ustc.edu.cn/nix-channels/nixpkgs-unstable/nixexprs.tar.xz";
-
-    # nixpkgs.url = "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/nixos-24.05/nixexprs.tar.xz";
-    # nixpkgs-unstable.url = "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/nixpkgs-unstable/nixexprs.tar.xz";
-
-    nixpkgs-cuda-12_4.url = "github:nixos/nixpkgs/5ed627539ac84809c78b2dd6d26a5cebeb5ae269";
-    nixpkgs-cuda-12_2.url = "github:nixos/nixpkgs/0cb2fd7c59fed0cd82ef858cbcbdb552b9a33465";
-
-    nixpkgs-glibc-2_35-224.url = "github:nixos/nixpkgs/nixos-22.11";
-
-    nixpkgs-nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-
-    nur.url = "github:nix-community/NUR";
-
-    # -------------------- tools ------------------
-    pre-commit-hooks.url = "github:cachix/git-hooks.nix";
-
-    # ------------------- Core inputs -------------------
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.05";
+      url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager-unstable = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    # nixpkgs.url = "https://mirrors.ustc.edu.cn/nix-channels/nixos-24.11/nixexprs.tar.xz";
+    # nixpkgs-unstable.url = "https://mirrors.ustc.edu.cn/nix-channels/nixpkgs-unstable/nixexprs.tar.xz";
+
+    # nixpkgs.url = "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/nixos-24.11/nixexprs.tar.xz";
+    # nixpkgs-unstable.url = "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/nixpkgs-unstable/nixexprs.tar.xz";
+
+    nixpkgs-glibc-2_35-224.url = "github:nixos/nixpkgs/nixos-22.11";
     home-manager-glibc-2_35-224 = {
       url = "github:nix-community/home-manager/release-22.11";
       inputs.nixpkgs.follows = "nixpkgs-glibc-2_35-224";
     };
+
+    nixpkgs-cuda-12_4.url = "github:nixos/nixpkgs/5ed627539ac84809c78b2dd6d26a5cebeb5ae269";
+    nixpkgs-cuda-12_2.url = "github:nixos/nixpkgs/0cb2fd7c59fed0cd82ef858cbcbdb552b9a33465";
+
+    # -------------------- tools ------------------
+    pre-commit-hooks.url = "github:cachix/git-hooks.nix";
+
+    # ------------------- Core inputs -------------------
+    nur.url = "github:nix-community/NUR";
 
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
 
