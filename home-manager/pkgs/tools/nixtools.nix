@@ -9,11 +9,17 @@
   home = config.home.homeDirectory;
 
   nixtools = with customVars; [
+    (pkgs.writeShellScriptBin "hms" ''
+      set -e
+      home-manager --flake "${home}/.nixos#${username}@${hostName}" switch;
+      nixdiff;
+    '')
+
     (pkgs.writeShellScriptBin "nixs" ''
       set -e
       # for nix 2.18
-      sudo nixos-rebuild --flake "path:$HOME/.nixos#${hostName}" switch;
-      home-manager --flake "path:$HOME/.nixos#${username}@${hostName}" switch;
+      sudo nixos-rebuild --flake "$HOME/.nixos#${hostName}" switch;
+      home-manager --flake "$HOME/.nixos#${username}@${hostName}" switch;
       nixdiff;
     '')
 
@@ -65,8 +71,6 @@ in
     home.shellAliases = {
       hm = lib.mkDefault "home-manager";
       hme = lib.mkDefault "$EDITOR '${home}/.nixos'";
-      hms = lib.mkDefault "home-manager --flake path:${home}/.nixos#${username}@${hostName} switch";
-      hmsdr = lib.mkDefault "home-manager --flake path:${home}/.nixos#${username}@${hostName} switch --dry-run";
       hmcd = lib.mkDefault "cd '${home}/.nixos/home-manager'";
       nxsearch = lib.mkDefault "nix search nixpkgs";
     };
