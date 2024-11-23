@@ -84,7 +84,13 @@
           xorg.xeyes
           mesa-demos
           vulkan-tools
+
+          podman
         ];
+
+        services.podman = {
+          enable = true;
+        };
       })
     ];
   });
