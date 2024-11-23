@@ -57,6 +57,12 @@ in
           ...
         }: let
           shellScripts = with pkgs; [
+            (pkgs.writeShellScriptBin "hms" ''
+              set -e
+              home-manager --flake "path:${home}/.nixos#${username}@${hostName}" switch;
+              nixdiff;
+            '')
+
             (pkgs.writeShellScriptBin "nixup"
               ''
                 nix flake update --flake "$HOME/.nixos";
