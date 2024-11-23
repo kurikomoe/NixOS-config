@@ -35,7 +35,7 @@
       nix store diff-closures \
         $(find /nix/var/nix/profiles -name "system-*-link" | sort | tail -n2 | head -n1) \
         /var/run/current-system
-
+      echo ""
       echo ======= Current Home Manager Updates ==========
       nix store diff-closures \
         $(find $HOME/.local/state/nix/profiles -name "home-manager-*-link" | sort | tail -n2 | head -n1) \

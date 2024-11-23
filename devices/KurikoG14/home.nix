@@ -49,15 +49,20 @@
 
             # "./apps/podman.nix"
           ]
-          ++ [
-          ];
+          ++ [];
 
         home.packages = with pkgs; [
           # Test gui
           xorg.xeyes
           mesa-demos
           vulkan-tools
+
+          podman
         ];
+
+        services.podman = {
+          enable = true;
+        };
       })
     ];
   });
