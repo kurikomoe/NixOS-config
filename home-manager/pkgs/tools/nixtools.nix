@@ -12,7 +12,7 @@
     (pkgs.writeShellScriptBin "hms" ''
       set -e
       home-manager --flake "${home}/.nixos#${username}@${hostName}" switch;
-      nixdiff;
+      nixdiff-hm;
     '')
 
     (pkgs.writeShellScriptBin "nixs" ''
@@ -29,13 +29,16 @@
       nixs
     '')
 
-    (pkgs.writeShellScriptBin "nixdiff" ''
+    (pkgs.writeShellScriptBin "nixdiff-os" ''
       set -e
       echo ======= Current System Updates ==========
       nix store diff-closures \
         $(find /nix/var/nix/profiles -name "system-*-link" | sort | tail -n2 | head -n1) \
         /var/run/current-system
-      echo ""
+    '')
+
+    (pkgs.writeShellScriptBin "nixdiff-hm" ''
+      set -e
       echo ======= Current Home Manager Updates ==========
       nix store diff-closures \
         $(find $HOME/.local/state/nix/profiles -name "home-manager-*-link" | sort | tail -n2 | head -n1) \
@@ -43,6 +46,13 @@
       nix store diff-closures \
         $(find $HOME/.local/state/nix/profiles -name "profile-*-link" | sort | tail -n2 | head -n1) \
         $HOME/.local/state/nix/profiles/profile
+    '')
+
+    (pkgs.writeShellScriptBin "nixdiff" ''
+      set -e
+      nixdiff-os
+      echo ""
+      nixdiff-hm
     '')
 
     (pkgs.writeShellScriptBin "nixgc" ''
