@@ -59,7 +59,7 @@ in
           shellScripts = with pkgs; [
             (pkgs.writeShellScriptBin "hms" ''
               set -e
-              home-manager --flake "path:${home}/.nixos#${username}@${hostName}" switch;
+              home-manager --flake "path:$HOME/.nixos#${username}@${hostName}" switch;
               nixdiff;
             '')
 
