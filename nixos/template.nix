@@ -28,6 +28,10 @@ in
         }: {
           boot.tmp.useTmpfs = false;
 
+          boot.kernel.sysctl = {
+            "kernel.core_pattern" = "./core.%e.%p.%t";
+          };
+
           nix = {
             package = repos.pkgs-unstable.nix;
             settings =
