@@ -69,6 +69,7 @@ in {
 
     # others
     macchina
+    fastfetch
     topgrade
 
     # provide lddtree command for better ldd experience
