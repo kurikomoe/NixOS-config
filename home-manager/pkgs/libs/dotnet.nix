@@ -25,6 +25,6 @@ in {
   ];
 
   home.sessionVariables = {
-    DOTNET_ROOT = "${combined-runtime-pkgs}";
+    DOTNET_ROOT = "${combined-runtime-pkgs}/share/dotnet";
   };
 }

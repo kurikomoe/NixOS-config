@@ -16,6 +16,8 @@ in {
     util-linux
     killall
 
+    cowsay
+
     # hardwares
     pciutils
     usbutils

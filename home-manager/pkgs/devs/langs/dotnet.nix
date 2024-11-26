@@ -43,6 +43,6 @@ in {
   ];
 
   home.sessionVariables = {
-    DOTNET_ROOT = "${combined-pkgs}";
+    DOTNET_ROOT = "${combined-pkgs}/share/dotnet";
   };
 }
