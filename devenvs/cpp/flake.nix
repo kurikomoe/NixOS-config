@@ -42,6 +42,9 @@
         formatter = pkgs.alejandra;
 
         devenv.shells.default = {
+          # Enable this to avoid forced -O2
+          # hardeningDisable = [ "all" ];
+
           packages = with pkgs; [
             # requirements
             pkg-config

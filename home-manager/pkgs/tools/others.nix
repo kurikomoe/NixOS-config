@@ -20,6 +20,8 @@ in {
     pciutils
     usbutils
     ethtool
+    parted
+    gparted
 
     kmod
 
