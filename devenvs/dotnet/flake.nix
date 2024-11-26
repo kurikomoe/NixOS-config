@@ -1,5 +1,5 @@
 {
-  description = "Kuriko's Python Template";
+  description = "Kuriko's dotnet Template";
 
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
@@ -30,6 +30,7 @@
         self',
         inputs',
         system,
+        lib,
         ...
       }: let
         pkgs = import inputs.nixpkgs {
@@ -37,39 +38,58 @@
           config.allowUnfree = true;
           overlays = [];
         };
+
+        dotnet-pkgs = with pkgs;
+        with dotnetCorePackages;
+          combinePackages [
+            sdk_9_0
+            # sdk_8_0_3xx
+            # sdk_7_0_3xx
+            # sdk_6_0_1xx
+          ];
       in {
+        formatter = pkgs.alejandra;
+
         devenv.shells.default = {
           packages = with pkgs; [
+            # requirements
+            pkg-config
+            zlib
+            clang
+
+            # tools
+            just
             hello
-            poetry
           ];
 
-          enterShell = ''
-            hello
-          '';
-
-          languages.python = {
-            enable = true;
-            # package = pkgs.python312;
-            poetry = {
+          languages = {
+            languages.dotnet = {
               enable = true;
-              activate.enable = true;
+              package = dotnet-pkgs;
+            };
+
+            python = {
+              enable = false;
+              # package = pkgs.python312;
+              poetry = {
+                enable = true;
+                activate.enable = true;
+              };
             };
           };
 
+          scripts.pack.exec = ''
+            nix bundle --bundler github:ralismark/nix-appimage  .#helloworld --option sandbox false
+          '';
+
           pre-commit.hooks = {
             alejandra.enable = true;
-
-            isort.enable = true;
-            mypy.enable = true;
-            pylint.enable = true;
-            pyright.enable = true;
-            flake8.enable = true;
+            clang-format.enable = true;
           };
+
+          cachix.pull = ["devenv"];
           cachix.push = "kurikomoe";
         };
       };
-
-      flake = {};
     };
 }

@@ -1,13 +1,13 @@
 {
-  description = "Kuriko's Default Template";
+  description = "Kuriko's C/C++ Template";
 
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
 
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
 
     devenv = {
-      url = "github:cachix/devenv/1.3.1";
+      url = "github:cachix/devenv";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -30,6 +30,7 @@
         self',
         inputs',
         system,
+        lib,
         ...
       }: let
         pkgs = import inputs.nixpkgs {
@@ -38,6 +39,8 @@
           overlays = [];
         };
       in {
+        formatter = pkgs.alejandra;
+
         devenv.shells.default = {
           packages = with pkgs; [
             # requirements
@@ -45,8 +48,10 @@
             stdenv.cc.cc.lib
 
             cmake
+            clang-tools
             autoreconfHook
             ninja
+            mold
 
             # libs
 
@@ -55,14 +60,30 @@
             hello
           ];
 
-          enterShell = ''
-          '';
+          languages.c = {
+            enable = true;
+            debugger = pkgs.gdb;
+          };
 
-          pre-commit.hooks = {};
+          languages.cplusplus.enable = true;
+
+          languages.python = {
+            enable = false;
+            # package = pkgs.python312;
+            poetry = {
+              enable = true;
+              activate.enable = true;
+            };
+          };
+
+          pre-commit.hooks = {
+            alejandra.enable = true;
+            clang-format.enable = true;
+          };
+
+          cachix.pull = ["devenv"];
           cachix.push = "kurikomoe";
         };
       };
-
-      flake = {};
     };
 }

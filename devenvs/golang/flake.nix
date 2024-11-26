@@ -4,10 +4,10 @@
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
 
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
 
     devenv = {
-      url = "github:cachix/devenv/1.3.1";
+      url = "github:cachix/devenv";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -54,7 +54,10 @@
 
           processes.hello.exec = "hello";
 
-          pre-commit.hooks = {};
+          pre-commit.hooks = {
+            alejandra.enable = true;
+            gofmt.enable = true;
+          };
           cachix.push = "kurikomoe";
         };
       };

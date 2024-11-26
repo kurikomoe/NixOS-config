@@ -4,10 +4,10 @@
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
 
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
 
     devenv = {
-      url = "github:cachix/devenv/1.3.1";
+      url = "github:cachix/devenv";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -56,20 +56,42 @@
       in {
         devenv.shells.default = {
           packages = with pkgs; [
-            toolchains
-            cargo-generate
             hello
+            cargo-generate
           ];
 
           enterShell = ''
             hello
           '';
 
+          languages.rust = {
+            enable = true;
+            channel = "stable";
+            components = ["rustc" "cargo" "clippy" "rustfmt" "rust-analyzer"];
+            mold.enable = true;
+            targets = [];
+          };
+
+          languages.python = {
+            enable = false;
+            # package = pkgs.python312;
+            poetry = {
+              enable = true;
+              activate.enable = true;
+            };
+          };
+
           processes.hello.exec = "hello";
 
           scripts.build.exec = "cargo build $@";
 
-          pre-commit.hooks = {};
+          pre-commit.hooks = {
+            alejandra.enable = true;
+            clippy.enable = true;
+            rust-fmt = {
+              enable = true;
+            };
+          };
           cachix.push = "kurikomoe";
         };
       };

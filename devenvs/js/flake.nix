@@ -1,13 +1,13 @@
 {
-  description = "Kuriko's Default Template";
+  description = "Kuriko's JS Template";
 
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
 
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
 
     devenv = {
-      url = "github:cachix/devenv/1.3.1";
+      url = "github:cachix/devenv";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -45,21 +45,39 @@
 
           languages.javascript = {
             enable = true;
-            bun.enable = true;
+
+            # select one
+            bun = {
+              enable = true;
+              install.enable = true;
+            };
+            pnpm = {
+              enable = false;
+              install.enable = true;
+            };
+            yarn = {
+              enable = false;
+              install.enable = true;
+            };
           };
 
           languages.python = {
-            enable = true;
-            poetry.enable = true;
+            enable = false;
+            # package = pkgs.python312;
+            poetry = {
+              enable = true;
+              activate.enable = true;
+            };
           };
 
           enterShell = ''
             hello
           '';
 
-          processes.hello.exec = "hello";
-
-          pre-commit.hooks = {};
+          pre-commit.hooks = {
+            alejandra.enable = true;
+            eslint.enable = true;
+          };
           cachix.push = "kurikomoe";
         };
       };
