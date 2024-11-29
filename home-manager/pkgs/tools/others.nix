@@ -74,6 +74,10 @@ in {
     fastfetch
     topgrade
 
+    # task control
+    just
+    pueue
+
     # provide lddtree command for better ldd experience
     pax-utils
 
