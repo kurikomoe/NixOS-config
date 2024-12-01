@@ -3,14 +3,6 @@
   lib,
   ...
 }: let
-  # combined-runtime-pkgs = pkgs.symlinkJoin {
-  #   name = "dotnet-runtime-complete";
-  #   paths = with pkgs; [
-  #     dotnet-runtime_8
-  #     dotnet-runtime_7
-  #     dotnet-runtime
-  #   ];
-  # };
   combined-runtime-pkgs = with pkgs;
   with dotnetCorePackages;
     combinePackages [
@@ -25,6 +17,6 @@ in {
   ];
 
   home.sessionVariables = {
-    DOTNET_ROOT = "${combined-runtime-pkgs}/share/dotnet";
+    DOTNET_ROOT = lib.mkDefault "${combined-runtime-pkgs}/share/dotnet";
   };
 }
