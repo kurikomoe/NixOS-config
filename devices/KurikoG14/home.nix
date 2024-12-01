@@ -39,6 +39,8 @@
 
             "./libs/others.nix"
 
+            "./libs/dotnet.nix"
+
             "./libs/cuda.nix"
 
             "./apps/db/mongodb.nix"
