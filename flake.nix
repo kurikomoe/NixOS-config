@@ -181,6 +181,7 @@
 
     devices = [
       ./devices/KurikoG14
+      ./devices/SCEEServer2
       ./devices/iprc
       ./devices/KurikoArch
     ];
