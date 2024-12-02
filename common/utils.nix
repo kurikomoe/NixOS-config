@@ -1,6 +1,10 @@
 {system, ...}: let
   _commonNixPkgsConfig = {
     allowUnfree = true;
+    permittedInsecurePackages = [
+      "dotnet-runtime-7.0.20"
+    ];
+
     settings = rec {
       experimental-features = ["nix-command" "flakes"];
       substituters = [

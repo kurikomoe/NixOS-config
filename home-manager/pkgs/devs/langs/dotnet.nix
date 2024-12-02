@@ -12,6 +12,8 @@ p @ {
       sdk_8_0_3xx
       # sdk_7_0_3xx  # EOL
       # sdk_6_0_1xx  # EOL
+      # dotnet-runtime_7
+      dotnet-runtime
     ];
 in {
   home.packages = with pkgs; [

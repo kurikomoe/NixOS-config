@@ -8,12 +8,12 @@
     combinePackages [
       dotnet_9.runtime
       dotnet_8.runtime
-      dotnet-runtime_7
+      # dotnet-runtime_7
       dotnet-runtime
     ];
 in {
   home.packages = with pkgs; [
-    (lib.loPrio combined-runtime-pkgs)
+    (lib.lowPrio combined-runtime-pkgs)
   ];
 
   home.sessionVariables = {
