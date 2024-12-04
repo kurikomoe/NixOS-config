@@ -13,6 +13,7 @@ in {
     # seer
     gdbgui
     pwndbg
+    gef
 
     strace
     ltrace
