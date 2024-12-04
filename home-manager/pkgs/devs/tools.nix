@@ -12,6 +12,7 @@ in {
     # gdb ui
     # seer
     gdbgui
+    pwndbg
 
     strace
     ltrace

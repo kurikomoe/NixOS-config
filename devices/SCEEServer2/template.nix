@@ -71,9 +71,12 @@
             "./shells/fish"
 
             "./devs/common.nix"
+            "./devs/tools.nix"
             "./devs/langs"
 
             "./libs/others.nix"
+
+            "./tools"
 
             "./apps/podman.nix"
           ]
@@ -87,6 +90,9 @@
           [
             # overwrite the system nix
             repos.pkgs-unstable.nix
+
+            numactl
+            libnl
 
             # Test gui
             xorg.xeyes
