@@ -44,6 +44,7 @@
             "./libs/cuda.nix"
 
             "./apps/db/mongodb.nix"
+            "./apps/db/mariadb.nix"
 
             "./gui/fonts.nix"
             "./gui/browsers"
