@@ -4,84 +4,107 @@
   ...
 }: let
 in {
-  home.packages = with pkgs; [
-    # Terminals
-    wget
-    curl
-    htop
-    nvtopPackages.full
-    less
-    tree
-    which
-    util-linux
-    killall
+  home.packages = with pkgs;
+    [
+      # Terminals
+      wget
+      curl
+      htop
+      nvtopPackages.full
+      less
+      tree
+      which
+      util-linux
+      killall
 
-    cowsay
+      cowsay
 
-    # hardwares
-    pciutils
-    usbutils
-    ethtool
-    parted
-    gparted
+      # hardwares
+      pciutils
+      usbutils
+      ethtool
+      parted
+      gparted
 
-    kmod
+      kmod
 
-    glances
-    gtop
-    dust # du-dust
-    fd # find
-    fend
-    ripgrep # search tools
-    file
-    mlocate
+      glances
+      gtop
+      dust # du-dust
+      fd # find
+      fend
+      ripgrep # search tools
+      file
+      mlocate
 
-    libva-utils
+      libva-utils
 
-    ncdu
-    jq
-    dos2unix
+      ncdu
+      jq
+      dos2unix
 
-    asciinema # record terminal
+      asciinema # record terminal
 
-    # network
-    dig
-    lsof
-    lshw
-    hwloc
-    iftop
-    nettools
-    tcpdump
-    traceroute
-    mtr
+      # network
+      dig
+      lsof
+      lshw
+      hwloc
+      iftop
+      nettools
+      tcpdump
+      traceroute
+      mtr
 
-    caddy
-    aria2
+      caddy
+      aria2
 
-    # media
-    yt-dlp
-    ffmpeg_7-full
+      # media
+      yt-dlp
+      ffmpeg_7-full
 
-    # netdisk
-    rclone
-    rsync
+      # netdisk
+      rclone
+      rsync
 
-    # diskio
-    iotop
+      # diskio
+      iotop
 
-    # others
-    macchina
-    fastfetch
-    topgrade
+      # others
+      macchina
+      fastfetch
+      topgrade
 
-    # task control
-    just
-    pueue
+      # task control
+      just
+      pueue
 
-    # provide lddtree command for better ldd experience
-    pax-utils
+      # provide lddtree command for better ldd experience
+      pax-utils
 
-    # nix tools
-    nix-output-monitor # aka nom
-  ];
+      # nix tools
+      nix-output-monitor # aka nom
+    ]
+    ++ (with pkgs.unixtools; [
+      # (lib.lowPrio xxd)
+      (lib.lowPrio top)
+      (lib.lowPrio col)
+      (lib.lowPrio arp)
+      (lib.lowPrio wall)
+      (lib.lowPrio ping)
+      (lib.lowPrio fsck)
+      (lib.lowPrio write)
+      (lib.lowPrio watch)
+      (lib.lowPrio route)
+      (lib.lowPrio quota)
+      (lib.lowPrio fdisk)
+      (lib.lowPrio script)
+      (lib.lowPrio procps)
+      (lib.lowPrio getopt)
+      (lib.lowPrio column)
+      (lib.lowPrio whereis)
+      (lib.lowPrio netstat)
+      (lib.lowPrio nettools)
+      (lib.lowPrio ifconfig)
+    ]);
 }

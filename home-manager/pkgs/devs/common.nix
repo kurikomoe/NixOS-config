@@ -52,8 +52,15 @@ in {
     gdb
   ];
 
-  xdg.configFile."gdb/gdbinit".text = ''
+  home.enableDebugInfo = true;
+
+  home.file.".gdbinit".text = ''
+    set disassembly intel
     set debuginfod enabled on
     set auto-load safe-path /
+
+    define rr
+      r &> out.log
+    end
   '';
 }
