@@ -11,6 +11,8 @@ in {
 
     ./buildsystems.nix
     ./tools.nix
+    ./gdb
+
     # ./frameworks/tauri.nix
   ];
 
@@ -48,19 +50,5 @@ in {
     devenv
     direnv
     cachix
-
-    gdb
   ];
-
-  home.enableDebugInfo = true;
-
-  home.file.".gdbinit".text = ''
-    set disassembly intel
-    set debuginfod enabled on
-    set auto-load safe-path /
-
-    define rr
-      r &> out.log
-    end
-  '';
 }

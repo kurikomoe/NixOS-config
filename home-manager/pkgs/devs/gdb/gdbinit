@@ -1,0 +1,23 @@
+set auto-load safe-path /
+
+set disassembly intel
+set debuginfod enabled on
+
+set trace-commands on
+set logging on
+
+source ~/.config/gdb/nlohmann_json.gdb
+
+define pqts
+    set $i=0
+    while $i < $arg0.size()
+        set $c=($arg0.data()[$i++])
+        printf "%c",(char)($c.ucs)
+    end
+    printf "\n"
+end
+
+define rr
+  r &> out.log
+end
+
