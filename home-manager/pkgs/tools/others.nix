@@ -8,6 +8,7 @@ in {
     [
       # Terminals
       wget
+      wget2
       curl
       htop
       nvtopPackages.full

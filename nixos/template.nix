@@ -19,6 +19,7 @@ in
     modules =
       p.modules
       ++ [
+        ./pkgs/ssh.nix
         # -------------- basic settings ----------------
         ({
           config,

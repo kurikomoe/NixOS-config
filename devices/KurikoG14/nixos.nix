@@ -15,6 +15,8 @@
     modules = [
       ./configuration.nix
 
+      ../../nixos/pkgs/docker.nix
+
       # Also import home here
       # No! this will cause problems:
       # https://www.reddit.com/r/NixOS/comments/112ekgm/comment/j8jngb3/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
@@ -87,39 +89,6 @@
 
         # cannot enable on wsl, it will invoke building kernel
         # hardware.nvidia-container-toolkit.enable = true;
-
-        virtualisation = {
-          docker = {
-            enable = true;
-            autoPrune.enable = true;
-          };
-
-          # podman = {
-          #   enable = true;
-          #   autoPrune.enable = true;
-          # };
-
-          # oci-containers ={
-          #   backend = "podman";
-          #   containers = {
-          #     container-name = {
-          #       image = "container-image";
-          #       autoStart = true;
-          #       ports = [ "127.0.0.1:1234:1234" ];
-          #     };
-          #   };
-          # };
-        };
-
-        services = {
-          openssh = {
-            enable = true;
-            settings = {
-              PermitRootLogin = "prohibit-password";
-              PasswordAuthentication = false;
-            };
-          };
-        };
       })
     ];
   });
