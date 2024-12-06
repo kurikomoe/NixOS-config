@@ -5,6 +5,10 @@ p @ {
 }: let
 in {
   home.packages = with pkgs; [
-    go
   ];
+
+  programs.go = {
+    enable = true;
+    goPath = ".local/share/go";
+  };
 }
