@@ -30,7 +30,22 @@ in {
     # replace vanilla autojump with autojump-rs
     (lib.hiPrio autojump-rs)
     fzf
+    bat
   ];
+
+  home.sessionVariables = {
+    FZF_CTRT_T_OPTS = ''
+      --walker-skip .git,target,build,build.rel,\
+        /mnt,/nix,.local/state,.cache,\
+        logs,.vscode,.idea,dist,.DS_Store,.Trash,\
+        .pnpm-store,node_modules,\
+        __pycache__,.venv,.pip,\
+        .gradle,\
+        bundle,\
+        .direnv,.devenv
+      --preview 'bat -n --color=always {}'
+    '';
+  };
 
   home.sessionPath = [
     "$HOME/.local/bin"
