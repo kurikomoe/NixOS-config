@@ -39,7 +39,7 @@ in
         # -------------- enable nur & others overlays ----------------
         {
           # This should be safe, since nur use username as namespace.
-          nixpkgs.overlays = [inputs.nur.overlay];
+          nixpkgs.overlays = [inputs.nur.overlays.default];
           home.packages = [];
         }
         # ------------ user nix settings --------------------
