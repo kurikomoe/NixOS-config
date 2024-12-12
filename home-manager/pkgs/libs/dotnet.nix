@@ -13,10 +13,10 @@
     ];
 in {
   home.packages = with pkgs; [
-    (lib.lowPrio combined-runtime-pkgs)
+    # (lib.lowPrio combined-runtime-pkgs)
   ];
 
   home.sessionVariables = {
-    DOTNET_ROOT = lib.mkDefault "${combined-runtime-pkgs}/share/dotnet";
+    # DOTNET_ROOT = lib.mkDefault "${combined-runtime-pkgs}/share/dotnet";
   };
 }
