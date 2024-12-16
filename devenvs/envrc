@@ -1,2 +1,2 @@
 nix_direnv_manual_reload
-use flake path:./nix --no-pure-eval
+use flake .# --no-pure-eval

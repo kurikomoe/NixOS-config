@@ -10,6 +10,11 @@
       url = "github:cachix/devenv";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nixpkgs-python = {
+      url = "github:cachix/nixpkgs-python";
+      inputs = {nixpkgs.follows = "nixpkgs";};
+    };
   };
 
   nixConfig = {
@@ -74,10 +79,21 @@
             hello
           '';
 
-          pre-commit.hooks = {
-            alejandra.enable = true;
-            eslint.enable = true;
+          pre-commit = {
+            addGcRoot = true;
+            hooks = {
+              alejandra.enable = true;
+              # JS
+              eslint.enable = true;
+              # Python
+              isort.enable = true;
+              mypy.enable = true;
+              pylint.enable = true;
+              pyright.enable = true;
+              flake8.enable = true;
+            };
           };
+
           cachix.push = "kurikomoe";
         };
       };

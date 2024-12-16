@@ -10,6 +10,11 @@
       url = "github:cachix/devenv";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nixpkgs-python = {
+      url = "github:cachix/nixpkgs-python";
+      inputs = {nixpkgs.follows = "nixpkgs";};
+    };
   };
 
   nixConfig = {
@@ -71,8 +76,9 @@
             python = {
               enable = false;
               # package = pkgs.python312;
+              # version = "3.12";
               poetry = {
-                enable = true;
+                enable = false;
                 activate.enable = true;
               };
             };
@@ -85,6 +91,14 @@
           pre-commit.hooks = {
             alejandra.enable = true;
             clang-format.enable = true;
+
+            # Python
+            isort.enable = true;
+            mypy.enable = true;
+            pylint.enable = true;
+            pyright.enable = true;
+            flake8.enable = true;
+            autoflake.enable = true;
           };
 
           cachix.pull = ["devenv"];

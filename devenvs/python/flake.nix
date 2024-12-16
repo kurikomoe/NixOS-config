@@ -10,6 +10,11 @@
       url = "github:cachix/devenv";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nixpkgs-python = {
+      url = "github:cachix/nixpkgs-python";
+      inputs = {nixpkgs.follows = "nixpkgs";};
+    };
   };
 
   nixConfig = {
@@ -51,6 +56,7 @@
           languages.python = {
             enable = true;
             # package = pkgs.python312;
+            # version = "3.12";
             poetry = {
               enable = true;
               activate.enable = true;
@@ -65,7 +71,10 @@
             pylint.enable = true;
             pyright.enable = true;
             flake8.enable = true;
+            autoflake.enable = true;
           };
+
+          cachix.pull = ["devenv"];
           cachix.push = "kurikomoe";
         };
       };

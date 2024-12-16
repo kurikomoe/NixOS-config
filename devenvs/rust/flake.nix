@@ -12,6 +12,11 @@
     };
 
     fenix.url = "github:nix-community/fenix";
+
+    nixpkgs-python = {
+      url = "github:cachix/nixpkgs-python";
+      inputs = {nixpkgs.follows = "nixpkgs";};
+    };
   };
 
   nixConfig = {
@@ -34,7 +39,7 @@
         system,
         ...
       }: let
-        pkgs = import inputs.nixpkgs-nixos {
+        pkgs = import inputs.nixpkgs {
           inherit system;
           config.allowUnfree = true;
           overlays = [
@@ -44,15 +49,15 @@
 
         rust_channel = "stable";
         rust_target = "x86_64-unknown-linux-gnu";
-        toolchains = with pkgs;
-          fenix.combine [
-            fenix.${rust_channel}.rustc
-            fenix.${rust_channel}.cargo
-            fenix.${rust_channel}.clippy
-            fenix.${rust_channel}.rust-analyzer
-            fenix.${rust_channel}.rust-src
-            # fenix.target.${rust_target}.${rust_channel}.rust-std
-          ];
+        # toolchains = with pkgs;
+        #   fenix.combine [
+        #     fenix.${rust_channel}.rustc
+        #     fenix.${rust_channel}.cargo
+        #     fenix.${rust_channel}.clippy
+        #     fenix.${rust_channel}.rust-analyzer
+        #     fenix.${rust_channel}.rust-src
+        #     # fenix.target.${rust_target}.${rust_channel}.rust-std
+        #   ];
       in {
         devenv.shells.default = {
           packages = with pkgs; [
@@ -66,17 +71,18 @@
 
           languages.rust = {
             enable = true;
-            channel = "stable";
+            channel = rust_channel;
             components = ["rustc" "cargo" "clippy" "rustfmt" "rust-analyzer"];
             mold.enable = true;
             targets = [];
           };
 
           languages.python = {
-            enable = false;
-            # package = pkgs.python312;
+            enable = true;
+            # package = pkgs.python311;
+            # version = "3.11";
             poetry = {
-              enable = true;
+              enable = false;
               activate.enable = true;
             };
           };
@@ -85,13 +91,17 @@
 
           scripts.build.exec = "cargo build $@";
 
-          pre-commit.hooks = {
-            alejandra.enable = true;
-            clippy.enable = true;
-            rust-fmt = {
-              enable = true;
+          pre-commit = {
+            addGcRoot = true;
+            hooks = {
+              alejandra.enable = true;
+              clippy.enable = true;
+              rust-fmt = {
+                enable = true;
+              };
             };
           };
+
           cachix.push = "kurikomoe";
         };
       };

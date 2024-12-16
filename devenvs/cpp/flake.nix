@@ -10,6 +10,11 @@
       url = "github:cachix/devenv";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nixpkgs-python = {
+      url = "github:cachix/nixpkgs-python";
+      inputs = {nixpkgs.follows = "nixpkgs";};
+    };
   };
 
   nixConfig = {
@@ -63,25 +68,38 @@
             hello
           ];
 
-          languages.c = {
-            enable = true;
-            debugger = pkgs.gdb;
-          };
-
-          languages.cplusplus.enable = true;
-
-          languages.python = {
-            enable = false;
-            # package = pkgs.python312;
-            poetry = {
+          languages = {
+            c = {
               enable = true;
-              activate.enable = true;
+              debugger = pkgs.gdb;
+            };
+
+            cplusplus.enable = true;
+
+            python = {
+              enable = false;
+              # package = pkgs.python312;
+              # version = "3.12";
+              poetry = {
+                enable = false;
+                activate.enable = true;
+              };
             };
           };
 
-          pre-commit.hooks = {
-            alejandra.enable = true;
-            clang-format.enable = true;
+          pre-commit = {
+            addGcRoot = true;
+            hooks = {
+              alejandra.enable = true;
+              # C/C++
+              clang-format.enable = true;
+              # Python
+              isort.enable = true;
+              mypy.enable = true;
+              pylint.enable = true;
+              pyright.enable = true;
+              flake8.enable = true;
+            };
           };
 
           cachix.pull = ["devenv"];
