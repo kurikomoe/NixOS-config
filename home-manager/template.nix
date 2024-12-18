@@ -5,6 +5,7 @@
   customVars,
   repos,
   modules ? [],
+  overrideSecrets ? null,
   extraSpecialArgs ? {},
   extraNixPkgsOptions ? {},
   stateVersion ? "24.05",
@@ -32,8 +33,12 @@ in
       ++ [
         # -------------- load agenix secrets ----------------
         {
-          imports = ["${root.hm}/pkgs/age.nix"];
-          home.packages = [inputs.agenix.packages.${system}.default];
+          imports =
+            if overrideSecrets != null
+            then overrideSecrets
+            else [
+              "${root.hm}/pkgs/age.nix"
+            ];
         }
 
         # -------------- enable nur & others overlays ----------------

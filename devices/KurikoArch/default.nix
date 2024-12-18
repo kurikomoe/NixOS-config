@@ -85,6 +85,8 @@
           mesa-demos
           vulkan-tools
 
+          colmena
+
           podman
         ];
 

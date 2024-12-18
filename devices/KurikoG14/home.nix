@@ -60,6 +60,13 @@
           mesa-demos
           vulkan-tools
 
+          colmena
+          nixos-anywhere
+
+          deploy-rs
+
+          qemu
+
           podman
         ];
 

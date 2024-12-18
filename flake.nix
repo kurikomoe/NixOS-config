@@ -33,6 +33,7 @@
 
     # -------------------- tools ------------------
     pre-commit-hooks.url = "github:cachix/git-hooks.nix";
+    deploy-rs.url = "github:serokell/deploy-rs";
 
     # ------------------- Core inputs -------------------
     nur.url = "github:nix-community/NUR";
@@ -185,7 +186,11 @@
       ./devices/SCEEServer2
       ./devices/iprc
       ./devices/KurikoArch
+      ./devices/tx-vps
     ];
+
+    checksDeploy = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) inputs.deploy-rs.lib;
+    # checksDeploy = builtins.trace _checksDeploy.x86_64-linux.deploy-schema _checksDeploy;
   in
     builtins.foldl'
     (
@@ -203,17 +208,17 @@
           config
       ))
     )
-    {
+    rec {
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
 
-      checks = forAllSystems (system: {
+      checks = nixpkgs.lib.recursiveUpdate checksDeploy (forAllSystems (system: {
         pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
           src = ./.;
           hooks = {
             alejandra.enable = true;
           };
         };
-      });
+      }));
 
       devShells = forAllSystems (system: {
         default = nixpkgs.legacyPackages.${system}.mkShell {

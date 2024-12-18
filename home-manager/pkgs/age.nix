@@ -15,15 +15,12 @@
   ];
 
   secret_file = filepath: {
-    ${filepath}.file = "${root.base}/res/${filepath}.age";
+    "${filepath}".file = "${root.base}/res/${filepath}.age";
   };
 
   agenix-edit = let
     identFiles = lib.lists.foldl' (acc: el: acc + "-i ${el}") "" identityPaths;
-  in (pkgs.writeShellScriptBin "agenix-edit" ''
-    set -xe
-    agenix ${identFiles} -e $@
-  '');
+  in (pkgs.writeShellScriptBin "agenix-edit" "agenix ${identFiles} -e $@");
 in {
   imports = [
     inputs.agenix.homeManagerModules.default
@@ -31,14 +28,13 @@ in {
 
   home.packages = with pkgs; [
     agenix-edit
+    inputs.agenix.packages.${system}.default
   ];
 
   age = {
     secretsDir = "${home}/.agenix";
 
-    identityPaths = [
-      "${home}/.ssh/id_ed25519_age"
-    ];
+    inherit identityPaths;
 
     secrets =
       {}

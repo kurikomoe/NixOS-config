@@ -47,7 +47,7 @@ in
             pkg-config
 
             home-manager
-            binutils
+            (lib.hiPrio binutils)
             neovim
             vim
             wget

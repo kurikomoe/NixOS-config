@@ -21,7 +21,7 @@ in {
     autoreconfHook
 
     pkg-config
-    llvmPackages.bintools
+    (lib.lowPrio llvmPackages.bintools)
 
     just
 

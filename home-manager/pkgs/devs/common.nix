@@ -18,7 +18,7 @@ in {
 
   home.packages = with pkgs; [
     # Shell Tools
-    binutils
+    (lib.hiPrio binutils)
     coreutils-full
 
     asdf-vm
