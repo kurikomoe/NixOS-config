@@ -1,7 +1,6 @@
 {
   description = "Kuriko's AIO Dev Template";
 
-  #region
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
 
@@ -19,7 +18,6 @@
 
     fenix.url = "github:nix-community/fenix";
   };
-  #endregion
 
   nixConfig = {
     extra-trusted-public-keys = "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=";
@@ -60,12 +58,13 @@
 
           languages.python = {
             enable = true;
+            uv.enable = true;
             # package = pkgs.python312;
             # version = "3.12";
-            poetry = {
-              enable = false;
-              activate.enable = true;
-            };
+            # poetry = {
+            #   enable = false;
+            #   activate.enable = true;
+            # };
           };
 
           pre-commit = {
@@ -88,7 +87,6 @@
 
         devenv.shells = rec {
           # ====================== Python ==========================
-          #region
           python =
             devenv.shells.base
             // {
@@ -102,18 +100,17 @@
 
               languages.python = {
                 enable = true;
+                uv.enable = true;
                 # package = pkgs.python312;
                 # version = "3.12";
-                poetry = {
-                  enable = true;
-                  activate.enable = true;
-                };
+                # poetry = {
+                #   enable = true;
+                #   activate.enable = true;
+                # };
               };
             };
-          #endregion
 
           # ====================== JavaScript ==========================
-          #region
           js =
             devenv.shells.base
             // {
@@ -146,10 +143,8 @@
                 eslint.enable = true;
               };
             };
-          #endregion
 
           # ====================== C/C++ ==========================
-          #region
           cpp =
             devenv.shells.base
             // rec {
@@ -192,10 +187,8 @@
                 clang-format.enable = true;
               };
             };
-          #endregion
 
           # ====================== Rust ==========================
-          #region
           rust = let
             rust_channel = "stable";
             rust_target = "x86_64-unknown-linux-gnu";
@@ -238,10 +231,8 @@
                 };
               };
             };
-          #endregion
 
           # ====================== dotnet ==========================
-          #region
           dotnet = let
             # For EOL dotnet, should add to allowInsecure in pkgs import.
             combinedDotnetPkgs = with pkgs;
@@ -280,7 +271,6 @@
                 };
               };
             };
-          #endregion
         };
       };
     };
