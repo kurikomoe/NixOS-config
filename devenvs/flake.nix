@@ -88,8 +88,8 @@
         devenv.shells = rec {
           # ====================== Python ==========================
           python =
-            devenv.shells.base
-            // {
+            lib.recursiveUpdate devenv.shells.base
+            rec {
               packages = with pkgs; [
                 hello
               ];
@@ -112,8 +112,8 @@
 
           # ====================== JavaScript ==========================
           js =
-            devenv.shells.base
-            // {
+            lib.recursiveUpdate devenv.shells.base
+            {
               packages = with pkgs; [
                 hello
               ];
@@ -146,8 +146,8 @@
 
           # ====================== C/C++ ==========================
           cpp =
-            devenv.shells.base
-            // rec {
+            lib.recursiveUpdate devenv.shells.base
+            rec {
               # Enable this to avoid forced -O2
               # hardeningDisable = [ "all" ];
 
@@ -202,8 +202,8 @@
                 # fenix.target.${rust_target}.${rust_channel}.rust-std
               ];
           in
-            devenv.shells.base
-            // rec {
+            lib.recursiveUpdate devenv.shells.base
+            rec {
               packages = with pkgs; [
                 hello
                 cargo-generate
@@ -244,8 +244,8 @@
                 # sdk_6_0_1xx
               ];
           in
-            devenv.shells.base
-            // rec {
+            lib.recursiveUpdate devenv.shells.base
+            rec {
               packages = with pkgs; [
                 hello
               ];
