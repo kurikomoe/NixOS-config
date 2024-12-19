@@ -50,7 +50,17 @@
 
             # "./apps/podman.nix"
           ]
-          ++ [];
+          ++ [
+            ../../home-manager/pkgs/devs/langs/python.nix
+            ../../home-manager/pkgs/devs/langs/c_cpp.nix
+            ../../home-manager/pkgs/devs/langs/node.nix
+            ../../home-manager/pkgs/devs/common.nix
+            ../../home-manager/pkgs/devs/tools.nix
+            ../../home-manager/pkgs/tools/tmux
+            ../../home-manager/pkgs/tools/others.nix
+            ../../home-manager/pkgs/tools/vim
+            ../../home-manager/pkgs/tools/vscode-server.nix
+          ];
 
         home.packages = with pkgs; [];
 

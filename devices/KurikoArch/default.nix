@@ -86,6 +86,7 @@
           vulkan-tools
 
           colmena
+          deploy-rs
 
           podman
         ];
