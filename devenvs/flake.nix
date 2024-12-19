@@ -2,21 +2,24 @@
   description = "Kuriko's AIO Dev Template";
 
   inputs = {
-    flake-parts.url = "github:hercules-ci/flake-parts";
-
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
-
-    devenv = {
-      url = "github:cachix/devenv";
-      inputs.nixpkgs.follows = "nixpkgs";
+    devenv-root = {
+      url = "file+file:///dev/null";
+      flake = false;
     };
+
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    devenv.url = "github:cachix/devenv";
+    nix2container.url = "github:nlewo/nix2container";
+    nix2container.inputs.nixpkgs.follows = "nixpkgs";
+    mk-shell-bin.url = "github:rrbutani/nix-mk-shell-bin";
+
+    fenix.url = "github:nix-community/fenix";
 
     nixpkgs-python = {
       url = "github:cachix/nixpkgs-python";
       inputs = {nixpkgs.follows = "nixpkgs";};
     };
-
-    fenix.url = "github:nix-community/fenix";
   };
 
   nixConfig = {
@@ -24,13 +27,17 @@
     extra-substituters = "https://devenv.cachix.org";
   };
 
-  outputs = inputs @ {flake-parts, ...}:
+  outputs = inputs @ {
+    flake-parts,
+    devenv-root,
+    ...
+  }:
     flake-parts.lib.mkFlake {inherit inputs;} {
       imports = [
         inputs.devenv.flakeModule
       ];
 
-      systems = ["x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin"];
+      systems = ["x86_64-linux" "i686-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin"];
 
       perSystem = {
         config,
@@ -53,8 +60,23 @@
       in rec {
         formatter = pkgs.alejandra;
 
+        packages.default = pkgs.hello;
+
         devenv.shells.base = {
-          packages = with pkgs; [];
+          name = "base";
+
+          devenv.root = let
+            devenvRootFileContent = builtins.readFile devenv-root.outPath;
+          in
+            pkgs.lib.mkIf (devenvRootFileContent != "") devenvRootFileContent;
+
+          imports = [
+            # This is just like the imports in devenv.nix.
+            # See https://devenv.sh/guides/using-with-flake-parts/#import-a-devenv-module
+            # ./devenv-foo.nix
+          ];
+
+          packages = with pkgs; [config.packages.default];
 
           languages.python = {
             enable = true;
@@ -272,6 +294,12 @@
               };
             };
         };
+      };
+
+      flake = {
+        # The usual flake attributes can be defined here, including system-
+        # agnostic ones like nixosModule and system-enumerating ones, although
+        # those are more easily expressed in perSystem.
       };
     };
 }
