@@ -13,7 +13,7 @@
     inherit inputs root customVars repos pkgs;
 
     overrideSecrets = [
-      ./age.nix
+      ./age-hm.nix
     ];
 
     stateVersion = "24.11";

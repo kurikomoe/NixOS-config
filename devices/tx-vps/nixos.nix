@@ -17,7 +17,7 @@
       ./bootstrap/configuration.nix
       ./bootstrap/hardware-configuration.nix
 
-      # "${root}/nixos/pkgs/docker.nix"
+      ./age-nixos.nix
 
       {
         imports = [
@@ -71,10 +71,13 @@
           docker-compose
         ];
 
+        # age.secrets."clash/config.m.yaml".path = "/etc/clash/config.m.yaml";
+
         services.mihomo = {
           enable = true;
           tunMode = true;
-          configFile = "/etc/config.m.yaml";
+          configFile = config.age.secrets."clash/config.m.yaml".path;
+          # configFile = "/etc/clash/config.m.yaml";
         };
 
         swapDevices = [

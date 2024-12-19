@@ -12,7 +12,7 @@ in
   with customVars; {
     specialArgs =
       {
-        inherit customVars repos inputs;
+        inherit root customVars repos inputs;
       }
       // (inputs.specialArgs or {});
 
