@@ -51,7 +51,9 @@
             "./gui/jetbrains.nix"
 
             # "./apps/podman.nix"
-            "./apps/radare2.nix"
+            "./apps/ReverseEngineering/radare2.nix"
+            "./apps/ReverseEngineering/ghidra.nix"
+            "./apps/ReverseEngineering/frida.nix"
           ]
           ++ [];
 
