@@ -51,6 +51,7 @@
             "./gui/jetbrains.nix"
 
             # "./apps/podman.nix"
+            "./apps/radare2.nix"
           ]
           ++ [];
 
