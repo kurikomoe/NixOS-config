@@ -183,13 +183,18 @@
 
     devices = [
       ./devices/KurikoG14
+      ./devices/KurikoArch
+
+      ./devices/tx-vps
+
       ./devices/SCEEServer2
       ./devices/iprc
-      ./devices/KurikoArch
-      ./devices/tx-vps
     ];
 
-    checksDeploy = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) inputs.deploy-rs.lib;
+    checksDeploy =
+      builtins.mapAttrs
+      (system: deployLib: deployLib.deployChecks self.deploy)
+      inputs.deploy-rs.lib;
     # checksDeploy = builtins.trace _checksDeploy.x86_64-linux.deploy-schema _checksDeploy;
   in
     builtins.foldl'

@@ -143,7 +143,7 @@
               languages.javascript = {
                 enable = true;
 
-                # Select one and comment out
+                ## Select one and comment out others
                 # bun = {
                 #   enable = true;
                 # };
@@ -291,6 +291,35 @@
                   pass_filenames = false;
                   stages = ["pre-commit"];
                 };
+              };
+            };
+
+          ## ====================== case by case projects ==========================
+
+          # ====================== dixous desktop linux ==========================
+          dixous = let
+            rust_channel = "nightly";
+            rust_target = "x86_64-unknown-linux-gnu";
+          in
+            lib.recursiveUpdate devenvs.shells.rust
+            rec {
+              packages = with pkgs; [
+                cargo-binstall
+
+                # Desktop
+                glib
+                libsoup_3
+                webkitgtk_4_1
+                xdo
+                xdotool # -lxdo
+              ];
+
+              languages.rust = {
+                enable = true;
+                channel = rust_channel;
+                components = ["rustc" "cargo" "clippy" "rustfmt" "rust-analyzer"];
+                mold.enable = false;
+                targets = ["wasm32-unknown-unknown"];
               };
             };
         };
