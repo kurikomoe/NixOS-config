@@ -27,7 +27,7 @@ in
           lib,
           ...
         }: {
-          boot.tmp.useTmpfs = false;
+          boot.tmp.useTmpfs = lib.mkDefault false;
 
           boot.kernel.sysctl = {
             "kernel.core_pattern" = "./core.%e.%p.%t";

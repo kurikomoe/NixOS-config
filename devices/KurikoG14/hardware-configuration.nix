@@ -37,6 +37,8 @@ in {
   boot.kernelModules = ["kvm-amd"];
   boot.extraModulePackages = [];
 
+  boot.tmp.useTmpfs = true;
+
   fileSystems = {
     "/home/kuriko/Projects" = {
       device = "/dev/disk/by-uuid/59eb1b70-d82d-4d62-9622-284d1515f849";
