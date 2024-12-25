@@ -106,7 +106,7 @@ in
               "./tools/topgrade"
               "./tools/direnv.nix"
               "./tools/network.nix"
-              "./tools/others.nix"
+              # "./tools/others.nix"
 
               "./tools/vscode-server.nix"
 
@@ -130,6 +130,76 @@ in
 
               nss_ldap
               nss
+
+              # Terminals
+              wget
+              wget2
+              curl
+              htop
+              nvtopPackages.full
+              less
+              tree
+              which
+              util-linux
+              killall
+
+              cowsay
+
+              # hardwares
+              pciutils
+              ethtool
+
+              gtop
+              dust # du-dust
+              fd # find
+              fend
+              ripgrep # search tools
+              file
+              mlocate
+
+              ncdu
+              jq
+              dos2unix
+
+              # network
+              dig
+              lsof
+              lshw
+              hwloc
+              iftop
+              nettools
+              # tcpdump
+              # traceroute
+              # mtr
+
+              # caddy
+              aria2
+
+              # media
+              # yt-dlp
+              # ffmpeg_7-full
+
+              # netdisk
+              # rclone
+              # rsync
+
+              # diskio
+              iotop
+
+              # others
+              macchina
+              fastfetch
+              # topgrade
+
+              # task control
+              just
+              pueue
+
+              # provide lddtree command for better ldd experience
+              pax-utils
+
+              # nix tools
+              nix-output-monitor # aka nom
             ]
             ++ (map (e: (lib.hiPrio e)) shellScripts);
 
