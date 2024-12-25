@@ -3,8 +3,8 @@ set auto-load safe-path /
 set disassembly intel
 set debuginfod enabled on
 
-set trace-commands on
-set logging on
+# set trace-commands on
+# set logging on
 
 source ~/.config/gdb/nlohmann_json.gdb
 
