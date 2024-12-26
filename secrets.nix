@@ -24,6 +24,10 @@ let
       "id_ed25519_age.pub".publicKeys = keys;
     };
 
+    "res/frp" = {
+      "frps.toml".publicKeys = keys_tx;
+    };
+
     "res/gh" = {
       "hosts.yml".publicKeys = keys;
     };

@@ -43,6 +43,14 @@
         ...
       }: let
       in {
+        disabledModules = [
+          "services/networking/frp.nix"
+        ];
+
+        imports = [
+          "${root.pkgs}/frp.nix"
+        ];
+
         users.defaultUserShell = pkgs.fish;
 
         users.users.${username} = {
@@ -71,13 +79,21 @@
           docker-compose
         ];
 
-        # age.secrets."clash/config.m.yaml".path = "/etc/clash/config.m.yaml";
-
         services.mihomo = {
           enable = true;
           tunMode = true;
           configFile = config.age.secrets."clash/config.m.yaml".path;
-          # configFile = "/etc/clash/config.m.yaml";
+        };
+
+        age.secrets."frp/frps.toml" = {
+          owner = "nobody";
+          mode = "400";
+        };
+
+        services.frp = {
+          enable = true;
+          role = "server";
+          settings = config.age.secrets."frp/frps.toml".path;
         };
 
         swapDevices = [

@@ -26,6 +26,7 @@ in {
     secrets =
       {}
       # ----------------------------------------------------------
+      // secret_file "frp/frps.toml"
       // secret_file "clash/config.m.yaml";
   };
 }
