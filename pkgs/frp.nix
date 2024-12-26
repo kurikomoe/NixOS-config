@@ -65,34 +65,9 @@ in {
             Type = "simple";
             Restart = "on-failure";
             RestartSec = 15;
-            ExecStart = "${cfg.package}/bin/${executableFile} --strict_config -c ${configFile}";
-            StateDirectoryMode = lib.optionalString isServer "0700";
-            User = "nobody";
-            # DynamicUser = true;
-            # Hardening
-            UMask = lib.optionalString isServer "0007";
-            CapabilityBoundingSet = serviceCapability;
-            AmbientCapabilities = serviceCapability;
-            PrivateDevices = true;
-            ProtectHostname = true;
-            ProtectClock = true;
-            ProtectKernelTunables = true;
-            ProtectKernelModules = true;
-            ProtectKernelLogs = true;
-            ProtectControlGroups = true;
-            RestrictAddressFamilies =
-              [
-                "AF_INET"
-                "AF_INET6"
-              ]
-              ++ lib.optionals isClient ["AF_UNIX"];
-            LockPersonality = true;
-            MemoryDenyWriteExecute = true;
-            RestrictRealtime = true;
-            RestrictSUIDSGID = true;
-            PrivateMounts = false;
-            SystemCallArchitectures = "native";
-            SystemCallFilter = ["@system-service"];
+            LoadCredential = "frps.toml:${configFile}";
+            ExecStart = "${cfg.package}/bin/${executableFile} --strict_config -c \${CREDENTIALS_DIRECTORY}/frps.toml";
+            DynamicUser = true;
           };
         };
       };

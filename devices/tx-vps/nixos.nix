@@ -85,10 +85,9 @@
           configFile = config.age.secrets."clash/config.m.yaml".path;
         };
 
-        age.secrets."frp/frps.toml" = {
-          owner = "nobody";
-          mode = "400";
-        };
+        # age.secrets."frp/frps.toml" = {
+        #   mode = "400";
+        # };
 
         services.frp = {
           enable = true;

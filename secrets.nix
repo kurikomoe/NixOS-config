@@ -26,6 +26,7 @@ let
 
     "res/frp" = {
       "frps.toml".publicKeys = keys_tx;
+      "frpc-arch.toml".publicKeys = [key_age];
     };
 
     "res/gh" = {
