@@ -4,5 +4,9 @@ in {
     # tools
     just
     pueue
+
+    # View hex
+    hexyl
+    hexdump
   ];
 }

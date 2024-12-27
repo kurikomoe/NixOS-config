@@ -56,7 +56,7 @@ in
             which
             git
 
-            tzdata
+            patchelf
 
             inputs.nix-alien.packages.${system}.nix-alien
           ];
