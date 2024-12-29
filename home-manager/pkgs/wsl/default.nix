@@ -71,7 +71,7 @@
     })
     // (mkBinWinAbs {
       name = "typora";
-      src = "/mnt/c/Windows/System32/clip.exe";
+      src = "/mnt/c/Program Files/Typora/Typora.exe";
     })
     // (mkBinWinAbs {
       name = "wsl.exe";

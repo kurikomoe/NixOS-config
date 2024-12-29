@@ -79,29 +79,22 @@
 
           languages.python = {
             enable = true;
-            # package = pkgs.python311;
-            # version = "3.11";
-            poetry = {
-              enable = false;
-              activate.enable = true;
-            };
+            uv.enable = true;
           };
 
-          processes.hello.exec = "hello";
-
-          scripts.build.exec = "cargo build $@";
+          scripts."build".exec = "cargo build $@";
+          scripts."run".exec = "cargo run $@";
 
           pre-commit = {
             addGcRoot = true;
             hooks = {
               alejandra.enable = true;
               clippy.enable = true;
-              rust-fmt = {
-                enable = true;
-              };
+              rustfmt.enable = true;
             };
           };
 
+          cachix.pull = ["devenv"];
           cachix.push = "kurikomoe";
         };
       };

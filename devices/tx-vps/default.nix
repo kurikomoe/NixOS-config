@@ -66,6 +66,7 @@ in
         profiles.system = {
           user = "root";
           sshUser = "root";
+          fastConnection = true;
           autoRollback = true;
           magicRollback = true;
           remoteBuild = false;

@@ -47,7 +47,7 @@
             "./apps/db/mariadb.nix"
 
             "./gui/fonts.nix"
-            "./gui/browsers"
+            "./gui/browsers/firefox"
             "./gui/jetbrains.nix"
 
             # "./apps/podman.nix"
