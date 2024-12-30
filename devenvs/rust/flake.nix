@@ -5,6 +5,7 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
 
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs";
 
     devenv = {
       url = "github:cachix/devenv";
@@ -46,19 +47,47 @@
             inputs.fenix.overlays.default
           ];
         };
+        pkgs-unstable = import inputs.nixpkgs-unstable {
+          inherit system;
+          config.allowUnfree = true;
+          overlays = [
+            inputs.fenix.overlays.default
+          ];
+        };
 
-        rust_channel = "stable";
+        rust_channel = "latest";
         rust_target = "x86_64-unknown-linux-gnu";
-        # toolchains = with pkgs;
-        #   fenix.combine [
-        #     fenix.${rust_channel}.rustc
-        #     fenix.${rust_channel}.cargo
-        #     fenix.${rust_channel}.clippy
-        #     fenix.${rust_channel}.rust-analyzer
-        #     fenix.${rust_channel}.rust-src
-        #     # fenix.target.${rust_target}.${rust_channel}.rust-std
-        #   ];
+
+        toolchain = with pkgs;
+          fenix.${rust_channel}.withComponents [
+            "cargo"
+            "clippy"
+            "rust-src"
+            "rustc"
+            "rustfmt"
+          ];
+
+        rustPlatform = pkgs.makeRustPlatform {
+          cargo = toolchain;
+          rustc = toolchain;
+        };
       in {
+        packages.default = rustPlatform.buildRustPackage rec {
+          pname = "hello-world";
+          version = "0.0.1";
+          cargoLock.lockFile = ./Cargo.lock;
+          src = pkgs.lib.cleanSource ./.;
+        };
+
+        packages.docker = pkgs.dockerTools.buildImage {
+          name = "hello-world";
+          config = {
+            Cmd = [
+              "${packages.default}/bin/hello-world"
+            ];
+          };
+        };
+
         devenv.shells.default = {
           packages = with pkgs; [
             hello
@@ -71,10 +100,12 @@
 
           languages.rust = {
             enable = true;
-            channel = rust_channel;
-            components = ["rustc" "cargo" "clippy" "rustfmt" "rust-analyzer"];
-            mold.enable = true;
-            targets = [];
+            mold.enable = false;
+            toolchain.cargo = toolchain;
+            toolchain.clippy = toolchain;
+            toolchain.rust-analyzer = toolchain;
+            toolchain.rustc = toolchain;
+            toolchain.rustfmt = toolchain;
           };
 
           languages.python = {

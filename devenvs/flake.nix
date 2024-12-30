@@ -8,7 +8,10 @@
     };
 
     flake-parts.url = "github:hercules-ci/flake-parts";
+
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs";
+
     devenv.url = "github:cachix/devenv";
     nix2container.url = "github:nlewo/nix2container";
     nix2container.inputs.nixpkgs.follows = "nixpkgs";
@@ -48,6 +51,17 @@
         ...
       }: let
         pkgs = import inputs.nixpkgs {
+          inherit system;
+          config = {
+            allowUnfree = true;
+            permittedInsecurePackages = [
+              # "dotnet-sdk-7.0.410"
+            ];
+          };
+          overlays = [];
+        };
+
+        pkgs-unstable = import inputs.nixpkgs-unstable {
           inherit system;
           config = {
             allowUnfree = true;
@@ -212,17 +226,22 @@
 
           # ====================== Rust ==========================
           rust = let
-            rust_channel = "stable";
+            rust_channel = "latest";
             rust_target = "x86_64-unknown-linux-gnu";
-            toolchains = with pkgs;
-              fenix.combine [
-                fenix.${rust_channel}.rustc
-                fenix.${rust_channel}.cargo
-                fenix.${rust_channel}.clippy
-                fenix.${rust_channel}.rust-analyzer
-                fenix.${rust_channel}.rust-src
-                # fenix.target.${rust_target}.${rust_channel}.rust-std
+
+            toolchain = with pkgs;
+              fenix.${rust_channel}.withComponents [
+                "cargo"
+                "clippy"
+                "rust-src"
+                "rustc"
+                "rustfmt"
               ];
+
+            rustPlatform = pkgs.makeRustPlatform {
+              cargo = toolchain;
+              rustc = toolchain;
+            };
           in
             lib.recursiveUpdate devenv.shells.base
             rec {
@@ -236,9 +255,9 @@
               '';
 
               languages.rust = {
+                inherit toolchain;
+
                 enable = true;
-                channel = rust_channel;
-                components = ["rustc" "cargo" "clippy" "rustfmt" "rust-analyzer"];
                 mold.enable = true;
                 targets = [];
               };
@@ -316,10 +335,12 @@
 
               languages.rust = {
                 enable = true;
-                channel = rust_channel;
-                components = ["rustc" "cargo" "clippy" "rustfmt" "rust-analyzer"];
                 mold.enable = false;
-                targets = ["wasm32-unknown-unknown"];
+                toolchain.cargo = toolchain;
+                toolchain.clippy = toolchain;
+                toolchain.rust-analyzer = toolchain;
+                toolchain.rustc = toolchain;
+                toolchain.rustfmt = toolchain;
               };
             };
         };
