@@ -38,6 +38,10 @@ let
       "cachix.nix.conf".publicKeys = keys;
     };
 
+    "res/docker" = {
+      "config.json".publicKeys = keys;
+    };
+
     "res/clash" = {
       "config.m.yaml".publicKeys = keys;
     };

@@ -50,5 +50,11 @@ in {
     devenv
     direnv
     cachix
+
+    # openapi
+    openapi-generator-cli
+
+    protobuf
+    protoscope
   ];
 }

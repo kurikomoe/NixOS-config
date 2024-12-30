@@ -64,6 +64,8 @@
 
         home.packages = with pkgs; [];
 
+        age.secrets."docker/config.json".path = ".docker/config.json";
+
         services.podman = {
           enable = true;
         };

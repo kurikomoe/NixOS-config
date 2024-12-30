@@ -29,6 +29,7 @@ in {
   };
 
   boot.loader.grub = {
+    configurationLimit = 2; # avoid using up the /boot disk space
     efiSupport = true;
     devices = ["/dev/vda"];
     efiInstallAsRemovable = true;

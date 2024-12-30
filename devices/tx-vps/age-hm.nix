@@ -48,6 +48,8 @@ in {
       # // secret_file "ssh/id_ed25519.pub"
       # // secret_file "ssh/id_ed25519_age.pub"
       # ----------------------------------------------------------
+      // secret_file "docker/config.json"
+      # ----------------------------------------------------------
       // secret_file "gh/hosts.yml"
       # ----------------------------------------------------------
       // secret_file "nix/access-tokens"
