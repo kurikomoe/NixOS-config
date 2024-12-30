@@ -55,6 +55,10 @@
           ];
         };
 
+        cargoTOML = builtins.fromTOML (builtins.readFile ./Cargo.toml);
+        name = cargoTOML.package.name;
+        version = cargoTOML.package.version;
+
         rust_channel = "latest";
         rust_target = "x86_64-unknown-linux-gnu";
 
@@ -73,17 +77,18 @@
         };
       in {
         packages.default = rustPlatform.buildRustPackage rec {
-          pname = "hello-world";
-          version = "0.0.1";
+          inherit version;
+          pname = name;
           cargoLock.lockFile = ./Cargo.lock;
           src = pkgs.lib.cleanSource ./.;
         };
 
         packages.docker = pkgs.dockerTools.buildImage {
-          name = "hello-world";
+          name = name;
+          tag = version;
           config = {
             Cmd = [
-              "${packages.default}/bin/hello-world"
+              "${packages.default}/bin/${name}"
             ];
           };
         };
