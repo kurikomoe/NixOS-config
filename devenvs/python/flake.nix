@@ -5,6 +5,7 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
 
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs";
 
     devenv = {
       url = "github:cachix/devenv";
@@ -55,7 +56,7 @@
 
           languages.python = {
             enable = true;
-            # package = pkgs.python312;
+            package = pkgs.python312;
             # version = "3.12";
             poetry = {
               enable = true;

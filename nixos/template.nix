@@ -38,6 +38,8 @@ in
             settings =
               utils._commonNixPkgsConfig.settings
               // {
+                always-allow-substitutes = lib.mkDefault true;
+                auto-optimise-store = lib.mkDefault true;
                 trusted-users = [username];
               };
           };

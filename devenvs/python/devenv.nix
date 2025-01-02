@@ -1,82 +1,52 @@
 {
-  inputs = {
-    nixpkgs.url = "github:cachix/devenv-nixpkgs/rolling";
-    nixpkgs-nixos.url = "github:nixos/nixpkgs/master";
+  pkgs,
+  lib,
+  config,
+  inputs,
+  ...
+}: {
+  # https://devenv.sh/basics/
+  env.GREET = "devenv";
 
-    systems.url = "github:nix-systems/default";
+  # https://devenv.sh/packages/
+  packages = with pkgs; [
+    hello
+    git
 
-    devenv.url = "github:cachix/devenv";
-    devenv.inputs.nixpkgs.follows = "nixpkgs";
+    # Github Action Tester
+    act
+  ];
 
-    nixpkgs-python.url = "github:cachix/nixpkgs-python";
-    nixpkgs-python.inputs = {nixpkgs.follows = "nixpkgs";};
+  languages.python = {
+    enable = true;
+    package = pkgs.python312;
+    poetry = {
+      enable = true;
+      activate.enable = true;
+    };
   };
 
-  nixConfig = {
-    extra-trusted-public-keys = "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=";
-    extra-substituters = "https://devenv.cachix.org";
-  };
+  enterShell = ''
+  '';
 
-  outputs = {
-    self,
-    nixpkgs,
-    devenv,
-    systems,
-    ...
-  } @ inputs: let
-    forEachSystem = nixpkgs.lib.genAttrs (import systems);
-  in {
-    packages = forEachSystem (system: {
-      devenv-up = self.devShells.${system}.default.config.procfileScript;
-    });
+  # tasks = {
+  #   "myproj:setup".exec = "mytool build";
+  #   "devenv:enterShell".after = [ "myproj:setup" ];
+  # };
 
-    devShells = forEachSystem (
-      system: let
-        pkgs = import nixpkgs {
-          inherit system;
-          config = {
-            allowUnfree = true;
-            # cudaSupport = true;
-            # cudnnSupport = true;
-          };
-        };
+  enterTest = ''
+    echo "Running tests"
+    git --version | grep --color=auto "${pkgs.git.version}"
+  '';
 
-        pkgs-nixos = import inputs.nixpkgs-nixos {
-          inherit system;
-          config = {
-            allowUnfree = true;
-            # cudaSupport = true;
-            # cudnnSupport = true;
-          };
-        };
-      in {
-        default = devenv.lib.mkShell {
-          inherit inputs pkgs;
-          modules = [
-            {
-              # https://devenv.sh/reference/options/
-              packages = with pkgs; [
-                hello
-              ];
+  pre-commit.hooks = {
+    alejandra.enable = true;
 
-              enterShell = ''
-                export BLUEARCHIVE=true;
-                export LD_LIBRARY_PATH="${pkgs.stdenv.cc.cc.lib}/lib/"
-              '';
-
-              languages.python = {
-                enable = true;
-                package = pkgs.python3;
-                poetry = {
-                  enable = true;
-                  activate.enable = true;
-                  install.enable = true;
-                };
-              };
-            }
-          ];
-        };
-      }
-    );
+    isort.enable = true;
+    mypy.enable = true;
+    pylint.enable = true;
+    pyright.enable = true;
+    flake8.enable = true;
+    autoflake.enable = true;
   };
 }
