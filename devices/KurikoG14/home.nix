@@ -26,6 +26,12 @@
 
     modules = [
       ({pkgs, ...}: {
+        nixpkgs.overlays = [
+          (final: prev: {
+            fish = repos.pkgs-fish-test.fish;
+          })
+        ];
+
         imports =
           utils.buildImports root.hm-pkgs [
             "./wsl"

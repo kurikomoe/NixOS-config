@@ -16,6 +16,7 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    nixpkgs-fish-test.url = "github:NixOS/nixpkgs/pull/367229/head";
     # nixpkgs.url = "https://mirrors.ustc.edu.cn/nix-channels/nixos-24.11/nixexprs.tar.xz";
     # nixpkgs-unstable.url = "https://mirrors.ustc.edu.cn/nix-channels/nixpkgs-unstable/nixexprs.tar.xz";
 
@@ -167,6 +168,8 @@
     in rec {
       pkgs-stable = cImport inputs.nixpkgs {};
       pkgs-unstable = cImport inputs.nixpkgs-unstable {};
+
+      pkgs-fish-test = cImport inputs.nixpkgs-fish-test {};
 
       pkgs-nur = import inputs.nur {
         pkgs = pkgs-stable;
