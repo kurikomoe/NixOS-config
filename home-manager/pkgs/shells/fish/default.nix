@@ -61,6 +61,7 @@ in {
 
   programs = {
     dircolors.enableFishIntegration = true;
+    atuin.enableFishIntegration = true;
 
     zoxide = {
       enable = true;

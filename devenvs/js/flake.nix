@@ -1,5 +1,5 @@
 {
-  description = "Kuriko's JS Template";
+  description = "Kuriko's Javascript/Typescript Workspace";
 
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
@@ -42,37 +42,28 @@
           config.allowUnfree = true;
           overlays = [];
         };
+
+        packageManager = "pnpm";
       in {
         devenv.shells.default = {
           packages = with pkgs; [
             hello
           ];
 
+          languages.typescript.enable = true;
           languages.javascript = {
             enable = true;
 
-            # select one
-            bun = {
+            "${packageManager}" = {
               enable = true;
-              install.enable = true;
-            };
-            pnpm = {
-              enable = false;
-              install.enable = true;
-            };
-            yarn = {
-              enable = false;
               install.enable = true;
             };
           };
 
           languages.python = {
             enable = false;
-            # package = pkgs.python312;
-            poetry = {
-              enable = true;
-              activate.enable = true;
-            };
+            package = pkgs.python312;
+            uv.enable = true;
           };
 
           enterShell = ''
@@ -91,10 +82,21 @@
               pylint.enable = true;
               pyright.enable = true;
               flake8.enable = true;
+
+              eslint-typescript = {
+                enable = true;
+                name = "eslint typescript";
+                entry = "${packageManager} eslint ";
+                files = "\\.(tsx|ts|js)$";
+                types = ["text"];
+                excludes = ["dist/.*"];
+                pass_filenames = true;
+                verbose = true;
+              };
             };
           };
 
-          cachix.push = "kurikomoe";
+          cachix.pull = ["devenv"];
         };
       };
 
