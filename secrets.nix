@@ -45,6 +45,10 @@ let
     "res/clash" = {
       "config.m.yaml".publicKeys = keys;
     };
+
+    "res/atuin" = {
+      "key".publicKeys = keys;
+    };
   };
 
   flattenAttrsWithAge = attrs:

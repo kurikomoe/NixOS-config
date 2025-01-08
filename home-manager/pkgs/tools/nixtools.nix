@@ -11,7 +11,7 @@
   nixtools = with customVars; [
     (pkgs.writeShellScriptBin "hms" ''
       set -e
-      home-manager --flake "${home}/.nixos#${username}@${hostName}" switch;
+      home-manager --flake "${home}/.nixos#${username}@${hostName}" switch $@;
       nixdiff-hm;
     '')
 

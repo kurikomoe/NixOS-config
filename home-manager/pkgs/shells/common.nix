@@ -24,6 +24,7 @@ p @ {
 in {
   imports = [
     "${root.hm-pkgs}/devs/common.nix"
+    ./atuin.nix
   ];
 
   home.packages = with pkgs; [
@@ -31,7 +32,6 @@ in {
     (lib.hiPrio autojump-rs)
     fzf
     bat
-    atuin
   ];
 
   home.sessionVariables = {
@@ -56,14 +56,9 @@ in {
   home.shellAliases = {
     # Others
     # j = "z";
-    at = "atuin";
   };
 
   programs = {
-    atuin = {
-      enable = true;
-      enableFishIntegration = true;
-    };
     dircolors = {
       enable = true;
       extraConfig = builtins.readFile ./common_data/dir_colors;
