@@ -47,6 +47,21 @@ in
           nixpkgs.overlays = [inputs.nur.overlays.default];
           home.packages = [];
         }
+        # -------------- nixGL ------------------
+        ({
+          inputs,
+          pkgs,
+          system,
+          nixpkgs,
+          ...
+        }: {
+          nixpkgs.overlays = [inputs.nixgl.overlays.default];
+
+          nixGL = {
+            packages = inputs.nixgl.packages;
+            defaultWrapper = "mesa";
+          };
+        })
         # ------------ user nix settings --------------------
         ({
           config,

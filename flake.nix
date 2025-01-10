@@ -32,6 +32,12 @@
     nixpkgs-cuda-12_4.url = "github:nixos/nixpkgs/5ed627539ac84809c78b2dd6d26a5cebeb5ae269";
     nixpkgs-cuda-12_2.url = "github:nixos/nixpkgs/0cb2fd7c59fed0cd82ef858cbcbdb552b9a33465";
 
+    # GUI
+    nixgl = {
+      url = "github:nix-community/nixGL";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # -------------------- tools ------------------
     pre-commit-hooks.url = "github:cachix/git-hooks.nix";
     deploy-rs.url = "github:serokell/deploy-rs";
