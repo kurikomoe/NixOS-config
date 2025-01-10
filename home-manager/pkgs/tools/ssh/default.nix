@@ -47,6 +47,6 @@ in {
   };
 
   home.activation.sshAuthorizedKeys = lib.hm.dag.entryAfter ["linkGeneration"] ''
-    run cat $HOME/.ssh/*.pub >> $HOME/.ssh/authorized_keys
+    # run cat $HOME/.ssh/*.pub >> $HOME/.ssh/authorized_keys
   '';
 }
