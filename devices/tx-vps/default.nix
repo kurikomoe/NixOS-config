@@ -69,7 +69,7 @@ in
           fastConnection = true;
           autoRollback = true;
           magicRollback = true;
-          remoteBuild = false;
+          remoteBuild = true;
           path =
             inputs.deploy-rs.lib.${system}.activate.nixos
             nixosConfigurations.${hostName};

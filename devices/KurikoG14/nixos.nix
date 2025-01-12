@@ -57,6 +57,15 @@
         };
       }
 
+      {
+        imports = [
+          "${root.base}/pkgs/nixos/wsl-drop-caches.nix"
+        ];
+
+        services."wsl-drop-caches".enable = true;
+        services."wsl-drop-caches".interval = "30s";
+      }
+
       ({
         pkgs,
         lib,
