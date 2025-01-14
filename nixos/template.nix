@@ -29,6 +29,12 @@ in
         }: {
           boot.tmp.useTmpfs = lib.mkDefault false;
 
+          boot.kernelParams = [
+            "audit=0"
+            "net.ifnames=0"
+            "mitigations=off"
+          ];
+
           boot.kernel.sysctl = {
             "kernel.core_pattern" = "./core.%e.%p.%t";
           };

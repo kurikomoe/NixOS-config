@@ -20,6 +20,7 @@ in {
   boot.kernelParams = [
     "audit=0"
     "net.ifnames=0"
+    "mitigations=off"
   ];
 
   boot.initrd = {
@@ -29,7 +30,7 @@ in {
   };
 
   boot.loader.grub = {
-    configurationLimit = 2; # avoid using up the /boot disk space
+    configurationLimit = 4; # avoid using up the /boot disk space
     efiSupport = true;
     devices = ["/dev/vda"];
     efiInstallAsRemovable = true;
