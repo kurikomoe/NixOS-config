@@ -221,12 +221,21 @@ in
             LD_PRELOAD = "/usr/lib64/libnss_ldap.so.2";
           };
 
+          programs.atuin = lib.mkForce {
+            enable = true;
+            enableFishIntegration = true;
+            settings = {
+              key_path = config.age.secrets."atuin/key".path;
+              db_path = "/tmp/${username}/atuin/history.db";
+              auto_sync = true;
+              sync_frequency = "5m";
+            };
+          };
+
           programs = {
             git = {
               extraConfig = {
-                http = {
-                  proxy = "http://127.0.0.1:8891";
-                };
+                http.proxy = "http://127.0.0.1:8891";
               };
             };
           };
