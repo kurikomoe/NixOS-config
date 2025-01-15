@@ -73,6 +73,18 @@
             pyright.enable = true;
             flake8.enable = true;
             autoflake.enable = true;
+
+            # Check Secrets
+            trufflehog = {
+              enable = true;
+              entry = let
+                script = pkgs.writeShellScript "precommit-trufflehog" ''
+                  set -e
+                  ${pkgs.trufflehog}/bin/trufflehog --no-update git "file://$(git rev-parse --show-toplevel)" --only-verified --fail
+                '';
+              in
+                builtins.toString script;
+            };
           };
 
           cachix.pull = ["devenv"];

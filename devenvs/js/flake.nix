@@ -93,6 +93,18 @@
                 pass_filenames = true;
                 verbose = true;
               };
+
+              # Check Secrets
+              trufflehog = {
+                enable = true;
+                entry = let
+                  script = pkgs.writeShellScript "precommit-trufflehog" ''
+                    set -e
+                    ${pkgs.trufflehog}/bin/trufflehog --no-update git "file://$(git rev-parse --show-toplevel)" --only-verified --fail
+                  '';
+                in
+                  builtins.toString script;
+              };
             };
           };
 

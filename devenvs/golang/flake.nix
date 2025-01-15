@@ -57,6 +57,18 @@
           pre-commit.hooks = {
             alejandra.enable = true;
             gofmt.enable = true;
+
+            # Check Secrets
+            trufflehog = {
+              enable = true;
+              entry = let
+                script = pkgs.writeShellScript "precommit-trufflehog" ''
+                  set -e
+                  ${pkgs.trufflehog}/bin/trufflehog --no-update git "file://$(git rev-parse --show-toplevel)" --only-verified --fail
+                '';
+              in
+                builtins.toString script;
+            };
           };
           cachix.push = "kurikomoe";
         };

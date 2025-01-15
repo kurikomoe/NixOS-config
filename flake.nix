@@ -228,8 +228,20 @@
       checks = nixpkgs.lib.recursiveUpdate checksDeploy (forAllSystems (system: {
         pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
           src = ./.;
-          hooks = {
+          hooks = let
+            pkgs = allRepos.${system}.pkgs-stable;
+          in {
             alejandra.enable = true;
+            trufflehog = {
+              enable = true;
+              entry = let
+                script = pkgs.writeShellScript "precommit-trufflehog" ''
+                  set -e
+                  ${pkgs.trufflehog}/bin/trufflehog --no-update git "file://$(git rev-parse --show-toplevel)" --only-verified --fail
+                '';
+              in
+                builtins.toString script;
+            };
           };
         };
       }));
