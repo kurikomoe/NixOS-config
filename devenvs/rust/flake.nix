@@ -75,7 +75,7 @@
           cargo = toolchain;
           rustc = toolchain;
         };
-      in {
+      in rec {
         packages.default = rustPlatform.buildRustPackage rec {
           inherit version;
           pname = name;
