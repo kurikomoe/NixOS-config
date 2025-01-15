@@ -134,7 +134,7 @@
                 entry = let
                   script = pkgs.writeShellScript "precommit-trufflehog" ''
                     set -e
-                    ${pkgs.trufflehog}/bin/trufflehog --no-update git "file://$(git rev-parse --show-toplevel)" --only-verified --fail
+                    ${pkgs.trufflehog}/bin/trufflehog --no-update git "file://$(git rev-parse --show-toplevel)" --since-commit HEAD --results=verified --fail
                   '';
                 in
                   builtins.toString script;
