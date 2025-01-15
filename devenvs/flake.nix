@@ -108,12 +108,27 @@
             hooks = {
               alejandra.enable = true;
               # Python
-              isort.enable = true;
-              mypy.enable = true;
               pylint.enable = true;
               pyright.enable = true;
               flake8.enable = true;
+
+              isort.enable = true;
               autoflake.enable = true;
+              mypy = {
+                enable = true;
+                excludes = [
+                  # ".*yarn_spinner_pb2.py$"
+                  # "yarn_spinner_pb2.py"
+                  # "third/.*"
+                ];
+                args = [
+                  # "--disable-error-code=attr-defined"
+                ];
+                extraPackages = with pkgs; [
+                  # python312Packages.protobuf
+                  # python312Packages.types-protobuf
+                ];
+              };
 
               trufflehog = {
                 enable = true;
