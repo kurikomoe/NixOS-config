@@ -1,0 +1,11 @@
+NIX=nix
+
+SHA=$(cat $NIX/** | sha256sum | cut -d' ' -f 1)
+CACHE_PATH=~/.sparseflake/$SHA
+if [ ! -d $CACHE_PATH ]; then
+  mkdir -p $CACHE_PATH
+  cp -r $NIX $CACHE_PATH
+fi
+
+use flake $CACHE_PATH/$NIX --impure
+

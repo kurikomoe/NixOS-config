@@ -11,7 +11,7 @@ in {
       wget2
       curl
       htop
-      nvtopPackages.full
+      # nvtopPackages.full
       less
       tree
       which
