@@ -9,10 +9,10 @@
   ];
 
   virtualisation = {
-    docker = {
-      enable = true;
-      autoPrune.enable = true;
-    };
+    # docker = {
+    #   enable = true;
+    #   autoPrune.enable = true;
+    # };
 
     # podman = {
     #   enable = true;
