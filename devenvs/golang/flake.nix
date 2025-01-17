@@ -70,6 +70,8 @@
                 builtins.toString script;
             };
           };
+
+          cachix.pull = ["devenv"];
           cachix.push = "kurikomoe";
         };
       };
