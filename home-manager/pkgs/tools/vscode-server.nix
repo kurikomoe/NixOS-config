@@ -15,7 +15,7 @@ p @ {
   ];
 
   services.vscode-server = {
-    enableFHS = true;
+    enableFHS = false;
     enable = true;
   };
 }

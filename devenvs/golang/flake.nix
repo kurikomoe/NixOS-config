@@ -32,18 +32,41 @@
         system,
         ...
       }: let
+        name = "test";
+
         pkgs = import inputs.nixpkgs {
           inherit system;
           config.allowUnfree = true;
           overlays = [];
         };
       in {
+        imports = [
+          # ./build.nix
+        ];
+
+        packages.default = packages."sakura-share";
+
+        packages.${name} = pkgs.buildGoModule {
+          pname = name;
+          version = "0.0.1";
+
+          GOPROXY = "https://goproxy.cn,direct";
+          GO111MODULE = "on";
+
+          src = lib.cleanSource ./.;
+
+          vendorHash = "";
+        };
+
         devenv.shells.default = {
           packages = with pkgs; [
             hello
           ];
 
           enterShell = ''
+            export GO111MODULE=on
+            export GOPROXY=https://goproxy.cn,direct
+
             hello
           '';
 
