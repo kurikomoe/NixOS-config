@@ -11,7 +11,7 @@ p @ {
   home.packages = with pkgs; [
     # wait for fix
     # devcontainer
-    (pkgs.callPackage "${root.pkgs}/devcontainer.nix" {})
+    # (pkgs.callPackage "${root.pkgs}/devcontainer.nix" {})
   ];
 
   services.vscode-server = {
