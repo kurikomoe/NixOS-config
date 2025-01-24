@@ -19,6 +19,8 @@ in
     modules =
       p.modules
       ++ [
+        inputs.nur.modules.nixos.default
+
         ./pkgs/ssh.nix
         # -------------- basic settings ----------------
         ({

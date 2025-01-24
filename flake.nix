@@ -43,7 +43,15 @@
     deploy-rs.url = "github:serokell/deploy-rs";
 
     # ------------------- Core inputs -------------------
-    nur.url = "github:nix-community/NUR";
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    kuriko-nur = {
+      url = "github:kurikomoe/nur-packages";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
 
@@ -182,11 +190,16 @@
         nurpkgs = pkgs-unstable;
       };
 
+      pkgs-kuriko-nur = import inputs.kuriko-nur {
+        pkgs = pkgs-stable;
+        nurpkgs = pkgs-unstable;
+      };
+
       agenix = import inputs.agenix {inherit system;};
 
       cuda = {
         "12.2" = cImport inputs.nixpkgs-cuda-12_2 {cudaSupport = true;};
-        "12.4" = cImport inputs.nixpkgs-cuda-12_4 {cudaSupport = true;};
+        # "12.4" = cImport inputs.nixpkgs-cuda-12_4 {cudaSupport = true;};
       };
     });
 
