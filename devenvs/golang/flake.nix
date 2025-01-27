@@ -30,6 +30,7 @@
         self',
         inputs',
         system,
+        lib,
         ...
       }: let
         name = "test";
@@ -39,7 +40,7 @@
           config.allowUnfree = true;
           overlays = [];
         };
-      in {
+      in rec {
         imports = [
           # ./build.nix
         ];
