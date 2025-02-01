@@ -8,6 +8,8 @@
   configFile = cfg.settings;
   isClient = cfg.role == "client";
   isServer = cfg.role == "server";
+
+  isSystem = builtins.getEnv "NIXOS" == "1"; # Check if running in NixOS
 in {
   options = {
     services.frp = {
@@ -50,26 +52,50 @@ in {
       if isClient
       then "frpc"
       else "frps";
-  in
-    lib.mkIf cfg.enable {
-      systemd.services = {
-        frp = {
-          wants = lib.optionals isClient ["network-online.target"];
-          after =
-            if isClient
-            then ["network-online.target"]
-            else ["network.target"];
-          wantedBy = ["multi-user.target"];
-          description = "A fast reverse proxy frp ${cfg.role}";
-          serviceConfig = {
-            Type = "simple";
-            Restart = "on-failure";
-            RestartSec = 15;
-            LoadCredential = "frps.toml:${configFile}";
-            ExecStart = "${cfg.package}/bin/${executableFile} --strict_config -c \${CREDENTIALS_DIRECTORY}/frps.toml";
-            DynamicUser = true;
-          };
-        };
+
+    frp = {
+      description = "A fast reverse proxy frp ${cfg.role}";
+      wants = lib.optionals isClient ["network-online.target"];
+      wantedBy = ["multi-user.target"];
+      after =
+        if isClient
+        then ["network-online.target"]
+        else ["network.target"];
+      serviceConfig = {
+        Type = "simple";
+        Restart = "on-failure";
+        RestartSec = 15;
+        LoadCredential = "frps.toml:${configFile}";
+        ExecStart = "${cfg.package}/bin/${executableFile} --strict_config -c \${CREDENTIALS_DIRECTORY}/frps.toml";
+        DynamicUser = true;
       };
     };
+
+    config =
+      if isSystem
+      then {inherit frp;}
+      else {
+        frp = {
+          Unit = {
+            Description = frp.description;
+            After = frp.after;
+            Wants = frp.wants;
+          };
+
+          Install.WantedBy = frp.wantedBy;
+
+          Service = lib.removeAttrs frp.serviceConfig ["DynamicUser"];
+          # Service = frp.serviceConfig;
+        };
+      };
+  in
+    lib.mkIf cfg.enable (
+      if isSystem
+      then {
+        systemd.services = config;
+      }
+      else {
+        systemd.user.services = config;
+      }
+    );
 }

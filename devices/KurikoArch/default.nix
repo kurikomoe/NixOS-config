@@ -50,7 +50,15 @@
     };
 
     modules = [
-      (inputs @ {pkgs, ...}: {
+      (inputs @ {
+        pkgs,
+        config,
+        ...
+      }: {
+        disabledModules = [
+          "services/networking/frp.nix"
+        ];
+
         imports =
           utils.buildImports root.hm-pkgs [
             "./shells/fish"
@@ -71,6 +79,7 @@
             # "./apps/podman.nix"
           ]
           ++ [
+            "${root.pkgs}/frp.nix"
             (import ../../home-manager/pkgs/tools (inputs // {topgrade = false;}))
           ];
 
@@ -90,6 +99,12 @@
 
           podman
         ];
+
+        services.frp = {
+          enable = true;
+          role = "client";
+          settings = config.age.secrets."frp/frpc-arch.toml".path;
+        };
 
         services.podman = {
           enable = true;
