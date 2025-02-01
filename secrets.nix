@@ -3,7 +3,7 @@ let
 
   system_tx = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPM25/UG2xBAdE679n4HzWfApH+0ezYKK0cEC+JicZcg";
   user_tx = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHYWa0plFvmQkJIHG15fkLqX6cjyg5pimMnnplGc2y7n";
-  keys_tx = [system_tx user_tx];
+  keys_tx = [key_age system_tx user_tx];
 
   keys = [key_age] ++ keys_tx;
 

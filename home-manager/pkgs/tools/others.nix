@@ -18,6 +18,8 @@ in {
       util-linux
       killall
 
+      frp
+
       tldr
 
       cowsay
