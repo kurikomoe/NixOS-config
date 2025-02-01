@@ -6,7 +6,7 @@
   ...
 }: {
   home.packages = with pkgs; [
-    repos.pkgs-unstable.mongodb-ce
+    repos.pkgs-stable.mongodb-ce
     mongodb-tools
     mongosh
   ];
