@@ -48,7 +48,7 @@
         ];
 
         imports = [
-          "${root.pkgs}/frp.nix"
+          "${root.pkgs}/nixos/frp.nix"
         ];
 
         users.defaultUserShell = pkgs.fish;

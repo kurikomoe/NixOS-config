@@ -79,7 +79,7 @@
             # "./apps/podman.nix"
           ]
           ++ [
-            "${root.pkgs}/frp.nix"
+            "${root.pkgs}/home-manager/frp.nix"
             (import ../../home-manager/pkgs/tools (inputs // {topgrade = false;}))
           ];
 

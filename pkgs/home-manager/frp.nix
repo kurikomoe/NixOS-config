@@ -9,7 +9,7 @@
   isClient = cfg.role == "client";
   isServer = cfg.role == "server";
 
-  isSystem = builtins.getEnv "NIXOS" == "1"; # Check if running in NixOS
+  isSystem = false;
 in {
   options = {
     services.frp = {
@@ -71,7 +71,7 @@ in {
       };
     };
 
-    config =
+    config_ =
       if isSystem
       then {inherit frp;}
       else {
@@ -92,10 +92,10 @@ in {
     lib.mkIf cfg.enable (
       if isSystem
       then {
-        systemd.services = config;
+        systemd.services = config_;
       }
       else {
-        systemd.user.services = config;
+        systemd.user.services = config_;
       }
     );
 }
