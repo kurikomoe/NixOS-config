@@ -3,6 +3,7 @@
 [core]
 	eol = lf
 	autocrlf = input
+	quotepath = false
 [credential "https://github.com"]
 	helper =
 	helper = !/usr/bin/env gh auth git-credential

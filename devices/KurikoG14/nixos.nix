@@ -84,6 +84,25 @@
 
         networking.hostName = hostName;
 
+        nix.buildMachines = [
+          {
+            protocol = "ssh-ng";
+            hostName = "frp-desk";
+            sshUser = "kuriko";
+            system = "x86_64-linux";
+            systems = ["x86_64-linux"];
+            maxJobs = 8;
+            speedFactor = 10;
+            supportedFeatures = ["nixos-test" "benchmark" "big-parallel" "kvm"];
+            mandatoryFeatures = [];
+          }
+        ];
+        nix.distributedBuilds = true;
+        # optional, useful when the builder has a faster internet connection than yours
+        nix.extraOptions = ''
+          builders-use-substitutes = true
+        '';
+
         environment.systemPackages = with pkgs; [
           sshfs
           steam-run
