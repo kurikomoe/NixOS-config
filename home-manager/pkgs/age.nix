@@ -56,6 +56,8 @@ in {
       # ----------------------------------------------------------
       // secret_file "frp/frpc-arch.toml"
       # ----------------------------------------------------------
+      // secret_file "builders/kurikoArch.ssh"
+      # ----------------------------------------------------------
       // secret_file "nix/access-tokens"
       // secret_file "nix/cachix.nix.conf";
   };

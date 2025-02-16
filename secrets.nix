@@ -1,11 +1,18 @@
 let
   key_age = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK88u8wb/Zcxd8WQoBgcZANWzrgar0iYvOhvr5yGtbw0";
 
-  system_tx = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPM25/UG2xBAdE679n4HzWfApH+0ezYKK0cEC+JicZcg";
-  user_tx = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHYWa0plFvmQkJIHG15fkLqX6cjyg5pimMnnplGc2y7n";
-  keys_tx = [key_age system_tx user_tx];
+  keys_tx = [
+    key_age
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPM25/UG2xBAdE679n4HzWfApH+0ezYKK0cEC+JicZcg System"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHYWa0plFvmQkJIHG15fkLqX6cjyg5pimMnnplGc2y7n User"
+  ];
 
-  keys = [key_age] ++ keys_tx;
+  keys_kurikoG14 = [
+    key_age
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG/WB1rjs8Gqtxjn7gPpuXzQ0Lpfs5egSC/w161ifboo root@KurikoNixOS"
+  ];
+
+  keys = [key_age] ++ keys_tx ++ keys_kurikoG14;
 
   file_list = {
     "res/gnupg" = {
@@ -48,6 +55,10 @@ let
 
     "res/atuin" = {
       "key".publicKeys = keys;
+    };
+
+    "res/builders" = {
+      "kurikoArch.ssh".publicKeys = keys;
     };
   };
 

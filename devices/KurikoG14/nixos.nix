@@ -17,6 +17,8 @@
 
       ../../nixos/pkgs/docker.nix
 
+      ./age-nixos.nix
+
       # Also import home here
       # No! this will cause problems:
       # https://www.reddit.com/r/NixOS/comments/112ekgm/comment/j8jngb3/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
@@ -66,6 +68,8 @@
         services."wsl-drop-caches".interval = "30s";
       }
 
+      ../../common/builders
+
       ({
         pkgs,
         lib,
@@ -84,19 +88,6 @@
 
         networking.hostName = hostName;
 
-        nix.buildMachines = [
-          {
-            protocol = "ssh-ng";
-            hostName = "frp-desk";
-            sshUser = "kuriko";
-            system = "x86_64-linux";
-            systems = ["x86_64-linux"];
-            maxJobs = 8;
-            speedFactor = 10;
-            supportedFeatures = ["nixos-test" "benchmark" "big-parallel" "kvm"];
-            mandatoryFeatures = [];
-          }
-        ];
         nix.distributedBuilds = true;
         # optional, useful when the builder has a faster internet connection than yours
         nix.extraOptions = ''
