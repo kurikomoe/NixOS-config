@@ -11,7 +11,7 @@ in {
   programs.ssh.extraConfig = ''
     Host ${hostTag}
       HostName ${hostName}
-      User ${username};
+      User ${username}
       PubkeyAcceptedKeyTypes ssh-ed25519
       ServerAliveInterval 60
       IPQoS throughput

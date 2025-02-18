@@ -11,7 +11,7 @@ in {
   config.programs.ssh.extraConfig = ''
     Host ${hostTag}
       HostName ${hostName}
-      User ${username};
+      User ${username}
       ServerAliveInterval 60
       IdentityFile /etc/ssh/ssh_host_ed25519_key
   '';
