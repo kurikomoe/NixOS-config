@@ -1,18 +1,21 @@
 {config, ...}: let
   username = "kuriko";
 
-  hostName = "kurikoArch";
+  hostName = "192.168.3.100";
   hostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPJuY6OLjTZ4/eWaaW8HKZrBhg+zX0Y+xo+4SMJQp05s";
 
   keyFile = "/etc/ssh/ssh_host_ed25519_key";
 
-  hostTag = "builder.${hostName}";
+  hostTag = "bs.kurikoArch";
 in {
-  config.age.secrets."builders/kurikoArch.ssh".mode = "444";
-
   config.programs.ssh.extraConfig = ''
     Host ${hostTag}
-      include ${config.age.secrets."builders/kurikoArch.ssh".path}
+      HostName ${hostName}
+      User ${username}
+      PubkeyAcceptedKeyTypes ssh-ed25519
+      ServerAliveInterval 60
+      IPQoS throughput
+      IdentityFile /etc/ssh/ssh_host_ed25519_key
   '';
 
   config.programs.ssh.knownHosts = {
@@ -27,7 +30,7 @@ in {
   '';
 
   config.nix = {
-    distributedBuilds = true;
+    distributedBuilds = false;
     buildMachines = [
       {
         protocol = "ssh-ng";
@@ -35,7 +38,7 @@ in {
         system = "x86_64-linux";
         systems = ["x86_64-linux"];
         maxJobs = 100;
-        speedFactor = 10;
+        speedFactor = 100;
         supportedFeatures = ["nixos-test" "benchmark" "big-parallel" "kvm"];
       }
     ];

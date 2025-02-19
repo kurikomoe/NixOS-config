@@ -2,11 +2,11 @@
   username = "root";
 
   hostName = "eu.nixbuild.net";
-  hostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPJuY6OLjTZ4/eWaaW8HKZrBhg+zX0Y+xo+4SMJQp05s";
+  hostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPIQCZc54poJ8vqawd8TraNryQeJnvH1eLpIDgbiqymM";
 
   keyFile = "/etc/ssh/ssh_host_ed25519_key";
 
-  hostTag = "builder.${hostName}";
+  hostTag = "bs.nixbuild";
 in {
   programs.ssh.extraConfig = ''
     Host ${hostTag}
@@ -21,12 +21,12 @@ in {
   programs.ssh.knownHosts = {
     ${hostTag} = {
       hostNames = [hostName];
-      publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPIQCZc54poJ8vqawd8TraNryQeJnvH1eLpIDgbiqymM";
+      publicKey = hostKey;
     };
   };
 
   nix = {
-    distributedBuilds = true;
+    distributedBuilds = false;
     buildMachines = [
       {
         protocol = "ssh-ng";

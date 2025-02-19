@@ -71,9 +71,18 @@
             "rustfmt"
           ];
 
-        rustPlatform = pkgs.makeRustPlatform {
+        rustPlatform = pkgs-unstable.makeRustPlatform {
           cargo = toolchain;
           rustc = toolchain;
+        };
+
+        deps = with pkgs; [
+          pkg-config
+          openssl
+        ];
+
+        env = {
+          PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
         };
       in rec {
         packages.default = rustPlatform.buildRustPackage rec {
@@ -81,6 +90,11 @@
           pname = name;
           cargoLock.lockFile = ./Cargo.lock;
           src = pkgs.lib.cleanSource ./.;
+
+          buildInputs = with pkgs; [] ++ deps;
+          nativebuildInputs = with pkgs; [] ++ deps;
+
+          inherit env;
         };
 
         packages.docker = pkgs.dockerTools.buildImage {
@@ -94,10 +108,12 @@
         };
 
         devenv.shells.default = {
-          packages = with pkgs; [
-            hello
-            cargo-generate
-          ];
+          packages = with pkgs;
+            [
+              hello
+              cargo-generate
+            ]
+            ++ deps;
 
           enterShell = ''
             hello

@@ -88,12 +88,6 @@
 
         networking.hostName = hostName;
 
-        nix.distributedBuilds = true;
-        # optional, useful when the builder has a faster internet connection than yours
-        nix.extraOptions = ''
-          builders-use-substitutes = true
-        '';
-
         environment.systemPackages = with pkgs; [
           sshfs
           steam-run

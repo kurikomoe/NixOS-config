@@ -1,7 +1,7 @@
 {...}: {
   imports = [
-    ./kurikoArch-local.nix
-    ./kurikoArch-remote.nix
+    ./kurikoArch.local.nix
+    ./kurikoArch.remote.nix
     ./nixbuild.nix
   ];
 }
