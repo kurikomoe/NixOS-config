@@ -18,15 +18,15 @@
     (pkgs.writeShellScriptBin "nixs" ''
       set -e
       # for nix 2.18
-      sudo nixos-rebuild --flake "$HOME/.nixos#${hostName}" switch;
-      home-manager --flake "$HOME/.nixos#${username}@${hostName}" switch;
+      sudo nixos-rebuild --flake "$HOME/.nixos#${hostName}" switch $@;
+      home-manager --flake "$HOME/.nixos#${username}@${hostName}" switch $@;
       nixdiff;
     '')
 
     (pkgs.writeShellScriptBin "nixup" ''
       sudo true
       nix flake update --flake "$HOME/.nixos";
-      nixs
+      nixs $@
     '')
 
     (pkgs.writeShellScriptBin "nixdiff-os" ''
