@@ -1,0 +1,30 @@
+# For third-party projects, we dont want to introduce extra flake related settings
+PATH_BASED=0
+
+# The target devshell
+TARGET=.#base
+
+# ========================================================================
+if ! has nix_direnv_version || ! nix_direnv_version 2.2.1; then
+  source_url "https://raw.githubusercontent.com/nix-community/nix-direnv/2.2.1/direnvrc" "sha256-zelF0vLbEl5uaqrfIzbgNzJWGmLzCmYAkInj/LNxvKs="
+fi
+
+nix_direnv_manual_reload
+
+# watch_file flake.nix
+# watch_file flake.lock
+
+DEVENV_ROOT_FILE="$(mktemp)"
+printf %s "$PWD" > "$DEVENV_ROOT_FILE"
+
+if [ $PATH_BASED -eq 1 ]; then
+  if ! use flake path:nix$TARGET --override-input devenv-root "file+file://$DEVENV_ROOT_FILE"
+  then
+    echo "devenv could not be built. The devenv environment was not loaded. Make the necessary changes to devenv.nix and hit enter to try again." >&2
+  fi
+else
+  if ! use flake $TARGET --override-input devenv-root "file+file://$DEVENV_ROOT_FILE"
+  then
+    echo "devenv could not be built. The devenv environment was not loaded. Make the necessary changes to devenv.nix and hit enter to try again." >&2
+  fi
+fi
