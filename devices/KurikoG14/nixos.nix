@@ -88,6 +88,18 @@
 
         networking.hostName = hostName;
 
+        fonts.fontDir.enable = true;
+        fonts.packages = with pkgs; [
+          noto-fonts
+          noto-fonts-cjk-sans
+          noto-fonts-cjk-serif
+          liberation_ttf
+          fira-code
+          fira-code-symbols
+          wqy_zenhei
+          wqy_microhei
+        ];
+
         environment.systemPackages = with pkgs; [
           sshfs
           steam-run

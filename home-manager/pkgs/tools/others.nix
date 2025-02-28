@@ -89,6 +89,9 @@ in {
 
       # nix tools
       nix-output-monitor # aka nom
+
+      # PDF
+      qpdf # 无损切分 pdf，qpdf input.pdf --pages input.pdf 79-94 -- output_79_94.pdf
     ]
     ++ (with pkgs.unixtools; [
       # (lib.lowPrio xxd)

@@ -1,0 +1,10 @@
+.direnv/
+.devenv/
+
+.pre-commit-config.yaml
+
+
+### Created by https://www.gitignore.io
+### direnv ###
+.direnv
+.envrc
