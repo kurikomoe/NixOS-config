@@ -90,7 +90,7 @@
             };
 
             # Check Secrets
-            trufflehog = {
+            hooks.trufflehog = {
               enable = true;
               entry = let
                 script = pkgs.writeShellScript "precommit-trufflehog" ''
