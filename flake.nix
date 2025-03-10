@@ -204,10 +204,10 @@
     });
 
     devices = [
-      ./devices/KurikoG14
-      ./devices/KurikoArch
+      # ./devices/KurikoG14
+      # ./devices/KurikoArch
 
-      ./devices/tx-vps
+      # ./devices/tx-vps
 
       ./devices/cpuserver58
       ./devices/iprc
@@ -225,8 +225,9 @@
         let
           config = let
             params = {inherit inputs root versionMap allRepos;};
+            cfg = import "${device}" params;
           in
-            import "${device}" params;
+            builtins.trace "${device}: ${builtins.concatStringsSep "," (builtins.attrNames cfg)}" cfg;
         in
           config
       ))

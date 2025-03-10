@@ -87,7 +87,6 @@ else let
             "./apps/podman.nix"
           ]
           ++ [
-            (import ../../home-manager/pkgs/tools (inputs // {topgrade = false;}))
           ];
 
         targets.genericLinux.enable = true;

@@ -130,11 +130,11 @@ in
           programs = lib.mkDefault {
             home-manager.enable = true;
 
-            ssh = lib.mkDefault {
-              enable = true;
-              compression = true;
-              forwardAgent = true;
-            };
+            # ssh = lib.mkDefault {
+            #   enable = true;
+            #   compression = true;
+            #   forwardAgent = true;
+            # };
 
             fish = lib.mkDefault {
               enable = true;
