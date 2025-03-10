@@ -10,7 +10,8 @@
   xdg_config = config.xdg.configHome;
 
   identityPaths = [
-    "${home}/.ssh/id_ed25519_age"
+    "${home}/.ssh/id_ed25519"
+    "${home}/.ssh/id_ed25519_cpuserver58"
   ];
 
   secret_file = filepath: {
@@ -35,6 +36,9 @@ in {
 
     secrets =
       {}
+      # ----------------------------------------------------------
+      // secret_file "ssh/id_ed25519"
+      // secret_file "ssh/id_ed25519.pub"
       # ----------------------------------------------------------
       // secret_file "gnupg/private.pgp"
       // secret_file "gnupg/public.pgp"

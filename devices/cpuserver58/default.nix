@@ -83,6 +83,7 @@ else let
             "./libs/others.nix"
 
             "./tools"
+            "./tools/ssh"
 
             "./apps/podman.nix"
           ]
