@@ -39,7 +39,7 @@
       };
     };
 
-    overrideSecrets = ./age.nix;
+    overrideSecrets = [./age.nix];
 
     modules = [
       (inputs @ {pkgs, ...}: let

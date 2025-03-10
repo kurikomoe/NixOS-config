@@ -5,8 +5,6 @@
 }: {
   imports =
     [
-      ./ssh
-
       ./git
       ./gnupg.nix
 

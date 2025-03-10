@@ -6,10 +6,17 @@
   lib,
   ...
 }: let
-  # age_helper = import "${root.base}/common/age-helper.nix";
-  # files = {
-  # };
-  # age_secrets_filelist = age_helper.buildAgeSecretsFileList files;
+  age_helper = import "${root.base}/common/age-helper.nix";
+
+  files = {
+    "ssh/config" = ".ssh/data/config";
+    "ssh/id_rsa" = ".ssh/id_rsa";
+    "ssh/id_rsa.pub" = ".ssh/id_rsa.pub";
+    "ssh/id_ed25519" = ".ssh/id_ed25519";
+    "ssh/id_ed25519.pub" = ".ssh/id_ed25519.pub";
+  };
+
+  age_secrets_filelist = age_helper.buildAgeSecretsFileList files;
 in {
   home.packages = with pkgs; [
     p7zip
@@ -19,7 +26,7 @@ in {
     mosh
   ];
 
-  # age.secrets = age_secrets_filelist;
+  age.secrets = age_secrets_filelist;
 
   programs = {
     ssh = {
@@ -28,9 +35,9 @@ in {
       addKeysToAgent = "yes";
       extraConfig = "";
       forwardAgent = true;
-      # includes = [
-      #   "data/config"
-      # ];
+      includes = [
+        "data/config"
+      ];
       serverAliveInterval = 60;
     };
   };

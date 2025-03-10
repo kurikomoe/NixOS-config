@@ -42,6 +42,7 @@
             "./devs/langs"
 
             "./tools"
+            "./tools/ssh/complete.nix"
 
             "./libs/others.nix"
 

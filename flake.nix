@@ -209,7 +209,7 @@
 
       ./devices/tx-vps
 
-      ./devices/SCEEServer2
+      ./devices/cpuserver58
       ./devices/iprc
     ];
 
