@@ -63,34 +63,23 @@
             kotlinCustom
           ];
 
-          languages = {
-            kotlin.enable = true;
-
-            java.enable = true;
-            java.gradle.enable = true;
-            java.maven.enable = false;
-
-            python = {
-              enable = false;
-              # package = pkgs.python312;
-              # version = "3.12";
-              uv.enable = true;
-            };
+          languages.python = {
+            enable = false;
+            package = pkgs.python312;
+            uv.enable = true;
           };
 
-          pre-commit = {
-            addGcRoot = true;
-            hooks = {
-              alejandra.enable = true;
-              # Python
-              isort.enable = true;
-              mypy.enable = true;
-              pylint.enable = true;
-              flake8.enable = true;
-            };
+          pre-commit.addGcRoot = true;
+          pre-commit.hooks = {
+            alejandra.enable = true;
+            # Python
+            isort.enable = true;
+            mypy.enable = true;
+            pylint.enable = true;
+            flake8.enable = true;
 
             # Check Secrets
-            hooks.trufflehog = {
+            trufflehog = {
               enable = true;
               entry = let
                 script = pkgs.writeShellScript "precommit-trufflehog" ''

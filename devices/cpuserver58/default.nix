@@ -3,10 +3,11 @@
   root,
   allRepos,
   versionMap,
-  customVars,
   ...
 }: let
   # -------------- custom variables --------------------
+  customVars = import ./customvars.nix;
+
   system = customVars.system;
 
   utils = import "${root.base}/common/utils.nix" {inherit system;};
@@ -37,6 +38,8 @@
         topgrade.enable = false;
       };
     };
+
+    overrideSecrets = ./age.nix;
 
     modules = [
       (inputs @ {pkgs, ...}: let

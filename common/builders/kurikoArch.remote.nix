@@ -27,7 +27,7 @@ in {
   '';
 
   config.nix = {
-    distributedBuilds = false;
+    distributedBuilds = true;
     buildMachines = [
       {
         protocol = "ssh-ng";
