@@ -12,12 +12,17 @@ let
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG/WB1rjs8Gqtxjn7gPpuXzQ0Lpfs5egSC/w161ifboo root@KurikoNixOS"
   ];
 
+  keys_cpuserver58 = [
+    key_age
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIKjZNEcnjScSSkCiWYmD2q5dRT6tw77gnuOs7cUudF7"
+  ];
+
   keys = [key_age] ++ keys_tx ++ keys_kurikoG14;
 
   file_list = {
     "res/gnupg" = {
-      "private.pgp".publicKeys = [key_age];
-      "public.pgp".publicKeys = [key_age];
+      "private.pgp".publicKeys = [key_age] ++ keys_cpuserver58;
+      "public.pgp".publicKeys = [key_age] ++ keys_cpuserver58;
     };
 
     "res/ssh" = {
@@ -37,12 +42,12 @@ let
     };
 
     "res/gh" = {
-      "hosts.yml".publicKeys = keys;
+      "hosts.yml".publicKeys = keys ++ keys_cpuserver58;
     };
 
     "res/nix" = {
-      "access-tokens".publicKeys = keys;
-      "cachix.nix.conf".publicKeys = keys;
+      "access-tokens".publicKeys = keys ++ keys_cpuserver58;
+      "cachix.nix.conf".publicKeys = keys ++ keys_cpuserver58;
     };
 
     "res/docker" = {
@@ -54,7 +59,7 @@ let
     };
 
     "res/atuin" = {
-      "key".publicKeys = keys;
+      "key".publicKeys = keys ++ keys_cpuserver58;
     };
 
     "res/builders" = {
