@@ -4,9 +4,12 @@
   allRepos,
   versionMap,
   ...
-}: let
-  # -------------- custom variables --------------------
+}:
+if !builtins.pathExists ./customvars.nix
+then {}
+else let
   customVars = import ./customvars.nix;
+  # -------------- custom variables --------------------
 
   system = customVars.system;
 

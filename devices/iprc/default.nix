@@ -4,10 +4,14 @@
   root,
   allRepos,
   versionMap,
-  customVars,
   ...
-}: let
+}:
+if !builtins.pathExists ./customvars.nix
+then {}
+else let
+  customVars = import ./customvars.nix;
   # -------------- custom variables --------------------
+
   system = "x86_64-linux";
 
   utils = import "${root.base}/common/utils.nix" {inherit system;};
