@@ -31,8 +31,8 @@ let
 
       "id_rsa".publicKeys = [key_age];
       "id_rsa.pub".publicKeys = keys;
-      "id_ed25519".publicKeys = [key_age];
-      "id_ed25519.pub".publicKeys = keys;
+      "id_ed25519".publicKeys = [key_age] ++ keys_cpuserver58;
+      "id_ed25519.pub".publicKeys = keys ++ keys_cpuserver58;
       "id_ed25519_age.pub".publicKeys = keys;
     };
 
