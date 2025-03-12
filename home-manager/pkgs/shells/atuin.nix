@@ -18,6 +18,10 @@
       sync = {
         records = true;
       };
+      update_check = false;
+      filter_mode = "host";
+      workspaces = true;
+      secrets_filter = true;
       auto_sync = true;
       sync_frequency = "5m";
     };
