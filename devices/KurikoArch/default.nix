@@ -80,7 +80,7 @@
           ]
           ++ [
             "${root.pkgs}/home-manager/frp.nix"
-            (import ../../home-manager/pkgs/tools (inputs // {topgrade = false;}))
+            (import "${root.hm}/pkgs/tools" (inputs // {topgrade = false;}))
           ];
 
         targets.genericLinux.enable = true;
