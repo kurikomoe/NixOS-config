@@ -15,7 +15,7 @@
     modules = [
       ./configuration.nix
 
-      ../../nixos/pkgs/docker.nix
+      "${root.base}/nixos/pkgs/docker.nix"
 
       ./age-nixos.nix
 

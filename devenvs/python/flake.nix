@@ -47,7 +47,7 @@
         devenv.shells.default = {
           packages = with pkgs; [
             hello
-            poetry
+            # poetry
           ];
 
           enterShell = ''
@@ -58,36 +58,40 @@
             enable = true;
             package = pkgs.python312;
             # version = "3.12";
-            poetry = {
-              enable = true;
-              activate.enable = true;
-            };
+
+            uv.enable = true;
+            uv.package = pkgs.uv;
+
+            # poetry = {
+            #   enable = true;
+            #   activate.enable = true;
+            # };
           };
 
           pre-commit.hooks = {
             alejandra.enable = true;
 
-            pylint.enable = true;
-            pyright.enable = true;
+            # pylint.enable = true;
+            # pyright.enable = true;
             flake8.enable = true;
 
             isort.enable = true;
-            autoflake.enable = true;
-            mypy = {
-              enable = true;
-              excludes = [
-                # ".*yarn_spinner_pb2.py$"
-                # "yarn_spinner_pb2.py"
-                # "third/.*"
-              ];
-              args = [
-                # "--disable-error-code=attr-defined"
-              ];
-              extraPackages = with pkgs; [
-                # python312Packages.protobuf
-                # python312Packages.types-protobuf
-              ];
-            };
+            # autoflake.enable = true;
+            # mypy = {
+            #   enable = true;
+            #   excludes = [
+            #     # ".*yarn_spinner_pb2.py$"
+            #     # "yarn_spinner_pb2.py"
+            #     # "third/.*"
+            #   ];
+            #   args = [
+            #     # "--disable-error-code=attr-defined"
+            #   ];
+            #   extraPackages = with pkgs; [
+            #     # python312Packages.protobuf
+            #     # python312Packages.types-protobuf
+            #   ];
+            # };
 
             # Check Secrets
             trufflehog = {
