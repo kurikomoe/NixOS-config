@@ -15,6 +15,16 @@ in {
   nixpkgs.overlays = [inputs.fenix.overlays.default];
 
   home.packages = with pkgs; [
+    rust-script
+    rust-bindgen
+
+    cargo-binstall
+    cargo-generate
+    cargo-binutils
+    cargo-expand # Expand macros in your source code
+    cargo-update # cargo subcommand for checking and applying updates to installed executables
+    cargo-outdated # displays when newer versions of Rust dependencies are available, or out of date
+
     rustup
     repos.pkgs-unstable.bacon
   ];

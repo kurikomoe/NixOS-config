@@ -27,13 +27,17 @@ in {
     "dotnet-sdk-6.0.136"
   ];
 
-  home.packages = with pkgs; [
-    mono
-    # (lib.lowPrio msbuild)  # for neovim omnisharp-vim plugin
-    dotnetPackages.Nuget
+  home.packages = with pkgs;
+    [
+      mono
+      # (lib.lowPrio msbuild)  # for neovim omnisharp-vim plugin
+      dotnetPackages.Nuget
 
-    (lib.hiPrio combined-pkgs)
-  ];
+      (lib.hiPrio combined-pkgs)
+    ]
+    ++ (with repos.pkgs-kuriko-nur; [
+      dotnet-script
+    ]);
 
   home.sessionPath = [
     "$HOME/.dotnet/tools"
