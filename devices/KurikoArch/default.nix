@@ -76,6 +76,8 @@
             "./gui/browsers"
             "./gui/jetbrains.nix"
 
+            "./tools/ssh/complete.nix"
+
             # "./apps/podman.nix"
           ]
           ++ [
