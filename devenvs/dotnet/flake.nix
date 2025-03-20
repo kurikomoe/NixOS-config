@@ -44,7 +44,9 @@
           overlays = [];
         };
 
-        dotnet-pkgs = with pkgs;
+        dotnetVersion = "net9.0";
+
+        dotnetPkgs = with pkgs;
         with dotnetCorePackages;
           combinePackages [
             sdk_9_0
@@ -52,8 +54,69 @@
             # sdk_7_0_3xx
             # sdk_6_0_1xx
           ];
+
+        name = "helloworld";
       in {
         formatter = pkgs.alejandra;
+
+        packages.default = pkgs.stdenv.mkDerivation rec {
+          inherit name;
+          pname = name;
+          version = "1.0";
+          src = lib.cleanSource ./.;
+
+          env = {
+            DOTNET_ROOT = "${dotnetPkgs}/share/dotnet";
+            LD_LIBRARY_PATH = "${lib.makeLibraryPath [pkgs.icu]}";
+          };
+
+          # build time deps
+          buildInputs = with pkgs; [
+            dotnetPkgs
+            clang
+            zlib
+            icu
+          ];
+
+          # on build machine
+          nativeBuildInputs = with pkgs; [
+            icu
+          ];
+
+          # packed into appimage
+          propagatedBuildInputs = with pkgs; [
+            dotnetPkgs
+            bash
+            icu
+          ];
+
+          buildPhase = ''
+            mkdir -p $out/bin
+            dotnet build -c Release
+          '';
+
+          installPhase = ''
+            install -Dm755 bin/Release/${dotnetVersion}/${name}* $out/bin/
+            install -Dm755 bin/Release/${dotnetVersion}/*.dll $out/bin/
+
+            # build a caller
+            cat > "$out/bin/${name}" << EOF
+            #! ${pkgs.bash}/bin/bash
+            export DOTNET_ROOT=${dotnetPkgs}
+            exec $out/bin/${name}
+            EOF
+
+            chmod 755 "$out/bin/${name}"
+            echo "$out/bin/${name}"
+          '';
+
+          postFixup = ''
+          '';
+
+          meta = {
+            mainProgram = name;
+          };
+        };
 
         devenv.shells.default = {
           packages = with pkgs; [
@@ -67,9 +130,13 @@
             hello
           ];
 
+          env = {
+            DOTNET_ROOT = "${dotnetPkgs}/share/dotnet";
+          };
+
           languages.dotnet = {
             enable = true;
-            package = dotnet-pkgs;
+            package = dotnetPkgs;
           };
 
           languages.python = {
