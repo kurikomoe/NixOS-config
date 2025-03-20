@@ -67,21 +67,16 @@
             hello
           ];
 
-          languages = {
-            languages.dotnet = {
-              enable = true;
-              package = dotnet-pkgs;
-            };
+          languages.dotnet = {
+            enable = true;
+            package = dotnet-pkgs;
+          };
 
-            python = {
-              enable = false;
-              # package = pkgs.python312;
-              # version = "3.12";
-              poetry = {
-                enable = false;
-                activate.enable = true;
-              };
-            };
+          languages.python = {
+            enable = false;
+            # package = pkgs.python312;
+            # version = "3.12";
+            uv.enable = false;
           };
 
           scripts.pack.exec = ''
@@ -95,13 +90,13 @@
             # Python
             isort.enable = true;
             mypy.enable = true;
-            pylint.enable = true;
-            pyright.enable = true;
+            # pylint.enable = true;
+            # pyright.enable = true;
             flake8.enable = true;
-            autoflake.enable = true;
+            # autoflake.enable = true;
 
             # Check Secrets
-            hooks.trufflehog = {
+            trufflehog = {
               enable = true;
               entry = let
                 script = pkgs.writeShellScript "precommit-trufflehog" ''

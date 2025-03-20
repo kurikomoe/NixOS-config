@@ -5,7 +5,7 @@ p @ {
   lib,
   ...
 }: let
-  combined-pkgs = with pkgs;
+  combinedPkgs = with pkgs;
   with dotnetCorePackages;
     combinePackages [
       sdk_9_0
@@ -13,6 +13,14 @@ p @ {
       # sdk_7_0_3xx  # EOL
       sdk_6_0_1xx # EOL
     ];
+
+  combineMono = pkgs.buildEnv {
+    name = "mono-combine";
+    paths = with pkgs; [
+      mono
+      (lib.lowPrio msbuild) # for neovim omnisharp-vim plugin
+    ];
+  };
 in {
   nixpkgs.overlays = [
     (final: prev: {
@@ -22,18 +30,15 @@ in {
     })
   ];
 
-  nixpkgs.config.permittedInsecurePackages = [
-    "dotnet-sdk-wrapped-6.0.136"
-    "dotnet-sdk-6.0.136"
-  ];
-
   home.packages = with pkgs;
     [
-      mono
+      combineMono
+      # mono
       # (lib.lowPrio msbuild)  # for neovim omnisharp-vim plugin
+
       dotnetPackages.Nuget
 
-      (lib.hiPrio combined-pkgs)
+      (lib.hiPrio combinedPkgs)
     ]
     ++ (with repos.pkgs-kuriko-nur; [
       dotnet-script
@@ -44,6 +49,6 @@ in {
   ];
 
   home.sessionVariables = {
-    DOTNET_ROOT = lib.mkForce "${combined-pkgs}/share/dotnet";
+    DOTNET_ROOT = lib.mkForce "${combinedPkgs}/share/dotnet";
   };
 }
