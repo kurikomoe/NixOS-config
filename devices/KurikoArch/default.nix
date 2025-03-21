@@ -59,6 +59,13 @@
           "services/networking/frp.nix"
         ];
 
+        nixpkgs.config.permittedInsecurePackages = [
+          "dotnet-sdk-wrapped-6.0.136"
+          "dotnet-sdk-6.0.136"
+          "dotnet-sdk-6.0.428"
+          "dotnet-runtime-6.0.36"
+        ];
+
         imports =
           utils.buildImports root.hm-pkgs [
             "./shells/fish"
