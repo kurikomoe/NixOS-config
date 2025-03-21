@@ -138,6 +138,7 @@
   outputs = inputs @ {
     self,
     nixpkgs,
+    nixpkgs-unstable,
     flake-parts,
     ...
   }: let
@@ -255,10 +256,21 @@
         };
       }));
 
-      devShells = forAllSystems (system: {
-        default = nixpkgs.legacyPackages.${system}.mkShell {
+      devShells = forAllSystems (system: let
+        pkgs = nixpkgs.legacyPackages.${system};
+        pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
+
+        lib = nixpkgs.lib;
+      in {
+        default = pkgs.mkShell {
           inherit (self.checks.${system}.pre-commit-check) shellHook;
           buildInputs = self.checks.${system}.pre-commit-check.enabledPackages;
+
+          packages = with pkgs; [
+            (lib.hiPrio pkgs-unstable.uutils-findutils)
+            (lib.hiPrio pkgs-unstable.uutils-diffutils)
+            (lib.hiPrio pkgs-unstable.uutils-coreutils-noprefix)
+          ];
         };
       });
     }

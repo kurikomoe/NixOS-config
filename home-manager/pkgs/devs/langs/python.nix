@@ -15,12 +15,18 @@ in {
   # ];
 
   home.packages = with pkgs; [
+    uv
+
     pipx
 
     pylint
+    mypy
 
     (python3.withPackages (py-pkgs:
       with py-pkgs; [
+        # tests
+        flake8
+
         # 各种配置文件格式
         lxml
         pyyaml

@@ -59,9 +59,9 @@ in
             home-manager
 
             (lib.hiPrio binutils)
-            # (lib.hiPrio repos.pkgs-unstable.uutils-findutils)
-            # (lib.hiPrio repos.pkgs-unstable.uutils-diffutils)
-            # (lib.hiPrio repos.pkgs-unstable.uutils-coreutils-noprefix)
+            (lib.hiPrio repos.pkgs-unstable.uutils-findutils)
+            (lib.hiPrio repos.pkgs-unstable.uutils-diffutils)
+            (lib.hiPrio repos.pkgs-unstable.uutils-coreutils-noprefix)
 
             neovim
             vim

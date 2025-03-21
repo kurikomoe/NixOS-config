@@ -71,10 +71,11 @@
   ];
 in
   with customVars; {
-    home.packages =
+    home.packages = with pkgs;
       [
         # inputs.nix-search.packages.${system}.default
-        pkgs.nix-search-cli
+        nix-search-cli
+        nix-index
       ]
       ++ nixtools;
 
