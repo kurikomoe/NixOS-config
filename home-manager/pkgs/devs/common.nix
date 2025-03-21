@@ -2,6 +2,7 @@ p @ {
   inputs,
   pkgs,
   root,
+  repos,
   ...
 }: let
 in {
@@ -19,7 +20,12 @@ in {
   home.packages = with pkgs; [
     # Shell Tools
     (lib.hiPrio binutils)
-    coreutils-full
+
+    # Let's replace it with rust!
+    # coreutils-full
+    (lib.hiPrio repos.pkgs-unstable.uutils-findutils)
+    (lib.hiPrio repos.pkgs-unstable.uutils-diffutils)
+    (lib.hiPrio repos.pkgs-unstable.uutils-coreutils-noprefix)
 
     asdf-vm
 
