@@ -30,6 +30,13 @@ in {
     })
   ];
 
+  nixpkgs.config.permittedInsecurePackages = [
+    "dotnet-sdk-wrapped-6.0.136"
+    "dotnet-sdk-6.0.136"
+    "dotnet-sdk-6.0.428"
+    "dotnet-runtime-6.0.36"
+  ];
+
   home.packages = with pkgs;
     [
       combineMono

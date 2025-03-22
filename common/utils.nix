@@ -29,7 +29,7 @@
     }
     // extraConfig;
 
-  buildImports = root: xs: builtins.map (x: "${root}/${x}") xs;
+  buildImports = root: xs: (builtins.map (x: "${root}/${x}") xs);
 in {
   inherit customNixPkgsImport _commonNixPkgsConfig buildImports;
 }

@@ -32,45 +32,46 @@
         #   })
         # ];
 
-        nixpkgs.config.permittedInsecurePackages = [
-          "dotnet-sdk-wrapped-6.0.136"
-          "dotnet-sdk-6.0.136"
-          "dotnet-sdk-6.0.428"
-          "dotnet-runtime-6.0.36"
-        ];
+        # nixpkgs.config.permittedInsecurePackages = [
+        #   "dotnet-sdk-wrapped-6.0.136"
+        #   "dotnet-sdk-6.0.136"
+        #   "dotnet-sdk-6.0.428"
+        #   "dotnet-runtime-6.0.36"
+        # ];
 
         imports =
-          utils.buildImports root.hm-pkgs [
-            "./wsl"
+          (utils.buildImports root.hm-pkgs [
+            "wsl"
 
-            "./shells/fish"
+            "shells/fish"
 
-            "./devs/common.nix"
-            "./devs/langs"
+            "devs/common.nix"
 
-            "./tools"
-            "./tools/ssh/complete.nix"
+            "devs/langs"
 
-            "./libs/others.nix"
+            "tools"
+            "tools/ssh/complete.nix"
 
-            "./libs/dotnet.nix"
+            "libs/others.nix"
 
-            "./libs/cuda.nix"
+            "libs/cuda.nix"
 
-            "./apps/db/mongodb.nix"
-            "./apps/db/mariadb.nix"
+            "apps/db/mongodb.nix"
+            "apps/db/mariadb.nix"
 
-            "./gui/fonts.nix"
-            "./gui/browsers/firefox"
-            "./gui/jetbrains.nix"
+            "gui/fonts.nix"
+            "gui/browsers/firefox"
+            "gui/jetbrains.nix"
 
-            # "./apps/podman.nix"
+            #./apps/podman.nix"
 
-            "./apps/ReverseEngineering/radare2.nix"
-            "./apps/ReverseEngineering/ghidra.nix"
-            "./apps/ReverseEngineering/frida.nix"
-          ]
-          ++ [];
+            "apps/ReverseEngineering/radare2.nix"
+            "apps/ReverseEngineering/ghidra.nix"
+            "apps/ReverseEngineering/frida.nix"
+          ])
+          ++ [
+            "${root.base}/home-manager/pkgs/devs/langs/dotnet.nix"
+          ];
 
         home.packages = with pkgs; [
           # Test gui

@@ -15,6 +15,11 @@
       url = "github:cachix/nixpkgs-python";
       inputs = {nixpkgs.follows = "nixpkgs";};
     };
+
+    kuriko-nur = {
+      url = "github:kurikomoe/nur-packages";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   nixConfig = {
@@ -38,6 +43,10 @@
         lib,
         ...
       }: let
+        pkgs-nur-kuriko =
+          import inputs.kuriko-nur {
+          };
+
         pkgs = import inputs.nixpkgs {
           inherit system;
           config.allowUnfree = true;
@@ -123,7 +132,13 @@
             # requirements
             pkg-config
             zlib
+            icu
+
             clang
+
+            dotnetPkgs
+
+            pkgs-nur-kuriko.dotnet-script
 
             # tools
             just
@@ -132,6 +147,7 @@
 
           env = {
             DOTNET_ROOT = "${dotnetPkgs}/share/dotnet";
+            LD_LIBRARY_PATH = "${pkgs.zlib}/lib:${pkgs.icu}/lib";
           };
 
           languages.dotnet = {
@@ -143,23 +159,28 @@
             enable = false;
             # package = pkgs.python312;
             # version = "3.12";
-            uv.enable = false;
+            uv.enable = true;
           };
 
           scripts.pack.exec = ''
-            nix bundle --bundler github:ralismark/nix-appimage  .#helloworld --option sandbox false
+            nix bundle --bundler github:ralismark/nix-appimage  .#${name} --option sandbox false
+          '';
+
+          scripts.push.exec = ''
+            nix build .#devShells.x86_64-linux.default --impure
+            nix-store -qR $(nix path-info .#devShells.x86_64-linux.default --impure) | cachix push kurikomoe
+            rm result
           '';
 
           pre-commit.hooks = {
             alejandra.enable = true;
-            clang-format.enable = true;
 
             # Python
-            isort.enable = true;
-            mypy.enable = true;
+            # isort.enable = true;
+            # mypy.enable = true;
             # pylint.enable = true;
             # pyright.enable = true;
-            flake8.enable = true;
+            # flake8.enable = true;
             # autoflake.enable = true;
 
             # Check Secrets
