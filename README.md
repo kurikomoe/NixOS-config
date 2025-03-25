@@ -6,10 +6,10 @@ Secrets are encrypted by `id_ed25519_age` or VPS ssh_hostkey.
 
 ```shell
 # please setup the wsl2-nixos first. (or any working nixos installation)
-sudo nixos-rebuild --flake 'github:kurikomoe/nixos-config/main?dir=nixos#KurikoNixOS' test
+sudo nixos-rebuild --flake 'github:kurikomoe/nixos-config/main?dir=.#KurikoNixOS' test
 
 # cp the `id_ed25519_age` to $HOME/.ssh/
-home-manager --flake 'github:kurikomoe/nixos-config/main?dir=home-manager' switch --dry-run
+home-manager --flake 'github:kurikomoe/nixos-config/main?dir=.#kuriko@KurikoNixOS' switch --dry-run
 
 # Or all-in-one
 nixup # update the flakes and rebuild all

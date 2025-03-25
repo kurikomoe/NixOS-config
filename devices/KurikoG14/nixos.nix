@@ -83,8 +83,12 @@
 
         users.users.${username} = {
           shell = pkgs.fish;
+          isNormalUser = true;
+          group = "wheel";
           extraGroups = ["docker"];
           linger = true;
+
+          hashedPassword = "$6$aV8t5ljQBwHKHJdd$UO6BD7maFeOdOhH47..H2zMJaKmuyzRNb45/Q1iRtSQ87YcddkQmFeO0TF8mtyfY2rwhom3lXanBn5AT5QFYh1";
         };
 
         networking.hostName = hostName;
