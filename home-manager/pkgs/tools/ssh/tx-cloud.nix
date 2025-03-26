@@ -22,7 +22,10 @@ in {
     p7zip
     autossh
     sshpass
-    expect
+
+    # conflict with the mkpasswd
+    # expect
+
     mosh
   ];
 

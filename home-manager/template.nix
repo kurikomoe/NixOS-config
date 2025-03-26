@@ -116,6 +116,8 @@ in
             [
               gnutar
 
+              (lib.lowPrio mkpasswd)
+
               stdenv.cc.cc.lib
 
               (lib.lowPrio vim)
