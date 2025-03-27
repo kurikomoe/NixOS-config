@@ -24,7 +24,8 @@
 
   nixConfig = {
     substituters = [
-      https://cache.nix.org
+      https://mirrors.ustc.edu.cn/nix-channels/store
+      https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store
       https://nix-community.cachix.org
     ];
     trusted-public-keys = [
@@ -56,6 +57,8 @@
           config.allowUnfree = true;
           overlays = [];
         };
+
+        runtimeLibs = with pkgs; [];
       in {
         formatter = pkgs.alejandra;
 
@@ -63,41 +66,45 @@
           # Enable this to avoid forced -O2
           # hardeningDisable = [ "all" ];
 
-          packages = with pkgs; [
-            # requirements
-            pkg-config
-            stdenv.cc.cc.lib
+          packages = with pkgs;
+            [
+              # requirements
+              pkg-config
+              stdenv.cc.cc.lib
 
-            cmake
-            clang-tools
-            autoreconfHook
-            ninja
-            mold
+              cmake
+              clang-tools
+              ninja
+              mold
 
-            # libs
+              # libs
 
-            # tools
-            just
+              # tools
+              just
+              hello
+            ]
+            ++ runtimeLibs;
+
+          env = {
+            LD_LIBRARY_PATH = lib.makeLibraryPath runtimeLibs;
+          };
+
+          enterShell = ''
             hello
-          ];
+          '';
 
-          languages = {
-            c = {
-              enable = true;
-              debugger = pkgs.gdb;
-            };
+          languages.c = {
+            enable = true;
+            debugger = pkgs.gdb;
+          };
 
-            cplusplus.enable = true;
+          languages.cplusplus.enable = true;
 
-            python = {
-              enable = false;
-              # package = pkgs.python312;
-              # version = "3.12";
-              poetry = {
-                enable = false;
-                activate.enable = true;
-              };
-            };
+          lanaguages.python = {
+            enable = false;
+            package = pkgs.python312;
+            # version = "3.12";
+            uv.enable = true;
           };
 
           pre-commit = {

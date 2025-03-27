@@ -1,24 +1,22 @@
 {
-  description = "Kuriko's Javascript/Typescript Workspace";
+  description = "Kuriko's Rust Template";
 
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
 
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs";
 
     devenv = {
       url = "github:cachix/devenv";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    fenix.url = "github:nix-community/fenix";
+
     nixpkgs-python = {
       url = "github:cachix/nixpkgs-python";
       inputs = {nixpkgs.follows = "nixpkgs";};
-    };
-
-    kuriko-nur = {
-      url = "github:kurikomoe/nur-packages";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -49,69 +47,108 @@
         self',
         inputs',
         system,
-        lib,
         ...
       }: let
         pkgs = import inputs.nixpkgs {
           inherit system;
           config.allowUnfree = true;
-          overlays = [];
+          overlays = [
+            inputs.fenix.overlays.default
+          ];
+        };
+        pkgs-unstable = import inputs.nixpkgs-unstable {
+          inherit system;
+          config.allowUnfree = true;
+          overlays = [
+            inputs.fenix.overlays.default
+          ];
         };
 
-        packageManager = "pnpm";
+        cargoTOML = builtins.fromTOML (builtins.readFile ./Cargo.toml);
+        name = cargoTOML.package.name;
+        version = cargoTOML.package.version;
 
-        runtimeLibs = with pkgs; [];
-      in {
+        rust_channel = "latest";
+        rust_target = "x86_64-unknown-linux-gnu";
+
+        toolchain = with pkgs;
+          fenix.${rust_channel}.withComponents [
+            "cargo"
+            "clippy"
+            "rust-src"
+            "rustc"
+            "rustfmt"
+          ];
+
+        rustPlatform = pkgs-unstable.makeRustPlatform {
+          cargo = toolchain;
+          rustc = toolchain;
+        };
+
+        deps = with pkgs; [
+          pkg-config
+          openssl
+        ];
+
+        env = {
+          PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
+        };
+      in rec {
         devenv.shells.default = {
           packages = with pkgs;
             [
               hello
+              cargo-generate
+
+              gobject-introspection
+              at-spi2-atk
+              atkmm
+              cairo
+              gdk-pixbuf
+              glib
+              gtk3
+              harfbuzz
+              librsvg
+              libsoup_3
+              pango
+              webkitgtk_4_1
+              openssl
             ]
-            ++ runtimeLibs;
-
-          languages.typescript.enable = true;
-          languages.javascript = {
-            enable = true;
-
-            "${packageManager}" = {
-              enable = true;
-              install.enable = true;
-            };
-          };
-
-          languages.python = {
-            enable = false;
-            package = pkgs.python312;
-            uv.enable = true;
-          };
+            ++ deps;
 
           enterShell = ''
             hello
           '';
 
+          languages.rust = {
+            enable = true;
+            mold.enable = false;
+            toolchain.cargo = toolchain;
+            toolchain.clippy = toolchain;
+            toolchain.rust-analyzer = toolchain;
+            toolchain.rustc = toolchain;
+            toolchain.rustfmt = toolchain;
+          };
+
+          languages.python = {
+            enable = true;
+            uv.enable = true;
+          };
+
+          languages.javascript = {
+            enable = true;
+            pnpm.enable = true;
+          };
+
+          scripts."build".exec = "cargo build $@";
+          scripts."run".exec = "cargo run $@";
+
           pre-commit = {
             addGcRoot = true;
             hooks = {
               alejandra.enable = true;
-              # JS
-              eslint.enable = true;
-              # Python
-              isort.enable = true;
-              mypy.enable = true;
-              pylint.enable = true;
-              pyright.enable = true;
-              flake8.enable = true;
-
-              eslint-typescript = {
-                enable = true;
-                name = "eslint typescript";
-                entry = "${packageManager} eslint ";
-                files = "\\.(tsx|ts|js)$";
-                types = ["text"];
-                excludes = ["dist/.*"];
-                pass_filenames = true;
-                verbose = true;
-              };
+              clippy.enable = true;
+              rustfmt.enable = true;
 
               # Check Secrets
               trufflehog = {
@@ -128,6 +165,7 @@
           };
 
           cachix.pull = ["devenv"];
+          cachix.push = "kurikomoe";
         };
       };
 

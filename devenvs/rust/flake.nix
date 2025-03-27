@@ -27,7 +27,8 @@
 
   nixConfig = {
     substituters = [
-      https://cache.nix.org
+      https://mirrors.ustc.edu.cn/nix-channels/store
+      https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store
       https://nix-community.cachix.org
     ];
     trusted-public-keys = [
@@ -52,6 +53,7 @@
         self',
         inputs',
         system,
+        lib,
         ...
       }: let
         pkgs = import inputs.nixpkgs {
@@ -90,7 +92,7 @@
           rustc = toolchain;
         };
 
-        deps = with pkgs; [
+        runtimeLibs = with pkgs; [
           pkg-config
           openssl
         ];
@@ -105,8 +107,8 @@
           cargoLock.lockFile = ./Cargo.lock;
           src = pkgs.lib.cleanSource ./.;
 
-          buildInputs = with pkgs; [] ++ deps;
-          nativebuildInputs = with pkgs; [] ++ deps;
+          buildInputs = with pkgs; [] ++ runtimeLibs;
+          nativebuildInputs = with pkgs; [] ++ runtimeLibs;
 
           inherit env;
         };
@@ -127,7 +129,11 @@
               hello
               cargo-generate
             ]
-            ++ deps;
+            ++ runtimeLibs;
+
+          env = {
+            LD_LIBRARY_PATH = lib.makeLibraryPath runtimeLibs;
+          };
 
           enterShell = ''
             hello

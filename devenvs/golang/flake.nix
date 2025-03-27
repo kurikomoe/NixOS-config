@@ -24,7 +24,8 @@
 
   nixConfig = {
     substituters = [
-      https://cache.nix.org
+      https://mirrors.ustc.edu.cn/nix-channels/store
+      https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store
       https://nix-community.cachix.org
     ];
     trusted-public-keys = [
@@ -58,6 +59,8 @@
           config.allowUnfree = true;
           overlays = [];
         };
+
+        runtimeLibs = with pkgs; [];
       in rec {
         imports = [
           # ./build.nix
@@ -78,9 +81,15 @@
         };
 
         devenv.shells.default = {
-          packages = with pkgs; [
-            hello
-          ];
+          packages = with pkgs;
+            [
+              hello
+            ]
+            ++ runtimeLibs;
+
+          env = {
+            LD_LIBRARY_PATH = lib.makeLibraryPath runtimeLibs;
+          };
 
           enterShell = ''
             export GO111MODULE=on

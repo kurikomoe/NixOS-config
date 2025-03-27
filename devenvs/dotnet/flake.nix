@@ -24,7 +24,8 @@
 
   nixConfig = {
     substituters = [
-      https://cache.nix.org
+      https://mirrors.ustc.edu.cn/nix-channels/store
+      https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store
       https://nix-community.cachix.org
     ];
     trusted-public-keys = [
@@ -72,6 +73,11 @@
             # sdk_6_0_1xx
           ];
 
+        runtimeLibs = with pkgs; [
+          icu
+          zlib
+        ];
+
         name = "helloworld";
       in {
         formatter = pkgs.alejandra;
@@ -84,7 +90,7 @@
 
           env = {
             DOTNET_ROOT = "${dotnetPkgs}/share/dotnet";
-            LD_LIBRARY_PATH = "${lib.makeLibraryPath [pkgs.icu]}";
+            LD_LIBRARY_PATH = lib.makeLibraryPath runtimeLibs;
           };
 
           # build time deps
@@ -136,26 +142,28 @@
         };
 
         devenv.shells.default = {
-          packages = with pkgs; [
-            # requirements
-            pkg-config
-            zlib
-            icu
+          packages = with pkgs;
+            [
+              # requirements
+              pkg-config
+              zlib
+              icu
 
-            clang
+              clang
 
-            dotnetPkgs
+              dotnetPkgs
 
-            pkgs-nur-kuriko.dotnet-script
+              pkgs-nur-kuriko.dotnet-script
 
-            # tools
-            just
-            hello
-          ];
+              # tools
+              just
+              hello
+            ]
+            ++ runtimeLibs;
 
           env = {
             DOTNET_ROOT = "${dotnetPkgs}/share/dotnet";
-            LD_LIBRARY_PATH = "${pkgs.zlib}/lib:${pkgs.icu}/lib";
+            LD_LIBRARY_PATH = lib.makeLibraryPath runtimeLibs;
           };
 
           languages.dotnet = {

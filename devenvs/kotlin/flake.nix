@@ -24,7 +24,8 @@
 
   nixConfig = {
     substituters = [
-      https://cache.nix.org
+      https://mirrors.ustc.edu.cn/nix-channels/store
+      https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store
       https://nix-community.cachix.org
     ];
     trusted-public-keys = [
@@ -59,6 +60,8 @@
 
         jdkCustom = pkgs.jdk17;
         kotlinCustom = pkgs.kotlin.override {jre = jdkCustom;};
+
+        runtimeLibs = with pkgs; [];
       in {
         formatter = pkgs.alejandra;
 
@@ -66,15 +69,25 @@
           # Enable this to avoid forced -O2
           # hardeningDisable = [ "all" ];
 
-          packages = with pkgs; [
-            # tools
-            just
-            hello
+          packages = with pkgs;
+            [
+              # tools
+              just
+              hello
 
-            gradle
-            jdkCustom
-            kotlinCustom
-          ];
+              gradle
+              jdkCustom
+              kotlinCustom
+            ]
+            ++ runtimeLibs;
+
+          env = {
+            LD_LIBRARY_PATH = lib.makeLibraryPath runtimeLibs;
+          };
+
+          enterShell = ''
+            hello
+          '';
 
           languages.python = {
             enable = false;

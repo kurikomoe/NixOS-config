@@ -25,7 +25,8 @@
 
   nixConfig = {
     substituters = [
-      https://cache.nix.org
+      https://mirrors.ustc.edu.cn/nix-channels/store
+      https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store
       https://nix-community.cachix.org
     ];
     trusted-public-keys = [
@@ -49,6 +50,7 @@
         self',
         inputs',
         system,
+        lib,
         ...
       }: let
         pkgs = import inputs.nixpkgs {
@@ -56,12 +58,19 @@
           config.allowUnfree = true;
           overlays = [];
         };
+
+        runtimeLibs = with pkgs; [];
       in {
         devenv.shells.default = {
-          packages = with pkgs; [
-            hello
-            # poetry
-          ];
+          packages = with pkgs;
+            [
+              hello
+            ]
+            ++ runtimeLibs;
+
+          env = {
+            LD_LIBRARY_PATH = lib.makeLibraryPath runtimeLibs;
+          };
 
           enterShell = ''
             hello
