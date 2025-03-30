@@ -103,6 +103,10 @@
       src = "shims_dir/nu.exe";
     })
     // (mkBinWinRel {
+      name = "nu";
+      src = "nu.exe";
+    })
+    // (mkBinWinRel {
       name = "git.exe";
       src = "shims_dir/git.exe";
     })
