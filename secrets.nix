@@ -10,6 +10,7 @@ let
   keys_kurikoG14 = [
     key_age
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG/WB1rjs8Gqtxjn7gPpuXzQ0Lpfs5egSC/w161ifboo root@KurikoNixOS"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMnof+7ZAzn6hRmqOTxEuEL+719RRWJonVEG2rWx0r2V root@KurikoTB16P"
   ];
 
   keys_cpuserver58 = [
