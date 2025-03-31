@@ -51,6 +51,7 @@
 
             "tools"
             "tools/ssh/complete.nix"
+            "tools/ssh/helpers.nix"
 
             "libs/others.nix"
 

@@ -18,6 +18,10 @@
 
   age_secrets_filelist = age_helper.buildAgeSecretsFileList files;
 in {
+  imports = [
+    ./helpers.nix
+  ];
+
   home.packages = with pkgs; [
     p7zip
     autossh
