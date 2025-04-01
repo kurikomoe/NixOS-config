@@ -32,9 +32,10 @@ in {
   ];
 
   age = {
-    secretsDir = "${home}/.agenix";
-
     inherit identityPaths;
+
+    secretsDir = "${home}/.agenix";
+    # secretsMountPoint = "${home}/.agenix/raw";
 
     secrets =
       {}

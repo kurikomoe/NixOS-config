@@ -53,6 +53,8 @@ in
           };
 
           environment.systemPackages = with pkgs; [
+            polkit
+
             openssl
             pkg-config
 
