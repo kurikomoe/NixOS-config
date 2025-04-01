@@ -72,46 +72,45 @@ else let
             '')
         ];
       in {
-        imports =
-          utils.buildImports root.hm-pkgs [
-            "./shells/fish"
+        imports = utils.buildImports root.hm-pkgs [
+          "./shells/fish"
 
-            "./devs/common.nix"
-            "./devs/tools.nix"
-            "./devs/langs"
+          "./devs/common.nix"
+          "./devs/tools.nix"
+          # "./devs/langs"
 
-            "./libs/others.nix"
+          # "./libs/others.nix"
 
-            "./tools"
-            "./tools/ssh"
+          "./tools"
+          "./tools/git"
+          "./tools/ssh"
+          "./tools/vscode-server.nix"
 
-            "./apps/podman.nix"
-          ]
-          ++ [
-          ];
+          # "./apps/podman.nix"
+        ];
 
         targets.genericLinux.enable = true;
 
         home.packages = with pkgs;
           [
             # overwrite the system nix
-            repos.pkgs-unstable.nix
+            # repos.pkgs-unstable.nix
 
-            numactl
-            libnl
+            # numactl
+            # libnl
 
             # Test gui
-            xorg.xeyes
-            mesa-demos
-            vulkan-tools
+            # xorg.xeyes
+            # mesa-demos
+            # vulkan-tools
 
-            podman
+            # podman
           ]
           ++ (map (e: (lib.hiPrio e)) shellScripts);
 
-        services.podman = {
-          enable = true;
-        };
+        # services.podman = {
+        #   enable = true;
+        # };
       })
     ];
   });
