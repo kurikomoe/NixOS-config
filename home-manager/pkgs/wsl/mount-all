@@ -3,7 +3,7 @@
 sudo true
 
 # wsl.exe -d NixOS --mount --vhd 'W:\@Packages\WSL\LinuxProjects.vhdx' --bare
-wsl.exe -d NixOS --mount --vhd 'D:\Data\WSL\LinuxProjects.vhdx' --bare
+gsudo wsl.exe -d NixOS --mount --vhd 'D:\Data\WSL\LinuxProjects.vhdx' --bare
 
 sleep 5
 

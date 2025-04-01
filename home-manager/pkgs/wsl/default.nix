@@ -12,9 +12,12 @@
     sudo true
 
     # wsl.exe -d NixOS --mount --vhd "W:/@Packages/WSL/LinuxProjects.vhdx" --bare
-    wsl.exe -d NixOS --mount --vhd "D:/Data/WSL/LinuxProjects.vhdx" --bare
+    # gsudo pwsh -c 'wsl.exe -d NixOS --mount --vhd "D:/Data/WSL/LinuxProjects.vhdx" --bare'
+    # gsudo "$(wslupath $(realpath wsl.exe))" -d NixOS --mount --vhd "D:/Data/WSL/LinuxProjects.vhdx" --bare
+    gsudo "$(wslpath -w $(realpath wsl.exe))" -d NixOS --mount --vhd "D:/Data/WSL/LinuxProjects.vhdx" --bare
 
     sleep 1
+
     for i in `seq 1 10`; do
       sudo mount -a;
       if [[ $? == 0 ]]; then
@@ -99,6 +102,14 @@
       src = "pwsh.exe";
     })
     // (mkBinWinRel {
+      name = "gsudo.exe";
+      src = "shims_dir/sudo.exe";
+    })
+    // (mkBinWinRel {
+      name = "gsudo";
+      src = "gsudo.exe";
+    })
+    // (mkBinWinRel {
       name = "nu.exe";
       src = "shims_dir/nu.exe";
     })
@@ -121,6 +132,7 @@
 in {
   home.packages = with pkgs; [
     mount-all
+    wslu
   ];
 
   home.file =
