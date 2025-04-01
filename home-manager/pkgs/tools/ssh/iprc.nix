@@ -8,7 +8,7 @@ inputs @ {
   age_helper = import "${root.base}/common/age-helper.nix";
 
   files = {
-    "ssh/config-iprc" = ".ssh/data/config";
+    "ssh/config-iprc" = ".ssh/config.extra";
     "ssh/id_rsa" = ".ssh/id_rsa";
     "ssh/id_rsa.pub" = ".ssh/id_rsa.pub";
     "ssh/id_ed25519" = ".ssh/id_ed25519";

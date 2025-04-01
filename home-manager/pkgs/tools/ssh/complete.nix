@@ -9,7 +9,7 @@
   age_helper = import "${root.base}/common/age-helper.nix";
 
   files = {
-    "ssh/config" = ".ssh/data/config";
+    "ssh/config" = ".ssh/config.extra";
     "ssh/id_rsa" = ".ssh/id_rsa";
     "ssh/id_rsa.pub" = ".ssh/id_rsa.pub";
     "ssh/id_ed25519" = ".ssh/id_ed25519";
@@ -43,7 +43,7 @@ in {
       extraConfig = "";
       forwardAgent = true;
       includes = [
-        "data/config"
+        "config.extra"
       ];
       serverAliveInterval = 60;
     };
