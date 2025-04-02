@@ -8,13 +8,23 @@
   buildSymlinkSrc = config.lib.file.mkOutOfStoreSymlink;
 
   mount-all = pkgs.writeShellScriptBin "mount-all" ''
-    #!/usr/bin/env bash
     sudo true
 
     # wsl.exe -d NixOS --mount --vhd "W:/@Packages/WSL/LinuxProjects.vhdx" --bare
     # gsudo pwsh -c 'wsl.exe -d NixOS --mount --vhd "D:/Data/WSL/LinuxProjects.vhdx" --bare'
     # gsudo "$(wslupath $(realpath wsl.exe))" -d NixOS --mount --vhd "D:/Data/WSL/LinuxProjects.vhdx" --bare
-    gsudo "$(wslpath -w $(realpath wsl.exe))" -d NixOS --mount --vhd "D:/Data/WSL/LinuxProjects.vhdx" --bare
+
+    ProjectVhdx=/mnt/d/Data/WSL/LinuxProjects.vhdx
+    [ -f "$ProjectVhdx" ] \
+      && gsudo "$(wslpath -w $(realpath $(which wsl.exe)))" -d NixOS --mount \
+        --vhd "$(wslpath -w $ProjectVhdx)" --bare \
+      && echo Mount $ProjectVhdx
+
+    ProjectVhdx=/mnt/w/@Data/WSL/LinuxProjects.vhdx
+    [ -f "$ProjectVhdx" ] \
+      && gsudo "$(wslpath -w $(realpath $(which wsl.exe)))" -d NixOS --mount \
+        --vhd "$(wslpath -w $ProjectVhdx)" --bare \
+      && echo Mount $ProjectVhdx
 
     sleep 1
 
