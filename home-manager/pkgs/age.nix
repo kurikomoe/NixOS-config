@@ -59,6 +59,8 @@ in {
       # ----------------------------------------------------------
       // secret_file "builders/kurikoArch.ssh"
       # ----------------------------------------------------------
+      // secret_file "cachix/cachix.dhall"
+      # ----------------------------------------------------------
       // secret_file "nix/access-tokens"
       // secret_file "nix/cachix.nix.conf";
   };

@@ -71,6 +71,22 @@
       # ../../common/builders
       # ../../common/builders/kurikoArch.local.nix
 
+      {
+        # nixpkgs.hostPlatform = {
+        #   system = "x86_64-linux";
+        #   gcc.arch = "x86-64-v3";
+        #   # gcc.tune = "core-avx2";
+        # };
+
+        nix.settings.system-features = [
+          "benchmark"
+          "big-parallel"
+          "kvm"
+          "nixos-test"
+          "gccarch-x86-64-v3"
+        ];
+      }
+
       ({
         pkgs,
         lib,

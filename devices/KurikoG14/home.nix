@@ -39,6 +39,14 @@
         #   "dotnet-runtime-6.0.36"
         # ];
 
+        nix.settings.system-features = [
+          "benchmark"
+          "big-parallel"
+          "kvm"
+          "nixos-test"
+          "gccarch-x86-64-v3"
+        ];
+
         imports =
           (utils.buildImports root.hm-pkgs [
             "wsl"

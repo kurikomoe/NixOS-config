@@ -22,7 +22,7 @@ let
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIKjZNEcnjScSSkCiWYmD2q5dRT6tw77gnuOs7cUudF7"
     ];
 
-  keys = keys_age ++ keys_tx ++ keys_kurikoG14;
+  keys = keys_age ++ keys_tx ++ keys_kurikoG14 ++ keys_cpuserver58;
 
   file_list = {
     "res/gnupg" = {
@@ -53,6 +53,10 @@ let
     "res/nix" = {
       "access-tokens".publicKeys = keys ++ keys_cpuserver58;
       "cachix.nix.conf".publicKeys = keys ++ keys_cpuserver58;
+    };
+
+    "res/cachix" = {
+      "cachix.dhall".publicKeys = keys;
     };
 
     "res/docker" = {
