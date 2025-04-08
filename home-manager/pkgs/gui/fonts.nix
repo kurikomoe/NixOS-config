@@ -1,6 +1,7 @@
 {
   pkgs,
   lib,
+  repos,
   ...
 }: let
 in {
@@ -10,6 +11,11 @@ in {
     noto-fonts-cjk-serif
 
     sarasa-gothic
+
+    wqy_zenhei
+    wqy_microhei
+
+    repos.pkgs-kuriko-nur.kfonts
 
     jetbrains-mono
   ];

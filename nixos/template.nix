@@ -46,6 +46,7 @@ in
             settings =
               utils._commonNixPkgsConfig.settings
               // {
+                download-buffer-size = 500000000;
                 always-allow-substitutes = lib.mkDefault true;
                 auto-optimise-store = lib.mkDefault true;
                 trusted-users = [username];

@@ -120,6 +120,15 @@
           memoryPercent = 50;
         };
 
+        services.rustdesk-server = {
+          enable = true;
+          relay.enable = true;
+          # signal.enable = true;
+          # signal.relayHosts = [
+          #   # HIDE
+          # ];
+        };
+
         # cannot enable on wsl, it will invoke building kernel
         # hardware.nvidia-container-toolkit.enable = true;
       })

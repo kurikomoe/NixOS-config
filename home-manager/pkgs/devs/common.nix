@@ -17,7 +17,10 @@ in {
     # ./frameworks/tauri.nix
   ];
 
-  age.secrets."cachix/cachix.dhall".path = ".config/cachix/cachix.dhall";
+  age.secrets."cachix/cachix.dhall" = {
+    file = "${root.base}/res/cachix/cachix.dhall.age";
+    path = ".config/cachix/cachix.dhall";
+  };
 
   home.packages = with pkgs; [
     # Shell Tools

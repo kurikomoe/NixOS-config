@@ -73,6 +73,7 @@ in
         }: {
           imports = [
             "${root.hm-pkgs}/tools/nixtools.nix"
+            "${root.hm-pkgs}/gui/fonts.nix"
           ];
 
           home.stateVersion = stateVersion;
@@ -117,6 +118,9 @@ in
           home.packages = with pkgs;
             [
               gnutar
+
+              wqy_microhei
+              wqy_zenhei
 
               (lib.lowPrio mkpasswd)
 

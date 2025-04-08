@@ -54,6 +54,8 @@ in {
       # ----------------------------------------------------------
       // secret_file "atuin/key"
       # ----------------------------------------------------------
+      // secret_file "cachix/cachix.dhall"
+      # ----------------------------------------------------------
       // secret_file "nix/access-tokens"
       // secret_file "nix/cachix.nix.conf";
   };
