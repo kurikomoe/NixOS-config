@@ -56,6 +56,7 @@
             "devs/common.nix"
 
             "devs/langs"
+            "devs/ide/jetbrains.nix"
 
             "tools"
             "tools/ssh/complete.nix"
