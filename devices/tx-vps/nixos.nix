@@ -121,7 +121,7 @@
         };
 
         services.rustdesk-server = {
-          enable = true;
+          enable = false;
           relay.enable = true;
           # signal.enable = true;
           # signal.relayHosts = [
