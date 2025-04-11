@@ -58,6 +58,8 @@ in {
     # j = "z";
   };
 
+  home.file.".ideavimrc".source = ./common_data/ideavimrc;
+
   programs = {
     dircolors = {
       enable = true;
