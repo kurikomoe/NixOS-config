@@ -68,6 +68,14 @@
       mkdir -p /nix/var/nix/gcroots/per-user/$USER/$PWD;
       ln -sf $PWD /nix/var/nix/gcroots/per-user/$USER/$PWD/;
     '')
+
+    (pkgs.writeShellScriptBin "push-hm" ''
+      realpath ~/.local/state/nix/profiles/home-manager | attic push kurikomoe
+    '')
+
+    (pkgs.writeShellScriptBin "push-nixos" ''
+      realpath /nix/var/nix/profiles/system | attic push kurikomoe
+    '')
   ];
 in
   with customVars; {
@@ -76,6 +84,7 @@ in
         # inputs.nix-search.packages.${system}.default
         nix-search-cli
         nix-index
+        attic-client
       ]
       ++ nixtools;
 

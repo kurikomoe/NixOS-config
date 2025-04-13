@@ -15,6 +15,9 @@ in {
     wqy_zenhei
     wqy_microhei
 
+    repos.pkgs-unstable.maple-mono.CN
+    _0xproto
+
     repos.pkgs-kuriko-nur.kfonts
 
     jetbrains-mono
@@ -24,6 +27,8 @@ in {
     enable = true;
     defaultFonts = {
       monospace = [
+        "Maple Mono CN"
+        "0xProto"
         "JetBrains Mono"
         "Sarasa Mono SC"
         "Noto Sans Mono CJK SC"
