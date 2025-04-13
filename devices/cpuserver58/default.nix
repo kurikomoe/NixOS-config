@@ -78,6 +78,7 @@ else let
           "./devs/common.nix"
           "./devs/tools.nix"
           # "./devs/langs"
+          # "./devs/ide/jetbrains.nix"
 
           # "./libs/others.nix"
 
@@ -87,6 +88,12 @@ else let
           "./tools/vscode-server.nix"
 
           # "./apps/podman.nix"
+        ];
+
+        programs.jetbrains-remote.enable = true;
+        programs.jetbrains-remote.ides = with repos.pkgs-unstable.jetbrains; [
+          pycharm-professional
+          clion
         ];
 
         targets.genericLinux.enable = true;
