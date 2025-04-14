@@ -78,6 +78,10 @@ let
     "res/builders" = {
       "kurikoArch.ssh".publicKeys = keys;
     };
+
+    "res/misc" = {
+      "shell_gpt/sgptrc".publicKeys = keys;
+    };
   };
 
   flattenAttrsWithAge = attrs:

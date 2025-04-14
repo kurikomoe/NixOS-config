@@ -25,6 +25,7 @@ in {
   imports = [
     "${root.hm-pkgs}/devs/common.nix"
     ./atuin.nix
+    ./shell_gpt.nix
   ];
 
   home.packages = with pkgs; [
