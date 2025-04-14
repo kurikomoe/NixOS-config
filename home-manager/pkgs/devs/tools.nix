@@ -1,4 +1,9 @@
-{pkgs, ...}: let
+{
+  pkgs,
+  repos,
+  inputs,
+  ...
+}: let
 in {
   home.packages = with pkgs; [
     # tools
@@ -8,5 +13,8 @@ in {
     # View hex
     hexyl
     hexdump
+
+    repos.pkgs-unstable.hexpatch
+    # inputs.hevi
   ];
 }
