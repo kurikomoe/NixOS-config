@@ -8,7 +8,7 @@
   ];
 
   home.shellAliases = {
-    "ask" = "sgpt --chat";
+    "ask" = "sgpt";
     "chat" = "sgpt --repl temp";
   };
 
