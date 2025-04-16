@@ -10,5 +10,6 @@ in {
 
   home.packages = with pkgs; [
     texliveFull
+    typst
   ];
 }
