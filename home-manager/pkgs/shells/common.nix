@@ -5,6 +5,7 @@ p @ {
   pkgs,
   lib,
   nixpkgs,
+  repos,
   ...
 }: let
   autojump-rs = pkgs.stdenv.mkDerivation {
@@ -33,6 +34,8 @@ in {
     (lib.hiPrio autojump-rs)
     fzf
     bat
+
+    (repos.pkgs-kuriko-nur.shellfirm)
   ];
 
   home.sessionVariables = {
