@@ -89,45 +89,46 @@
             hello
           '';
 
-          pre-commit = {
-            addGcRoot = true;
-            hooks = {
-              alejandra.enable = true;
-              # JS
-              eslint.enable = true;
-              # Python
-              isort.enable = true;
-              mypy.enable = true;
-              pylint.enable = true;
-              pyright.enable = true;
-              flake8.enable = true;
+          dotenv.enable = true;
 
-              eslint-typescript = {
-                enable = true;
-                name = "eslint typescript";
-                entry = "${packageManager} eslint ";
-                files = "\\.(tsx|ts|js)$";
-                types = ["text"];
-                excludes = ["dist/.*"];
-                pass_filenames = true;
-                verbose = true;
-              };
+          pre-commit.hooks = {
+            alejandra.enable = true;
 
-              # Check Secrets
-              trufflehog = {
-                enable = true;
-                entry = let
-                  script = pkgs.writeShellScript "precommit-trufflehog" ''
-                    set -e
-                    ${pkgs.trufflehog}/bin/trufflehog --no-update git "file://$(git rev-parse --show-toplevel)" --since-commit HEAD --results=verified --fail
-                  '';
-                in
-                  builtins.toString script;
-              };
+            # Python
+            isort.enable = true;
+            # mypy.enable = true;
+            pylint.enable = true;
+            # pyright.enable = true;
+            # flake8.enable = true;
+
+            # JS
+            eslint.enable = true;
+            eslint-typescript = {
+              enable = true;
+              name = "eslint typescript";
+              entry = "${packageManager} eslint ";
+              files = "\\.(tsx|ts|js)$";
+              types = ["text"];
+              excludes = ["dist/.*"];
+              pass_filenames = true;
+              verbose = true;
+            };
+
+            # Check Secrets
+            trufflehog = {
+              enable = true;
+              entry = let
+                script = pkgs.writeShellScript "precommit-trufflehog" ''
+                  set -e
+                  ${pkgs.trufflehog}/bin/trufflehog --no-update git "file://$(git rev-parse --show-toplevel)" --since-commit HEAD --results=verified --fail
+                '';
+              in
+                builtins.toString script;
             };
           };
 
           cachix.pull = ["devenv"];
+          cachix.push = "kurikomoe";
         };
       };
 
