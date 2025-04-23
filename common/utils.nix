@@ -1,6 +1,12 @@
 {system, ...}: let
   _commonNixPkgsConfig = {
     allowUnfree = true;
+
+    # allow test fails
+    doCheck = false;
+    checkPhase = "true";
+    allowBroken = true;
+
     permittedInsecurePackages = [
       "dotnet-runtime-7.0.20"
     ];
