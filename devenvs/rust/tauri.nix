@@ -1,5 +1,5 @@
 {
-  description = "Kuriko's Rust Template";
+  description = "Kuriko's Tauri Template";
 
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
@@ -64,7 +64,7 @@
           ];
         };
 
-        cargoTOML = builtins.fromTOML (builtins.readFile ./Cargo.toml);
+        cargoTOML = builtins.fromTOML (builtins.readFile ./src-tauri/Cargo.toml);
         name = cargoTOML.package.name;
         version = cargoTOML.package.version;
 
@@ -143,12 +143,21 @@
           scripts."build".exec = "cargo build $@";
           scripts."run".exec = "cargo run $@";
 
+          env = {
+            CARGO_MANIFEST_DIR = "./src-tauri/";
+          };
+
           pre-commit = {
             addGcRoot = true;
             hooks = {
               alejandra.enable = true;
+
               clippy.enable = true;
+              clippy.settings.extraArgs = "--manifest-path ./src-tauri/Cargo.toml --no-deps";
+              clippy.settings.offline = false;
+
               rustfmt.enable = true;
+              rustfmt.settings.manifest-path = "./src-tauri/Cargo.toml";
 
               # Check Secrets
               trufflehog = {
