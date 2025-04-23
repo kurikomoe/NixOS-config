@@ -532,11 +532,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1745380081,
-        "narHash": "sha256-bUy25YkdRfdWPxSyx22igWi6g3rd3HXKFg+yL4dfBPY=",
+        "lastModified": 1745427103,
+        "narHash": "sha256-J4v65MKoXt95nmCYr6a7Cdiyl9QmPp6u3+7aJ71zxbk=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "1d0e13904bd8c444ab1595f686ede5eff377e881",
+        "rev": "6d1f834ca63700604a96d8c38aa8ac272d95071a",
         "type": "github"
       },
       "original": {
@@ -550,14 +550,15 @@
         "nixpkgs": [
           "nixpkgs"
         ],
-        "pre-commit-hooks": "pre-commit-hooks"
+        "pre-commit-hooks": "pre-commit-hooks",
+        "shellfirm": "shellfirm"
       },
       "locked": {
-        "lastModified": 1745233123,
-        "narHash": "sha256-nrK8hLXYgMnPF6JAZrd318/EbEXHSL71Ya8ZtftGlM4=",
+        "lastModified": 1745431092,
+        "narHash": "sha256-al+6L8ecFcyH/CkiQpC0Ol95dl1oPRMlM/L8NmjXgMs=",
         "owner": "kurikomoe",
         "repo": "nur-packages",
-        "rev": "c29b2b1b0eb82932a67de2e165930c6bdce0ec72",
+        "rev": "036957f8dd1f3ad5c1f2aa7a1bb277002b0f7fd0",
         "type": "github"
       },
       "original": {
@@ -962,11 +963,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1745393762,
-        "narHash": "sha256-La1QgVPGj4TDvoImE3nDZJY3cmAgxpyGB2UYhoymnOM=",
+        "lastModified": 1745430461,
+        "narHash": "sha256-hQs026p3fxkwVxRSF0GIGZ51CiZugNNLyt42IwCh+7g=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "ba216cca2fe945c6f3234cd422212c74b4df644f",
+        "rev": "3b16e74eae922df0a2ad3a4da3d1779fcd426c3d",
         "type": "github"
       },
       "original": {
@@ -1064,6 +1065,22 @@
         "owner": "rust-lang",
         "ref": "nightly",
         "repo": "rust-analyzer",
+        "type": "github"
+      }
+    },
+    "shellfirm": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1742891908,
+        "narHash": "sha256-Bka3U7DHUp+KyMw0KFQtJxrHbZf4RJxmhJjgyAmVHa8=",
+        "owner": "kaplanelad",
+        "repo": "shellfirm",
+        "rev": "68107796e074004451277ec3139043c64895a201",
+        "type": "github"
+      },
+      "original": {
+        "owner": "kaplanelad",
+        "repo": "shellfirm",
         "type": "github"
       }
     },

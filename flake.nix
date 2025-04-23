@@ -50,6 +50,7 @@
 
     kuriko-nur = {
       url = "github:kurikomoe/nur-packages";
+      # url = "git+file:///home/kuriko/.nur";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -196,6 +197,7 @@
 
       pkgs-kuriko-nur = import inputs.kuriko-nur {
         pkgs = pkgs-stable;
+        inputs = inputs.kuriko-nur.inputs;
       };
 
       agenix = import inputs.agenix {inherit system;};
