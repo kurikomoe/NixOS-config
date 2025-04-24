@@ -554,11 +554,11 @@
         "shellfirm": "shellfirm"
       },
       "locked": {
-        "lastModified": 1745431092,
-        "narHash": "sha256-al+6L8ecFcyH/CkiQpC0Ol95dl1oPRMlM/L8NmjXgMs=",
+        "lastModified": 1745466877,
+        "narHash": "sha256-BsfoJPrvZcmMGwqJjaBHdt1p+CWcxcCxh7q5kCDOxkw=",
         "owner": "kurikomoe",
         "repo": "nur-packages",
-        "rev": "036957f8dd1f3ad5c1f2aa7a1bb277002b0f7fd0",
+        "rev": "ac7aa1f076302988921fd4fa2a19a4c820ef0d58",
         "type": "github"
       },
       "original": {
@@ -963,11 +963,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1745459908,
-        "narHash": "sha256-bWqgohVf/py9EW3bLS/dYbenD2p9N2/Qsw1+CJk1S04=",
+        "lastModified": 1745464059,
+        "narHash": "sha256-e4b+inE8yqzjcptcgigr3nO75XZP8pebAiCxnCB0BuI=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "dbc4ba3233b2bf951521177bf0ee0a7679959035",
+        "rev": "50982fc02ae7489bf4d90efb9f9ae67af7ba63a3",
         "type": "github"
       },
       "original": {

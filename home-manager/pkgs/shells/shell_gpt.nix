@@ -2,13 +2,18 @@
   root,
   pkgs,
   ...
-}: {
+}: let
+  ask = pkgs.writeShellScriptBin "ask" ''
+    args="$*"
+    ${pkgs.shell-gpt}/bin/sgpt "$args"
+  '';
+in {
   home.packages = with pkgs; [
     shell-gpt
+    ask
   ];
 
   home.shellAliases = {
-    "ask" = "sgpt";
     "chat" = "sgpt --repl temp";
   };
 

@@ -197,7 +197,7 @@
 
       pkgs-kuriko-nur = import inputs.kuriko-nur {
         pkgs = pkgs-stable;
-        inputs = inputs.kuriko-nur.inputs;
+        # inputs = inputs.kuriko-nur.inputs;
       };
 
       agenix = import inputs.agenix {inherit system;};

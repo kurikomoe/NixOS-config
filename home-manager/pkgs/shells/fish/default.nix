@@ -48,7 +48,15 @@ p @ {
     src = inputs.fishPlugin-theme-dracula;
   };
 
-  myShellInit = builtins.readFile ./shell_init.fish;
+  shellInit = ''
+    set fish_command_timer_min_cmd_duration 15000; # in milliseconds
+    source ${fish-command-timer.src}/fish_command_timer.fish;
+  '';
+
+  myInteractiveShellInit = builtins.readFile ./shell_init.fish;
+  interactiveShellInit = ''
+    ${myInteractiveShellInit}
+  '';
 in {
   imports = [
     "${root.hm-pkgs}/devs/common.nix"
@@ -75,17 +83,7 @@ in {
 
     fish = {
       enable = true;
-      shellInit = ''
-        # in milliseconds
-        set fish_command_timer_min_cmd_duration 15000;
-        source ${fish-command-timer.src}/fish_command_timer.fish;
-
-        # set fish_prompt_pwd_dir_length 0
-
-        # function postexec_test --on-event fish_postexec
-        #    echo
-        # end
-      '';
+      inherit shellInit interactiveShellInit;
       plugins = with pkgs.fishPlugins; [
         {
           name = "fish-abbreviation-tips";
