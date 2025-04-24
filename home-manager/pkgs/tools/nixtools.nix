@@ -4,6 +4,7 @@
   lib,
   pkgs,
   customVars,
+  repos,
   ...
 }: let
   home = config.home.homeDirectory;
@@ -70,11 +71,11 @@
     '')
 
     (pkgs.writeShellScriptBin "push-hm" ''
-      realpath ~/.local/state/nix/profiles/home-manager | attic push kurikomoe
+      realpath ~/.local/state/nix/profiles/home-manager | cachix push kurikomoe
     '')
 
     (pkgs.writeShellScriptBin "push-nixos" ''
-      realpath /nix/var/nix/profiles/system | attic push kurikomoe
+      realpath /nix/var/nix/profiles/system | cachix push kurikomoe
     '')
   ];
 in
@@ -84,7 +85,9 @@ in
         # inputs.nix-search.packages.${system}.default
         nix-search-cli
         nix-index
-        attic-client
+
+        # repos.pkgs-unstable.attic-client
+        # repos.pkgs-unstable.attic-server
       ]
       ++ nixtools;
 
