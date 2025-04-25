@@ -3,11 +3,17 @@
   lib,
   pkgs,
   ...
-}: {
+}: let
+  script = pkgs.writeShellScriptBin "update-nvidia-ctk" ''
+    ${pkgs.nvidia-docker}/bin/nvidia-ctk cdi generate --output="$HOME/.cdi/nvidia.yaml"
+    ${pkgs.sudo}/bin/sudo ${pkgs.nvidia-docker}/bin/nvidia-ctk cdi generate --output="/etc/cdi/nvidia.yaml"
+  '';
+in {
   environment.systemPackages = with pkgs; [
     arion
     nvidia-docker
     nvidia-container-toolkit
+    script
   ];
 
   # ref: https://github.com/nix-community/NixOS-WSL/discussions/487#discussioncomment-11180666
