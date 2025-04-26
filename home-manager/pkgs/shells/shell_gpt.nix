@@ -6,6 +6,7 @@
   ask = pkgs.writeShellScriptBin "ask" ''
     args="$*"
     ${pkgs.shell-gpt}/bin/sgpt "$args"
+    rm -r \~
   '';
 in {
   home.packages = with pkgs; [
