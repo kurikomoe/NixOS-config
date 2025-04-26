@@ -25,10 +25,12 @@
       https://mirrors.ustc.edu.cn/nix-channels/store
       https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store
       https://nix-community.cachix.org
+      https://kurikomoe.cachix.org
     ];
     trusted-public-keys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "kurikomoe.cachix.org-1:NewppX3NeGxT8OwdwABq+Av7gjOum55dTAG9oG7YeEI="
     ];
     extra-trusted-public-keys = "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=";
     extra-substituters = "https://devenv.cachix.org";
@@ -147,29 +149,26 @@
             CARGO_MANIFEST_DIR = "./src-tauri/";
           };
 
-          pre-commit = {
-            addGcRoot = true;
-            hooks = {
-              alejandra.enable = true;
+          pre-commit.hooks = {
+            alejandra.enable = true;
 
-              clippy.enable = true;
-              clippy.settings.extraArgs = "--manifest-path ./src-tauri/Cargo.toml --no-deps";
-              clippy.settings.offline = false;
+            clippy.enable = true;
+            clippy.settings.extraArgs = "--manifest-path ./src-tauri/Cargo.toml --no-deps";
+            clippy.settings.offline = false;
 
-              rustfmt.enable = true;
-              rustfmt.settings.manifest-path = "./src-tauri/Cargo.toml";
+            rustfmt.enable = true;
+            rustfmt.settings.manifest-path = "./src-tauri/Cargo.toml";
 
-              # Check Secrets
-              trufflehog = {
-                enable = true;
-                entry = let
-                  script = pkgs.writeShellScript "precommit-trufflehog" ''
-                    set -e
-                    ${pkgs.trufflehog}/bin/trufflehog --no-update git "file://$(git rev-parse --show-toplevel)" --since-commit HEAD --results=verified --fail
-                  '';
-                in
-                  builtins.toString script;
-              };
+            # Check Secrets
+            trufflehog = {
+              enable = true;
+              entry = let
+                script = pkgs.writeShellScript "precommit-trufflehog" ''
+                  set -e
+                  ${pkgs.trufflehog}/bin/trufflehog --no-update git "file://$(git rev-parse --show-toplevel)" --since-commit HEAD --results=verified --fail
+                '';
+              in
+                builtins.toString script;
             };
           };
 

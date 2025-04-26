@@ -27,10 +27,12 @@
       https://mirrors.ustc.edu.cn/nix-channels/store
       https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store
       https://nix-community.cachix.org
+      https://kurikomoe.cachix.org
     ];
     trusted-public-keys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "kurikomoe.cachix.org-1:NewppX3NeGxT8OwdwABq+Av7gjOum55dTAG9oG7YeEI="
     ];
     extra-trusted-public-keys = "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=";
     extra-substituters = "https://devenv.cachix.org";
@@ -100,29 +102,26 @@
 
           languages.cplusplus.enable = true;
 
-          lanaguages.python = {
+          languages.python = {
             enable = false;
             package = pkgs.python312;
             # version = "3.12";
             uv.enable = true;
           };
 
-          pre-commit = {
-            addGcRoot = true;
-            hooks = {
-              alejandra.enable = true;
-              # C/C++
-              clang-format.enable = true;
-              # Python
-              isort.enable = true;
-              mypy.enable = true;
-              pylint.enable = true;
-              pyright.enable = true;
-              flake8.enable = true;
-            };
+          pre-commit.hooks = {
+            alejandra.enable = true;
+            # C/C++
+            clang-format.enable = true;
+            # Python
+            isort.enable = true;
+            mypy.enable = true;
+            pylint.enable = true;
+            pyright.enable = true;
+            flake8.enable = true;
 
             # Check Secrets
-            hooks.trufflehog = {
+            trufflehog = {
               enable = true;
               entry = let
                 script = pkgs.writeShellScript "precommit-trufflehog" ''
