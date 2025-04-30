@@ -17,7 +17,7 @@
 
       "${root.base}/nixos/pkgs/docker-cuda.nix"
 
-      ./age-nixos.nix
+      # ./age-nixos.nix
 
       # Also import home here
       # No! this will cause problems:
