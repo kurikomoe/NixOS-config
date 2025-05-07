@@ -37,7 +37,7 @@ in {
   boot.kernelModules = ["kvm-amd"];
   boot.extraModulePackages = [];
 
-  boot.tmp.useTmpfs = true;
+  boot.tmp.useTmpfs = false;
 
   fileSystems = {
     "/home/kuriko/Projects" = {
