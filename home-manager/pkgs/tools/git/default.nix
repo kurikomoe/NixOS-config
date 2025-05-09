@@ -4,6 +4,7 @@
   inputs,
   lib,
   customVars,
+  repos,
   ...
 }: let
   configDir = "${config.xdg.configHome}";
@@ -11,6 +12,10 @@
   gitConfigDir = "${configDir}/git";
   gitExtraConfigPath = "${gitConfigDir}/config_extra";
 in {
+  imports = [
+    ./lazygit
+  ];
+
   home.packages = with pkgs; [
     git-lfs
   ];
