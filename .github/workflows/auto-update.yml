@@ -1,0 +1,24 @@
+name: "update flakes"
+
+on:
+    workflow_dispatch
+    # push:
+    # schedule:
+    #     - cron: "0 6 * * *"
+
+jobs:
+    update-flakes:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: szenius/set-timezone@v2.0
+              with:
+                timezoneLinux: "Asia/Shanghai"
+
+            - uses: actions/checkout@v4
+
+            - uses: cachix/install-nix-action@v31
+              with:
+                github_access_token: ${{ secrets.GITHUB_TOKEN }}
+                set_as_trusted_user: true
+
+            - run: nix flake update

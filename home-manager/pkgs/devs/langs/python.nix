@@ -108,6 +108,8 @@ in {
         setuptools
         # ninja
         scons
+
+        lz4
       ]))
   ];
 }

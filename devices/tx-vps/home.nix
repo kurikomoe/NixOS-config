@@ -62,7 +62,9 @@
             "${root.base}/home-manager/pkgs/tools/vscode-server.nix"
           ];
 
-        home.packages = with pkgs; [];
+        home.packages = with pkgs; [
+          teamspeak_server
+        ];
 
         age.secrets."docker/config.json".path = ".docker/config.json";
 
