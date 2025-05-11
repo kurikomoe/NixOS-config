@@ -2,6 +2,11 @@
   description = "Home Manager configuration of kuriko";
 
   inputs = {
+    devenv-root = {
+      url = "file+file:///dev/null";
+      flake = false;
+    };
+
     # --------------------- Main inputs ---------------------
     # nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";  # bug now 24-12-12
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
@@ -144,6 +149,7 @@
     nixpkgs,
     nixpkgs-unstable,
     flake-parts,
+    devenv-root,
     ...
   }: let
     forAllSystems = nixpkgs.lib.genAttrs systems;

@@ -2,6 +2,11 @@
   description = "Kuriko's Rust Template";
 
   inputs = {
+    devenv-root = {
+      url = "file+file:///dev/null";
+      flake = false;
+    };
+
     flake-parts.url = "github:hercules-ci/flake-parts";
 
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
@@ -41,7 +46,11 @@
     extra-substituters = "https://devenv.cachix.org";
   };
 
-  outputs = inputs @ {flake-parts, ...}:
+  outputs = inputs @ {
+    flake-parts,
+    devenv-root,
+    ...
+  }:
     flake-parts.lib.mkFlake {inherit inputs;} {
       imports = [
         inputs.devenv.flakeModule
@@ -95,11 +104,11 @@
 
         runtimeLibs = with pkgs; [
           pkg-config
-          openssl
+          # openssl
         ];
 
         env = {
-          PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
+          # PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
         };
       in rec {
         packages.default = rustPlatform.buildRustPackage rec {
@@ -125,6 +134,11 @@
         };
 
         devenv.shells.default = {
+          devenv.root = let
+            devenvRootFileContent = builtins.readFile devenv-root.outPath;
+          in
+            pkgs.lib.mkIf (devenvRootFileContent != "") devenvRootFileContent;
+
           packages = with pkgs;
             [
               hello
