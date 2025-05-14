@@ -107,6 +107,8 @@
           deploy-rs
 
           podman
+
+          repos.pkgs-unstable.cherry-studio
         ];
 
         services.frp = {
