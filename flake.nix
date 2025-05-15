@@ -79,7 +79,7 @@
     # --------------------- Third Party inputs ---------------------
     nix-alien.url = "github:thiagokokada/nix-alien";
 
-    nixos-vscode-server.url = "github:msteen/nixos-vscode-server/master";
+    nixos-vscode-server.url = "github:nix-community/nixos-vscode-server";
 
     # --------------------- Tmux Plugins ---------------------
     tmux-themepack = {
