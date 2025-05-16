@@ -83,6 +83,7 @@
             "./gui/browsers"
             "./gui/jetbrains.nix"
 
+            "./tools/vscode-server.nix"
             "./tools/ssh/complete.nix"
 
             # "./apps/podman.nix"
