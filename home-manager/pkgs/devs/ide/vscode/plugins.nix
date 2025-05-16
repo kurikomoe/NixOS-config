@@ -8,51 +8,6 @@
     #   version = "2.4.0";
     #   hash = "sha256-rxx/tG0WqSQoP1nfuknPewDkmEkNBkFBaC2ZrWwTLpg=";
     # };
-
-    # "wayou.vscode-todo-highlight" = {
-    #   version = "1.0.5";
-    #   hash = "sha256-CQVtMdt/fZcNIbH/KybJixnLqCsz5iF1U0k+GfL65Ok=";
-    # };
-
-    # "aaron-bond.better-comments" = {
-    #   version = "3.0.2";
-    #   hash = "sha256-hQmA8PWjf2Nd60v5EAuqqD8LIEu7slrNs8luc3ePgZc=";
-    # };
-
-    # "evan-buss.font-switcher" = {
-    #   version = "4.1.0";
-    #   hash = "sha256-KkXUfA/W73kRfs1TpguXtZvBXFiSMXXzU9AYZGwpVsY=";
-    # };
-
-    # "andrejunges.Handlebars" = {
-    #   version = "0.4.1";
-    #   hash = "sha256-Rwhr9X3sjDm6u/KRYE2ucCJSlZwsgUJbH/fdq2WZ034=";
-    # };
-
-    # "mrmlnc.vscode-json5" = {
-    #   version = "1.0.0";
-    #   hash = "sha256-XJmlUuKiAWqzvT7tawVY5NHsnUL+hsAjJbrcmxDe8C0=";
-    # };
-
-    # "revng.llvm-ir" = {
-    #   version = "1.0.5";
-    #   hash = "sha256-zTLF/3Xc5QSzDTn6YLKrH4Rtk+XG17CK/GWhzj1IOC0=";
-    # };
-
-    # "basdp.language-gas-x86" = {
-    #   version = "0.0.2";
-    #   hash = "sha256-PbXhOsoR0/5wXuFrzwCcauM1uGgfQoSRTj0gPVVZ4Kg=";
-    # };
-
-    # "blindtiger.masm" = {
-    #   version = "0.0.5";
-    #   hash = "sha256-4rE0/FynZXTysgS+H9uTekOjnpc7PEEu+MMZlUCE8RQ=";
-    # };
-
-    # "Zignd.html-css-class-completion" = {
-    #   version = "1.20.0";
-    #   hash = "sha256-3BEppTBc+gjZW5XrYLPpYUcx3OeHQDPW8z7zseJrgsE=";
-    # };
   };
 
   kustomPluginList =
@@ -67,9 +22,17 @@
         }
       )
       kustomPluginDefs);
-in
+in {
+  libs = with pkgs;
+    [
+      pkg-config
+      icu
+      zlib
+    ]
+    ++ (pkgs.steam.args.multiPkgs pkgs);
+
+  extensions = with pkgs.vscode-extensions;
   with pkgs.vscode-marketplace;
-  with pkgs.vscode-extensions;
     [
       # Langs
       rust-lang.rust-analyzer
@@ -197,4 +160,5 @@ in
       humao.rest-client
       alefragnani.project-manager
     ]
-    ++ kustomPluginList
+    ++ kustomPluginList;
+}

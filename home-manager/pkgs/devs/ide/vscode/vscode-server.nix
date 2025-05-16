@@ -6,16 +6,17 @@ p @ {
   ...
 }: let
   pkgs = repos.pkgs-unstable;
-  pluginList = pkgs.callPackage ./plugins.nix {inherit pkgs;};
+  deps = pkgs.callPackage ./plugins.nix {inherit pkgs;};
 in {
   imports = [
     "${inputs.nixos-vscode-server}/modules/vscode-server/home.nix"
   ];
 
-  home.packages = pluginList;
+  home.packages = deps.extensions;
 
   services.vscode-server = {
-    enableFHS = false;
+    enableFHS = true;
     enable = true;
+    extraRuntimeDependencies = deps.libs;
   };
 }

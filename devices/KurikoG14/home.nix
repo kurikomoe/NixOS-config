@@ -57,6 +57,8 @@
 
             "devs/langs"
             "devs/ide/jetbrains.nix"
+            # "devs/ide/vscode/default.nix"
+            "devs/ide/vscode/vscode-server.nix"
 
             "tools"
             "tools/ssh/complete.nix"
