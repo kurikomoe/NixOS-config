@@ -583,11 +583,11 @@
         "pre-commit-hooks": "pre-commit-hooks"
       },
       "locked": {
-        "lastModified": 1745467695,
-        "narHash": "sha256-nrK8hLXYgMnPF6JAZrd318/EbEXHSL71Ya8ZtftGlM4=",
+        "lastModified": 1747383479,
+        "narHash": "sha256-wBBxLgrMHcCUDxDBazrnZXwNj8BtUyS2VdzF7QcqdHI=",
         "owner": "kurikomoe",
         "repo": "nur-packages",
-        "rev": "23de47abbedbc968979ed0962ef80d87948af205",
+        "rev": "b20c9f5f897e1761a8aee54302cb5cba0fed5e24",
         "type": "github"
       },
       "original": {
@@ -663,11 +663,11 @@
         "nixpkgs": "nixpkgs_7"
       },
       "locked": {
-        "lastModified": 1747360951,
-        "narHash": "sha256-nmK5wONprbBmgZ7A86Pz2QefEzngI3JrCeIt9cBeEIQ=",
+        "lastModified": 1747383427,
+        "narHash": "sha256-l7NPb4CiGfBS5VEwIsqThLlGrTRysxb+BMOgBJkizTk=",
         "owner": "nix-community",
         "repo": "nix-vscode-extensions",
-        "rev": "e001ea5c1cdfa934d0a6f65c7229df42bb31faee",
+        "rev": "84fa86a820a365b12d7bbae3556ad737f7091af3",
         "type": "github"
       },
       "original": {
