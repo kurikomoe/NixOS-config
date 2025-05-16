@@ -2,25 +2,17 @@
   description = "Kuriko's Python Template";
 
   inputs = {
+    devenv-root = {
+      url = "file+file:///dev/null";
+      flake = false;
+    };
     flake-parts.url = "github:hercules-ci/flake-parts";
 
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs";
+    devenv.url = "github:cachix/devenv";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
-    devenv = {
-      url = "github:cachix/devenv";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nixpkgs-python = {
-      url = "github:cachix/nixpkgs-python";
-      inputs = {nixpkgs.follows = "nixpkgs";};
-    };
-
-    kuriko-nur = {
-      url = "github:kurikomoe/nur-packages";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    fenix.url = "github:nix-community/fenix";
+    kuriko-nur.url = "github:kurikomoe/nur-packages";
   };
 
   nixConfig = {
@@ -94,28 +86,14 @@
 
           pre-commit.hooks = {
             alejandra.enable = true;
+            shellcheck.enable = true;
 
-            # pylint.enable = true;
-            # pyright.enable = true;
-            flake8.enable = true;
-
+            # Python
             isort.enable = true;
-            # autoflake.enable = true;
-            # mypy = {
-            #   enable = true;
-            #   excludes = [
-            #     # ".*yarn_spinner_pb2.py$"
-            #     # "yarn_spinner_pb2.py"
-            #     # "third/.*"
-            #   ];
-            #   args = [
-            #     # "--disable-error-code=attr-defined"
-            #   ];
-            #   extraPackages = with pkgs; [
-            #     # python312Packages.protobuf
-            #     # python312Packages.types-protobuf
-            #   ];
-            # };
+            pyright.enable = true;
+            # mypy.enable = true;
+            # pylint.enable = true;
+            # flake8.enable = true;
 
             # Check Secrets
             trufflehog = {

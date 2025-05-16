@@ -6,28 +6,13 @@
       url = "file+file:///dev/null";
       flake = false;
     };
-
     flake-parts.url = "github:hercules-ci/flake-parts";
 
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs";
-
-    devenv = {
-      url = "github:cachix/devenv";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    devenv.url = "github:cachix/devenv";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
     fenix.url = "github:nix-community/fenix";
-
-    nixpkgs-python = {
-      url = "github:cachix/nixpkgs-python";
-      inputs = {nixpkgs.follows = "nixpkgs";};
-    };
-
-    kuriko-nur = {
-      url = "github:kurikomoe/nur-packages";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    kuriko-nur.url = "github:kurikomoe/nur-packages";
   };
 
   nixConfig = {
@@ -46,18 +31,10 @@
     extra-substituters = "https://devenv.cachix.org";
   };
 
-  outputs = inputs @ {
-    flake-parts,
-    devenv-root,
-    ...
-  }:
+  outputs = inputs @ {flake-parts, ...}:
     flake-parts.lib.mkFlake {inherit inputs;} {
-      imports = [
-        inputs.devenv.flakeModule
-      ];
-
+      imports = [inputs.devenv.flakeModule];
       systems = ["x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin"];
-
       perSystem = {
         config,
         self',
@@ -67,13 +44,6 @@
         ...
       }: let
         pkgs = import inputs.nixpkgs {
-          inherit system;
-          config.allowUnfree = true;
-          overlays = [
-            inputs.fenix.overlays.default
-          ];
-        };
-        pkgs-unstable = import inputs.nixpkgs-unstable {
           inherit system;
           config.allowUnfree = true;
           overlays = [
@@ -97,58 +67,45 @@
             "rustfmt"
           ];
 
-        rustPlatform = pkgs-unstable.makeRustPlatform {
+        rustPlatform = pkgs.makeRustPlatform {
           cargo = toolchain;
           rustc = toolchain;
         };
 
         runtimeLibs = with pkgs; [
           pkg-config
-          # openssl
+          openssl
         ];
 
         env = {
-          # PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
+          PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
         };
       in rec {
+        formatter = pkgs.alejandra;
+
         packages.default = rustPlatform.buildRustPackage rec {
-          inherit version;
+          inherit version env;
           pname = name;
           cargoLock.lockFile = ./Cargo.lock;
           src = pkgs.lib.cleanSource ./.;
 
           buildInputs = with pkgs; [] ++ runtimeLibs;
           nativebuildInputs = with pkgs; [] ++ runtimeLibs;
-
-          inherit env;
         };
 
         packages.docker = pkgs.dockerTools.buildImage {
-          name = name;
+          inherit name;
           tag = version;
-          config = {
-            Cmd = [
-              "${packages.default}/bin/${name}"
-            ];
-          };
+          config.Cmd = ["${packages.default}/bin/${name}"];
         };
 
         devenv.shells.default = {
-          devenv.root = let
-            devenvRootFileContent = builtins.readFile devenv-root.outPath;
-          in
-            pkgs.lib.mkIf (devenvRootFileContent != "") devenvRootFileContent;
-
           packages = with pkgs;
             [
               hello
               cargo-generate
             ]
             ++ runtimeLibs;
-
-          env = {
-            LD_LIBRARY_PATH = lib.makeLibraryPath runtimeLibs;
-          };
 
           enterShell = ''
             hello
@@ -172,24 +129,30 @@
           scripts."build".exec = "cargo build $@";
           scripts."run".exec = "cargo run $@";
 
-          pre-commit = {
-            addGcRoot = true;
-            hooks = {
-              alejandra.enable = true;
-              clippy.enable = true;
-              rustfmt.enable = true;
+          git-hooks.hooks = {
+            alejandra.enable = true;
+            shellcheck.enable = true;
 
-              # Check Secrets
-              trufflehog = {
-                enable = true;
-                entry = let
-                  script = pkgs.writeShellScript "precommit-trufflehog" ''
-                    set -e
-                    ${pkgs.trufflehog}/bin/trufflehog --no-update git "file://$(git rev-parse --show-toplevel)" --since-commit HEAD --results=verified --fail
-                  '';
-                in
-                  builtins.toString script;
-              };
+            clippy.enable = true;
+            rustfmt.enable = true;
+
+            # Python
+            isort.enable = true;
+            pyright.enable = true;
+            # mypy.enable = true;
+            # pylint.enable = true;
+            # flake8.enable = true;
+
+            # Check Secrets
+            trufflehog = {
+              enable = true;
+              entry = let
+                script = pkgs.writeShellScript "precommit-trufflehog" ''
+                  set -e
+                  ${pkgs.trufflehog}/bin/trufflehog --no-update git "file://$(git rev-parse --show-toplevel)" --since-commit HEAD --results=verified --fail
+                '';
+              in
+                builtins.toString script;
             };
           };
 
@@ -197,7 +160,5 @@
           cachix.push = "kurikomoe";
         };
       };
-
-      flake = {};
     };
 }

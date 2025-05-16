@@ -2,24 +2,17 @@
   description = "Kuriko's C/C++ Template";
 
   inputs = {
+    devenv-root = {
+      url = "file+file:///dev/null";
+      flake = false;
+    };
     flake-parts.url = "github:hercules-ci/flake-parts";
 
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    devenv.url = "github:cachix/devenv";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
-    devenv = {
-      url = "github:cachix/devenv";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nixpkgs-python = {
-      url = "github:cachix/nixpkgs-python";
-      inputs = {nixpkgs.follows = "nixpkgs";};
-    };
-
-    kuriko-nur = {
-      url = "github:kurikomoe/nur-packages";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    fenix.url = "github:nix-community/fenix";
+    kuriko-nur.url = "github:kurikomoe/nur-packages";
   };
 
   nixConfig = {
@@ -109,16 +102,18 @@
             uv.enable = true;
           };
 
-          pre-commit.hooks = {
+          git-commit.hooks = {
             alejandra.enable = true;
+            shellcheck.enable = true;
+
             # C/C++
             clang-format.enable = true;
             # Python
             isort.enable = true;
-            mypy.enable = true;
-            pylint.enable = true;
             pyright.enable = true;
-            flake8.enable = true;
+            # mypy.enable = true;
+            # pylint.enable = true;
+            # flake8.enable = true;
 
             # Check Secrets
             trufflehog = {
