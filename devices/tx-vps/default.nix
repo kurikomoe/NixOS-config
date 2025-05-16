@@ -66,10 +66,10 @@ in
         profiles.system = {
           user = "root";
           sshUser = "root";
-          fastConnection = true;
+          fastConnection = false;
           autoRollback = true;
           magicRollback = true;
-          remoteBuild = true;
+          remoteBuild = false;
           path =
             inputs.deploy-rs.lib.${system}.activate.nixos
             nixosConfigurations.${hostName};
