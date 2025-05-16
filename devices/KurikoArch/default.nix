@@ -20,7 +20,7 @@
     homeDirectory = /home/${username};
   };
 
-  utils = import "${root.base}/common/utils.nix" {inherit system;};
+  utils = import "${root.base}/common/utils.nix" {inherit system inputs;};
   repos = allRepos.${system};
 
   # =========== change this to switch version ===========
@@ -70,6 +70,9 @@
           utils.buildImports root.hm-pkgs [
             "./shells/fish"
 
+            "./devs/ide/vscode/vscode-server.nix"
+            "./devs/ide/vscode/default.nix"
+
             "./devs/common.nix"
             "./devs/langs"
 
@@ -83,7 +86,6 @@
             "./gui/browsers"
             "./gui/jetbrains.nix"
 
-            "./tools/vscode-server.nix"
             "./tools/ssh/complete.nix"
 
             # "./apps/podman.nix"

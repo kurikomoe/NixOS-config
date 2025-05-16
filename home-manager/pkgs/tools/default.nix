@@ -13,7 +13,6 @@
       ./tmux
 
       ./direnv.nix
-      ./vscode-server.nix
 
       ./network.nix
 

@@ -80,6 +80,7 @@
     nix-alien.url = "github:thiagokokada/nix-alien";
 
     nixos-vscode-server.url = "github:nix-community/nixos-vscode-server";
+    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
 
     # --------------------- Tmux Plugins ---------------------
     tmux-themepack = {
@@ -188,7 +189,7 @@
     };
 
     allRepos = forAllSystems (system: let
-      utils = import "${root.base}/common/utils.nix" {inherit system;};
+      utils = import "${root.base}/common/utils.nix" {inherit system inputs;};
       cImport = utils.customNixPkgsImport;
     in rec {
       pkgs-stable = cImport inputs.nixpkgs {};

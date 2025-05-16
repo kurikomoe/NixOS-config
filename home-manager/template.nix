@@ -12,7 +12,7 @@
   ...
 } @ p: let
   system = customVars.system;
-  utils = import "${root.base}/common/utils.nix" {inherit system;};
+  utils = import "${root.base}/common/utils.nix" {inherit system inputs;};
 in
   with customVars; {
     inherit pkgs;

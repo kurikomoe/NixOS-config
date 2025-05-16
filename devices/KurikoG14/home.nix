@@ -7,7 +7,7 @@
   ...
 }: let
   system = customVars.system;
-  utils = import "${root.base}/common/utils.nix" {inherit system;};
+  utils = import "${root.base}/common/utils.nix" {inherit system inputs;};
 
   hm-template = import "${root.hm}/template.nix" (with customVars; {
     inherit inputs root customVars repos pkgs;

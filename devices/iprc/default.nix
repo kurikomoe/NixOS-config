@@ -14,7 +14,7 @@ else let
 
   system = "x86_64-linux";
 
-  utils = import "${root.base}/common/utils.nix" {inherit system;};
+  utils = import "${root.base}/common/utils.nix" {inherit system inputs;};
   repos = allRepos.${system};
 
   # =========== change this to switch version ===========
@@ -112,7 +112,7 @@ in
               "./tools/network.nix"
               # "./tools/others.nix"
 
-              "./tools/vscode-server.nix"
+              "./devs/ide/vscode/vscode-server.nix"
 
               "./tools/proxychains.nix"
 
