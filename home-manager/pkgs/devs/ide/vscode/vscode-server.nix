@@ -1,12 +1,12 @@
 p @ {
   inputs,
-  pkgs,
   root,
   repos,
   lib,
   ...
 }: let
-  pluginList = pkgs.callPackage ./plugins.nix {pkgs = repos.pkgs-unstable;};
+  pkgs = repos.pkgs-unstable;
+  pluginList = pkgs.callPackage ./plugins.nix {inherit pkgs;};
 in {
   imports = [
     "${inputs.nixos-vscode-server}/modules/vscode-server/home.nix"
