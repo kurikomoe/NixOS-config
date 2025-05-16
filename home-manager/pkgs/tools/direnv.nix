@@ -15,7 +15,7 @@
   ];
 
   home.packages = with pkgs; [
-    devenv
+    repos.pkgs-unstable.devenv
   ];
 
   programs = {

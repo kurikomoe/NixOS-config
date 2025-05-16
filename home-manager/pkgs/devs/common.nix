@@ -10,6 +10,8 @@ in {
     "${root.hm-pkgs}/libs/openssl.nix"
     # "${root.hm-pkgs}/libs/musl.nix"
 
+    "${root.hm-pkgs}/tools/direnv.nix"
+
     ./buildsystems.nix
     ./tools.nix
     ./gdb
@@ -58,8 +60,6 @@ in {
     git-ignore
 
     # dev
-    devenv
-    direnv
     cachix
 
     # openapi
