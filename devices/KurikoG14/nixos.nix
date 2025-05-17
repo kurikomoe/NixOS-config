@@ -7,7 +7,7 @@
   ...
 }: let
   system = customVars.system;
-  utils = import "${root.base}/common/utils.nix" {inherit system inputs;};
+  kutils = import "${root.base}/common/kutils.nix" {inherit system inputs;};
 
   os-template = import "${root.os}/template.nix" (with customVars; {
     inherit inputs root customVars repos pkgs;
@@ -108,6 +108,11 @@
         };
 
         networking.hostName = hostName;
+
+        programs.nix-ld.enable = true;
+        programs.nix-ld.libraries = with pkgs;
+          [icu libz]
+          ++ (pkgs.steam.args.multiPkgs pkgs);
 
         i18n.supportedLocales = [
           "en_US.UTF-8/UTF-8"

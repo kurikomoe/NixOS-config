@@ -10,9 +10,8 @@ p @ {
 in {
   imports = [
     "${inputs.nixos-vscode-server}/modules/vscode-server/home.nix"
+    ./plugins-hm.nix
   ];
-
-  home.packages = deps.extensions;
 
   services.vscode-server = {
     enableFHS = true;

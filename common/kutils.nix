@@ -1,6 +1,7 @@
 {
   system,
   inputs,
+  lib ? "<nixpkgs>".lib,
   ...
 }: let
   _commonNixPkgsConfig = {
@@ -49,6 +50,26 @@
     // extraConfig;
 
   buildImports = root: xs: (builtins.map (x: "${root}/${x}") xs);
+
+  buildPath = {
+    srcPath,
+    dstPath,
+  }: let
+    traverse = path: prefix: let
+      entries = builtins.readDir path;
+      processEntry = name: let
+        fullPath = "${path}/${name}";
+      in
+        if entries.${name}.isDir
+        then traverse fullPath (prefix + "/" + name)
+        else {
+          inherit (lib) mkMerge;
+          home.file."${prefix}/${name}".source = fullPath;
+        };
+    in
+      lib.concatMapAttrs processEntry entries;
+  in
+    traverse srcPath dstPath;
 in {
-  inherit customNixPkgsImport _commonNixPkgsConfig buildImports;
+  inherit customNixPkgsImport _commonNixPkgsConfig buildImports buildPath;
 }

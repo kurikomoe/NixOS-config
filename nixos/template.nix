@@ -7,12 +7,12 @@ p @ {
   ...
 }: let
   system = customVars.system;
-  utils = import "${root.base}/common/utils.nix" {inherit system inputs;};
+  kutils = import "${root.base}/common/kutils.nix" {inherit system inputs;};
 in
   with customVars; {
     specialArgs =
       {
-        inherit root customVars repos inputs;
+        inherit root customVars repos inputs kutils;
       }
       // (inputs.specialArgs or {});
 
@@ -44,7 +44,7 @@ in
           nix = {
             package = repos.pkgs-unstable.nix;
             settings =
-              utils._commonNixPkgsConfig.settings
+              kutils._commonNixPkgsConfig.settings
               // {
                 download-buffer-size = 500000000;
                 always-allow-substitutes = lib.mkDefault true;
@@ -92,7 +92,7 @@ in
             nix-ld = {
               enable = true;
               libraries = with pkgs;
-                []
+                [icu libz]
                 ++ (pkgs.steam.args.multiPkgs pkgs);
             };
             zsh.enable = true;

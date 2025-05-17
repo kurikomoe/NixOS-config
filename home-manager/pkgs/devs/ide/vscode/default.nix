@@ -4,15 +4,13 @@
   ...
 }: let
   pkgs = repos.pkgs-unstable;
-
-  deps = pkgs.callPackage ./plugins.nix {pkgs = repos.pkgs-unstable;};
+  deps = pkgs.callPackage ./plugins.nix {inherit pkgs;};
 
   # Alternative
-  vscodeWithExtensions = pkgs.vscode-with-extensions.override {
-    vscodeExtensions = deps.extensions;
-  };
-
   vscode-fhs = pkgs.vscode.fhsWithPackages (ps: with ps; [] ++ deps.libs);
+  # vscodeWithExtensions = pkgs.vscode-with-extensions.override {
+  #   vscodeExtensions = deps.extensions;
+  # };
 in {
   home.packages = with pkgs; [];
 

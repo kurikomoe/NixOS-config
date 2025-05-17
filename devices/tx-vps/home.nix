@@ -7,7 +7,7 @@
   ...
 }: let
   system = customVars.system;
-  utils = import "${root.base}/common/utils.nix" {inherit system inputs;};
+  kutils = import "${root.base}/common/kutils.nix" {inherit system inputs;};
 
   hm-template = import "${root.hm}/template.nix" (with customVars; {
     inherit inputs root customVars repos pkgs;
@@ -25,7 +25,7 @@
     modules = [
       ({pkgs, ...}: {
         imports =
-          utils.buildImports root.hm-pkgs [
+          kutils.buildImports root.hm-pkgs [
             "./shells/fish"
 
             "./tools/ssh/tx-cloud.nix"

@@ -1,6 +1,6 @@
 {
   pkgs,
-  lib,
+  repos,
   ...
 }: let
 in {
@@ -11,7 +11,7 @@ in {
     # gdb ui
     # seer
     gdbgui
-    pwndbg
+    repos.pkgs-kuriko-nur.pwndbg
     gef
 
     # tracing

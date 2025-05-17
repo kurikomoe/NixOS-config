@@ -8,7 +8,6 @@
     };
 
     # --------------------- Main inputs ---------------------
-    # nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";  # bug now 24-12-12
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
@@ -22,9 +21,9 @@
     };
 
     nixpkgs-fish-test.url = "github:NixOS/nixpkgs/pull/367229/head";
+
     # nixpkgs.url = "https://mirrors.ustc.edu.cn/nix-channels/nixos-24.11/nixexprs.tar.xz";
     # nixpkgs-unstable.url = "https://mirrors.ustc.edu.cn/nix-channels/nixpkgs-unstable/nixexprs.tar.xz";
-
     # nixpkgs.url = "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/nixos-24.11/nixexprs.tar.xz";
     # nixpkgs-unstable.url = "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/nixpkgs-unstable/nixexprs.tar.xz";
 
@@ -204,8 +203,8 @@
     };
 
     allRepos = forAllSystems (system: let
-      utils = import "${root.base}/common/utils.nix" {inherit system inputs;};
-      cImport = utils.customNixPkgsImport;
+      kutils = import "${root.base}/common/kutils.nix" {inherit system inputs;};
+      cImport = kutils.customNixPkgsImport;
     in rec {
       pkgs-stable = cImport inputs.nixpkgs {};
       pkgs-unstable = cImport inputs.nixpkgs-unstable {};

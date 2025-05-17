@@ -20,7 +20,7 @@
     homeDirectory = /home/${username};
   };
 
-  utils = import "${root.base}/common/utils.nix" {inherit system inputs;};
+  kutils = import "${root.base}/common/kutils.nix" {inherit system inputs;};
   repos = allRepos.${system};
 
   # =========== change this to switch version ===========

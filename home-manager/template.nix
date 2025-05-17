@@ -12,14 +12,14 @@
   ...
 } @ p: let
   system = customVars.system;
-  utils = import "${root.base}/common/utils.nix" {inherit system inputs;};
+  kutils = import "${root.base}/common/kutils.nix" {inherit system inputs;};
 in
   with customVars; {
     inherit pkgs;
 
     extraSpecialArgs =
       {
-        inherit customVars inputs root;
+        inherit customVars inputs root kutils;
 
         # locked pkgs
         inherit repos;
@@ -91,7 +91,7 @@ in
               automatic = true;
               frequency = "weekly";
             };
-            settings = lib.recursiveUpdate utils._commonNixPkgsConfig.settings {
+            settings = lib.recursiveUpdate kutils._commonNixPkgsConfig.settings {
               trusted-users = [username];
               sandbox = true;
             };
