@@ -6,7 +6,7 @@
   pkgs = repos.pkgs-unstable;
 
   push-cache = pkgs.writeShellScriptBin "push-cache" ''
-    ${pkgs.attic-client}/bin/attic push r2 -j1 $@
+    ${pkgs.attic-client}/bin/attic push r2 $@
   '';
   push-cache-hm = pkgs.writeShellScriptBin "push-cache-hm" ''
     ${push-cache}/bin/push-cache \
