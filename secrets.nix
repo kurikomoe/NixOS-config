@@ -53,6 +53,7 @@ let
     "res/nix" = {
       "access-tokens".publicKeys = keys ++ keys_cpuserver58;
       "cachix.nix.conf".publicKeys = keys ++ keys_cpuserver58;
+      "netrc".publicKeys = keys;
     };
 
     "res/cachix" = {

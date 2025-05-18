@@ -28,7 +28,7 @@
         https://hydra.iohk.io # vscode-extensions
 
         https://kurikomoe.cachix.org
-        https://nix-cache.0v0.io/
+        https://nix-cache.0v0.io/r2
       ];
       trusted-substituters = substituters;
       trusted-public-keys = [

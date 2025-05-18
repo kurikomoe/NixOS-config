@@ -86,6 +86,8 @@ in
             display = "show";
           };
 
+          age.secrets.".config/netrc".file = "${root.base}/res/nix/netrc.age";
+
           nix = {
             package = lib.mkDefault repos.pkgs-unstable.nix;
             gc = lib.mkDefault {
@@ -95,6 +97,7 @@ in
             settings = lib.recursiveUpdate kutils._commonNixPkgsConfig.settings {
               trusted-users = [username];
               sandbox = true;
+              netrc-file = config.age.secrets.".config/netrc".path;
             };
             # https://github.com/NixOS/nix/issues/6536#issuecomment-1254858889
             extraOptions = ''
