@@ -64,6 +64,9 @@
             "tools/ssh/complete.nix"
             "tools/ssh/helpers.nix"
 
+            "tools/attic/attic-client.nix"
+            "tools/attic/attic-server.nix"
+
             "libs/others.nix"
 
             "libs/cuda.nix"

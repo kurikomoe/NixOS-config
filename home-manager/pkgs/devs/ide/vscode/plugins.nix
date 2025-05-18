@@ -33,8 +33,8 @@ in {
     ]
     ++ (pkgs.steam.args.multiPkgs pkgs);
 
-  extensions = with pkgs.vscode-marketplace;
-  with pkgs.vscode-extensions;
+  extensions = with pkgs.vscode-extensions;
+  with pkgs.vscode-marketplace;
     [
       # Langs
       rust-lang.rust-analyzer

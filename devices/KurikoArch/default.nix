@@ -88,6 +88,9 @@
 
             "./tools/ssh/complete.nix"
 
+            "./tools/attic/attic-client.nix"
+            "./tools/attic/attic-server.nix"
+
             # "./apps/podman.nix"
           ]
           ++ [

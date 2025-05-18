@@ -72,8 +72,9 @@ in
           ...
         }: {
           imports = [
-            "${root.hm-pkgs}/tools/nixtools.nix"
             "${root.hm-pkgs}/gui/fonts.nix"
+            "${root.hm-pkgs}/tools/nixtools.nix"
+            "${root.hm-pkgs}/tools/attic/attic-client.nix"
           ];
 
           home.stateVersion = stateVersion;
@@ -128,6 +129,9 @@ in
 
               (lib.lowPrio vim)
               (lib.lowPrio neovim)
+
+              repos.pkgs-unstable.attic-server
+              repos.pkgs-unstable.attic-client
             ]
             ++ (p.packages or []);
 

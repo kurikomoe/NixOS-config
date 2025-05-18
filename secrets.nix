@@ -59,6 +59,11 @@ let
       "cachix.dhall".publicKeys = keys;
     };
 
+    "res/attic" = {
+      "server.toml".publicKeys = keys;
+      "config.toml".publicKeys = keys;
+    };
+
     "res/docker" = {
       "config.json".publicKeys = keys;
     };
