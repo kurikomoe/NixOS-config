@@ -7,7 +7,8 @@ p @ {
   ...
 }: let
   system = customVars.system;
-  kutils = import "${root.base}/common/kutils.nix" {inherit system inputs;};
+  lib = repos.pkgs.lib;
+  kutils = import "${root.base}/common/kutils.nix" {inherit inputs lib;};
 in
   with customVars; {
     specialArgs =

@@ -150,14 +150,15 @@
     devenv-root,
     ...
   }: let
-    forAllSystems = nixpkgs.lib.genAttrs systems;
-
     systems = [
       "x86_64-linux"
       # "aarch64-linux"
-      # "aarch64-darwin"
+      #   "aarch64-darwin"
       # "x86_64-darwin"
     ];
+
+    lib = nixpkgs.lib;
+    forAllSystems = lib.genAttrs systems;
 
     root = rec {
       base = self;
@@ -185,10 +186,12 @@
       };
     };
 
+    kutils = import "${root.base}/common/kutils.nix" {inherit inputs lib;};
+
     allRepos = forAllSystems (system: let
-      kutils = import "${root.base}/common/kutils.nix" {inherit system inputs;};
-      cImport = kutils.customNixPkgsImport;
+      cImport = kutils.customNixPkgsImport system;
     in rec {
+      pkgs = pkgs-stable;
       pkgs-stable = cImport inputs.nixpkgs {};
       pkgs-unstable = cImport inputs.nixpkgs-unstable {};
 
@@ -230,10 +233,10 @@
   in
     builtins.foldl'
     (
-      acc: device: (nixpkgs.lib.recursiveUpdate acc (
+      acc: device: (lib.recursiveUpdate acc (
         let
           config = let
-            params = {inherit inputs root versionMap allRepos;};
+            params = {inherit inputs root versionMap allRepos lib;};
             cfg = import "${device}" params;
           in
             builtins.trace "${device}: ${builtins.concatStringsSep "," (builtins.attrNames cfg)}" cfg;
@@ -244,7 +247,7 @@
     rec {
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
 
-      checks = nixpkgs.lib.recursiveUpdate checksDeploy (forAllSystems (system: {
+      checks = lib.recursiveUpdate checksDeploy (forAllSystems (system: {
         pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
           src = ./.;
           hooks = let

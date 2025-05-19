@@ -7,7 +7,6 @@
   ...
 }: let
   system = customVars.system;
-  kutils = import "${root.base}/common/kutils.nix" {inherit system inputs;};
 
   os-template = import "${root.os}/template.nix" (with customVars; {
     inherit inputs root customVars repos pkgs;

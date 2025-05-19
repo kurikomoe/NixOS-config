@@ -1,5 +1,6 @@
 {
   inputs,
+  lib,
   root,
   allRepos,
   versionMap,
@@ -13,7 +14,7 @@ else let
 
   system = customVars.system;
 
-  kutils = import "${root.base}/common/kutils.nix" {inherit system inputs;};
+  kutils = import "${root.base}/common/kutils.nix" {inherit inputs lib;};
   repos = allRepos.${system};
 
   # =========== change this to switch version ===========

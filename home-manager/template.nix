@@ -12,7 +12,11 @@
   ...
 } @ p: let
   system = customVars.system;
-  kutils = import "${root.base}/common/kutils.nix" {inherit system inputs;};
+  lib = pkgs.lib;
+  kutils = import "${root.base}/common/kutils.nix" {
+    inherit inputs lib;
+    enableKCache = true;
+  };
 in
   with customVars; {
     inherit pkgs;

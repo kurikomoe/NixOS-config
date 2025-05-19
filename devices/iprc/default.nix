@@ -2,6 +2,7 @@
 {
   inputs,
   root,
+  lib,
   allRepos,
   versionMap,
   ...
@@ -14,7 +15,7 @@ else let
 
   system = "x86_64-linux";
 
-  kutils = import "${root.base}/common/kutils.nix" {inherit system inputs;};
+  kutils = import "${root.base}/common/kutils.nix" {inherit inputs lib;};
   repos = allRepos.${system};
 
   # =========== change this to switch version ===========
@@ -35,7 +36,7 @@ else let
 in
   with customVars; {
     homeConfigurations."${username}@${hostName}" = home-manager.lib.homeManagerConfiguration (hm-template {
-      inherit inputs root customVars repos;
+      inherit inputs root customVars repos lib;
 
       pkgs = pkgs-hm;
 
