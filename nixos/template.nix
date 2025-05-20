@@ -20,6 +20,7 @@ in
     modules =
       p.modules
       ++ [
+        # inputs.nix-ld.nixosModules.nix-ld
         inputs.nur.modules.nixos.default
 
         ./pkgs/ssh.nix
@@ -90,11 +91,18 @@ in
           # i18n.defaultLocale = "en_US.UTF-8/UTF-8";
 
           programs = {
-            nix-ld = {
+            nix-ld = let
+              libs = with pkgs;
+                [
+                  icu
+                  icu.dev
+                  libz
+                ]
+                ++ (pkgs.steam.args.multiPkgs pkgs)
+                ++ (pkgs.steam-run.args.multiPkgs pkgs);
+            in {
               enable = true;
-              libraries = with pkgs;
-                [icu libz]
-                ++ (pkgs.steam.args.multiPkgs pkgs);
+              libraries = libs;
             };
             zsh.enable = true;
             fish.enable = true;

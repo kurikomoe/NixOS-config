@@ -78,6 +78,9 @@
     # --------------------- Third Party inputs ---------------------
     nix-alien.url = "github:thiagokokada/nix-alien";
 
+    # nix-ld.url = "github:Mic92/nix-ld";
+    # nix-ld.inputs.nixpkgs.follows = "nixpkgs";
+
     nixos-vscode-server.url = "github:nix-community/nixos-vscode-server";
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
 

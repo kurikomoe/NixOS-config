@@ -641,11 +641,11 @@
         "pwndbg": "pwndbg"
       },
       "locked": {
-        "lastModified": 1747710851,
-        "narHash": "sha256-/Qe6qVABEF4ckR3bltSuCVv3TXc4qMYqa0rh9g0zp/g=",
+        "lastModified": 1747712943,
+        "narHash": "sha256-F4OqdatqbAGE4EDHs2pMjfqG0rR6O855W5NXlyClKJg=",
         "owner": "kurikomoe",
         "repo": "nur-packages",
-        "rev": "f91a0f4b45a11c086a89a2ef5f2497b4440b29ae",
+        "rev": "67434c4d52b667223d50f18ee379b7ef795a0fa6",
         "type": "github"
       },
       "original": {
@@ -1183,11 +1183,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1747710475,
-        "narHash": "sha256-MaLrpaYI/rambRSU4V8fSqH0QdHb0GL/BnpiA6ROM7M=",
+        "lastModified": 1747711207,
+        "narHash": "sha256-1zXpw/id9v/Vu+PB8zmmF480K7glsgZ6VYuxEL5uTI0=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "af965ae49fa2282f12142d71d35be9e625810b8f",
+        "rev": "fc010a0bd0a27f864fc4299ecde92f6c96c4f7ff",
         "type": "github"
       },
       "original": {

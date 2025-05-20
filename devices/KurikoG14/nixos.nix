@@ -108,11 +108,6 @@
 
         networking.hostName = hostName;
 
-        programs.nix-ld.enable = true;
-        programs.nix-ld.libraries = with pkgs;
-          [icu libz]
-          ++ (pkgs.steam.args.multiPkgs pkgs);
-
         i18n.supportedLocales = [
           "en_US.UTF-8/UTF-8"
           "zh_CN.UTF-8/UTF-8"

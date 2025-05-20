@@ -81,12 +81,6 @@ p @ {
   ];
 
   programs = {
-    nix-ld = {
-      enable = true;
-      libraries = with pkgs;
-        []
-        ++ (pkgs.steam.args.multiPkgs pkgs);
-    };
     zsh.enable = true;
     fish.enable = true;
   };
