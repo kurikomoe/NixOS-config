@@ -220,7 +220,7 @@
 
     devices = [
       ./devices/KurikoG14
-      ./devices/KurikoTB16+
+      ./devices/KurikoTB16p
 
       ./devices/KurikoArch
 

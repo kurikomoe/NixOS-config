@@ -12,7 +12,7 @@
   customVars = rec {
     inherit system;
 
-    hostName = "KurikoTB16+";
+    hostName = "KurikoTB16p";
 
     username = "kuriko";
     usernameFull = "KurikoMoe";
@@ -37,7 +37,7 @@
   pkgs-os = repos."pkgs-${os-version}";
 
   # ====================================================
-  hm-config = import ../KurikoG14/home.nix (p
+  hm-config = import "${root.base}/devices/KurikoG14/home.nix" (p
     // {
       inherit home-manager customVars repos;
 
@@ -45,7 +45,7 @@
       pkgs = pkgs-hm;
     });
 
-  os-config = import ../KurikoG14/nixos.nix (p
+  os-config = import "${root.base}/devices/KurikoG14/nixos.nix" (p
     // {
       inherit home-manager customVars repos;
 

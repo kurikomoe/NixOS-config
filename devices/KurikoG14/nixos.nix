@@ -127,7 +127,21 @@
           wqy_microhei
         ];
 
+        services.avahi = {
+          enable = true;
+          nssmdns4 = true;
+          nssmdns6 = true;
+          publish = {
+            enable = true;
+            domain = true;
+            addresses = true;
+            workstation = true;
+          };
+        };
+
         environment.systemPackages = with pkgs; [
+          avahi
+
           sshfs
           steam-run
 

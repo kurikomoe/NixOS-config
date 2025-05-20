@@ -96,7 +96,6 @@ in
                 [
                   stdenv.cc
                   stdenv.cc.cc.lib
-                  stdenv.lib
                   openssl
                   icu
                   libz
