@@ -9,18 +9,34 @@
 }: let
   home = config.home.homeDirectory;
 
+  username = customVars.username;
+  hostName = customVars.hostName;
+
+  hms-text = ''
+    home-manager --flake "${home}/.nixos#${username}@${hostName}" switch $@;
+  '';
+
+  oss-text = ''
+    home-manager --flake "${home}/.nixos#${username}@${hostName}" switch $@;
+  '';
+
   nixtools = with customVars; [
     (pkgs.writeShellScriptBin "hms" ''
       set -e
-      home-manager --flake "${home}/.nixos#${username}@${hostName}" switch $@;
+      ${hms-text}
       nixdiff-hm;
+    '')
+
+    (pkgs.writeShellScriptBin "oss" ''
+      set -e
+      ${oss-text}
+      nixdiff-os;
     '')
 
     (pkgs.writeShellScriptBin "nixs" ''
       set -e
-      # for nix 2.18
-      sudo nixos-rebuild --flake "$HOME/.nixos#${hostName}" switch $@;
-      home-manager --flake "$HOME/.nixos#${username}@${hostName}" switch $@;
+      ${oss-text}
+      ${hms-text}
       nixdiff;
     '')
 

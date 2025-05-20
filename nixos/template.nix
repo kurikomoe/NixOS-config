@@ -94,8 +94,11 @@ in
             nix-ld = let
               libs = with pkgs;
                 [
+                  stdenv.cc
+                  stdenv.cc.cc.lib
+                  stdenv.lib
+                  openssl
                   icu
-                  icu.dev
                   libz
                 ]
                 ++ (pkgs.steam.args.multiPkgs pkgs)
