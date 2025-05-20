@@ -38,7 +38,7 @@
   toExtensionJson = extensions: builtins.toJSON (map toExtensionJsonEntry extensions);
 
   pkgs = repos.pkgs-unstable;
-  deps = pkgs.callPackage ./plugins.nix {inherit pkgs;};
+  deps = pkgs.callPackage ./plugins.nix {inherit pkgs repos;};
 
   # Solution 1: copy
   # addVscodeServerExtention = exts: let

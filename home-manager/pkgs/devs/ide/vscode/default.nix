@@ -4,7 +4,7 @@
   ...
 }: let
   pkgs = repos.pkgs-unstable;
-  deps = pkgs.callPackage ./plugins.nix {inherit pkgs;};
+  deps = pkgs.callPackage ./plugins.nix {inherit pkgs repos;};
 
   # Alternative
   vscode-fhs = pkgs.vscode.fhsWithPackages (ps: with ps; [] ++ deps.libs);

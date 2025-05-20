@@ -2,6 +2,7 @@
   pkgs,
   lib,
   config,
+  repos,
   ...
 }: let
   kustomPluginDefs = {
@@ -35,6 +36,7 @@ in {
 
   extensions = with pkgs.vscode-extensions;
   with pkgs.vscode-marketplace;
+  with repos.pkgs-kuriko-nur;
     [
       # Langs
       rust-lang.rust-analyzer

@@ -6,7 +6,7 @@ p @ {
   ...
 }: let
   pkgs = repos.pkgs-unstable;
-  deps = pkgs.callPackage ./plugins.nix {inherit pkgs;};
+  deps = pkgs.callPackage ./plugins.nix {inherit pkgs repos;};
 in {
   imports = [
     "${inputs.nixos-vscode-server}/modules/vscode-server/home.nix"

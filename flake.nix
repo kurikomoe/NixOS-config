@@ -55,7 +55,7 @@
     kuriko-nur = {
       url = "github:kurikomoe/nur-packages";
       # url = "git+file:///home/kuriko/.nur";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
