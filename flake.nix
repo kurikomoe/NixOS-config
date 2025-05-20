@@ -220,6 +220,8 @@
 
     devices = [
       ./devices/KurikoG14
+      ./devices/KurikoTB16+
+
       ./devices/KurikoArch
 
       ./devices/tx-vps
