@@ -12,7 +12,9 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
     fenix.url = "github:nix-community/fenix";
+
     kuriko-nur.url = "github:kurikomoe/nur-packages";
+    kuriko-nur.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   nixConfig = {
@@ -146,13 +148,8 @@
             # Check Secrets
             trufflehog = {
               enable = true;
-              entry = let
-                script = pkgs.writeShellScript "precommit-trufflehog" ''
-                  set -e
-                  ${pkgs.trufflehog}/bin/trufflehog --no-update git "file://$(git rev-parse --show-toplevel)" --since-commit HEAD --results=verified --fail
-                '';
-              in
-                builtins.toString script;
+              entry = builtins.toString inputs.kuriko-nur.legacyPackages.${system}.precommit-trufflehog;
+              stages = ["pre-push" "pre-commit"];
             };
           };
 

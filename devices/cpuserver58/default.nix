@@ -2,7 +2,7 @@
   inputs,
   lib,
   root,
-  allRepos,
+  genRepos,
   versionMap,
   ...
 }:
@@ -15,10 +15,10 @@ else let
   system = customVars.system;
 
   kutils = import "${root.base}/common/kutils.nix" {inherit inputs lib;};
-  repos = allRepos.${system};
 
   # =========== change this to switch version ===========
   hm-version = "stable";
+  repos = genRepos system;
   # ====================================================
 
   nixpkgs-hm = versionMap.${hm-version}.nixpkgs;

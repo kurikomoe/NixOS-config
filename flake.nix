@@ -147,140 +147,154 @@
 
   outputs = inputs @ {
     self,
-    nixpkgs,
-    nixpkgs-unstable,
     flake-parts,
-    devenv-root,
     ...
-  }: let
-    systems = [
-      "x86_64-linux"
-      # "aarch64-linux"
-      #   "aarch64-darwin"
-      # "x86_64-darwin"
-    ];
-
-    lib = nixpkgs.lib;
-    forAllSystems = lib.genAttrs systems;
-
-    root = rec {
-      base = self;
-      pkgs = "${self}/pkgs";
-
-      os = "${self}/nixos";
-      os-pkgs = "${os}/pkgs";
-
-      hm = "${self}/home-manager";
-      hm-pkgs = "${hm}/pkgs";
-    };
-
-    versionMap = {
-      "stable" = {
-        nixpkgs = inputs.nixpkgs;
-        home-manager = inputs.home-manager;
-      };
-      "unstable" = {
-        nixpkgs = inputs.nixpkgs-unstable;
-        home-manager = inputs.home-manager-unstable;
-      };
-      "iprc" = {
-        nixpkgs = inputs.nixpkgs;
-        home-manager = inputs.home-manager;
-      };
-    };
-
-    kutils = import "${root.base}/common/kutils.nix" {inherit inputs lib;};
-
-    allRepos = forAllSystems (system: let
-      cImport = kutils.customNixPkgsImport system;
-    in rec {
-      pkgs = pkgs-stable;
-      pkgs-stable = cImport inputs.nixpkgs {};
-      pkgs-unstable = cImport inputs.nixpkgs-unstable {};
-
-      pkgs-fish-test = cImport inputs.nixpkgs-fish-test {};
-
-      pkgs-nur = import inputs.nur {
-        pkgs = pkgs-stable;
-        nurpkgs = pkgs-unstable;
-      };
-
-      pkgs-kuriko-nur = inputs.kuriko-nur.packages.${system};
-      # import inputs.kuriko-nur {
-      #   pkgs = pkgs-stable;
-      #   # inputs = inputs.kuriko-nur.inputs;
-      # };
-
-      agenix = import inputs.agenix {inherit system;};
-
-      cuda = {
-        "12.2" = cImport inputs.nixpkgs-cuda-12_2 {cudaSupport = true;};
-        # "12.4" = cImport inputs.nixpkgs-cuda-12_4 {cudaSupport = true;};
-      };
-    });
-
-    devices = [
-      ./devices/KurikoG14
-      ./devices/KurikoTB16p
-
-      ./devices/KurikoArch
-
-      ./devices/tx-vps
-
-      ./devices/cpuserver58
-      ./devices/iprc
-    ];
-
-    checksDeploy =
-      builtins.mapAttrs
-      (system: deployLib: deployLib.deployChecks self.deploy)
-      inputs.deploy-rs.lib;
-    # checksDeploy = builtins.trace _checksDeploy.x86_64-linux.deploy-schema _checksDeploy;
-  in
-    builtins.foldl'
-    (
-      acc: device: (lib.recursiveUpdate acc (
-        let
-          config = let
-            params = {inherit inputs root versionMap allRepos lib;};
-            cfg = import "${device}" params;
-          in
-            builtins.trace "${device}: ${builtins.concatStringsSep "," (builtins.attrNames cfg)}" cfg;
+  }:
+    flake-parts.lib.mkFlake {inherit inputs;} rec {
+      imports = [
+        inputs.home-manager.flakeModules.home-manager
+        ({
+          flake-parts-lib,
+          lib,
+          ...
+        }: let
+          inherit (flake-parts-lib) mkTransposedPerSystemModule;
+          inherit (lib) mkOption types;
         in
-          config
-      ))
-    )
-    rec {
-      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
+          mkTransposedPerSystemModule {
+            name = "deploy";
+            option = mkOption {
+              type = types.lazyAttrsOf types.attrs;
+              default = {};
+              description = "support deploy-rs";
+            };
+            file = ./default.nix;
+          })
+      ];
+      systems = [
+        "x86_64-linux"
+        # "aarch64-linux"
+        # "aarch64-darwin"
+        # "x86_64-darwin"
+      ];
 
-      checks = lib.recursiveUpdate checksDeploy (forAllSystems (system: {
-        pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
-          src = ./.;
-          hooks = let
-            pkgs = allRepos.${system}.pkgs-stable;
-          in {
-            alejandra.enable = true;
-            trufflehog = {
-              enable = true;
-              entry = let
-                script = pkgs.writeShellScript "precommit-trufflehog" ''
-                  set -e
-                  ${pkgs.trufflehog}/bin/trufflehog --no-update git "file://$(git rev-parse --show-toplevel)" --only-verified --fail
-                '';
+      flake = let
+        lib = inputs.nixpkgs.lib;
+        forAllSystems = lib.genAttrs systems;
+
+        root = rec {
+          base = ./.;
+          pkgs = "${base}/pkgs";
+
+          os = "${base}/nixos";
+          os-pkgs = "${os}/pkgs";
+
+          hm = "${base}/home-manager";
+          hm-pkgs = "${hm}/pkgs";
+        };
+
+        versionMap = {
+          "stable" = {
+            nixpkgs = inputs.nixpkgs;
+            home-manager = inputs.home-manager;
+          };
+          "unstable" = {
+            nixpkgs = inputs.nixpkgs-unstable;
+            home-manager = inputs.home-manager-unstable;
+          };
+          "iprc" = {
+            nixpkgs = inputs.nixpkgs;
+            home-manager = inputs.home-manager;
+          };
+        };
+
+        kutils = import "${root.base}/common/kutils.nix" {inherit inputs lib;};
+
+        genRepos = system: let
+          cImport = kutils.customNixPkgsImport system;
+        in rec {
+          pkgs = pkgs-stable;
+          pkgs-stable = cImport inputs.nixpkgs {};
+          pkgs-unstable = cImport inputs.nixpkgs-unstable {};
+
+          pkgs-fish-test = cImport inputs.nixpkgs-fish-test {};
+
+          pkgs-nur = import inputs.nur {
+            pkgs = pkgs-stable;
+            nurpkgs = pkgs-unstable;
+          };
+
+          pkgs-kuriko-nur = inputs.kuriko-nur.packages.${system};
+
+          agenix = import inputs.agenix {inherit system;};
+
+          cuda = {
+            "12.2" = cImport inputs.nixpkgs-cuda-12_2 {cudaSupport = true;};
+            # "12.4" = cImport inputs.nixpkgs-cuda-12_4 {cudaSupport = true;};
+          };
+        };
+
+        devices = [
+          ./devices/KurikoG14
+          ./devices/KurikoTB16p
+
+          ./devices/KurikoArch
+
+          ./devices/tx-vps
+
+          ./devices/cpuserver58
+          ./devices/iprc
+        ];
+
+        deviceCfg =
+          builtins.foldl' (
+            acc: device: (lib.recursiveUpdate acc (
+              let
+                config = let
+                  params = {inherit inputs root versionMap genRepos lib;};
+                  cfg = import "${device}" params;
+                in
+                  builtins.trace "${device}: ${builtins.concatStringsSep "," (builtins.attrNames cfg)}" cfg;
               in
-                builtins.toString script;
+                config
+            ))
+          ) {}
+          devices;
+      in
+        deviceCfg // {};
+
+      perSystem = {
+        config,
+        system,
+        lib,
+        ...
+      }: let
+        pkgs = inputs.nixpkgs.legacyPackages.${system};
+        pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${system};
+        pkgs-kuriko-nur = inputs.kuriko-nur.legacyPackages.${system};
+
+        checksDeploy =
+          builtins.mapAttrs
+          (system: deployLib: deployLib.deployChecks self.deploy)
+          inputs.deploy-rs.lib;
+      in rec {
+        formatter = pkgs.alejandra;
+
+        checks = lib.recursiveUpdate checksDeploy {
+          pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
+            src = ./.;
+            hooks = {
+              alejandra.enable = true;
+              trufflehog = {
+                enable = true;
+                entry = builtins.toString pkgs-kuriko-nur.precommit-trufflehog;
+                stages = ["pre-push" "pre-commit"];
+              };
             };
           };
         };
-      }));
 
-      devShells = forAllSystems (system: let
-        pkgs = nixpkgs.legacyPackages.${system};
-        pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
-
-        lib = nixpkgs.lib;
-      in {
-        default = pkgs.mkShell {
+        devShells.default = pkgs.mkShell {
           inherit (self.checks.${system}.pre-commit-check) shellHook;
           buildInputs = self.checks.${system}.pre-commit-check.enabledPackages;
 
@@ -290,7 +304,6 @@
             (lib.hiPrio pkgs-unstable.uutils-coreutils-noprefix)
           ];
         };
-      });
-    }
-    devices;
+      };
+    };
 }

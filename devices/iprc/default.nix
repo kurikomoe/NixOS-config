@@ -3,7 +3,7 @@
   inputs,
   root,
   lib,
-  allRepos,
+  genRepos,
   versionMap,
   ...
 }:
@@ -16,7 +16,7 @@ else let
   system = "x86_64-linux";
 
   kutils = import "${root.base}/common/kutils.nix" {inherit inputs lib;};
-  repos = allRepos.${system};
+  repos = genRepos system;
 
   # =========== change this to switch version ===========
   hm-version = "stable";

@@ -2,7 +2,7 @@
   inputs,
   root,
   lib,
-  allRepos,
+  genRepos,
   versionMap,
   ...
 }: let
@@ -22,7 +22,7 @@
   };
 
   kutils = import "${root.base}/common/kutils.nix" {inherit inputs lib;};
-  repos = allRepos.${system};
+  repos = genRepos system;
 
   # =========== change this to switch version ===========
   hm-version = "stable";
