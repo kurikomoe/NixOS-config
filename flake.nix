@@ -205,10 +205,11 @@
         nurpkgs = pkgs-unstable;
       };
 
-      pkgs-kuriko-nur = import inputs.kuriko-nur {
-        pkgs = pkgs-stable;
-        # inputs = inputs.kuriko-nur.inputs;
-      };
+      pkgs-kuriko-nur = inputs.kuriko-nur.packages.${system};
+      # import inputs.kuriko-nur {
+      #   pkgs = pkgs-stable;
+      #   # inputs = inputs.kuriko-nur.inputs;
+      # };
 
       agenix = import inputs.agenix {inherit system;};
 
