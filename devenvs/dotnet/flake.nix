@@ -49,9 +49,7 @@
         lib,
         ...
       }: let
-        pkgs-nur-kuriko =
-          import inputs.kuriko-nur {
-          };
+        pkgs-nur-kuriko = inputs.kuriko-nur.packages.${system};
 
         pkgs = import inputs.nixpkgs {
           inherit system;
@@ -159,8 +157,8 @@
             ++ runtimeLibs;
 
           env = {
-            DOTNET_ROOT = "${dotnetPkgs}/share/dotnet";
-            LD_LIBRARY_PATH = lib.makeLibraryPath runtimeLibs;
+            # DOTNET_ROOT = "${dotnetPkgs}/share/dotnet";
+            # LD_LIBRARY_PATH = lib.makeLibraryPath runtimeLibs;
           };
 
           languages.dotnet = {

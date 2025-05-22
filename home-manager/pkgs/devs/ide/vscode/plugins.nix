@@ -28,6 +28,7 @@ in {
   libs = with pkgs;
     [
       pkg-config
+      openssl
       icu
       icu.dev
       zlib
