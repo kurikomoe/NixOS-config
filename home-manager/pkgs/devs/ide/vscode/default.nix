@@ -15,10 +15,14 @@ in {
   home.packages = with pkgs; [];
 
   programs.vscode = {
-    inherit (deps) extensions;
-    package = vscode-fhs;
     enable = true;
-    enableUpdateCheck = true;
-    enableExtensionUpdateCheck = true;
+    package = vscode-fhs;
+    profiles = {
+      default = {
+        inherit (deps) extensions;
+        enableExtensionUpdateCheck = true;
+        enableUpdateCheck = true;
+      };
+    };
   };
 }
