@@ -198,7 +198,7 @@
             # Check Secrets
             trufflehog = {
               enable = true;
-              entry = builtins.toString inputs.kuriko-nur.legacyPackages.${system}.precommit-trufflehog;
+              entry = builtins.toString inputs.kuriko-nur.packages.${system}.precommit-trufflehog;
               stages = ["pre-push" "pre-commit"];
             };
           };

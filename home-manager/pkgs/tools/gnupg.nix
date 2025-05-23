@@ -21,9 +21,7 @@ in {
       enable = true;
       enableSshSupport = true;
 
-      pinentryPackage = pkgs.pinentry-tty;
-      # FIXME(kuriko): wait for 25.04
-      # pinentry.package = pkgs.pinentry-tty;
+      pinentry.package = pkgs.pinentry-tty;
 
       defaultCacheTtl = 7200;
       defaultCacheTtlSsh = 7200;

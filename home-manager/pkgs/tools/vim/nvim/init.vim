@@ -219,7 +219,8 @@ vmap <C-c>   <Plug>NERDCommenterToggle
 " NerdTree
 map <leader><S-t> :NERDTreeToggle<CR>
 
-let NERDTreeIgnore=['__pycache__$[[dir]]', 'node_modules$[[dir]]', '*\.pyc$', '\.vim$', 'build', 'target']
+let NERDTreeShowHidden=1
+let NERDTreeIgnore=['__pycache__$[[dir]]', 'node_modules$[[dir]]', '*\.pyc$', '\.vim$', '^build$', '^target$']
 
 " 自动关闭NerdTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
@@ -363,10 +364,11 @@ nnoremap <c-f> :CtrlPFunky<Cr>
 " narrow the list down with a word under cursor
 nnoremap <c-h> :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
 let g:ctrlp_working_path_mode = 'w'
+let g:ctrlp_show_hidden = 1
 
 " Ctrlp 忽略文件列表
 let g:ctrlp_custom_ignore = {
-      \ 'dir':  '\v[\/]\.(git|hg|svn)|node_modules$|target|build',
+      \ 'dir':  '\v[\/]\.(git|hg|svn)|node_modules$|target$|build$',
       \ 'file': '\v\.(exe|so|dll)$',
       \ 'link': 'some_bad_symbolic_links',
       \ }
