@@ -2,9 +2,9 @@ name: "update flakes"
 
 on:
     # push:
-    workflow_dispatch:
-    schedule:
-        - cron: "0 22 * * *"
+    # workflow_dispatch:
+    # schedule:
+    #     - cron: "0 10,23 * * *"
 
 permissions:
     actions: write
@@ -70,4 +70,4 @@ jobs:
               with:
                 committer_name: GitHub Actions
                 committer_email: 41898282+github-actions[bot]@users.noreply.github.com
-                message: "[skip ci][${{ env.timestamp }}] update locks"
+                message: "Auto update"
