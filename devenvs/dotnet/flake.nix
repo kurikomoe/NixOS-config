@@ -58,7 +58,8 @@
         dotnetPkgs = with pkgs;
         with dotnetCorePackages;
           combinePackages [
-            sdk_9_0
+            dotnet-sdk_10
+            # sdk_9_0
             # sdk_8_0_3xx
             # sdk_7_0_3xx
             # sdk_6_0_1xx
