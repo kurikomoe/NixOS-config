@@ -2,11 +2,6 @@
   description = "Home Manager configuration of kuriko";
 
   inputs = {
-    devenv-root = {
-      url = "file+file:///dev/null";
-      flake = false;
-    };
-
     # --------------------- Main inputs ---------------------
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     home-manager = {

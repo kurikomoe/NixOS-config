@@ -35,6 +35,9 @@ in {
     fzf
     bat
 
+    yazi
+    helix
+
     (repos.pkgs-kuriko-nur.shellfirm)
   ];
 

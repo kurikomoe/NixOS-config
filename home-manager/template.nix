@@ -139,6 +139,8 @@ in
 
               repos.pkgs-unstable.attic-server
               repos.pkgs-unstable.attic-client
+
+              nvfetcher
             ]
             ++ (p.packages or []);
 

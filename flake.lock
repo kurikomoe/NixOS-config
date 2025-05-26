@@ -67,18 +67,6 @@
         "type": "github"
       }
     },
-    "devenv-root": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-d6xi4mKdjkX2JFicDIv5niSzpyI0m/Hnm8GGAIU04kY=",
-        "type": "file",
-        "url": "file:///dev/null"
-      },
-      "original": {
-        "type": "file",
-        "url": "file:///dev/null"
-      }
-    },
     "fenix": {
       "inputs": {
         "nixpkgs": [
@@ -1216,7 +1204,6 @@
       "inputs": {
         "agenix": "agenix",
         "deploy-rs": "deploy-rs",
-        "devenv-root": "devenv-root",
         "fenix": "fenix",
         "fishPlugin-autopair": "fishPlugin-autopair",
         "fishPlugin-fish-abbreviation-tips": "fishPlugin-fish-abbreviation-tips",

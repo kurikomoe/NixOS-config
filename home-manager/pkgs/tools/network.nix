@@ -10,6 +10,7 @@
     iftop
 
     # proxychains-ng
+    q
 
     caddy
     aria2
