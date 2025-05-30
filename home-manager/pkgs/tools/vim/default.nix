@@ -78,17 +78,8 @@ in {
     "${root.hm-pkgs}/devs/langs/node.nix"
   ];
 
-  xdg.configFile = {
-    vim = {
-      source = ./nvim/init.vim;
-    };
-  };
-
-  # home.file = {
-  #   "${config.xdg.configHome}/nvim/coc-settings.json" = {
-  #     source = ./nvim/coc-settings.json;
-  #   };
-  # };
+  # Legacy vimrc
+  home.file.".confvim/vimrc".source = ./nvim/init.vim;
 
   home.packages = with pkgs; [
     universal-ctags

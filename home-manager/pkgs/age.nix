@@ -8,7 +8,6 @@
   ...
 }: let
   home = config.home.homeDirectory;
-  xdg_config = config.xdg.configHome;
 
   identityPaths = [
     "${home}/.ssh/id_ed25519_age"

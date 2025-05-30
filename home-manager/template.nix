@@ -116,7 +116,7 @@ in
 
           xdg.enable = true;
 
-          home.file."${config.xdg.configHome}/current-home-packages".text = let
+          home.file.".config/current-home-packages".text = let
             packages = builtins.map (p: "${p.name}") config.home.packages;
             sortedUnique = builtins.sort builtins.lessThan (lib.lists.unique packages);
             formatted = builtins.concatStringsSep "\n" sortedUnique;

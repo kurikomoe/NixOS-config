@@ -17,7 +17,7 @@
   '';
 
   oss-text = ''
-    home-manager --flake "${home}/.nixos#${username}@${hostName}" switch $@;
+    sudo nixos-rebuild --flake "${home}/.nixos#${hostName}" switch $@
   '';
 
   nixtools = with customVars; [

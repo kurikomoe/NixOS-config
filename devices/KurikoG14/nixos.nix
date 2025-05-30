@@ -1,9 +1,12 @@
-{
+p @ {
   inputs,
   pkgs,
   root,
   customVars,
   repos,
+  # Optional
+  home-manager,
+  hm-config ? {},
   ...
 }: let
   system = customVars.system;
@@ -21,39 +24,47 @@
       # Also import home here
       # No! this will cause problems:
       # https://www.reddit.com/r/NixOS/comments/112ekgm/comment/j8jngb3/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
-      # {
-      #   imports = [
-      #     home-manager.nixosModules.home-manager
-      #   ];
-      #
-      #   home-manager = {
-      #     # useGlobalPkgs = true;
-      #     # useUserPackages = true;
-      #
-      #     extraSpecialArgs = hm-template.extraSpecialArgs;
-      #
-      #     users.${username} = {
-      #       imports = hm-template.modules;
-      #     };
-      #   };
-      # }
+      {
+        imports = [
+          home-manager.nixosModules.home-manager
+        ];
+
+        home-manager = {
+          # useGlobalPkgs = true;
+          # useUserPackages = true;
+
+          extraSpecialArgs = hm-config.extraSpecialArgs;
+
+          users.${username} = {
+            imports = hm-config.modules;
+          };
+        };
+      }
 
       inputs.nixos-wsl.nixosModules.default
       {
         system.stateVersion = "24.05";
         wsl = {
           enable = true;
+
           defaultUser = username;
+
           interop.includePath = false;
           interop.register = true;
+
           usbip.enable = true;
           useWindowsDriver = true;
+
           wslConf = {
             user.default = username;
+
             automount.ldconfig = true;
             automount.enabled = true;
+
             interop.enabled = true;
             interop.appendWindowsPath = false;
+
+            boot.protectBinfmt = false;
           };
         };
       }

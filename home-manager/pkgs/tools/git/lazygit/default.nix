@@ -11,7 +11,7 @@
     # settings = builtins.fromYAML ./lazygit.yml;
   };
 
-  xdg.configFile."lazygit/config.yml".source = ./config.yml;
+  home.file.".config/lazygit/config.yml".source = ./config.yml;
 
   home.shellAliases = {
     lg = "lazygit";

@@ -7,9 +7,8 @@
   repos,
   ...
 }: let
-  configDir = "${config.xdg.configHome}";
-  ghConfigDir = "${configDir}/gh";
-  gitConfigDir = "${configDir}/git";
+  ghConfigDir = ".config/gh";
+  gitConfigDir = ".config/git";
   gitExtraConfigPath = "${gitConfigDir}/config_extra";
 in {
   imports = [

@@ -103,6 +103,8 @@
           qemu
 
           podman
+
+          (pkgs.callPackage "${root.pkgs}/home-manager/fix-wsl.nix" {})
         ];
 
         services.podman = {

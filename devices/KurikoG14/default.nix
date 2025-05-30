@@ -47,7 +47,7 @@
 
   os-config = import ./nixos.nix (p
     // {
-      inherit home-manager customVars repos;
+      inherit home-manager customVars repos hm-config;
 
       nixpkgs = nixpkgs-os;
       pkgs = pkgs-os;

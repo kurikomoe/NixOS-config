@@ -4,7 +4,7 @@
   koptions,
   ...
 }: let
-  proxychains_ng_conf = "${config.xdg.configHome}/proxychains.conf";
+  proxychains_ng_conf = ".config/proxychains.conf";
 
   proxychains_ng_conf_txt = ''
     [ProxyList]
