@@ -95,6 +95,9 @@ in {
     xclip # Clipboard support
 
     csharp-ls
+
+    # vim alternative?
+    helix
   ];
 
   # for omnisharp-vim to find the executable
