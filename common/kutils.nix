@@ -14,6 +14,10 @@
 
     permittedInsecurePackages = [
       "dotnet-runtime-7.0.20"
+      "dotnet-sdk-wrapped-6.0.136"
+      "dotnet-sdk-6.0.136"
+      "dotnet-sdk-6.0.428"
+      "dotnet-runtime-6.0.36"
     ];
 
     settings = rec {

@@ -5,13 +5,15 @@ p @ {
   lib,
   ...
 }: let
-  combinedPkgs = with pkgs;
+  combinedPkgs = with repos.pkgs-stable;
   with dotnetCorePackages;
     combinePackages [
-      sdk_9_0
-      sdk_8_0_3xx
-      # sdk_7_0_3xx  # EOL
-      sdk_6_0_1xx # EOL
+      sdk_10_0-bin
+      sdk_9_0_3xx-bin
+      sdk_8_0_3xx-bin
+      sdk_6_0_1xx-bin
+
+      # sdk_7_0_3xx-bin  # EOL
     ];
 
   combineMono = pkgs.buildEnv {
@@ -22,11 +24,9 @@ p @ {
     ];
   };
 in {
-  nixpkgs.overlays = [
+  nixpkgs.overlays = with repos.pkgs-stable.dotnetCorePackages; [
     (final: prev: {
-      sdk_9_0 = repos.pkgs-unstable.sdk_9_0;
-      sdk_8_0_3xx = repos.pkgs-unstable.sdk_8_0_3xx;
-      sdk_6_0_1xx = repos.pkgs-unstable.sdk_6_0_1xx;
+      inherit (repos.pkgs-stable) dotnet-sdk_10_0-bin sdk_9_0_3xx-bin sdk_8_0_3xx-bin sdk_6_0_1xx-bin;
     })
   ];
 

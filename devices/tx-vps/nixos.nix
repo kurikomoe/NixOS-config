@@ -87,6 +87,12 @@
           configFile = config.age.secrets."clash/config.m.yaml".path;
         };
 
+        services.journald.extraConfig = ''
+          SystemMaxUse=100M
+          SystemMaxFileSize=50M
+          MaxFileSec=1week
+        '';
+
         # age.secrets."frp/frps.toml" = {
         #   mode = "400";
         # };
