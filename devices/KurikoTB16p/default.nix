@@ -51,6 +51,8 @@
 
       nixpkgs = nixpkgs-os;
       pkgs = pkgs-os;
+
+      inherit hm-config;
     });
   # =======================================================================
 in

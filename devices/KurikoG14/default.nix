@@ -12,7 +12,7 @@
   customVars = rec {
     inherit system;
 
-    hostName = "KurikoNixOS";
+    hostName = "KurikoG14";
 
     username = "kuriko";
     usernameFull = "KurikoMoe";
