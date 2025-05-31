@@ -105,6 +105,12 @@
           podman
 
           (pkgs.callPackage "${root.pkgs}/home-manager/fix-wsl.nix" {})
+
+          (hiPrio (pkgs.writeShellScriptBin "nixup" ''
+            sudo true
+            nix flake update --flake "$HOME/.nixos";
+            oss $@
+          ''))
         ];
 
         services.podman = {
