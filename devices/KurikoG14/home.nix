@@ -106,6 +106,8 @@
 
           (pkgs.callPackage "${root.pkgs}/home-manager/fix-wsl.nix" {})
 
+          repos.pkgs-kuriko-nur.microsoft-edit
+
           (hiPrio (pkgs.writeShellScriptBin "nixup" ''
             sudo true
             nix flake update --flake "$HOME/.nixos";
