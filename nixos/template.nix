@@ -23,6 +23,9 @@ in
         # inputs.nix-ld.nixosModules.nix-ld
         inputs.nur.modules.nixos.default
 
+        # Use lix
+        inputs.lix-module.nixosModules.default
+
         ./pkgs/ssh.nix
         # -------------- basic settings ----------------
         ({
@@ -44,11 +47,11 @@ in
           };
 
           nix = {
-            package = repos.pkgs-unstable.nix;
+            # package = repos.pkgs-unstable.nix;
             settings =
               kutils._commonNixPkgsConfig.settings
               // {
-                download-buffer-size = 500000000;
+                # download-buffer-size = 500000000;
                 always-allow-substitutes = lib.mkDefault true;
                 auto-optimise-store = lib.mkDefault true;
                 trusted-users = [username];

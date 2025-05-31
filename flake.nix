@@ -31,6 +31,12 @@
     nixpkgs-cuda-12_4.url = "github:nixos/nixpkgs/5ed627539ac84809c78b2dd6d26a5cebeb5ae269";
     nixpkgs-cuda-12_2.url = "github:nixos/nixpkgs/0cb2fd7c59fed0cd82ef858cbcbdb552b9a33465";
 
+    # ------------------- Lix --------------------------------
+    lix-module = {
+      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.93.0.tar.gz";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # GUI
     nixgl = {
       url = "github:nix-community/nixGL";
@@ -90,7 +96,7 @@
     };
 
     # -------------------- nix search --------------------
-    nix-search.url = github:diamondburned/nix-search;
+    nix-search.url = "github:diamondburned/nix-search";
 
     # -------------------- vim plugins --------------------
     # omnisharp-vim = {

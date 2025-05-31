@@ -93,7 +93,7 @@ in
           age.secrets.".config/netrc".file = "${root.base}/res/nix/netrc.age";
 
           nix = {
-            package = lib.mkDefault repos.pkgs-unstable.nix;
+            # package = lib.mkDefault repos.pkgs-unstable.nix;
             gc = lib.mkDefault {
               automatic = true;
               frequency = "weekly";
