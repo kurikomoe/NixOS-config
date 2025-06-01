@@ -37,7 +37,7 @@ let
       "id_rsa".publicKeys = keys_age;
       "id_rsa.pub".publicKeys = keys;
       "id_ed25519".publicKeys = keys_age ++ keys_cpuserver58;
-      "id_ed25519.pub".publicKeys = keys ++ keys_cpuserver58;
+      "id_ed25519.pub".publicKeys = keys;
       "id_ed25519_age.pub".publicKeys = keys;
     };
 
@@ -47,13 +47,14 @@ let
     };
 
     "res/gh" = {
-      "hosts.yml".publicKeys = keys ++ keys_cpuserver58;
+      "hosts.yml".publicKeys = keys;
     };
 
     "res/nix" = {
-      "access-tokens".publicKeys = keys ++ keys_cpuserver58;
-      "cachix.nix.conf".publicKeys = keys ++ keys_cpuserver58;
+      "access-tokens".publicKeys = keys;
+      "cachix.nix.conf".publicKeys = keys;
       "netrc".publicKeys = keys;
+      # "trusted-settings.json".publicKeys = keys;
     };
 
     "res/cachix" = {
