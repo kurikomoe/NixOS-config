@@ -11,7 +11,8 @@
     # settings = builtins.fromYAML ./lazygit.yml;
   };
 
-  home.file.".config/lazygit/config.yml".source = ./config.yml;
+  # NOTE(kuriko): experimentally, try using chezmoi to manage the dotfile
+  # home.file.".config/lazygit/config.yml".source = ./config.yml;
 
   home.shellAliases = {
     lg = "lazygit";
