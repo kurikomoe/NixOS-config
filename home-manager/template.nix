@@ -104,6 +104,7 @@ in
               trusted-users = [username];
               sandbox = true;
               netrc-file = config.age.secrets.".config/netrc".path;
+              auto-optimise-store = lib.mkDefault true;
             };
             # https://github.com/NixOS/nix/issues/6536#issuecomment-1254858889
             extraOptions = ''
