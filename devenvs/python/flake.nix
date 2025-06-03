@@ -4,7 +4,7 @@
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
 
-    devenv.url = "github:cachix/devenv";
+    devenv.url = "github:cachix/devenv/latest";
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
     kuriko-nur.url = "github:kurikomoe/nur-packages";
