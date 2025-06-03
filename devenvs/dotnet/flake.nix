@@ -51,6 +51,10 @@
         pkgs = import inputs.nixpkgs {
           inherit system;
           config.allowUnfree = true;
+          config.permittedInsecurePackages = [
+            "dotnet-sdk-7.0.317"
+            "dotnet-sdk-6.0.136"
+          ];
           overlays = [];
         };
 
@@ -59,11 +63,11 @@
         dotnetPkgs = with pkgs;
         with dotnetCorePackages;
           combinePackages [
-            dotnet-sdk_10
-            # sdk_9_0
-            # sdk_8_0_3xx
-            # sdk_7_0_3xx
-            # sdk_6_0_1xx
+            sdk_10_0-bin
+            sdk_9_0-bin
+            # sdk_8_0-bin
+            # sdk_7_0_3xx-bin
+            # sdk_6_0_1xx-bin
           ];
 
         runtimeLibs = with pkgs; [
