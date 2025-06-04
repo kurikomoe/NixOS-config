@@ -77,6 +77,7 @@
 
             "gui/fonts.nix"
             "gui/browsers/firefox"
+            "gui/browsers/edge.nix"
             "gui/jetbrains.nix"
 
             #./apps/podman.nix"

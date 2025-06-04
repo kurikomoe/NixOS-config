@@ -53,6 +53,15 @@
       pkgs = pkgs-os;
 
       inherit hm-config;
+
+      extraModules = [
+        ({...}: {
+          # disable buggy windows vulkan, use cpu
+          environment.sessionVariables = {
+            VK_ICD_FILENAMES = lib.mkDefault "/run/opengl-driver/share/vulkan/icd.d/lvp_icd.x86_64.json";
+          };
+        })
+      ];
     });
   # =======================================================================
 in

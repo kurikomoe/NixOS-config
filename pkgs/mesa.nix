@@ -1,5 +1,9 @@
-{pkgs, ...}: let
-  new_mesa = pkgs.mesa.overrideAttrs (oldAttrs: rec {
+{
+  lib,
+  mesa,
+  ...
+}: let
+  new_mesa = mesa.overrideAttrs (oldAttrs: rec {
     mesonFlags =
       oldAttrs.mesonFlags
       ++ [
