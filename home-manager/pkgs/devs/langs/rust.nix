@@ -12,7 +12,7 @@ in {
   ];
 
   # use fenix rust overlay
-  nixpkgs.overlays = [inputs.fenix.overlays.default];
+  # nixpkgs.overlays = [inputs.fenix.overlays.default];
 
   home.packages = with pkgs; [
     rust-script
