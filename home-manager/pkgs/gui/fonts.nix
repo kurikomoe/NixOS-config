@@ -4,8 +4,10 @@
   repos,
   ...
 }: let
-in {
-  home.packages = with pkgs; [
+in rec {
+  _module.args.fonts = with pkgs; [
+    inconsolata
+
     noto-fonts
     noto-fonts-cjk-sans
     noto-fonts-cjk-serif
@@ -19,9 +21,12 @@ in {
     _0xproto
 
     repos.pkgs-kuriko-nur.kfonts
+    repos.pkgs-kuriko-nur.kuriko-all-fonts
 
     jetbrains-mono
   ];
+
+  home.packages = _module.args.fonts;
 
   fonts.fontconfig = {
     enable = true;
