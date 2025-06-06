@@ -69,6 +69,8 @@
         networking.hostName = hostName;
 
         environment.systemPackages = with pkgs; [
+          acme-sh
+
           sshfs
           steam-run
 
@@ -92,6 +94,25 @@
           SystemMaxFileSize=50M
           MaxFileSec=1week
         '';
+
+        services.headscale = rec {
+          enable = true;
+          address = "0.0.0.0";
+          port = 4444;
+          settings = {
+            dns.base_domain = "c.0v0.io";
+            tls_key_path = "/etc/key/a.key";
+            tls_cert_path = "/etc/key/a.crt";
+            server_url = "https://c.0v0.io:4444";
+          };
+        };
+
+        # services.tailscale = {
+        #   enable = true;
+        #   # derper.enable = true;
+        #   # derper.domain = "c.0v0.io";
+        #   # derper.verifyClients = true;
+        # };
 
         # age.secrets."frp/frps.toml" = {
         #   mode = "400";
