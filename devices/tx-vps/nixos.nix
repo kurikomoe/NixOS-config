@@ -69,6 +69,8 @@
         networking.hostName = hostName;
 
         environment.systemPackages = with pkgs; [
+          acme-sh
+
           sshfs
           steam-run
 
@@ -92,6 +94,34 @@
           SystemMaxFileSize=50M
           MaxFileSec=1week
         '';
+
+        services.headscale = rec {
+          enable = false;
+          address = "0.0.0.0";
+          port = 3333;
+          settings = {
+            dns.base_domain = "c.0v0.io";
+            tls_key_path = "/etc/keys/c.0v0.io_ecc/c.0v0.io.key";
+            tls_cert_path = "/etc/keys/c.0v0.io_ecc/c.0v0.io.cer";
+            server_url = "https://c.0v0.io:${toString port}";
+            derp.server = {
+              enabled = true;
+              region_id = "901";
+              region_code = "KurikoHeadCrab";
+              region_name = "Kuriko's HeadCrab DERP";
+              stun_listen_addr = "0.0.0.0:3478";
+              ipv4 = "122.51.29.4";
+              automatically_add_embedded_derp_region = true;
+            };
+          };
+        };
+
+        services.tailscale = {
+          enable = true;
+          # derper.enable = true;
+          # derper.domain = "c.0v0.io";
+          # derper.verifyClients = true;
+        };
 
         # age.secrets."frp/frps.toml" = {
         #   mode = "400";

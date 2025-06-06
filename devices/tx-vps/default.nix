@@ -68,7 +68,7 @@ in
           user = "root";
           sshUser = "root";
           fastConnection = false;
-          autoRollback = true;
+          autoRollback = false;
           magicRollback = true;
           remoteBuild = false;
           path =

@@ -33,6 +33,7 @@
 
             # "./devs/common.nix"
             # "./devs/langs"
+            "./devs/langs/golang.nix"
 
             # "./tools"
 
