@@ -282,7 +282,7 @@
       in rec {
         formatter = pkgs.alejandra;
 
-        checks = lib.recursiveUpdate checksDeploy {
+        checks = lib.recursiveUpdate checksDeploy.${system} {
           pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
             src = ./.;
             hooks = {

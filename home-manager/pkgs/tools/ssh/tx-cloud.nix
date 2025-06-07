@@ -1,4 +1,4 @@
-{
+params @ {
   root,
   pkgs,
   inputs,
@@ -6,6 +6,7 @@
   lib,
   ...
 }: let
+  common = import ./common.nix params;
   age_helper = import "${root.base}/common/age-helper.nix";
 
   files = {
@@ -18,30 +19,15 @@
 
   age_secrets_filelist = age_helper.buildAgeSecretsFileList files;
 in {
-  home.packages = with pkgs; [
-    p7zip
-    autossh
-    sshpass
-
-    # conflict with the mkpasswd
-    # expect
-
-    mosh
-  ];
+  home.packages = common.packages;
 
   age.secrets = age_secrets_filelist;
 
-  programs = {
+  programs = lib.recursiveUpdate common.programs {
     ssh = {
-      enable = true;
-      compression = true;
-      addKeysToAgent = "yes";
-      extraConfig = "";
-      forwardAgent = true;
       includes = [
         "data/config"
       ];
-      serverAliveInterval = 60;
     };
   };
 

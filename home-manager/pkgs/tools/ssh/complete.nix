@@ -1,4 +1,4 @@
-{
+params @ {
   root,
   pkgs,
   inputs,
@@ -6,6 +6,7 @@
   lib,
   ...
 }: let
+  common = import ./common.nix params;
   age_helper = import "${root.base}/common/age-helper.nix";
 
   files = {
@@ -22,30 +23,16 @@ in {
     ./helpers.nix
   ];
 
-  home.packages = with pkgs; [
-    p7zip
-    autossh
-    sshpass
-
-    # conflict with the mkpasswd
-    # expect
-
-    mosh
-  ];
+  home.packages = common.packages;
 
   age.secrets = age_secrets_filelist;
 
-  programs = {
+  programs = lib.recursiveUpdate common.programs {
     ssh = {
-      enable = true;
-      compression = true;
-      addKeysToAgent = "yes";
       extraConfig = "";
-      forwardAgent = true;
       includes = [
         "config.extra"
       ];
-      serverAliveInterval = 60;
     };
   };
 
@@ -53,7 +40,7 @@ in {
     ssh-agent.enable = true;
   };
 
-  home.activation.sshAuthorizedKeys = lib.hm.dag.entryAfter ["linkGeneration"] ''
-    # run cat $HOME/.ssh/*.pub >> $HOME/.ssh/authorized_keys
-  '';
+  # home.activation.sshAuthorizedKeys = lib.hm.dag.entryAfter ["linkGeneration"] ''
+  #   run cat $HOME/.ssh/*.pub >> $HOME/.ssh/authorized_keys
+  # '';
 }
