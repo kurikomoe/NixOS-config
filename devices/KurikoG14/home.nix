@@ -74,6 +74,7 @@
 
             "apps/db/mongodb.nix"
             "apps/db/mariadb.nix"
+            "apps/vnc/server.nix"
 
             "gui/fonts.nix"
             "gui/browsers/firefox"
