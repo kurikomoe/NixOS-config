@@ -50,7 +50,7 @@
             # "./gui/browsers"
             # "./gui/jetbrains.nix"
 
-            # "./apps/podman.nix"
+            "./apps/podman.nix"
           ]
           ++ [
             "${root.hm-pkgs}/devs/ide/vscode/vscode-server.nix"
@@ -70,10 +70,6 @@
         ];
 
         age.secrets."docker/config.json".path = ".docker/config.json";
-
-        services.podman = {
-          enable = true;
-        };
       })
     ];
   });

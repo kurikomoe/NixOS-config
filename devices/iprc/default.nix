@@ -127,7 +127,6 @@ in
           home.packages = with pkgs;
             [
               # repos.pkgs-iprc.glibc
-              podman
 
               # tsocks
               # adguardhome

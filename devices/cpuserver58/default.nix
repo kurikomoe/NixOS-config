@@ -111,14 +111,8 @@ else let
             # xorg.xeyes
             # mesa-demos
             # vulkan-tools
-
-            # podman
           ]
           ++ (map (e: (lib.hiPrio e)) shellScripts);
-
-        # services.podman = {
-        #   enable = true;
-        # };
       })
     ];
   });

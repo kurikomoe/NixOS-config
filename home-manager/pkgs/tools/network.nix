@@ -14,5 +14,7 @@
 
     caddy
     aria2
+
+    nmap
   ];
 }

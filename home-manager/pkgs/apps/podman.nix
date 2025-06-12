@@ -1,8 +1,6 @@
 {pkgs, ...}: let
 in {
-  home.packages = with pkgs; [
-    podman
-  ];
+  home.packages = with pkgs; [];
 
   services.podman = {
     enable = true;

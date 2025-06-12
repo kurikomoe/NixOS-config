@@ -80,7 +80,7 @@
             "gui/browsers/edge.nix"
             "gui/jetbrains.nix"
 
-            #./apps/podman.nix"
+            "./apps/podman.nix"
 
             "apps/ReverseEngineering/radare2.nix"
             "apps/ReverseEngineering/ghidra.nix"
@@ -103,8 +103,6 @@
 
           qemu
 
-          podman
-
           (pkgs.callPackage "${root.pkgs}/home-manager/fix-wsl.nix" {})
 
           repos.pkgs-kuriko-nur.microsoft-edit
@@ -115,10 +113,6 @@
             oss $@
           ''))
         ];
-
-        services.podman = {
-          enable = true;
-        };
       })
     ];
   });
