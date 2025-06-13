@@ -106,7 +106,7 @@
 
           (pkgs.callPackage "${root.pkgs}/home-manager/fix-wsl.nix" {})
 
-          repos.pkgs-kuriko-nur.microsoft-edit
+          repos.pkgs-kuriko-nur.msedit
 
           (hiPrio (pkgs.writeShellScriptBin "nixup" ''
             sudo true
