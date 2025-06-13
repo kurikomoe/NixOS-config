@@ -102,6 +102,9 @@ in
         nix-search-cli
         nix-index
 
+        nix-update
+        nvfetcher
+
         # repos.pkgs-unstable.attic-client
         # repos.pkgs-unstable.attic-server
       ]
