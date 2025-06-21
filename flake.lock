@@ -763,11 +763,11 @@
         "pre-commit-hooks": "pre-commit-hooks"
       },
       "locked": {
-        "lastModified": 1750415150,
-        "narHash": "sha256-Ji8wbiCoI3+8EYOzge5ZHLiwkzgKh6QpAuHREuGC+Xk=",
+        "lastModified": 1750501634,
+        "narHash": "sha256-vS7SRdyOcUygcPjqgwePluCeK440p1dQJ+HKvCZrYOw=",
         "owner": "kurikomoe",
         "repo": "nur-packages",
-        "rev": "2f644dc6437d61ce3432692846de239dfdaccc47",
+        "rev": "5c31c1a14f5fa0e3b802b2316b4dd0ec1b0b8c29",
         "type": "github"
       },
       "original": {
@@ -931,11 +931,11 @@
         "nixpkgs": "nixpkgs_10"
       },
       "locked": {
-        "lastModified": 1750385101,
-        "narHash": "sha256-pA8Bl/FUg3gRUHmre+VCx0MNRXshaneTevnr19BAGfY=",
+        "lastModified": 1750471394,
+        "narHash": "sha256-IdOUn2DcabUAa42nthbyIY+frX42tTkU9KGddbpq5H4=",
         "owner": "nix-community",
         "repo": "nix-vscode-extensions",
-        "rev": "9631817b593f6e2a0f1a9de667ad26fbc5edb085",
+        "rev": "8368fd526c329cb83a00f9e3cbc35a89599d5ced",
         "type": "github"
       },
       "original": {
@@ -1373,11 +1373,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1750459798,
-        "narHash": "sha256-6Y7styevH2kOdGt8G3WEvNFDJZVByBLnL32rEvKGQ30=",
+        "lastModified": 1750546130,
+        "narHash": "sha256-Q4//trsIEs+Gxjk6L5rSsGraTv0AOMS+RMYF/8oN7es=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "8f9bcfd3e483222c9da13551e56767c7fb51c19b",
+        "rev": "60c4381bb5b0b6d408e1904d92e3b5796df976f9",
         "type": "github"
       },
       "original": {
