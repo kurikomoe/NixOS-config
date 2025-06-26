@@ -5,6 +5,8 @@
 }: let
 in {
   home.packages = with pkgs; [
-    firefox-devedition-bin
+    # Depreatced
+    # firefox-devedition-bin
+    firefox-devedition
   ];
 }
