@@ -52,6 +52,8 @@
           (kutils.buildImports root.hm-pkgs [
             "wsl"
 
+            "wsl/wslg.nix"
+
             "shells/fish"
 
             "devs/common.nix"

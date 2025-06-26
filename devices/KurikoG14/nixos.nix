@@ -173,7 +173,7 @@ p @ {
           services.xserver.enable = true;
           services.xserver.desktopManager.xfce.enable = true;
           services.displayManager.defaultSession = "xfce";
-          services.xrdp.defaultWindowManager = "startxfce4";
+          # services.xrdp.defaultWindowManager = "startxfce4";
 
           programs.hyprland = {
             enable = true;
