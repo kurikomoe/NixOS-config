@@ -17,7 +17,7 @@ in rec {
     wqy_zenhei
     wqy_microhei
 
-    repos.pkgs-unstable.maple-mono.CN
+    # repos.pkgs-unstable.maple-mono.CN
     _0xproto
 
     repos.pkgs-kuriko-nur.kfonts
