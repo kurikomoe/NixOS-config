@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  repos,
   ...
 }: let
   script = pkgs.writeShellScriptBin "update-nvidia-ctk" ''
@@ -12,7 +13,8 @@ in {
   environment.systemPackages = with pkgs; [
     arion
     nvidia-docker
-    nvidia-container-toolkit
+    pkgs.nvidia-container-toolkit.out
+    pkgs.nvidia-container-toolkit.tools
     script
   ];
 
@@ -21,13 +23,14 @@ in {
     enable = true;
     autoPrune.enable = true;
 
-    daemon.settings = {
-      features.cdi = true;
-    };
+    daemon.settings.features.cdi = true;
   };
 
   # hardware = {
   #   graphics.enable32Bit = true;
+  #   nvidia-container-toolkit.enable = true;
+  # };
+
   #
   #   nvidia = {
   #     modesetting.enable = true;

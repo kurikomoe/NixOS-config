@@ -189,6 +189,7 @@ p @ {
             steam-run
 
             libva
+            nvidia-container-toolkit
 
             # docker
             dive # look into docker image layers
@@ -198,6 +199,9 @@ p @ {
 
           # cannot enable on wsl, it will invoke building kernel
           # hardware.nvidia-container-toolkit.enable = true;
+
+          # Provided by wsl
+          hardware.nvidia-container-toolkit.suppressNvidiaDriverAssertion = true;
         })
       ]
       ++ extraModules;
