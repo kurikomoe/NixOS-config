@@ -76,8 +76,8 @@ else let
         imports = kutils.buildImports root.hm-pkgs [
           "./shells/fish"
 
-          "./devs/common.nix"
-          "./devs/tools.nix"
+          # "./devs/common.nix"
+          # "./devs/tools.nix"
           # "./devs/langs"
           # "./devs/ide/jetbrains.nix"
 
@@ -86,16 +86,16 @@ else let
           "./tools"
           "./tools/git"
           "./tools/ssh"
-          "./devs/ide/vscode/vscode-server.nix"
+          # "./devs/ide/vscode/vscode-server.nix"
 
           # "./apps/podman.nix"
         ];
 
-        programs.jetbrains-remote.enable = true;
-        programs.jetbrains-remote.ides = with repos.pkgs-unstable.jetbrains; [
-          pycharm-professional
-          clion
-        ];
+        # programs.jetbrains-remote.enable = true;
+        # programs.jetbrains-remote.ides = with repos.pkgs-unstable.jetbrains; [
+        #   pycharm-professional
+        #   clion
+        # ];
 
         targets.genericLinux.enable = true;
 
@@ -111,8 +111,15 @@ else let
             # xorg.xeyes
             # mesa-demos
             # vulkan-tools
+            repos.pkgs-rocksdb.rocksdb
+            boost
+            sd
           ]
           ++ (map (e: (lib.hiPrio e)) shellScripts);
+
+        home.sessionVariablesExtra = ''
+          export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:${repos.pkgs-rocksdb.rocksdb}/lib/pkgconfig;
+        '';
       })
     ];
   });

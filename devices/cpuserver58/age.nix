@@ -10,6 +10,7 @@
 
   identityPaths = [
     "${home}/.ssh/id_ed25519"
+    "${home}/.ssh/id_ed25519_age"
     "${home}/.ssh/id_ed25519_cpuserver58"
   ];
 

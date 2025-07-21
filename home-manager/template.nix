@@ -79,7 +79,7 @@ in
             "${root.hm-pkgs}/gui/fonts.nix"
             "${root.hm-pkgs}/tools/nixtools.nix"
             "${root.hm-pkgs}/tools/attic/attic-client.nix"
-            "${root.hm-pkgs}/tools/chezmoi.nix"
+            # "${root.hm-pkgs}/tools/chezmoi.nix"
             "${root.hm-pkgs}/tools/stow.nix"
           ];
 

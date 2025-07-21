@@ -56,6 +56,7 @@ p @ {
   myInteractiveShellInit = builtins.readFile ./shell_init.fish;
   interactiveShellInit = ''
     ${myInteractiveShellInit}
+    ulimit -c unlimited
   '';
 in {
   imports = [

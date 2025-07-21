@@ -9,6 +9,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nixpkgs-rocksdb.url = "github:nixos/nixpkgs/55d15ad12a74eb7d4646254e13638ad0c4128776";
+
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager-unstable = {
       url = "github:nix-community/home-manager";
@@ -217,6 +219,8 @@
           pkgs-stable = cImport inputs.nixpkgs {};
           pkgs-unstable = cImport inputs.nixpkgs-unstable {};
 
+          pkgs-rocksdb = cImport inputs.nixpkgs-rocksdb {};
+
           pkgs-fish-test = cImport inputs.nixpkgs-fish-test {};
 
           pkgs-nur = import inputs.nur {
@@ -254,8 +258,8 @@
                   params = {inherit inputs root versionMap genRepos lib;};
                   cfg = import "${device}" params;
                 in
-                  # builtins.trace "${device}: ${builtins.concatStringsSep "," (builtins.attrNames cfg)}" cfg;
-                  cfg;
+                  builtins.trace "${device}: ${builtins.concatStringsSep "," (builtins.attrNames cfg)}" cfg;
+                # cfg;
               in
                 config
             ))

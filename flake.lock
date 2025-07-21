@@ -1208,6 +1208,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-rocksdb": {
+      "locked": {
+        "lastModified": 1733212471,
+        "narHash": "sha256-M1+uCoV5igihRfcUKrr1riygbe73/dzNnzPsmaLCmpo=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "55d15ad12a74eb7d4646254e13638ad0c4128776",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "55d15ad12a74eb7d4646254e13638ad0c4128776",
+        "type": "github"
+      }
+    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1752480373,
@@ -1536,6 +1552,7 @@
         "nixpkgs-cuda-12_4": "nixpkgs-cuda-12_4",
         "nixpkgs-fish-test": "nixpkgs-fish-test",
         "nixpkgs-glibc-2_35-224": "nixpkgs-glibc-2_35-224",
+        "nixpkgs-rocksdb": "nixpkgs-rocksdb",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nur": "nur",
         "pre-commit-hooks": "pre-commit-hooks_2",
