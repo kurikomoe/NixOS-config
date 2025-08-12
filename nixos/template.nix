@@ -121,6 +121,18 @@ in
             zsh.enable = true;
             fish.enable = true;
           };
+
+          # all /bin/bash to avoid headache
+          systemd.tmpfiles.rules = lib.mkDefault [
+            "L /bin/bash - - - - /run/current-system/sw/bin/bash"
+          ];
+
+          system.activationScripts."addBinBash" = {
+            deps = ["usrbinenv"];
+            text = ''
+              ln -sf /run/current-system/sw/bin/bash /bin/bash
+            '';
+          };
         })
 
         # # -------------- enable nur ----------------
