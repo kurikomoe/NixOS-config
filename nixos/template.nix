@@ -96,6 +96,13 @@ in
           # services.envfs.enable = true;
 
           programs = {
+            # Format nix outputs
+            nh = {
+              enable = true;
+              # clean.enable = true;
+              # clean.extraArgs = "--keep-since 14d --keep 5";
+            };
+
             nix-ld = let
               libs = with pkgs;
                 [
