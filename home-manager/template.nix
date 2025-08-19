@@ -153,6 +153,13 @@ in
           programs = lib.mkDefault {
             home-manager.enable = true;
 
+            # Format nix outputs
+            nh = {
+              enable = true;
+              # clean.enable = true;
+              # clean.extraArgs = "--keep-since 14d --keep 5";
+            };
+
             # ssh = lib.mkDefault {
             #   enable = true;
             #   compression = true;

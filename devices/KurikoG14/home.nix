@@ -59,7 +59,8 @@
             "devs/common.nix"
 
             "devs/langs"
-            "devs/ide/jetbrains.nix"
+            # "devs/ide/jetbrains.nix"
+            # "gui/jetbrains.nix"
             # "devs/ide/vscode/default.nix"
             "devs/ide/vscode/vscode-server.nix"
 
@@ -81,7 +82,6 @@
             "gui/fonts.nix"
             "gui/browsers/firefox"
             "gui/browsers/edge.nix"
-            "gui/jetbrains.nix"
 
             # "./apps/podman.nix"
 
@@ -108,7 +108,7 @@
 
           (pkgs.callPackage "${root.pkgs}/home-manager/fix-wsl.nix" {})
 
-          repos.pkgs-kuriko-nur.msedit
+          repos.pkgs-unstable.msedit
 
           (hiPrio (pkgs.writeShellScriptBin "nixup" ''
             sudo true

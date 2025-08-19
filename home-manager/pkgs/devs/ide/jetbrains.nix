@@ -24,6 +24,11 @@
     "nixidea"
     "direnv integration"
   ];
+
+  temp_fix_for_jdk = x:
+    x.override {
+      jdk = pkgs.openjdk21;
+    };
 in {
   # https://github.com/nix-community/home-manager/blob/release-25.05/modules/programs/jetbrains-remote.nix
   # 250615: seem fixed
@@ -45,12 +50,12 @@ in {
   programs.jetbrains-remote.enable = true;
   # programs.jetbrains-remote.ides = with repos.pkgs-kuriko-nur; [
   programs.jetbrains-remote.ides = with repos.pkgs-unstable.jetbrains; [
-    webstorm
-    rust-rover
-    pycharm-professional
-    rider
-    idea-ultimate
-    goland
-    clion
+    (temp_fix_for_jdk webstorm)
+    (temp_fix_for_jdk rust-rover)
+    (temp_fix_for_jdk pycharm-professional)
+    (temp_fix_for_jdk rider)
+    (temp_fix_for_jdk idea-ultimate)
+    (temp_fix_for_jdk goland)
+    (temp_fix_for_jdk clion)
   ];
 }

@@ -96,6 +96,13 @@ in
           # services.envfs.enable = true;
 
           programs = {
+            # Format nix outputs
+            nh = {
+              enable = true;
+              # clean.enable = true;
+              # clean.extraArgs = "--keep-since 14d --keep 5";
+            };
+
             nix-ld = let
               libs = with pkgs;
                 [
@@ -113,6 +120,18 @@ in
             };
             zsh.enable = true;
             fish.enable = true;
+          };
+
+          # all /bin/bash to avoid headache
+          systemd.tmpfiles.rules = lib.mkDefault [
+            "L /bin/bash - - - - /run/current-system/sw/bin/bash"
+          ];
+
+          system.activationScripts."addBinBash" = {
+            deps = ["usrbinenv"];
+            text = ''
+              ln -sf /run/current-system/sw/bin/bash /bin/bash
+            '';
           };
         })
 

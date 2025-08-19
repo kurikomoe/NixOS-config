@@ -12,6 +12,9 @@ in rec {
     noto-fonts-cjk-sans
     noto-fonts-cjk-serif
 
+    source-serif-pro
+    source-han-serif
+
     sarasa-gothic
 
     wqy_zenhei
@@ -24,6 +27,8 @@ in rec {
     repos.pkgs-kuriko-nur.kuriko-all-fonts
 
     jetbrains-mono
+
+    ibm-plex
   ];
 
   home.packages = _module.args.fonts;

@@ -23,7 +23,7 @@
       workspaces = true;
       secrets_filter = true;
       auto_sync = true;
-      sync_frequency = "5m";
+      sync_frequency = "1h";
     };
   };
 }
