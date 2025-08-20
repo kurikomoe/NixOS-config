@@ -254,8 +254,8 @@
                   params = {inherit inputs root versionMap genRepos lib;};
                   cfg = import "${device}" params;
                 in
-                  # builtins.trace "${device}: ${builtins.concatStringsSep "," (builtins.attrNames cfg)}" cfg;
-                  cfg;
+                  builtins.trace "${device}: ${builtins.concatStringsSep "," (builtins.attrNames cfg)}" cfg;
+                # cfg;
               in
                 config
             ))

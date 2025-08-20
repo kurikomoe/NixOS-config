@@ -8,7 +8,7 @@
   ...
 }:
 if !builtins.pathExists ./customvars.nix
-then {}
+then builtins.trace "Not Found ignore" {}
 else let
   customVars = import ./customvars.nix;
   # -------------- custom variables --------------------
@@ -100,8 +100,8 @@ in
             ++ kutils.buildImports root.hm-pkgs [
               "./shells/fish"
 
-              "./devs/common.nix"
-              "./devs/langs"
+              # "./devs/common.nix"
+              # "./devs/langs"
 
               "./tools/ssh/iprc.nix"
               "./tools/git"
