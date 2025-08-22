@@ -80,8 +80,8 @@
             "apps/vnc/server.nix"
 
             "gui/fonts.nix"
-            "gui/browsers/firefox"
-            "gui/browsers/edge.nix"
+            # "gui/browsers/firefox"
+            # "gui/browsers/edge.nix"
 
             # "./apps/podman.nix"
 
