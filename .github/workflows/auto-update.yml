@@ -3,8 +3,8 @@ name: "update flakes"
 on:
     # push:
     workflow_dispatch:
-    # schedule:
-    #     - cron: "0 23 * * *"
+    schedule:
+        - cron: "23 23 * * *"
 
 permissions:
     actions: write
