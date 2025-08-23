@@ -39,6 +39,13 @@ in {
     helix
 
     (repos.pkgs-kuriko-nur.shellfirm)
+
+    fd
+    ripgrep
+    dust
+    choose
+    fend
+    bat
   ];
 
   home.sessionVariables = {
