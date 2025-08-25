@@ -110,6 +110,8 @@
 
           repos.pkgs-unstable.msedit
 
+          repos.pkgs-kuriko-nur.doxx
+
           (hiPrio (pkgs.writeShellScriptBin "nixup" ''
             sudo true
             nix flake update --flake "$HOME/.nixos";
