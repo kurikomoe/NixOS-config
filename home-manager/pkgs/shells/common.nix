@@ -41,6 +41,7 @@ in {
     (repos.pkgs-kuriko-nur.shellfirm)
 
     fd
+    sd
     ripgrep
     dust
     choose

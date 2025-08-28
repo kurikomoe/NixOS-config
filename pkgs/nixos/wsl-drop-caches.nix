@@ -23,10 +23,11 @@
 
     phases = ["unpackPhase" "installPhase"];
 
-    buildInputs = with pkgs; [pythonDep coreutils];
+    buildInputs = with pkgs; [pythonDep coreutils sd];
 
     installPhase = ''
       mkdir -p $out/bin;
+      sd "if load_check():" "if True:" drop_cache_if_idle
       cp drop_cache_if_idle $out/bin;
       chmod +x $out/bin/drop_cache_if_idle;
     '';
