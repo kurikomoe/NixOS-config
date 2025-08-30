@@ -19,7 +19,7 @@ in {
     package = vscode-fhs;
     profiles = {
       default = {
-        inherit (deps) extensions;
+        # inherit (deps) extensions;
         enableExtensionUpdateCheck = true;
         enableUpdateCheck = true;
       };
