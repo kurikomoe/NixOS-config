@@ -9,14 +9,13 @@ on:
 permissions:
     actions: write
     contents: write
-    pull-requests: write
     statuses: read
 
 jobs:
     update-flakes:
         runs-on: ubuntu-latest
         env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             timestamp: "N/A"
         steps:
             - name: Maximize build space
@@ -36,8 +35,8 @@ jobs:
                 timezoneLinux: "Asia/Shanghai"
 
             - uses: actions/checkout@v4
-              with:
-                token: ${{ secrets.GITHUB_TOKEN }}
+              # with:
+              #   token: ${{ secrets.GITHUB_TOKEN }}
 
             # - name: Install Nix
             #   uses: cachix/install-nix-action@v31
@@ -105,6 +104,8 @@ jobs:
             - name: Commit Changes
               uses: EndBug/add-and-commit@v9.1.4
               with:
+                author_name: github-actions[bot]
+                author_email: 41898282+github-actions[bot]@users.noreply.github.com
                 committer_name: GitHub Actions
                 committer_email: 41898282+github-actions[bot]@users.noreply.github.com
                 message: "Auto update"
