@@ -48,6 +48,7 @@ jobs:
             #         keep-outputs = true
 
             - uses: nixbuild/nix-quick-install-action@v32
+
             - name: Restore and save Nix store
               uses: nix-community/cache-nix-action@v6
               with:
@@ -89,13 +90,54 @@ jobs:
             #         # except any version with the key that is the same as the `primary-key`
             #         purge-primary-key: never
 
-            - run: nix flake update
+            # - run: nix profile install nixpkgs#nixStatic
 
-            - name: Build Test
+            - name: update flake
+              id: update-flake
               run: |
-                echo "testing on g14"
-                nix eval .#nixosConfigurations.KurikoG14.config.system.build.toplevel
-                nix build .#nixosConfigurations.KurikoG14.config.system.build.toplevel
+                # We treat KurikoG14 as the standard
+                TARGET="KurikoG14"
+                set -ex
+
+                echo "### 1. Getting current system path..."
+                # 使用 nix build 来确保路径是可用的
+                OLD_BUILD=$(nix build .#nixosConfigurations.${TARGET}.config.system.build.toplevel --no-link --print-out-paths)
+
+                echo "### 2. Updating flake inputs..."
+                # 更新 flake.lock 文件
+                nix flake update
+
+                echo "### 3. Getting new system path..."
+                NEW_BUILD=$(nix build .#nixosConfigurations.${TARGET}.config.system.build.toplevel --no-link --print-out-paths)
+
+                echo "### 4. Comparing closures..."
+                # 使用 || true 防止在有差异时命令失败
+                nix store diff-closures ${OLD_BUILD} ${NEW_BUILD} > /tmp/results.txt || true
+
+                # Show updates
+                echo "==================================="
+                cat /tmp/results.txt
+                echo "==================================="
+
+                # 清理输出，排除顶层的系统元包
+                grep -v 'nixos-system-' /tmp/results.txt > /tmp/results.clean.txt
+
+                echo "### 5. Checking for meaningful changes..."
+                # -s 检查文件是否存在且不为空
+                if [[ -s /tmp/results.clean.txt ]]; then
+                  echo "✅ Meaningful changes detected. Preparing commit."
+                  # 设置一个输出变量，用于控制后续步骤
+                  echo "changes_detected=true" >> $GITHUB_OUTPUT
+
+                  # 准备 commit message
+                  # 使用 heredoc EOF 来处理多行文本
+                  echo "commit_body<<EOF" >> $GITHUB_OUTPUT
+                  cat /tmp/results.clean.txt >> $GITHUB_OUTPUT
+                  echo "EOF" >> $GITHUB_OUTPUT
+                else
+                  echo "✅ No meaningful changes detected. Skipping commit."
+                  echo "changes_detected=false" >> $GITHUB_OUTPUT
+                fi
 
             - name: Generate timestamp
               id: timestamp
@@ -103,9 +145,21 @@ jobs:
 
             - name: Commit Changes
               uses: EndBug/add-and-commit@v9.1.4
+              if: steps.update-flake.outputs.changes_detected == 'true'
               with:
                 author_name: github-actions[bot]
                 author_email: 41898282+github-actions[bot]@users.noreply.github.com
                 committer_name: GitHub Actions
                 committer_email: 41898282+github-actions[bot]@users.noreply.github.com
-                message: "Auto update"
+                message: |
+                  Auto-update:
+
+                  The following package changes were detected in the system closure:
+                  ${{ steps.update-flake.outputs.commit_body }}
+
+            - name: Setup upterm session
+              uses: lhotari/action-upterm@v1
+              if: ${{ failure() }}
+              with:
+                wait-timeout-minutes: 5
+
