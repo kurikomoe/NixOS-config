@@ -61,7 +61,7 @@
     coc-sh
     coc-clangd
     coc-rust-analyzer
-    coc-java
+    # coc-java
     coc-lua
     coc-css
     coc-html
