@@ -123,12 +123,13 @@ jobs:
                 # 1. 排除顶层的系统元包
                 # 2. 排除纯哈希的无意义重建
                 grep -v 'nixos-system-' /tmp/results.txt \
+                  | grep -v -E '^\s*[0-9a-z]{32}:' \
                   > /tmp/results.clean.txt
 
 
                 echo "### 5. Checking for meaningful changes..."
                 line_count=$(< /tmp/results.clean.txt wc -l)
-                if [[ $line_count -gt 2 ]]; then
+                if [[ $line_count -gt 0 ]]; then
                   echo "✅ Meaningful changes detected ($line_count lines). Preparing commit."
                   echo "changes_detected=true" >> $GITHUB_OUTPUT
                   echo "commit_body<<EOF" >> $GITHUB_OUTPUT
