@@ -5,6 +5,9 @@ on:
     workflow_dispatch:
     schedule:
         - cron: "23 9,23 * * *"
+    push:
+      paths:
+        - ".github/workflows/**.yml"
 
 permissions:
     actions: write
