@@ -140,6 +140,10 @@
       src = "op.exe";
     });
 in {
+  imports = [
+    ./cdw.nix
+  ];
+
   home.packages = with pkgs; [
     mount-all
     wslu
