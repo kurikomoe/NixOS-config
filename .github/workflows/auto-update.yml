@@ -41,17 +41,13 @@ jobs:
               # with:
               #   token: ${{ secrets.GITHUB_TOKEN }}
 
-            # - name: Install Nix
-            #   uses: cachix/install-nix-action@v31
-            #   with:
-            #     github_access_token: ${{ secrets.GITHUB_TOKEN }}
-            #     set_as_trusted_user: true
-            #     extra_nix_config: |
-            #         keep-env-derivations = true
-            #         keep-outputs = true
+            - name: Install Nix
+              uses: cachix/install-nix-action@v31
+              with:
+                github_access_token: ${{ secrets.GITHUB_TOKEN }}
+                set_as_trusted_user: true
 
-            - uses: nixbuild/nix-quick-install-action@v32
-
+            # - uses: nixbuild/nix-quick-install-action@v32
             # - name: Restore and save Nix store
             #   uses: nix-community/cache-nix-action@v6
             #   with:
