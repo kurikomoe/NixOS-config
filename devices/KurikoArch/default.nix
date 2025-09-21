@@ -92,7 +92,7 @@
             "./tools/attic/attic-client.nix"
             "./tools/attic/attic-server.nix"
 
-            "./apps/podman.nix"
+            # "./apps/podman.nix"
           ]
           ++ [
             "${root.pkgs}/home-manager/frp.nix"

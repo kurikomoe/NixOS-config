@@ -278,33 +278,20 @@
           builtins.mapAttrs
           (system: deployLib: deployLib.deployChecks self.deploy)
           inputs.deploy-rs.lib;
+
+        shellNix = import ./shell.nix {
+          pkgs = pkgs;
+          pkgs-kuriko-nur' = pkgs-kuriko-nur;
+          pre-commit-hooks' = inputs.pre-commit-hooks.lib.${system};
+        };
       in rec {
         formatter = pkgs.alejandra;
 
         checks = lib.recursiveUpdate checksDeploy.${system} {
-          pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
-            src = ./.;
-            hooks = {
-              alejandra.enable = true;
-              trufflehog = {
-                enable = true;
-                entry = builtins.toString pkgs-kuriko-nur.precommit-trufflehog;
-                stages = ["pre-push" "pre-commit"];
-              };
-            };
-          };
+          inherit (shellNix) pre-commit-check;
         };
 
-        devShells.default = pkgs.mkShell {
-          inherit (self.checks.${system}.pre-commit-check) shellHook;
-          buildInputs = self.checks.${system}.pre-commit-check.enabledPackages;
-
-          packages = with pkgs; [
-            (lib.hiPrio pkgs-unstable.uutils-findutils)
-            (lib.hiPrio pkgs-unstable.uutils-diffutils)
-            (lib.hiPrio pkgs-unstable.uutils-coreutils-noprefix)
-          ];
-        };
+        devShells = shellNix.devShells;
       };
     };
 }

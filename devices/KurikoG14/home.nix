@@ -83,7 +83,7 @@
             # "gui/browsers/firefox"
             # "gui/browsers/edge.nix"
 
-            # "./apps/podman.nix"
+            "./apps/podman.nix"
 
             "apps/ReverseEngineering/radare2.nix"
             "apps/ReverseEngineering/ghidra.nix"
