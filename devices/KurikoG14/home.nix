@@ -81,7 +81,7 @@
 
             "gui/fonts.nix"
             # "gui/browsers/firefox"
-            # "gui/browsers/edge.nix"
+            "gui/browsers/edge.nix"
 
             "./apps/podman.nix"
 
