@@ -280,7 +280,7 @@
           inputs.deploy-rs.lib;
 
         shellNix = import ./shell.nix {
-          pkgs = pkgs;
+          pkgs' = pkgs;
           pkgs-kuriko-nur' = pkgs-kuriko-nur;
           pre-commit-hooks' = inputs.pre-commit-hooks.lib.${system};
         };

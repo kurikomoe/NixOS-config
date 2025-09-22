@@ -1,9 +1,14 @@
 {
-  pkgs ? import (fetchTarball "https://github.com/NixOS/nixpkgs/tarball/nixos-unstable") {},
+  pkgs' ? null,
   pkgs-kuriko-nur' ? null,
   pre-commit-hooks' ? null,
   ...
 }: let
+  pkgs =
+    if pkgs' == null
+    then import (fetchTarball "https://github.com/NixOS/nixpkgs/tarball/nixos-25.05") {}
+    else pkgs';
+
   inherit (pkgs) lib fetchFromGitHub;
 
   pkgs-kuriko-nur =
