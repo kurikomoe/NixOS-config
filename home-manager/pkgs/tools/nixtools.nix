@@ -102,6 +102,8 @@ in
         nix-search-cli
         nix-index
 
+        nix-tree # check disk usage
+
         nix-update
         nvfetcher
 
