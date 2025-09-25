@@ -1,0 +1,39 @@
+name: "build system by self-hosted"
+
+on:
+    workflow_dispatch:
+    push:
+      paths-ignore:
+        - "flake.*"
+
+permissions:
+    actions: write
+    contents: write
+    statuses: read
+
+jobs:
+    build-system:
+        timeout-minutes: 2880
+        runs-on: self-hosted
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: build flake
+              id: build-flake
+              run: |
+                # We treat KurikoG14 as the standard
+                TARGET="KurikoG14"
+                set -ex
+
+                ATTR=".#nixosConfigurations.${TARGET}.config.system.build.toplevel"
+
+                PATHS=$(nix build "$ATTR" --print-out-paths --no-link)
+
+                cachix push kurikomoe $PATHS || true
+                attic push r2 $PATHS || true
+
+            # - name: Setup upterm session
+            #   uses: lhotari/action-upterm@v1
+            #   if: ${{ failure() }}
+            #   with:
+            #     wait-timeout-minutes: 5

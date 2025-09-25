@@ -1,13 +1,10 @@
-name: "update flakes"
+name: "build system"
 
 on:
-    # push:
     workflow_dispatch:
-    # schedule:
-    #     - cron: "23 9,23 * * *"
     # push:
-    #   paths:
-    #     - ".github/workflows/auto-update.yml"
+    #   paths-ignore:
+    #     - "flake.*"
 
 permissions:
     actions: write
@@ -15,7 +12,7 @@ permissions:
     statuses: read
 
 jobs:
-    update-flakes:
+    build-system:
         runs-on: ubuntu-latest
         env:
             # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -45,7 +42,11 @@ jobs:
               uses: cachix/install-nix-action@v31
               with:
                 github_access_token: ${{ secrets.GITHUB_TOKEN }}
+                enable_kvm: true
                 set_as_trusted_user: true
+                extra_nix_config: |
+                  system-features = nixos-test benchmark big-parallel kvm benchmark big-parallel kvm nixos-test gccarch-x86-64-v3
+
 
             # - uses: nixbuild/nix-quick-install-action@v32
             # - name: Restore and save Nix store
@@ -125,63 +126,7 @@ jobs:
 
                 echo "### 1. Getting current system path..."
                 # 使用 nix build 来确保路径是可用的
-                OLD_BUILD=$(nix_build_with_retry "$ATTR")
-
-                echo "### 2. Updating flake inputs..."
-                # 更新 flake.lock 文件
-                nix flake update
-
-                echo "### 3. Getting new system path..."
-                NEW_BUILD=$(nix_build_with_retry "$ATTR")
-
-                echo "### 4. Comparing closures..."
-                # 使用 || true 防止在有差异时命令失败
-                nix store diff-closures ${OLD_BUILD} ${NEW_BUILD} > /tmp/results.txt || true
-
-                # Show updates
-                echo "==================================="
-                cat /tmp/results.txt
-                echo "==================================="
-
-                # 清理输出：
-                # 1. 排除顶层的系统元包
-                # 2. 排除纯哈希的无意义重建
-                grep -v 'nixos-system-' /tmp/results.txt \
-                  | grep -v -E '^\s*[0-9a-z]{32}:' \
-                  | grep -v -E '^\s*source:' \
-                  > /tmp/results.clean.txt || true
-
-
-                echo "### 5. Checking for meaningful changes..."
-                line_count=$(< /tmp/results.clean.txt wc -l)
-                if [[ $line_count -gt 0 ]]; then
-                  echo "✅ Meaningful changes detected ($line_count lines). Preparing commit."
-                  echo "changes_detected=true" >> $GITHUB_OUTPUT
-                  echo "commit_body<<EOF" >> $GITHUB_OUTPUT
-                  cat /tmp/results.clean.txt >> $GITHUB_OUTPUT
-                  echo "EOF" >> $GITHUB_OUTPUT
-                else
-                  echo "✅ No meaningful changes detected ($line_count lines). Skipping commit."
-                  echo "changes_detected=false" >> $GITHUB_OUTPUT
-                fi
-
-            - name: Generate timestamp
-              id: timestamp
-              run: echo "timestamp=$(date +'%y%m%d.%H%M')" >> $GITHUB_ENV
-
-            - name: Commit Changes
-              uses: EndBug/add-and-commit@v9.1.4
-              if: steps.update-flake.outputs.changes_detected == 'true'
-              with:
-                author_name: github-actions[bot]
-                author_email: 41898282+github-actions[bot]@users.noreply.github.com
-                committer_name: GitHub Actions
-                committer_email: 41898282+github-actions[bot]@users.noreply.github.com
-                message: |
-                  Auto-update:
-
-                  The following package changes were detected in the system closure:
-                  ${{ steps.update-flake.outputs.commit_body }}
+                nix_build_with_retry "$ATTR"
 
             - name: Setup upterm session
               uses: lhotari/action-upterm@v1
