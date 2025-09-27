@@ -1,4 +1,4 @@
-name: "update flakes"
+name: "update flakes by self-hosted"
 
 on:
     # push:

@@ -84,12 +84,11 @@ p @ {
         # ../../common/builders/kurikoArch.local.nix
 
         {
-          nixpkgs.config.doCheck = false;
-          nixpkgs.hostPlatform = {
-            system = "x86_64-linux";
-            gcc.arch = "x86-64-v3";
-            # gcc.tune = "core-avx2";
-          };
+          # nixpkgs.hostPlatform = {
+          #   system = "x86_64-linux";
+          #   gcc.arch = "x86-64-v3";
+          #   # gcc.tune = "core-avx2";
+          # };
 
           # nix.settings.system-features = [
           #   "benchmark"
