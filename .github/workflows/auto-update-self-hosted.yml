@@ -2,9 +2,9 @@ name: "update flakes by self-hosted"
 
 on:
     # push:
-    workflow_dispatch:
-    schedule:
-        - cron: "23 9,23 * * *"
+    # workflow_dispatch:
+    # schedule:
+    #     - cron: "23 9,23 * * *"
     # push:
     #   paths:
     #     - ".github/workflows/auto-update.yml"
