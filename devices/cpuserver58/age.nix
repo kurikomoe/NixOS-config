@@ -10,7 +10,7 @@
 
   identityPaths = [
     "${home}/.ssh/id_ed25519"
-    "${home}/.ssh/id_ed25519_cpuserver58"
+    "${home}/.ssh/id_ed25519_cpuserver"
   ];
 
   secret_file = filepath: {
