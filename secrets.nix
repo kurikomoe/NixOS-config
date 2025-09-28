@@ -20,6 +20,8 @@ let
     keys_age
     ++ [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIKjZNEcnjScSSkCiWYmD2q5dRT6tw77gnuOs7cUudF7"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAhqWj+nd6tH+eASsgtfIUXlNw656chrv7r+bDQqimts"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICTqzxgeqkCXdZgNzdRn4zUjSQduRaml4vAAFFgnHSi6"
     ];
 
   keys = keys_age ++ keys_tx ++ keys_kurikoG14 ++ keys_cpuserver58;
