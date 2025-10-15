@@ -8,15 +8,23 @@
 
   # Alternative
   vscode-fhs = pkgs.vscode.fhsWithPackages (ps: with ps; [] ++ deps.libs);
-  # vscodeWithExtensions = pkgs.vscode-with-extensions.override {
-  #   vscodeExtensions = deps.extensions;
-  # };
+  vscodeWithExtensions =
+    pkgs.vscode-with-extensions.override {
+      vscode = vscode-fhs;
+      vscodeExtensions = deps.extensions;
+    }
+    // {
+      pname = pkgs.vscode.pname;
+      version = pkgs.vscode.version;
+    };
 in {
-  home.packages = with pkgs; [];
+  home.packages = with pkgs; [
+    vscodeWithExtensions
+  ];
 
   programs.vscode = {
     enable = true;
-    package = vscode-fhs;
+    package = vscodeWithExtensions;
     profiles = {
       default = {
         # inherit (deps) extensions;

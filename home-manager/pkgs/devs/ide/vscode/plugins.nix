@@ -35,9 +35,7 @@ in {
     ]
     ++ (pkgs.steam.args.multiPkgs pkgs);
 
-  extensions = with pkgs.vscode-extensions;
-  with pkgs.vscode-marketplace;
-  with repos.pkgs-kuriko-nur;
+  extensions = with pkgs.vscode-marketplace;
     [
       # Langs
       rust-lang.rust-analyzer
@@ -61,7 +59,6 @@ in {
       ms-python.vscode-pylance
       ms-python.mypy-type-checker
       ms-python.debugpy
-      ms-toolsai.jupyter
       ms-toolsai.jupyter-keymap
       ms-toolsai.jupyter-renderers
       ms-toolsai.vscode-jupyter-cell-tags
@@ -148,8 +145,7 @@ in {
       waderyan.gitblame
       donjayamanne.githistory
       github.vscode-github-actions
-      eamodio.gitlens
-      github.vscode-pull-request-github
+      # eamodio.gitlens
 
       # Env
       mkhl.direnv
@@ -178,7 +174,9 @@ in {
       chrmarti.regex
 
       # AI
-      github.copilot-chat
+      # github.copilot-chat
+      # github.vscode-pull-request-github
+      # ms-toolsai.jupyter
       github.copilot
       jetbrains.jetbrains-ai-assistant
     ]

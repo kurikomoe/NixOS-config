@@ -14,7 +14,7 @@ in {
   ];
 
   services.vscode-server = {
-    enableFHS = true;
+    # enableFHS = true;
     enable = true;
     extraRuntimeDependencies = deps.libs;
   };
