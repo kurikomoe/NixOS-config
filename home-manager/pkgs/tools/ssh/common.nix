@@ -2,7 +2,12 @@
   pkgs,
   repos,
   ...
-}: {
+}: let
+  go = repos.pkgs-unstable.go;
+
+  trzsz-ssh = repos.pkgs-kuriko-nur.trzsz-ssh;
+  trzsz = repos.pkgs-kuriko-nur.trzsz;
+in {
   packages = with pkgs; [
     p7zip
     autossh
@@ -10,8 +15,8 @@
 
     zssh
 
-    repos.pkgs-kuriko-nur.trzsz-ssh
-    repos.pkgs-kuriko-nur.trzsz
+    trzsz-ssh
+    trzsz
 
     # conflict with the mkpasswd
     # expect
