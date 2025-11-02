@@ -102,6 +102,14 @@
     #   url = "github:OmniSharp/omnisharp-vim";
     #   flake = false;
     # };
+    zig-vim = {
+      url = "github:ziglang/zig.vim";
+      flake = false;
+    };
+    coc-zig = {
+      url = "github:UltiRequiem/coc-zig";
+      flake = false;
+    };
 
     # ------------------ common shell plugins --------------
     # move to fetch

@@ -103,7 +103,7 @@
             uv.enable = true;
           };
 
-          git-commit.hooks = {
+          pre-commit.hooks = {
             alejandra.enable = true;
             shellcheck.enable = true;
 

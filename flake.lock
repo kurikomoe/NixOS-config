@@ -25,6 +25,22 @@
         "type": "github"
       }
     },
+    "coc-zig": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1747785184,
+        "narHash": "sha256-DOtI/La+hFRRy+C5hPqG0dN9bZFh+/TPFTvI+a87AJ0=",
+        "owner": "UltiRequiem",
+        "repo": "coc-zig",
+        "rev": "e86e6ff538efb08736a95af0396891409dc6dcae",
+        "type": "github"
+      },
+      "original": {
+        "owner": "UltiRequiem",
+        "repo": "coc-zig",
+        "type": "github"
+      }
+    },
     "darwin": {
       "inputs": {
         "nixpkgs": [
@@ -1075,6 +1091,7 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
+        "coc-zig": "coc-zig",
         "deploy-rs": "deploy-rs",
         "fishPlugin-autopair": "fishPlugin-autopair",
         "fishPlugin-fish-abbreviation-tips": "fishPlugin-fish-abbreviation-tips",
@@ -1105,7 +1122,8 @@
         "nur": "nur",
         "pre-commit-hooks": "pre-commit-hooks",
         "tmux-current-pane-hostname": "tmux-current-pane-hostname",
-        "tmux-themepack": "tmux-themepack"
+        "tmux-themepack": "tmux-themepack",
+        "zig-vim": "zig-vim"
       }
     },
     "systems": {
@@ -1296,6 +1314,22 @@
       "original": {
         "owner": "water-sucks",
         "repo": "zig-deps-fod",
+        "type": "github"
+      }
+    },
+    "zig-vim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1757608918,
+        "narHash": "sha256-6ARj5+7ceLagu3hJ39NL9WaFSG3Y0PCEbF50/vy5t6w=",
+        "owner": "ziglang",
+        "repo": "zig.vim",
+        "rev": "0c100863c7901a79d9c4b7a2092e335cc09337cc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ziglang",
+        "repo": "zig.vim",
         "type": "github"
       }
     }

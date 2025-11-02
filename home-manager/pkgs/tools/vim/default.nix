@@ -10,9 +10,22 @@
   #   name = "omnisharp-vim";
   #   src = inputs.omnisharp-vim;
   # };
+  zig-vim = pkgs.vimUtils.buildVimPlugin {
+    name = "zig-vim";
+    src = inputs.zig-vim;
+  };
+
+  coc-zig-plugin = pkgs.vimUtils.buildVimPlugin {
+    name = "coc-zig";
+    src = inputs.coc-zig;
+  };
+
   vimPlugins = with pkgs.vimPlugins; [
     coc-nvim
     nvim-lspconfig
+
+    coc-zig-plugin
+    zig-vim
 
     ctrlp-vim
     vim-airline
@@ -38,7 +51,7 @@
     vim-lastplace
     vim-repeat
     vim-jsbeautify
-    vim-polyglot
+    # vim-polyglot
 
     # not working for now
     # omnisharp-vim-plugin
