@@ -71,8 +71,8 @@
           kutils.buildImports root.hm-pkgs [
             "./shells/fish"
 
-            "./devs/ide/vscode/vscode-server.nix"
-            "./devs/ide/vscode/default.nix"
+            # "./devs/ide/vscode/vscode-server.nix"
+            # "./devs/ide/vscode/default.nix"
 
             "./devs/common.nix"
             "./devs/langs"

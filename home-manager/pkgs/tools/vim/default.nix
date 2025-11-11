@@ -51,7 +51,7 @@
     vim-lastplace
     vim-repeat
     vim-jsbeautify
-    # vim-polyglot
+    vim-polyglot
 
     # not working for now
     # omnisharp-vim-plugin
