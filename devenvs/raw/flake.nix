@@ -36,9 +36,10 @@
 
         pkgs-kuriko-nur = inputs.kuriko-nur.legacyPackages.${system};
 
-        my-python = pkgs.python312.withPackages (ps:
+        my-python = pkgs.python313.withPackages (ps:
           with ps; [
             pyyaml
+            pysocks
           ]);
       in rec {
         formatter = pkgs.alejandra;
@@ -68,17 +69,32 @@
           runScript = "fish";
         };
 
-        devShells.default = pkgs.mkShell {
+        devShells.default = pkgs.mkShell rec {
           hardeningDisable = ["all"];
 
           packages = with pkgs; [
             cmake
             hello
             just
-            my-python
-            ninja
             fish
+
+            my-python
+
+            gnumake
+            ninja
+            cmake
+            xmake
+
+            zlib.dev
+            stdenv.cc.cc.lib
           ];
+
+          env = rec {
+            LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath ([
+                "/usr/lib/wsl/" # for wsl env
+              ]
+              ++ packages);
+          };
 
           shellHook = ''
             ${config.pre-commit.installationScript}
@@ -89,7 +105,7 @@
             # export PATH="$LLVM_DIR/bin:$PATH"
 
             # Enter FHS env
-            ${packages.fhs}/bin/fhs-devenv
+            # ${packages.fhs}/bin/fhs-devenv
           '';
         };
       };

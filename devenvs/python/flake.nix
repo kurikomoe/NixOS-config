@@ -51,36 +51,39 @@
           config.allowUnfree = true;
           overlays = [];
         };
-
-        runtimeLibs = with pkgs; [];
       in {
         devenv.shells.default = {
-          packages = with pkgs;
-            [
-              hello
-            ]
-            ++ runtimeLibs;
+          packages = with pkgs; [
+            hello
+            python313Packages.venvShellHook
 
-          env = {
-            LD_LIBRARY_PATH = lib.makeLibraryPath runtimeLibs;
+            gnumake
+            ninja
+            cmake
+            xmake
+
+            zlib.dev
+            stdenv.cc.cc.lib
+          ];
+
+          env = rec {
+            LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath ([
+                "/usr/lib/wsl/" # for wsl env
+              ]
+              ++ packages);
           };
 
           enterShell = ''
             hello
+            uv sync
+            source .devenv/state/venv/bin/activate
           '';
 
           languages.python = {
             enable = true;
-            package = pkgs.python312;
-            # version = "3.12";
-
+            package = pkgs.python313;
             uv.enable = true;
             uv.package = pkgs.uv;
-
-            # poetry = {
-            #   enable = true;
-            #   activate.enable = true;
-            # };
           };
 
           pre-commit.hooks = {
@@ -90,9 +93,8 @@
             # Python
             isort.enable = true;
             pyright.enable = true;
+            flake8.enable = true;
             # mypy.enable = true;
-            # pylint.enable = true;
-            # flake8.enable = true;
 
             # Check Secrets
             trufflehog = {

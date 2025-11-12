@@ -58,7 +58,7 @@
       in {
         formatter = pkgs.alejandra;
 
-        devenv.shells.default = {
+        devenv.shells.default = rec {
           # Enable this to avoid forced -O2
           # hardeningDisable = [ "all" ];
 
@@ -66,12 +66,15 @@
             [
               # requirements
               pkg-config
+              zlib.dev
               stdenv.cc.cc.lib
 
-              cmake
-              clang-tools
+              gnumake
               ninja
+              cmake
+              xmake
               mold
+              clang-tools
 
               # libs
 
@@ -82,7 +85,10 @@
             ++ runtimeLibs;
 
           env = {
-            LD_LIBRARY_PATH = lib.makeLibraryPath runtimeLibs;
+            LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath ([
+                "/usr/lib/wsl/" # for wsl env
+              ]
+              ++ packages);
           };
 
           enterShell = ''
@@ -97,10 +103,10 @@
           languages.cplusplus.enable = true;
 
           languages.python = {
-            enable = false;
-            package = pkgs.python312;
-            # version = "3.12";
+            enable = true;
+            package = pkgs.python313;
             uv.enable = true;
+            uv.package = pkgs.uv;
           };
 
           pre-commit.hooks = {
@@ -109,12 +115,12 @@
 
             # C/C++
             clang-format.enable = true;
+
             # Python
             isort.enable = true;
             pyright.enable = true;
+            flake8.enable = true;
             # mypy.enable = true;
-            # pylint.enable = true;
-            # flake8.enable = true;
 
             # Check Secrets
             trufflehog = {
