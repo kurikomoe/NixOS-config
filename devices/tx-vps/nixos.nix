@@ -117,7 +117,7 @@
         };
 
         services.tailscale = {
-          enable = true;
+          enable = false;
           # derper.enable = true;
           # derper.domain = "c.0v0.io";
           # derper.verifyClients = true;
