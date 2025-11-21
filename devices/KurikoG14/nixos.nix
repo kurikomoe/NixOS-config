@@ -171,9 +171,9 @@ p @ {
           services.xrdp.enable = true;
           services.xrdp.port = 3390;
           services.xserver.enable = true;
+          # services.displayManager.defaultSession = "";
           services.xserver.desktopManager.xfce.enable = true;
-          services.displayManager.defaultSession = "xfce";
-          # services.xrdp.defaultWindowManager = "startxfce4";
+          services.xrdp.defaultWindowManager = "${pkgs.xfce.xfce4-session}/bin/xfce4-session";
 
           programs.hyprland = {
             enable = true;
