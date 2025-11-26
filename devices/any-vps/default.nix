@@ -12,7 +12,7 @@
   customVars = rec {
     inherit system;
 
-    hostName = "KurikoG14";
+    hostName = "KurikoLinode";
 
     username = "kuriko";
     usernameFull = "KurikoMoe";
@@ -25,22 +25,20 @@
   repos = genRepos system;
 
   # =========== change this to switch version ===========
-  os-version = "stable";
   hm-version = "stable";
+  os-version = "stable";
   # ====================================================
-
   nixpkgs-hm = versionMap.${hm-version}.nixpkgs;
   pkgs-hm = repos."pkgs-${hm-version}";
   home-manager = versionMap.${hm-version}.home-manager;
 
   nixpkgs-os = versionMap.${os-version}.nixpkgs;
   pkgs-os = repos."pkgs-${os-version}";
-
   # ====================================================
+  # Put into nixos build config
   hm-config = import ./home.nix (p
     // {
       inherit home-manager customVars repos;
-
       nixpkgs = nixpkgs-hm;
       pkgs = pkgs-hm;
     });
@@ -48,16 +46,44 @@
   os-config = import ./nixos.nix (p
     // {
       inherit home-manager customVars repos hm-config;
-
       nixpkgs = nixpkgs-os;
       pkgs = pkgs-os;
     });
   # =======================================================================
 in
-  with customVars; {
+  with customVars; rec {
+    nixosConfigurations.${hostName} =
+      nixpkgs-os.lib.nixosSystem os-config;
+
     homeConfigurations."${username}@${hostName}" =
       home-manager.lib.homeManagerConfiguration hm-config;
 
-    nixosConfigurations.${hostName} =
-      nixpkgs-os.lib.nixosSystem os-config;
+    deploy = {
+      nodes.${hostName} = {
+        hostname = "172.238.15.30";
+
+        # profiles.system = {
+        #   user = "root";
+        #   sshUser = "root";
+        #   fastConnection = false;
+        #   autoRollback = true;
+        #   magicRollback = true;
+        #   remoteBuild = false;
+        #   path =
+        #     inputs.deploy-rs.lib.${system}.activate.nixos
+        #     nixosConfigurations.${hostName};
+        # };
+
+        profiles.home-manager = {
+          user = "kuriko";
+          sshUser = "kuriko";
+          autoRollback = true;
+          magicRollback = true;
+          remoteBuild = false;
+          path =
+            inputs.deploy-rs.lib.${system}.activate.home-manager
+            homeConfigurations."${username}@${hostName}";
+        };
+      };
+    };
   }

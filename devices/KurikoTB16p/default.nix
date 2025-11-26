@@ -18,7 +18,7 @@
     usernameFull = "KurikoMoe";
     userEmail = "kurikomoe@gmail.com";
 
-    homeDirectory = /home/${username};
+    homeDirectory = "/home/${username}";
   };
 
   kutils = import "${root.base}/common/kutils.nix" {inherit inputs lib;};

@@ -1,4 +1,9 @@
 let
+  key_tmp = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEEc5QjmCNgSafLu0JvmVwykRV9J6rax+ZAMYcVj4tDV" # linode-test
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIExhvEYV0wjayl/rYrAYLq02DDChoIZ1TOjEfvd20aM7" # b.0v0.io
+  ];
+
   key_age = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK88u8wb/Zcxd8WQoBgcZANWzrgar0iYvOhvr5yGtbw0";
   keys_age = [key_age];
 
@@ -24,7 +29,7 @@ let
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICTqzxgeqkCXdZgNzdRn4zUjSQduRaml4vAAFFgnHSi6"
     ];
 
-  keys = keys_age ++ keys_tx ++ keys_kurikoG14 ++ keys_cpuserver58;
+  keys = keys_age ++ keys_tx ++ keys_kurikoG14 ++ keys_cpuserver58 ++ key_tmp;
 
   file_list = {
     "res/gnupg" = {

@@ -249,6 +249,7 @@
           ./devices/KurikoArch
 
           ./devices/tx-vps
+          ./devices/any-vps
 
           ./devices/cpuserver58
           ./devices/iprc

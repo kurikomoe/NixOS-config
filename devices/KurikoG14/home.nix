@@ -102,7 +102,8 @@
           colmena
           nixos-anywhere
 
-          deploy-rs
+          # use the latest deploy to avoid a bug
+          repos.pkgs-kuriko-nur.deploy-rs
 
           qemu
 
