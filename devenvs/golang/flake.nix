@@ -88,15 +88,13 @@
 
                 uv
                 my-python
-                my-python-packages.venvShellHook
               ]
               ++ config.pre-commit.settings.enabledPackages);
 
             shellHook = ''
               ${config.pre-commit.shellHook}
               test -f .venv/bin/activate \
-                && source .venv/bin/activate \
-                || echo "Please use `uv venv` to init first"
+                && source .venv/bin/activate
               test -f pyproject.toml && uv sync
 
               export GO111MODULE=on

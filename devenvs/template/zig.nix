@@ -12,7 +12,6 @@
     git-hooks.inputs.nixpkgs.follows = "nixpkgs";
 
     kuriko-nur.url = "github:kurikomoe/nur-packages";
-    kuriko-nur.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   nixConfig = {
@@ -25,6 +24,7 @@
     ];
     trusted-public-keys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+      "nixpkgs-python.cachix.org-1:hxjI7pFxTyuTHn2NkvWCrAUcNZLNS3ZAvfYNuYifcEU="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "kurikomoe.cachix.org-1:NewppX3NeGxT8OwdwABq+Av7gjOum55dTAG9oG7YeEI="
     ];
@@ -62,27 +62,6 @@
             venvShellHook
           ]);
 
-        cargoTOML = builtins.fromTOML (builtins.readFile ./Cargo.toml);
-        name = cargoTOML.package.name;
-        version = cargoTOML.package.version;
-
-        rust_channel = "latest";
-        rust_target = "x86_64-unknown-linux-gnu";
-
-        toolchain = with pkgs;
-          fenix.${rust_channel}.withComponents [
-            "cargo"
-            "clippy"
-            "rust-src"
-            "rustc"
-            "rustfmt"
-          ];
-
-        rustPlatform = pkgs.makeRustPlatform {
-          cargo = toolchain;
-          rustc = toolchain;
-        };
-
         inherit (pkgs) mkShell lib;
       in rec {
         formatter = pkgs.alejandra;
@@ -107,12 +86,12 @@
                 clang-tools
 
                 # libs
-                toolchain
 
                 # tools
                 just
                 hello
-                cargo-generate
+
+                zig
 
                 uv
                 my-python
@@ -122,7 +101,8 @@
             shellHook = ''
               ${config.pre-commit.shellHook}
               test -f .venv/bin/activate \
-                && source .venv/bin/activate
+                && source .venv/bin/activate \
+                || echo "Please use `uv venv` to init first"
               test -f pyproject.toml && uv sync
 
               hello
