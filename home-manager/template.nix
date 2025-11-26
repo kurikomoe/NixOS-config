@@ -96,7 +96,8 @@ in
 
           nix = {
             # package = lib.mkDefault repos.pkgs-unstable.lix;
-            package = lib.mkDefault repos.pkgs-unstable.nix;
+            # package = lib.mkDefault repos.pkgs-unstable.nix;
+            package = lib.mkDefault repos.pkgs-unstable.nixVersions.latest;
             gc = lib.mkDefault {
               automatic = true;
               frequency = "weekly";

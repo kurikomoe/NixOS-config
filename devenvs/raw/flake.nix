@@ -6,9 +6,10 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     git-hooks.url = "github:cachix/git-hooks.nix";
+    git-hooks.inputs.nixpkgs.follows = "nixpkgs";
 
     kuriko-nur.url = "github:kurikomoe/nur-packages";
-    kuriko-nur.inputs.nixpkgs.follows = "nixpkgs";
+    # kuriko-nur.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = inputs @ {flake-parts, ...}:
@@ -36,6 +37,7 @@
 
         pkgs-kuriko-nur = inputs.kuriko-nur.legacyPackages.${system};
 
+        my-python-packages = pkgs.python313Packages;
         my-python = pkgs.python313.withPackages (ps:
           with ps; [
             pyyaml
@@ -43,6 +45,69 @@
           ]);
       in rec {
         formatter = pkgs.alejandra;
+
+        packages.fhs = pkgs.buildFHSEnv {
+          name = "fhs-devenv";
+
+          targetPkgs = pkgs:
+            with pkgs; [
+              pkg-config
+              stdenv.cc
+              glibc
+              zlib
+            ];
+
+          runScript = "fish";
+        };
+
+        devShells.default = let
+          # inherit (pre-commit) shellHook enabledPackages;
+        in
+          pkgs.mkShell rec {
+            hardeningDisable = ["all"];
+            packages = with pkgs; ([
+                pkg-config
+                zlib.dev
+                openssl.dev
+                stdenv.cc.cc.lib
+
+                xmake
+                cmake
+                gnumake
+                ninja
+
+                hello
+                just
+                fish
+
+                my-python
+                my-python-packages.venvShellHook
+              ]
+              ++ config.pre-commit.settings.enabledPackages);
+
+            shellHook = ''
+              ${config.pre-commit.shellHook}
+
+              test -f .venv/bin/activate \
+                && source .venv/bin/activate \
+                || echo "Please use `uv venv` to init first"
+              test -f pyproject.toml && uv sync
+
+              export ROOT=$(realpath $PWD)
+              # export LLVM_DIR=$ROOT/llvm-project/build
+              # export PATH="$LLVM_DIR/bin:$PATH"
+
+              # Enter FHS env
+              # ${packages.fhs}/bin/fhs-devenv
+            '';
+
+            env = rec {
+              LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath ([
+                  "/usr/lib/wsl" # for wsl env
+                ]
+                ++ packages);
+            };
+          };
 
         pre-commit.settings.hooks = {
           alejandra.enable = true;
@@ -52,61 +117,6 @@
             entry = builtins.toString inputs.kuriko-nur.legacyPackages.${system}.precommit-trufflehog;
             stages = ["pre-push" "pre-commit"];
           };
-        };
-
-        packages.fhs = pkgs.buildFHSEnv {
-          name = "fhs-devenv";
-
-          targetPkgs = pkgs:
-            with pkgs; [
-              pkg-config
-              llvmPackages_16.stdenv.cc
-              stdenv.cc
-              glibc
-              zlib
-            ];
-
-          runScript = "fish";
-        };
-
-        devShells.default = pkgs.mkShell rec {
-          hardeningDisable = ["all"];
-
-          packages = with pkgs; [
-            cmake
-            hello
-            just
-            fish
-
-            my-python
-
-            gnumake
-            ninja
-            cmake
-            xmake
-
-            zlib.dev
-            stdenv.cc.cc.lib
-          ];
-
-          env = rec {
-            LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath ([
-                "/usr/lib/wsl/" # for wsl env
-              ]
-              ++ packages);
-          };
-
-          shellHook = ''
-            ${config.pre-commit.installationScript}
-
-            export ROOT=$(realpath $PWD)
-            export LLVM_DIR=$ROOT/llvm-project/build
-
-            # export PATH="$LLVM_DIR/bin:$PATH"
-
-            # Enter FHS env
-            # ${packages.fhs}/bin/fhs-devenv
-          '';
         };
       };
     };

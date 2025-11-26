@@ -47,7 +47,8 @@ in
           };
 
           nix = {
-            package = repos.pkgs-unstable.nix;
+            # package = repos.pkgs-unstable.nix;
+            package = repos.pkgs-unstable.nixVersions.latest;
             settings =
               kutils._commonNixPkgsConfig.settings
               // {

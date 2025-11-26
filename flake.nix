@@ -22,20 +22,20 @@
     # nixpkgs.url = "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/nixos-24.11/nixexprs.tar.xz";
     # nixpkgs-unstable.url = "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/nixpkgs-unstable/nixexprs.tar.xz";
 
-    nixpkgs-glibc-2_35-224.url = "github:nixos/nixpkgs/nixos-22.11";
-    home-manager-glibc-2_35-224 = {
-      url = "github:nix-community/home-manager/release-22.11";
-      inputs.nixpkgs.follows = "nixpkgs-glibc-2_35-224";
-    };
+    # nixpkgs-glibc-2_35-224.url = "github:nixos/nixpkgs/nixos-22.11";
+    # home-manager-glibc-2_35-224 = {
+    #   url = "github:nix-community/home-manager/release-22.11";
+    #   inputs.nixpkgs.follows = "nixpkgs-glibc-2_35-224";
+    # };
 
-    nixpkgs-cuda-12_4.url = "github:nixos/nixpkgs/5ed627539ac84809c78b2dd6d26a5cebeb5ae269";
-    nixpkgs-cuda-12_2.url = "github:nixos/nixpkgs/0cb2fd7c59fed0cd82ef858cbcbdb552b9a33465";
+    # nixpkgs-cuda-12_4.url = "github:nixos/nixpkgs/5ed627539ac84809c78b2dd6d26a5cebeb5ae269";
+    # nixpkgs-cuda-12_2.url = "github:nixos/nixpkgs/0cb2fd7c59fed0cd82ef858cbcbdb552b9a33465";
 
     # ------------------- Lix --------------------------------
-    lix-module = {
-      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.93.0.tar.gz";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # lix-module = {
+    #   url = "https://git.lix.systems/lix-project/nixos-module/archive/2.93.0.tar.gz";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
 
     # GUI
     nixgl = {
@@ -237,7 +237,7 @@
           agenix = import inputs.agenix {inherit system;};
 
           cuda = {
-            "12.2" = cImport inputs.nixpkgs-cuda-12_2 {cudaSupport = true;};
+            # "12.2" = cImport inputs.nixpkgs-cuda-12_2 {cudaSupport = true;};
             # "12.4" = cImport inputs.nixpkgs-cuda-12_4 {cudaSupport = true;};
           };
         };
