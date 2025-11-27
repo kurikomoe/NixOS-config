@@ -67,6 +67,7 @@
         home.packages = with pkgs; [
           teamspeak_server
           rustdesk-server
+          zerotierone
         ];
 
         age.secrets."docker/config.json".path = ".docker/config.json";

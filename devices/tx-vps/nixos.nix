@@ -133,6 +133,13 @@
           settings = config.age.secrets."frp/frps.toml".path;
         };
 
+        services.zerotierone = {
+          enable = true;
+          joinNetworks = [
+            "acb32915af0ad9ab"
+          ];
+        };
+
         swapDevices = [
           {
             device = "/swapfile";
