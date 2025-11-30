@@ -50,7 +50,7 @@
             # "./gui/browsers"
             # "./gui/jetbrains.nix"
 
-            "./apps/podman.nix"
+            # "./apps/podman.nix"
           ]
           ++ [
             "${root.hm-pkgs}/devs/ide/vscode/vscode-server.nix"

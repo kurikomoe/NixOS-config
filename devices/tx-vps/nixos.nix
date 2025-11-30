@@ -78,8 +78,8 @@
           iptables
 
           # docker
-          dive # look into docker image layers
-          podman-tui # status of containers in the terminal
+          # dive # look into docker image layers
+          # podman-tui # status of containers in the terminal
           docker-compose
         ];
 
