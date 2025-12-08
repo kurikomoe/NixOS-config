@@ -128,6 +128,10 @@ jobs:
                 # 使用 nix build 来确保路径是可用的
                 nix_build_with_retry "$ATTR"
 
+            - name: Check Build Others
+              run: |
+                nix build .#devShells.x86_64-linux.default --no-link --impure
+
             - name: Setup upterm session
               uses: lhotari/action-upterm@v1
               if: ${{ failure() }}

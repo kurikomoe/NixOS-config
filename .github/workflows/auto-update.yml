@@ -165,6 +165,10 @@ jobs:
                   echo "changes_detected=false" >> $GITHUB_OUTPUT
                 fi
 
+            - name: Check Build Others
+              run: |
+                nix build .#devShells.x86_64-linux.default --no-link --impure
+
             - name: Generate timestamp
               id: timestamp
               run: echo "timestamp=$(date +'%y%m%d.%H%M')" >> $GITHUB_ENV
