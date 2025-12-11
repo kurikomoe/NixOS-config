@@ -3,9 +3,9 @@
 
   inputs = {
     # --------------------- Main inputs ---------------------
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -14,8 +14,6 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-
-    nixpkgs-fish-test.url = "github:NixOS/nixpkgs/pull/367229/head";
 
     # nixpkgs.url = "https://mirrors.ustc.edu.cn/nix-channels/nixos-24.11/nixexprs.tar.xz";
     # nixpkgs-unstable.url = "https://mirrors.ustc.edu.cn/nix-channels/nixpkgs-unstable/nixexprs.tar.xz";
@@ -44,7 +42,11 @@
     };
 
     # -------------------- tools ------------------
-    pre-commit-hooks.url = "github:cachix/git-hooks.nix";
+    pre-commit-hooks = {
+      url = "github:cachix/git-hooks.nix/50b9238891e388c9fdc6a5c49e49c42533a1b5ce";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     deploy-rs.url = "github:serokell/deploy-rs";
 
     # ------------------- Core inputs -------------------
