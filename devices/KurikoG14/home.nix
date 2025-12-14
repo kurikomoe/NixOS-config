@@ -85,9 +85,9 @@
 
             # "./apps/podman.nix"
 
-            "apps/ReverseEngineering/radare2.nix"
-            "apps/ReverseEngineering/ghidra.nix"
-            "apps/ReverseEngineering/frida.nix"
+            # "apps/ReverseEngineering/radare2.nix"
+            # "apps/ReverseEngineering/ghidra.nix"
+            # "apps/ReverseEngineering/frida.nix"
           ])
           ++ [
             "${root.base}/home-manager/pkgs/devs/langs/dotnet.nix"
@@ -113,7 +113,7 @@
 
           repos.pkgs-kuriko-nur.doxx
 
-          (hiPrio (pkgs.writeShellScriptBin "nixup" ''
+          (lib.hiPrio (pkgs.writeShellScriptBin "nixup" ''
             sudo true
             nix flake update --flake "$HOME/.nixos";
             oss $@

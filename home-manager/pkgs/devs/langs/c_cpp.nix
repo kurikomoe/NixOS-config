@@ -10,7 +10,7 @@ in {
 
   home.packages = with pkgs; [
     # gcc
-    (hiPrio gcc)
+    (lib.hiPrio gcc)
     # gcc_multi
     # musl
 

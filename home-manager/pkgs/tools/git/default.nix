@@ -23,8 +23,10 @@ in {
     git = {
       enable = true;
       lfs.enable = true;
-      userName = customVars.usernameFull;
-      userEmail = customVars.userEmail;
+      settings = {
+        user.name = customVars.usernameFull;
+        user.email = customVars.userEmail;
+      };
       signing = {
         key = "B6CF5D8D8ED4D90ED1D830922D6BAAE3F96083D2";
         signByDefault = true;

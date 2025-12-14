@@ -56,7 +56,7 @@
     # not working for now
     # omnisharp-vim-plugin
 
-    coc-ultisnips
+    # coc-ultisnips
     coc-highlight
     coc-yank
     coc-prettier

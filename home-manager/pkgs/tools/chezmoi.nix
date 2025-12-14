@@ -29,9 +29,9 @@ in {
     chz = "chezmoi";
   };
 
-  home.activation.chezmoiMount = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    run ${linkChezmoi}
-    # run echo "devices/${customVars.hostName}" > "${chezmoiRoot}/.chezmoiroot"
-    run [ -d "$HOME/.local/share/chezmoi" ] && ${chezmoi}/bin/chezmoi apply
-  '';
+  # home.activation.chezmoiMount = lib.hm.dag.entryAfter ["writeBoundary"] ''
+  #   run ${linkChezmoi}
+  #   # run echo "devices/${customVars.hostName}" > "${chezmoiRoot}/.chezmoiroot"
+  #   run [ -d "$HOME/.local/share/chezmoi" ] && ${chezmoi}/bin/chezmoi apply
+  # '';
 }

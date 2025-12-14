@@ -9,6 +9,8 @@ in {
 
   programs.go = {
     enable = true;
-    goPath = ".local/share/go";
+    env = {
+      GOPATH = "$HOME/.local/share/go";
+    };
   };
 }

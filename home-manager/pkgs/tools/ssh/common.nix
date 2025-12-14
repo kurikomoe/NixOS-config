@@ -27,10 +27,13 @@ in {
   programs = {
     ssh = {
       enable = true;
-      compression = true;
-      addKeysToAgent = "yes";
-      forwardAgent = true;
-      serverAliveInterval = 60;
+      enableDefaultConfig = false;
+      matchBlocks."*" = {
+        serverAliveInterval = 60;
+        compression = true;
+        addKeysToAgent = "yes";
+        forwardAgent = true;
+      };
     };
   };
 }

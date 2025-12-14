@@ -62,7 +62,8 @@ in
         }: {
           nixpkgs.overlays = [inputs.nixgl.overlays.default];
 
-          nixGL = {
+          # nixGL = {
+          targets.genericLinux.nixGL = {
             packages = inputs.nixgl.packages;
             defaultWrapper = "mesa";
           };
@@ -100,7 +101,8 @@ in
             package = lib.mkDefault repos.pkgs-unstable.nixVersions.latest;
             gc = lib.mkDefault {
               automatic = true;
-              frequency = "weekly";
+              # Deperacated
+              # frequency = "weekly";
             };
             settings = lib.recursiveUpdate kutils._commonNixPkgsConfig.settings {
               trusted-users = [username];
