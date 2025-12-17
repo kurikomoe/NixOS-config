@@ -56,6 +56,8 @@
     # not working for now
     # omnisharp-vim-plugin
 
+    csharpls-extended-lsp-nvim
+
     # coc-ultisnips
     coc-highlight
     coc-yank
@@ -127,7 +129,16 @@ in {
                                             \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
       '';
     extraLuaConfig = ''
-      require('lspconfig').csharp_ls.setup({})
+      vim.lsp.config["csharp_ls"] = {
+        root_marker = { "*.sln", "*.csproj", },
+        handlers = {
+          ["textDocument/definition"] = require('csharpls_extended').handler,
+          ["textDocument/typeDefinition"] = require('csharpls_extended').handler,
+        },
+        cmd = { "csharp-ls" },
+      }
+      vim.lsp.enable("csharp_ls")
+      require("csharpls_extended").buf_read_cmd_bind()
     '';
     plugins = vimPlugins;
     coc = {
