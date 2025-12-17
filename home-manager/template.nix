@@ -98,7 +98,7 @@ in
           nix = {
             # package = lib.mkDefault repos.pkgs-unstable.lix;
             # package = lib.mkDefault repos.pkgs-unstable.nix;
-            package = lib.mkDefault repos.pkgs-unstable.nixVersions.latest;
+            package = lib.mkDefault repos.pkgs-kuriko-nur.determinate-nix;
             gc = lib.mkDefault {
               automatic = true;
               # Deperacated
