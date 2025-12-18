@@ -34,6 +34,7 @@
           };
           overlays = [];
         };
+        inherit (pkgs) mkShell lib;
 
         pkgs-kuriko-nur = inputs.kuriko-nur.legacyPackages.${system};
 
@@ -63,7 +64,7 @@
         devShells.default = let
           # inherit (pre-commit) shellHook enabledPackages;
         in
-          pkgs.mkShell rec {
+          mkShell rec {
             hardeningDisable = ["all"];
             packages = with pkgs; ([
                 pkg-config
@@ -96,7 +97,7 @@
               # export PATH="$LLVM_DIR/bin:$PATH"
 
               # Enter FHS env
-              # ${packages.fhs}/bin/fhs-devenv
+              # $\{packages.fhs}/bin/fhs-devenv
             '';
 
             env = rec {
@@ -110,6 +111,7 @@
         pre-commit.settings.hooks = {
           alejandra.enable = true;
           shellcheck.enable = true;
+          commitizen.enable = true;
           trufflehog = {
             enable = true;
             entry = builtins.toString inputs.kuriko-nur.legacyPackages.${system}.precommit-trufflehog;

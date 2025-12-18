@@ -3,7 +3,6 @@
 
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
-
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
     git-hooks.url = "github:cachix/git-hooks.nix";
@@ -26,6 +25,8 @@
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "kurikomoe.cachix.org-1:NewppX3NeGxT8OwdwABq+Av7gjOum55dTAG9oG7YeEI="
     ];
+    extra-trusted-public-keys = "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=";
+    extra-substituters = "https://devenv.cachix.org";
   };
 
   outputs = inputs @ {flake-parts, ...}:
@@ -53,7 +54,6 @@
           ];
           overlays = [];
         };
-
         inherit (pkgs) mkShell lib;
 
         pkgs-kuriko-nur = inputs.kuriko-nur.legacyPackages.${system};
@@ -131,6 +131,7 @@
         pre-commit.settings.hooks = {
           alejandra.enable = true;
           shellcheck.enable = true;
+          commitizen.enable = true;
 
           # Python
           isort.enable = true;

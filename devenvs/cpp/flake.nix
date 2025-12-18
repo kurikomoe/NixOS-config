@@ -3,15 +3,13 @@
 
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
-
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-
-    fenix.url = "github:nix-community/fenix";
 
     git-hooks.url = "github:cachix/git-hooks.nix";
     git-hooks.inputs.nixpkgs.follows = "nixpkgs";
 
     kuriko-nur.url = "github:kurikomoe/nur-packages";
+    kuriko-nur.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   nixConfig = {
@@ -24,10 +22,11 @@
     ];
     trusted-public-keys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-      "nixpkgs-python.cachix.org-1:hxjI7pFxTyuTHn2NkvWCrAUcNZLNS3ZAvfYNuYifcEU="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "kurikomoe.cachix.org-1:NewppX3NeGxT8OwdwABq+Av7gjOum55dTAG9oG7YeEI="
     ];
+    extra-trusted-public-keys = "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=";
+    extra-substituters = "https://devenv.cachix.org";
   };
 
   outputs = inputs @ {flake-parts, ...}:
@@ -51,6 +50,7 @@
           config.allowUnfree = true;
           overlays = [];
         };
+        inherit (pkgs) mkShell lib;
 
         pkgs-kuriko-nur = inputs.kuriko-nur.legacyPackages.${system};
 
@@ -61,8 +61,6 @@
             pysocks
             venvShellHook
           ]);
-
-        inherit (pkgs) mkShell lib;
       in rec {
         formatter = pkgs.alejandra;
 
@@ -116,6 +114,7 @@
         pre-commit.settings.hooks = {
           alejandra.enable = true;
           shellcheck.enable = true;
+          commitizen.enable = true;
 
           # C/C++
           clang-format.enable = true;
@@ -125,6 +124,7 @@
           pyright.enable = true;
           flake8.enable = true;
           # mypy.enable = true;
+          # pylint.enable = true;
 
           # Check Secrets
           trufflehog = {

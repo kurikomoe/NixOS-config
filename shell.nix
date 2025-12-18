@@ -31,6 +31,7 @@ in rec {
     src = ./.;
 
     hooks = {
+      commitizen.enable = true;
       alejandra.enable = true;
       trufflehog = {
         enable = true;

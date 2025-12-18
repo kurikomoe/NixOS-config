@@ -3,11 +3,10 @@
 
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-    devenv.url = "github:cachix/devenv/latest";
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-
-    fenix.url = "github:nix-community/fenix";
+    git-hooks.url = "github:cachix/git-hooks.nix";
+    git-hooks.inputs.nixpkgs.follows = "nixpkgs";
 
     kuriko-nur.url = "github:kurikomoe/nur-packages";
     kuriko-nur.inputs.nixpkgs.follows = "nixpkgs";
@@ -16,15 +15,13 @@
   nixConfig = {
     substituters = [
       "https://cache.nixos.org"
-      "https://nixpkgs-python.cachix.org"
       "https://nix-community.cachix.org"
+      "https://kurikomoe.cachix.org"
       "https://mirrors.ustc.edu.cn/nix-channels/store"
       "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store"
-      "https://kurikomoe.cachix.org"
     ];
     trusted-public-keys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-      "nixpkgs-python.cachix.org-1:hxjI7pFxTyuTHn2NkvWCrAUcNZLNS3ZAvfYNuYifcEU="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "kurikomoe.cachix.org-1:NewppX3NeGxT8OwdwABq+Av7gjOum55dTAG9oG7YeEI="
     ];
@@ -35,83 +32,121 @@
   outputs = inputs @ {flake-parts, ...}:
     flake-parts.lib.mkFlake {inherit inputs;} {
       imports = [
-        inputs.devenv.flakeModule
+        inputs.git-hooks.flakeModule
       ];
 
-      systems = ["x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin"];
+      systems = ["x86_64-linux" "i686-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin"];
 
       perSystem = {
         config,
-        self',
-        inputs',
         system,
         lib,
         ...
       }: let
         pkgs = import inputs.nixpkgs {
           inherit system;
-          config.allowUnfree = true;
+          config = {
+            allowUnfree = true;
+            permittedInsecurePackages = [];
+          };
           overlays = [];
         };
+        inherit (pkgs) mkShell lib;
+
+        pkgs-kuriko-nur = inputs.kuriko-nur.legacyPackages.${system};
+
+        my-python-packages = pkgs.python313Packages;
+        my-python = pkgs.python313.withPackages (ps:
+          with ps; [
+            pyyaml
+            pysocks
+          ]);
 
         jdkCustom = pkgs.jdk17;
         kotlinCustom = pkgs.kotlin.override {jre = jdkCustom;};
-
-        runtimeLibs = with pkgs; [];
-      in {
+      in rec {
         formatter = pkgs.alejandra;
 
-        devenv.shells.default = {
-          # Enable this to avoid forced -O2
-          # hardeningDisable = [ "all" ];
+        packages.fhs = pkgs.buildFHSEnv {
+          name = "fhs-devenv";
 
-          packages = with pkgs;
-            [
-              # tools
-              just
-              hello
+          targetPkgs = pkgs:
+            with pkgs; [
+              pkg-config
+              stdenv.cc
+              glibc
+              zlib
+            ];
 
-              gradle
-              jdkCustom
-              kotlinCustom
-            ]
-            ++ runtimeLibs;
+          runScript = "fish";
+        };
 
-          env = {
-            LD_LIBRARY_PATH = lib.makeLibraryPath runtimeLibs;
-          };
+        devShells.default = let
+          # inherit (pre-commit) shellHook enabledPackages;
+        in
+          mkShell rec {
+            hardeningDisable = ["all"];
+            packages = with pkgs; ([
+                pkg-config
+                zlib.dev
+                openssl.dev
+                stdenv.cc.cc.lib
 
-          enterShell = ''
-            hello
-          '';
+                xmake
+                cmake
+                gnumake
+                ninja
 
-          languages.python = {
-            enable = false;
-            package = pkgs.python312;
-            uv.enable = true;
-          };
+                hello
+                just
 
-          pre-commit.hooks = {
-            alejandra.enable = true;
-            shellcheck.enable = true;
+                uv
+                my-python
 
-            # Python
-            isort.enable = true;
-            pyright.enable = true;
-            # mypy.enable = true;
-            # pylint.enable = true;
-            # flake8.enable = true;
+                gradle
+                jdkCustom
+                kotlinCustom
+              ]
+              ++ config.pre-commit.settings.enabledPackages);
 
-            # Check Secrets
-            trufflehog = {
-              enable = true;
-              entry = builtins.toString inputs.kuriko-nur.legacyPackages.${system}.precommit-trufflehog;
-              stages = ["pre-push" "pre-commit"];
+            shellHook = ''
+              ${config.pre-commit.shellHook}
+              test -f .venv/bin/activate \
+                && source .venv/bin/activate
+              test -f pyproject.toml && uv sync
+
+              export ROOT=$(realpath $PWD)
+              # export PATH="$LLVM_DIR/bin:$PATH"
+
+              # Enter FHS env
+              # $\{packages.fhs}/bin/fhs-devenv
+            '';
+
+            env = rec {
+              LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath ([
+                  "/usr/lib/wsl" # for wsl env
+                ]
+                ++ packages);
             };
           };
 
-          cachix.pull = ["devenv"];
-          cachix.push = "kurikomoe";
+        pre-commit.settings.hooks = {
+          alejandra.enable = true;
+          shellcheck.enable = true;
+          commitizen.enable = true;
+
+          # Python
+          isort.enable = true;
+          pyright.enable = true;
+          flake8.enable = true;
+          # mypy.enable = true;
+          # pylint.enable = true;
+
+          trufflehog = {
+            enable = true;
+            entry = builtins.toString inputs.kuriko-nur.legacyPackages.${system}.precommit-trufflehog;
+            stages = ["pre-push" "pre-commit"];
+          };
         };
       };
     };
