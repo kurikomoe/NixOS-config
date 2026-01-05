@@ -99,6 +99,11 @@
           mesa-demos
           vulkan-tools
 
+          distrobox
+          distrobox-tui
+
+          gemini-cli-bin
+
           colmena
           nixos-anywhere
 
