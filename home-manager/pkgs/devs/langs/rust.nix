@@ -25,6 +25,9 @@ in {
     cargo-update # cargo subcommand for checking and applying updates to installed executables
     cargo-outdated # displays when newer versions of Rust dependencies are available, or out of date
 
+    cargo-zigbuild
+    cargo-cross
+
     rustup
     repos.pkgs-unstable.bacon
   ];
