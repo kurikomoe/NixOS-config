@@ -2,9 +2,9 @@ name: "build system"
 
 on:
     workflow_dispatch:
-    # push:
-    #   paths-ignore:
-    #     - "flake.*"
+    push:
+      paths-ignore:
+        - "flake.*"
 
 permissions:
     actions: write
