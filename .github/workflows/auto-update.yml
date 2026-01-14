@@ -24,7 +24,7 @@ jobs:
             - name: Maximize build space
               uses: easimon/maximize-build-space@master
               with:
-                root-reserve-mb: 16384
+                root-reserve-mb: 2048
                 swap-size-mb: 4096
                 build-mount-path: '/nix'
                 remove-dotnet: 'true'
@@ -98,44 +98,32 @@ jobs:
                 TARGET="KurikoG14"
                 set -ex
 
-                nix_build_once() {
-                  # $1: flake attr path
-                  nix build "$1" --no-link --print-out-paths
+                # 定义一个获取 store path 的函数，使用 eval 替代 build
+                get_store_path() {
+                  nix eval --raw "$1"
                 }
 
-                nix_build_with_retry() {
-                  # $1: flake attr path
-                  local attr="$1"
-                  local out
-                  if out=$(nix_build_once "$attr"); then
-                    echo "$out"
-                    return 0
-                  fi
-                  echo "nix build failed for $attr, retrying once in 5s..." >&2
-                  sleep 5
-                  if out=$(nix_build_once "$attr"); then
-                    echo "$out"
-                    return 0
-                  fi
-                  echo "nix build failed twice for $attr" >&2
-                  return 1
-                }
+                ATTR=".#nixosConfigurations.${TARGET}.config.system.build.toplevel.outPath"
 
-                ATTR=".#nixosConfigurations.${TARGET}.config.system.build.toplevel"
-
-                echo "### 1. Getting current system path..."
-                # 使用 nix build 来确保路径是可用的
-                OLD_BUILD=$(nix_build_with_retry "$ATTR")
+                echo "### 1. Getting current system path (Evaluation only)..."
+                OLD_BUILD=$(get_store_path "$ATTR")
+                echo "Current Path: $OLD_BUILD"
 
                 echo "### 2. Updating flake inputs..."
-                # 更新 flake.lock 文件
                 nix flake update
 
-                echo "### 3. Getting new system path..."
-                NEW_BUILD=$(nix_build_with_retry "$ATTR")
+                echo "### 3. Getting new system path (Evaluation only)..."
+                NEW_BUILD=$(get_store_path "$ATTR")
+                echo "New Path: $NEW_BUILD"
 
                 echo "### 4. Comparing closures..."
-                # 使用 || true 防止在有差异时命令失败
+
+                if [ "$OLD_BUILD" == "$NEW_BUILD" ]; then
+                   echo "Path unchanged. No meaningful changes detected."
+                   echo "changes_detected=false" >> $GITHUB_OUTPUT
+                   exit 0
+                fi
+
                 nix store diff-closures ${OLD_BUILD} ${NEW_BUILD} > /tmp/results.txt || true
 
                 # Show updates
@@ -143,9 +131,7 @@ jobs:
                 cat /tmp/results.txt
                 echo "==================================="
 
-                # 清理输出：
-                # 1. 排除顶层的系统元包
-                # 2. 排除纯哈希的无意义重建
+                # 清理输出逻辑保持不变
                 grep -v 'nixos-system-' /tmp/results.txt \
                   | grep -v -E '^\s*[0-9a-z]{32}:' \
                   | grep -v -E '^\s*source:' \
@@ -164,6 +150,7 @@ jobs:
                   echo "✅ No meaningful changes detected ($line_count lines). Skipping commit."
                   echo "changes_detected=false" >> $GITHUB_OUTPUT
                 fi
+
 
             - name: Check Build Others
               run: |
