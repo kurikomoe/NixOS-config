@@ -68,7 +68,7 @@
     coc-yaml
     coc-toml
 
-    coc-tabnine
+    # coc-tabnine
     coc-cmake
     coc-git
 
