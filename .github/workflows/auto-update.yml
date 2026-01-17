@@ -126,6 +126,8 @@ jobs:
 
                 nix store diff-closures ${OLD_BUILD} ${NEW_BUILD} > /tmp/results.txt || true
 
+                cat /tmp/results.txt
+
                 # Show updates
                 echo "==================================="
                 cat /tmp/results.txt
