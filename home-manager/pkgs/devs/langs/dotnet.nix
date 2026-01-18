@@ -9,11 +9,8 @@ p @ {
   with dotnetCorePackages;
     combinePackages [
       sdk_10_0-bin
-      sdk_9_0_3xx-bin
-      sdk_8_0_3xx-bin
-      sdk_6_0_1xx-bin
-
-      # sdk_7_0_3xx-bin  # EOL
+      sdk_9_0-bin
+      sdk_8_0-bin
     ];
 
   combineMono = pkgs.buildEnv {
