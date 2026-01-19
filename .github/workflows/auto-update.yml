@@ -96,7 +96,11 @@ jobs:
               run: |
                 # We treat KurikoG14 as the standard
                 TARGET="KurikoG14"
-                set -ex
+                set -e
+
+                echo "===== initial storage info ====="
+                df -h
+                echo "================================"
 
                 nix_build_once() {
                   # $1: flake attr path
@@ -166,6 +170,10 @@ jobs:
                   echo "✅ No meaningful changes detected ($line_count lines). Skipping commit."
                   echo "changes_detected=false" >> $GITHUB_OUTPUT
                 fi
+
+                echo "===== after storage info ====="
+                df -h
+                echo "================================"
 
             - name: Check Build Others
               run: |

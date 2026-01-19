@@ -97,7 +97,11 @@ jobs:
               run: |
                 # We treat KurikoG14 as the standard
                 TARGET="KurikoG14"
-                set -ex
+                set -e
+
+                echo "===== initial storage info ====="
+                df -h
+                echo "================================"
 
                 nix_build_once() {
                   # $1: flake attr path
@@ -127,6 +131,10 @@ jobs:
                 echo "### 1. Getting current system path..."
                 # 使用 nix build 来确保路径是可用的
                 nix_build_with_retry "$ATTR"
+
+                echo "===== after storage info ====="
+                df -h
+                echo "================================"
 
             - name: Check Build Others
               run: |
