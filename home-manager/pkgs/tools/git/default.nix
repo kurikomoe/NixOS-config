@@ -17,6 +17,8 @@ in {
 
   home.packages = with pkgs; [
     git-lfs
+    age
+    sops
   ];
 
   programs = {
@@ -45,7 +47,7 @@ in {
   home.shellAliases = {
     # Git
     gst = "git status";
-    gi = "git ignore";
+    # gi = "git ignore";
   };
 
   age.secrets."gh/hosts.yml".path = "${ghConfigDir}/hosts.yml";
