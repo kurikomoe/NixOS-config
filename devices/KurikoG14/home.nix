@@ -114,9 +114,8 @@
 
           (pkgs.callPackage "${root.pkgs}/home-manager/fix-wsl.nix" {})
 
-          repos.pkgs-unstable.msedit
-
-          repos.pkgs-kuriko-nur.doxx
+          # repos.pkgs-unstable.msedit
+          # repos.pkgs-kuriko-nur.doxx
 
           (lib.hiPrio (pkgs.writeShellScriptBin "nixup" ''
             sudo true
