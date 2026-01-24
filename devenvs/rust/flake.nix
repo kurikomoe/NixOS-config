@@ -94,6 +94,8 @@
           mkShell rec {
             hardeningDisable = ["all"];
             packages = with pkgs; ([
+                pkgs-kuriko-nur.devshell-cache-tools
+
                 # requirements
                 pkg-config
                 zlib.dev
@@ -126,6 +128,10 @@
                 && source .venv/bin/activate
               test -f pyproject.toml && uv sync
 
+              declare function push() {
+                attic push r2 $\{pkgs-kuriko-nur.cache-devshell}/bin/cache-devshell}
+                ${pkgs-kuriko-nur.cache-devshell}/bin/cache-devshell | cachix push kurikomoe
+              }
               hello
             '';
 

@@ -70,6 +70,8 @@
           mkShell rec {
             hardeningDisable = ["all"];
             packages = with pkgs; ([
+                pkgs-kuriko-nur.devshell-cache-tools
+
                 # requirements
                 pkg-config
                 zlib.dev

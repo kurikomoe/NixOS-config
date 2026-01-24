@@ -87,6 +87,8 @@
           mkShell rec {
             hardeningDisable = ["all"];
             packages = with pkgs; ([
+                pkgs-kuriko-nur.devshell-cache-tools
+
                 pkg-config
                 zlib.dev
                 openssl.dev
