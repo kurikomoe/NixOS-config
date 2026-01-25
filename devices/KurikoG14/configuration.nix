@@ -50,7 +50,7 @@ p @ {
 
   nix.gc = lib.mkDefault {
     persistent = true;
-    automatic = true;
+    automatic = false;
     dates = "weekly";
     # options = "--delete-older-than 14d";
   };

@@ -23,12 +23,16 @@
 
     phases = ["unpackPhase" "installPhase"];
 
-    buildInputs = with pkgs; [pythonDep coreutils sd];
+    buildInputs = with pkgs; [pythonDep];
 
     installPhase = ''
       mkdir -p $out/bin;
-      sd "if load_check():" "if True:" drop_cache_if_idle
+
       cp drop_cache_if_idle $out/bin;
+
+      substituteInPlace $out/bin/drop_cache_if_idle \
+        --replace-fail "if load_check():" "if True:"
+
       chmod +x $out/bin/drop_cache_if_idle;
     '';
   };
@@ -36,9 +40,9 @@ in {
   options.services.wsl-drop-caches = {
     enable = lib.mkEnableOption "wsl-drop-cache Periodically drop the WSL caches when load is low.";
     interval = lib.mkOption {
-      default = "3min";
+      default = "30s";
       type = lib.types.nullOr lib.types.str;
-      example = "3min";
+      example = "30s";
     };
   };
 

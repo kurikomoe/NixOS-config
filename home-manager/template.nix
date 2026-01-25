@@ -100,7 +100,7 @@ in
             # package = lib.mkDefault repos.pkgs-unstable.nix;
             # package = lib.mkDefault repos.pkgs-kuriko-nur.determinate-nix;
             gc = lib.mkDefault {
-              automatic = true;
+              automatic = false;
               # Deperacated
               # frequency = "weekly";
             };
