@@ -1,7 +1,7 @@
 {
   inputs,
   lib,
-  enableKCache ? false,
+  enableKCache ? true,
   ...
 }: let
   _commonNixPkgsConfig = {
@@ -61,7 +61,7 @@
         inherit system;
         config = _commonNixPkgsConfig;
         overlays = [
-          inputs.nix-vscode-extensions.overlays.default
+          # inputs.nix-vscode-extensions.overlays.default
         ];
       }
       extraConfig;
