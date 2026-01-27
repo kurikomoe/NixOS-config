@@ -17,7 +17,7 @@
       import (fetchFromGitHub {
         owner = "kurikomoe";
         repo = "nur-packages";
-        rev = "2247608d30c46af719f894e0d5406069d2c8a7aa";
+        rev = "68018133183b99d33bc290cf44d9933abc38f0fc";
         sha256 = "sha256-C+UhZ5BzugS8g/vhzBGrXA0v+7dOlbAoTghveDuWgp4=";
       }) {}
     else pkgs-kuriko-nur';
@@ -46,6 +46,7 @@ in rec {
 
     packages = with pkgs;
       [
+        (lib.hiPrio pkgs-kuriko-nur.devshell-cache-tools)
         (lib.hiPrio pkgs.uutils-findutils)
         (lib.hiPrio pkgs.uutils-diffutils)
         (lib.hiPrio pkgs.uutils-coreutils-noprefix)
