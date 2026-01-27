@@ -10,10 +10,8 @@ in {
     p7zip
   ];
 
-  programs = {
-    gpg = {
-      enable = true;
-    };
+  programs.gpg = {
+    enable = true;
   };
 
   services = {
@@ -25,6 +23,8 @@ in {
 
       defaultCacheTtl = 7200;
       defaultCacheTtlSsh = 7200;
+      grabKeyboardAndMouse = false;
+      noAllowExternalCache = true;
     };
   };
 
