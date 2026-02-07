@@ -98,7 +98,7 @@
         alejandra.enable = true;
         trufflehog = {
           enable = true;
-          entry = "${precommit-trufflehog}/bin/trufflehog";
+          entry = "${precommit-trufflehog}/bin/precommit-trufflehog";
           stages = ["pre-push" "pre-commit"];
         };
         devshell = {
