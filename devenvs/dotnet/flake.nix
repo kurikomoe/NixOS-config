@@ -1,5 +1,5 @@
 {
-  description = "Kuriko's C/C++ Template";
+  description = "Kuriko's C# Template";
 
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
@@ -8,6 +8,7 @@
     git-hooks.url = "github:cachix/git-hooks.nix";
     git-hooks.inputs.nixpkgs.follows = "nixpkgs";
 
+    kuriko-main.url = "github:kurikomoe/NixOS-config/main?dir=devenvs";
     kuriko-nur.url = "github:kurikomoe/nur-packages";
     kuriko-nur.inputs.nixpkgs.follows = "nixpkgs";
   };
@@ -15,15 +16,17 @@
   nixConfig = {
     substituters = [
       "https://cache.nixos.org"
-      "https://nix-community.cachix.org"
-      "https://kurikomoe.cachix.org"
       "https://mirrors.ustc.edu.cn/nix-channels/store"
       "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store"
+      "https://nix-community.cachix.org"
+      "https://kurikomoe.cachix.org"
+      "https://nix-cache.0v0.io/r2"
     ];
     trusted-public-keys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "kurikomoe.cachix.org-1:NewppX3NeGxT8OwdwABq+Av7gjOum55dTAG9oG7YeEI="
+      "r2:p04JD2QTSWn937oqqCMX9CdMAd71ulb1FZZm+3Nd/9c="
     ];
     extra-trusted-public-keys = "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=";
     extra-substituters = "https://devenv.cachix.org";
@@ -33,6 +36,7 @@
     flake-parts.lib.mkFlake {inherit inputs;} {
       imports = [
         inputs.git-hooks.flakeModule
+        inputs.kuriko-main.flakeModules.devShellBase
       ];
 
       systems = ["x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin"];
@@ -54,100 +58,33 @@
           ];
           overlays = [];
         };
-        inherit (pkgs) mkShell lib;
-
+        inherit (pkgs) lib;
         pkgs-kuriko-nur = inputs.kuriko-nur.legacyPackages.${system};
-
-        my-python-packages = pkgs.python313Packages;
-        my-python = pkgs.python313.withPackages (ps:
-          with ps; [
-            pyyaml
-            pysocks
-            venvShellHook
-          ]);
 
         dotnetPkgs = with pkgs;
         with dotnetCorePackages;
           combinePackages [
             sdk_10_0-bin
             sdk_9_0-bin
-            # sdk_8_0-bin
-            # sdk_7_0_3xx-bin
-            # sdk_6_0_1xx-bin
           ];
       in rec {
         formatter = pkgs.alejandra;
 
-        devShells.default = let
-          # inherit (pre-commit) shellHook enabledPackages;
-        in
-          mkShell rec {
-            hardeningDisable = ["all"];
-            packages = with pkgs; ([
-                pkgs-kuriko-nur.devshell-cache-tools
+        devShellBase = let
+        in {
+          # hardeningDisable = ["all"];
+          packages = with pkgs; [
+            dotnetPkgs
+            pkgs-kuriko-nur.dotnet-script
+          ];
 
-                # requirements
-                pkg-config
-                stdenv.cc.cc.lib
-                icu.dev
-                zlib.dev
-                openssl.dev
+          shellHook = ''
+          '';
 
-                gnumake
-                ninja
-                cmake
-                clang
-
-                # tools
-                just
-                hello
-
-                dotnetPkgs
-                pkgs-kuriko-nur.dotnet-script
-
-                uv
-                my-python
-              ]
-              ++ config.pre-commit.settings.enabledPackages);
-
-            shellHook = ''
-              ${config.pre-commit.shellHook}
-              test -f .venv/bin/activate \
-                && source .venv/bin/activate
-              test -f pyproject.toml && uv sync
-
-              export GO111MODULE=on
-              export GOPROXY=https://goproxy.cn,direct
-
-              hello
-            '';
-
-            env = rec {
-              LD_LIBRARY_PATH = lib.makeLibraryPath ([
-                  "/usr/lib/wsl" # for wsl env
-                ]
-                ++ packages);
-            };
-          };
-
-        pre-commit.settings.hooks = {
-          alejandra.enable = true;
-          shellcheck.enable = true;
-          commitizen.enable = true;
-
-          # Python
-          isort.enable = true;
-          pyright.enable = true;
-          flake8.enable = true;
-          # mypy.enable = true;
-
-          # Check Secrets
-          trufflehog = {
-            enable = true;
-            entry = builtins.toString inputs.kuriko-nur.legacyPackages.${system}.precommit-trufflehog;
-            stages = ["pre-push" "pre-commit"];
-          };
+          env = rec {};
         };
+
+        pre-commit.settings.hooks = {};
       };
     };
 }

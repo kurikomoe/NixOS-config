@@ -273,7 +273,10 @@
           ) {}
           devices;
       in
-        deviceCfg // {};
+        deviceCfg
+        // {
+          flakeModules.devShellBase = ./devenvs/base.nix;
+        };
 
       perSystem = {
         config,
