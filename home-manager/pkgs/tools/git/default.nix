@@ -19,6 +19,7 @@ in {
     git-lfs
     age
     sops
+    gibo
   ];
 
   programs = {
@@ -48,6 +49,7 @@ in {
     # Git
     gst = "git status";
     # gi = "git ignore";
+    gi = "gibo dump";
   };
 
   age.secrets."gh/hosts.yml".path = "${ghConfigDir}/hosts.yml";

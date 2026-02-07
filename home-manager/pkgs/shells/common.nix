@@ -40,8 +40,6 @@ in {
 
     (repos.pkgs-kuriko-nur.shellfirm)
 
-    gibo
-
     fd
     sd
     ripgrep
@@ -73,7 +71,6 @@ in {
   home.shellAliases = {
     # Others
     # j = "z";
-    gi = "gibo";
   };
 
   home.file.".ideavimrc".source = ./common_data/ideavimrc;

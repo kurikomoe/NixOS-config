@@ -9,7 +9,7 @@
     cfg = config.devShellBase;
     pkgs-kuriko-nur = inputs.kuriko-nur.legacyPackages.${system};
 
-    inherit (pkgs-kuriko-nur) devshell-cache-tools;
+    inherit (pkgs-kuriko-nur) devshell-cache-tools precommit-trufflehog;
 
     my-python = pkgs.python313.withPackages (ps:
       with ps; [
@@ -63,6 +63,7 @@
         devshell-cache-tools
         just
         hello
+        precommit-trufflehog
 
         # requirements
         pkg-config
@@ -96,7 +97,7 @@
         alejandra.enable = true;
         trufflehog = {
           enable = true;
-          entry = "${pkgs-kuriko-nur.precommit-trufflehog}/bin/trufflehog";
+          entry = "${precommit-trufflehog}/bin/trufflehog";
           stages = ["pre-push" "pre-commit"];
         };
         devshell = {
