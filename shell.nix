@@ -26,6 +26,8 @@
     if pre-commit-hooks' == null
     then import (builtins.fetchTarball "https://github.com/cachix/git-hooks.nix/tarball/master")
     else pre-commit-hooks';
+
+  inherit (pkgs-kuriko-nur) devshell-cache-tools;
 in rec {
   pre-commit-check = pre-commit-hooks.run {
     src = ./.;
@@ -37,6 +39,13 @@ in rec {
         enable = true;
         entry = builtins.toString pkgs-kuriko-nur.precommit-trufflehog;
         stages = ["pre-push" "pre-commit"];
+      };
+      devshell = {
+        enable = true;
+        entry = "${devshell-cache-tools}/bin/push-shell";
+        stages = ["pre-push"];
+        pass_filenames = false;
+        always_run = true;
       };
     };
   };

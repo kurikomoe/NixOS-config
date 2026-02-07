@@ -14,6 +14,9 @@ in {
     hexyl
     hexdump
 
+    # Generate src pack
+    repomix
+
     repos.pkgs-unstable.hexpatch
     # inputs.hevi
   ];
