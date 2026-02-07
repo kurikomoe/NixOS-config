@@ -61,6 +61,7 @@
       devShellBase.packages = with pkgs; [
         # tools
         devshell-cache-tools
+        git
         just
         hello
         precommit-trufflehog
