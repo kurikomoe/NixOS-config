@@ -65,6 +65,7 @@ p @ {
       RemainAfterExit = true;
     };
     script = ''
+      modprobe zram
       swapoff /dev/zram0 || true
 
       # 2. 重置设备（这是关键，必须写入 1 来重置状态）
