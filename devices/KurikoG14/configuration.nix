@@ -43,6 +43,49 @@ p @ {
     ];
   };
 
+  boot.kernelModules = ["zram"];
+  zramSwap = {
+    enable = true;
+    algorithm = "zstd";
+    memoryPercent = 80;
+    priority = 99;
+  };
+  systemd.services.init-zram = {
+    description = "Manual zRAM Setup";
+    after = ["dev-zram0.device"];
+    wantedBy = ["multi-user.target"];
+    path = with pkgs; [
+      gawk # 提供 awk
+      gnugrep # 提供 grep
+      utillinux # 提供 mkswap, swapon, zramctl
+      kmod # 提供 modprobe
+    ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+    };
+    script = ''
+      swapoff /dev/zram0 || true
+
+      # 2. 重置设备（这是关键，必须写入 1 来重置状态）
+      echo 1 > /sys/block/zram0/reset || true
+
+      # 3. 现在设置压缩算法
+      # 注意：某些内核可能不支持 zstd，如果报错可以换成 lzo-rle
+      echo zstd > /sys/block/zram0/comp_algorithm || echo lzo-rle > /sys/block/zram0/comp_algorithm
+
+      # 4. 设置容量
+      # 我们取总内存的一半。WSL2 的 MemTotal 单位是 kB。
+      TOTAL_MEM_KB=$(grep MemTotal /proc/meminfo | awk '{print $2}')
+      DISK_SIZE_BYTES=$((TOTAL_MEM_KB * 1024))
+      echo $DISK_SIZE_BYTES > /sys/block/zram0/disksize
+
+      # 5. 格式化并启用
+      mkswap /dev/zram0
+      swapon /dev/zram0 -p 100
+    '';
+  };
+
   system.autoUpgrade = {
     enable = true;
     allowReboot = false;
