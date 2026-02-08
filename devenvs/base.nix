@@ -98,12 +98,12 @@
         alejandra.enable = true;
         trufflehog = {
           enable = true;
-          entry = "${precommit-trufflehog}/bin/precommit-trufflehog";
+          entry = lib.getExe precommit-trufflehog;
           stages = ["pre-push" "pre-commit"];
         };
         devshell = {
           enable = true;
-          entry = "${devshell-cache-tools}/bin/push-shell";
+          entry = lib.getExe devshell-cache-tools;
           stages = ["pre-push"];
           pass_filenames = false;
           always_run = true;
