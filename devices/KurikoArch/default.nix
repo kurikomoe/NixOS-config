@@ -101,7 +101,7 @@
 
         targets.genericLinux.enable = true;
 
-        nix.package = repos.pkgs-kuriko-nur.determinate-nix;
+        nix.package = pkgs.nix;
 
         home.packages = with pkgs; [
           # overwrite the system nix

@@ -1,33 +1,24 @@
 {
-  pkgs' ? null,
-  pkgs-kuriko-nur' ? null,
-  pre-commit-hooks' ? null,
+  pkgs ? "<nixpkgs>",
+  pkgs-kuriko-nur ? null,
+  pre-commit-hooks ? null,
   ...
-}: let
-  pkgs =
-    if pkgs' == null
-    then import (fetchTarball "https://github.com/NixOS/nixpkgs/tarball/nixos-25.05") {}
-    else pkgs';
+} @ inputs: let
+  pkgs = inputs.pkgs;
 
   inherit (pkgs) lib fetchFromGitHub;
 
   pkgs-kuriko-nur =
-    if pkgs-kuriko-nur' == null
-    then
-      import (fetchFromGitHub {
-        owner = "kurikomoe";
-        repo = "nur-packages";
-        rev = "68018133183b99d33bc290cf44d9933abc38f0fc";
-        sha256 = "sha256-C+UhZ5BzugS8g/vhzBGrXA0v+7dOlbAoTghveDuWgp4=";
-      }) {}
-    else pkgs-kuriko-nur';
+    inputs.pkgs-kuriko-nur  or (import (fetchFromGitHub {
+      owner = "kurikomoe";
+      repo = "nur-packages";
+      rev = "main";
+      sha256 = "sha256-C+UhZ5BzugS8g/vhzBGrXA0v+7dOlbAoTghveDuWgp4=";
+    }) {});
 
-  pre-commit-hooks =
-    if pre-commit-hooks' == null
-    then import (builtins.fetchTarball "https://github.com/cachix/git-hooks.nix/tarball/master")
-    else pre-commit-hooks';
+  pre-commit-hooks = inputs.pre-commit-hooks or (import (builtins.fetchTarball "https://github.com/cachix/git-hooks.nix/tarball/master"));
 
-  inherit (pkgs-kuriko-nur) devshell-cache-tools;
+  inherit (pkgs-kuriko-nur) devshell-cache-tools precommit-trufflehog;
 in rec {
   pre-commit-check = pre-commit-hooks.run {
     src = ./.;
@@ -37,7 +28,7 @@ in rec {
       alejandra.enable = true;
       trufflehog = {
         enable = true;
-        entry = builtins.toString pkgs-kuriko-nur.precommit-trufflehog;
+        entry = "${precommit-trufflehog}/bin/precommit-trufflehog";
         stages = ["pre-push" "pre-commit"];
       };
       devshell = {
