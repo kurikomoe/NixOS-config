@@ -54,7 +54,7 @@
           config.allowUnfree = true;
           overlays = [
             (final: prev: {
-              nodejs = prev.nodejs;
+              nodejs = prev.nodejs_22;
             })
           ];
         };
@@ -65,15 +65,17 @@
 
         devShellBase = let
         in {
-          packages = with pkgs;
-          with nodePackages; [
-            nodejs
-
-            pnpm
-            typescript
-            eslint
-            prettier
-          ];
+          packages =
+            pkgs.electron.buildInputs
+            ++ (with pkgs; [
+              steam-run
+              glib
+              nodejs
+              nodePackages.pnpm
+              typescript
+              eslint
+              prettier
+            ]);
 
           shellHook = ''
           '';
