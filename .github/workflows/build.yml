@@ -58,6 +58,14 @@ jobs:
                 name: kurikomoe
                 authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
 
+            # - name: Setup Attic cache
+            #   uses: ryanccn/attic-action@v0
+            #   continue-on-error: true
+            #   with:
+            #     endpoint: ${{ secrets.ATTIC_ENDPOINT }}
+            #     cache: ${{ secrets.ATTIC_CACHE }}
+            #     token: ${{ secrets.ATTIC_TOKEN }}
+
             # - name: Restore and save Nix store
             #   uses: nix-community/cache-nix-action@v6
             #   with:
