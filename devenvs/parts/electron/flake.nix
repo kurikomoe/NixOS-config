@@ -60,24 +60,74 @@
         };
         inherit (pkgs) lib;
         pkgs-kuriko-nur = inputs.kuriko-nur.legacyPackages.${system};
+
+        electronLibs = with pkgs; [
+          alsa-lib
+          at-spi2-atk
+          cairo
+          cups
+          dbus
+          expat
+          gdk-pixbuf
+          glib
+          gtk3
+          gtk4
+          nss
+          nspr
+          libx11
+          libxcb
+          libxcomposite
+          libxdamage
+          libxext
+          libxfixes
+          libxrandr
+          libxkbfile
+          pango
+          pciutils
+          stdenv.cc.cc
+          systemd
+          libnotify
+          pipewire
+          libsecret
+          libpulseaudio
+          speechd-minimal
+          libdrm
+          libgbm
+          libxkbcommon
+          libxshmfence
+          libGL
+          vulkan-loader
+        ];
       in rec {
         formatter = pkgs.alejandra;
+
+        packages.fhsEnv = pkgs.buildFHSEnv {
+          name = "electron-fhs-env";
+          targetPkgs = pkgs:
+            (with pkgs; [
+              electron-bin
+              fish
+            ])
+            ++ electronLibs;
+          runScript = "bash -c 'export FHS=1; exec fish'";
+        };
+
+        devShells.fhs = packages.fhsEnv.env;
 
         devShellBase = let
         in {
           packages =
-            pkgs.electron.buildInputs
-            ++ (with pkgs; [
-              steam-run
-              glib
+            (with pkgs; [
               nodejs
               nodePackages.pnpm
               typescript
               eslint
               prettier
-            ]);
+            ])
+            ++ electronLibs;
 
           shellHook = ''
+            hello
           '';
 
           env = rec {};
