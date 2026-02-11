@@ -3,6 +3,7 @@ p @ {
   inputs,
   repos,
   lib,
+  useGlobalPkgs,
   ...
 }: let
   combinedPkgs = with repos.pkgs-stable;
@@ -21,18 +22,20 @@ p @ {
     ];
   };
 in {
-  nixpkgs.overlays = with repos.pkgs-stable.dotnetCorePackages; [
-    (final: prev: {
-      inherit (repos.pkgs-stable) dotnet-sdk_10_0-bin sdk_9_0_3xx-bin sdk_8_0_3xx-bin sdk_6_0_1xx-bin;
-    })
-  ];
+  nixpkgs = lib.mkIf (!useGlobalPkgs) {
+    overlays = with repos.pkgs-stable.dotnetCorePackages; [
+      (final: prev: {
+        inherit (repos.pkgs-stable) dotnet-sdk_10_0-bin sdk_9_0_3xx-bin sdk_8_0_3xx-bin sdk_6_0_1xx-bin;
+      })
+    ];
 
-  nixpkgs.config.permittedInsecurePackages = [
-    "dotnet-sdk-wrapped-6.0.136"
-    "dotnet-sdk-6.0.136"
-    "dotnet-sdk-6.0.428"
-    "dotnet-runtime-6.0.36"
-  ];
+    config.permittedInsecurePackages = [
+      "dotnet-sdk-wrapped-6.0.136"
+      "dotnet-sdk-6.0.136"
+      "dotnet-sdk-6.0.428"
+      "dotnet-runtime-6.0.36"
+    ];
+  };
 
   home.packages = with pkgs;
     [

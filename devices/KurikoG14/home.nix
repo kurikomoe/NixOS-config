@@ -13,11 +13,12 @@
   hm-template = import "${root.hm}/template.nix" (with customVars; {
     inherit inputs root customVars repos pkgs;
 
+    useGlobalPkgs = true;
     stateVersion = "24.05";
 
-    extraNixPkgsOptions = {
-      cudaSupport = true;
-    };
+    # extraNixPkgsOptions = {
+    #   cudaSupport = true;
+    # };
 
     extraSpecialArgs = {
       koptions = {

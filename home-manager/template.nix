@@ -4,6 +4,7 @@
   pkgs,
   customVars,
   repos,
+  useGlobalPkgs ? false,
   modules ? [],
   overrideSecrets ? null,
   extraSpecialArgs ? {},
@@ -24,6 +25,7 @@ in
     extraSpecialArgs =
       {
         inherit customVars inputs root kutils;
+        inherit useGlobalPkgs;
 
         # locked pkgs
         inherit repos;
@@ -45,10 +47,21 @@ in
             ];
         }
 
+        {
+          nixpkgs = lib.mkIf (!useGlobalPkgs) {
+            overlays = [
+              inputs.nur.overlays.default
+              inputs.nixgl.overlays.default
+            ];
+            config = {
+              allowUnfree = true;
+            };
+          };
+        }
+
         # -------------- enable nur & others overlays ----------------
         {
           # This should be safe, since nur use username as namespace.
-          nixpkgs.overlays = [inputs.nur.overlays.default];
           home.packages = [];
         }
 
@@ -60,8 +73,6 @@ in
           nixpkgs,
           ...
         }: {
-          nixpkgs.overlays = [inputs.nixgl.overlays.default];
-
           # nixGL = {
           targets.genericLinux.nixGL = {
             packages = inputs.nixgl.packages;
@@ -115,10 +126,6 @@ in
               !include ${config.age.secrets."nix/access-tokens".path}
               !include ${config.age.secrets."nix/cachix.nix.conf".path}
             '';
-          };
-
-          nixpkgs.config = {
-            allowUnfree = true;
           };
 
           xdg.enable = true;

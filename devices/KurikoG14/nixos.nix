@@ -32,8 +32,8 @@ p @ {
           ];
 
           home-manager = {
-            # useGlobalPkgs = true;
-            # useUserPackages = true;
+            useGlobalPkgs = true;
+            useUserPackages = true;
 
             extraSpecialArgs = hm-config.extraSpecialArgs;
 
