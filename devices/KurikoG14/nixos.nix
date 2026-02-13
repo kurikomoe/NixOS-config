@@ -183,6 +183,9 @@ p @ {
           environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
           environment.systemPackages = with pkgs; [
+            compsize
+            btrfs-progs
+
             avahi
 
             sshfs

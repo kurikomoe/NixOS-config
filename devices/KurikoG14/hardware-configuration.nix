@@ -29,6 +29,7 @@
   #     ]))
   #   ];
   # });
+  img_path = "/nix_store_btrfs.img";
 in {
   imports = [];
 
@@ -37,31 +38,65 @@ in {
   boot.kernelModules = ["kvm-amd"];
   boot.extraModulePackages = [];
 
+  boot.supportedFilesystems = ["btrfs"];
+
   boot.tmp.useTmpfs = false;
 
   fileSystems = {
     "/home/kuriko/Projects" = {
-      device = "/dev/disk/by-uuid/59eb1b70-d82d-4d62-9622-284d1515f849";
-      fsType = "ext4";
-      options = ["noatime" "nofail"];
+      device = "/dev/disk/by-uuid/e0e5f930-1dee-4179-a2bd-897e7b8b733b";
+      fsType = "btrfs";
+      options = [
+        "compress=zstd:1" # 开启透明压缩，等级1 (最佳性能/压缩比)
+        "noatime" # 读取文件不更新访问时间 (大幅减少写操作)
+        "space_cache=v2" # Btrfs 专用：优化空闲空间管理 (推荐开启)
+        "discard=async" # SSD 优化：异步 TRIM (对 WSL 虚拟盘也有帮助)
+        "nofail" # 必须保留：防止磁盘未挂载时导致系统启动失败
+      ];
     };
 
-    # "/tmp/.X11-unix" = {
-    #   device = "/mnt/wslg/.X11-unix";
-    #   fsType = "bind";
-    #   options = [ "nofail" ];
-    # };
+    "/nix/store" = {
+      device = img_path;
+      fsType = "btrfs";
+      options = ["loop" "compress=zstd:1" "noatime" "rw" "noauto"];
+      neededForBoot = true;
+    };
+  };
+
+  systemd.services.replace-nix-store = {
+    description = "Force Replace Nix Store with Btrfs Image";
+    after = ["local-fs-pre.target"];
+    before = ["sysinit.target" "nix-daemon.service"];
+    wantedBy = ["sysinit.target"];
+
+    unitConfig.DefaultDependencies = false;
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = pkgs.writeShellScript "replace-store" ''
+        if [ -f "${img_path}" ]; then
+          echo "Btrfs image found, swapping /nix/store..."
+          ${pkgs.util-linux}/bin/umount -l /nix/store || true
+          ${pkgs.util-linux}/bin/mount -t btrfs -o loop,compress=zstd:1,noatime,rw ${img_path} /nix/store
+        else
+          echo "Btrfs image not found, keeping default store."
+        fi
+      '';
+      RemainAfterExit = true;
+    };
   };
 
   environment.variables = {
     # WSL libs need to find stdc++.so.6 and libssl.so to work
-    LD_LIBRARY_PATH = "/usr/lib/wsl/lib";
+    # LD_LIBRARY_PATH = "/usr/lib/wsl/lib";
     # LD_LIBRARY_PATH = "/usr/lib/wsl/lib:${pkgs.stdenv.cc.cc.lib}/lib/:${pkgs.openssl.out}/lib";
 
     # MESA_D3D12_DEFAULT_ADAPTER_NAME = "NVIDIA";
   };
 
-  environment.systemPackages = with pkgs; [];
+  environment.systemPackages = with pkgs; [
+    btrfs-progs
+    util-linux
+  ];
 
   # wsl-utils enables this automatically
   # hardware.graphics = {
