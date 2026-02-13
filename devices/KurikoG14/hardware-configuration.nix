@@ -29,7 +29,6 @@
   #     ]))
   #   ];
   # });
-  img_path = "/nix_store_btrfs.img";
 in {
   imports = [];
 
@@ -53,35 +52,6 @@ in {
         "discard=async" # SSD 优化：异步 TRIM (对 WSL 虚拟盘也有帮助)
         "nofail" # 必须保留：防止磁盘未挂载时导致系统启动失败
       ];
-    };
-
-    "/nix/store" = {
-      device = img_path;
-      fsType = "btrfs";
-      options = ["loop" "compress=zstd:1" "noatime" "rw" "noauto"];
-      neededForBoot = true;
-    };
-  };
-
-  systemd.services.replace-nix-store = {
-    description = "Force Replace Nix Store with Btrfs Image";
-    after = ["local-fs-pre.target"];
-    before = ["sysinit.target" "nix-daemon.service"];
-    wantedBy = ["sysinit.target"];
-
-    unitConfig.DefaultDependencies = false;
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = pkgs.writeShellScript "replace-store" ''
-        if [ -f "${img_path}" ]; then
-          echo "Btrfs image found, swapping /nix/store..."
-          ${pkgs.util-linux}/bin/umount -l /nix/store || true
-          ${pkgs.util-linux}/bin/mount -t btrfs -o loop,compress=zstd:1,noatime,rw ${img_path} /nix/store
-        else
-          echo "Btrfs image not found, keeping default store."
-        fi
-      '';
-      RemainAfterExit = true;
     };
   };
 
