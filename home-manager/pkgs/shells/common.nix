@@ -69,8 +69,7 @@ in {
   ];
 
   home.shellAliases = {
-    # Others
-    # j = "z";
+    ls = "ls --group-directories-first --color";
   };
 
   home.file.".ideavimrc".source = ./common_data/ideavimrc;

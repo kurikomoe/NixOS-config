@@ -87,7 +87,7 @@
       devShellBase.shellHook = ''
         export ROOT=$(realpath $PWD)
         test -f .venv/bin/activate && source .venv/bin/activate
-        test -f pyproject.toml && uv sync
+        # test -f "$ROOT/pyproject.toml" && uv sync
         echo "🚀 Base environment loaded."
       '';
 
