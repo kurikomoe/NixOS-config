@@ -19,6 +19,11 @@
       ]);
   in {
     options.devShellBase = {
+      stdenv = lib.mkOption {
+        type = lib.types.package;
+        default = pkgs.stdenv;
+        description = "The stdenv to use for mkShell";
+      };
       hardeningDisable = lib.mkOption {
         type = lib.types.listOf lib.types.str;
         default = [];
@@ -91,6 +96,13 @@
         echo "🚀 Base environment loaded."
       '';
 
+      # 基础的库
+      devShellBase.libraries = with pkgs; [
+        zlib
+        openssl
+        cfg.python
+      ];
+
       # 集成 Pre-commit (git-hooks.nix 会自动处理合并)
       pre-commit.settings.hooks = {
         shellcheck.enable = true;
@@ -115,23 +127,39 @@
       };
 
       # 最终生成 devShell
-      devShells.default = pkgs.mkShell ({
-          hardeningDisable = cfg.hardeningDisable;
+      devShells.default = let
+        targetStdenv = cfg.stdenv;
 
-          packages = cfg.packages ++ config.pre-commit.settings.enabledPackages;
+        inherit (cfg) extraArgs;
+        extraPackages = extraArgs.packages or [];
+        extraShellHook = extraArgs.shellHook or "";
+
+        sanitizedExtraArgs = builtins.removeAttrs extraArgs ["packages" "shellHook"];
+
+        baseShellArgs = {
+          inherit (cfg) hardeningDisable;
+
+          packages = cfg.packages ++ cfg.libraries ++ extraPackages ++ config.pre-commit.settings.enabledPackages;
 
           shellHook = ''
             ${config.pre-commit.shellHook}
+            ${extraShellHook}
             ${cfg.shellHook}
           '';
 
           env =
-            {
-              LD_LIBRARY_PATH = lib.makeLibraryPath (["/usr/lib/wsl"] ++ cfg.libraries ++ cfg.packages);
+            lib.recursiveUpdate {
+              LD_LIBRARY_PATH = lib.makeLibraryPath (["/usr/lib/wsl"] ++ cfg.libraries);
             }
-            // cfg.env;
-        }
-        // cfg.extraArgs);
+            cfg.env;
+        };
+
+        finalArgs = lib.recursiveUpdate baseShellArgs sanitizedExtraArgs;
+      in
+        (pkgs.mkShell.override {
+          stdenv = targetStdenv;
+        })
+        finalArgs;
     };
   };
 }
