@@ -49,7 +49,7 @@
         default = {};
         description = "Environment variables";
       };
-      mkShellArgs = lib.mkOption {
+      extraArgs = lib.mkOption {
         type = lib.types.attrs;
         default = {};
         description = "Extra arguments passed directly to mkShell";
@@ -131,7 +131,7 @@
             }
             // cfg.env;
         }
-        // cfg.mkShellArgs);
+        // cfg.extraArgs);
     };
   };
 }
