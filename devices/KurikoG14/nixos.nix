@@ -168,19 +168,19 @@ p @ {
           # Enable hyperland
           # services.xserver.displayManager.startx.enable = true; = true;
           # services.displayManager.sddm.enable = true;
-          services.xrdp.enable = true;
-          services.xrdp.port = 3390;
-          services.xserver.enable = true;
+          # services.xrdp.enable = true;
+          # services.xrdp.port = 3390;
+          # services.xserver.enable = true;
           # services.displayManager.defaultSession = "";
-          services.xserver.desktopManager.xfce.enable = true;
-          services.xrdp.defaultWindowManager = "${pkgs.xfce.xfce4-session}/bin/xfce4-session";
+          # services.xserver.desktopManager.xfce.enable = true;
+          # services.xrdp.defaultWindowManager = "${pkgs.xfce.xfce4-session}/bin/xfce4-session";
 
-          programs.hyprland = {
-            enable = true;
-            withUWSM = true; # recommended for most users
-            xwayland.enable = true; # Xwayland can be disabled.
-          };
-          environment.sessionVariables.NIXOS_OZONE_WL = "1";
+          # programs.hyprland = {
+          #   enable = true;
+          #   withUWSM = true; # recommended for most users
+          #   xwayland.enable = true; # Xwayland can be disabled.
+          # };
+          # environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
           environment.systemPackages = with pkgs; [
             compsize
