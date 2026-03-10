@@ -13,6 +13,7 @@
     # kuriko-nur.inputs.nixpkgs.follows = "nixpkgs";
 
     fenix.url = "github:nix-community/fenix";
+    fenix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   nixConfig = {
@@ -54,7 +55,7 @@
         pkgs = import inputs.nixpkgs {
           inherit system;
           config.allowUnfree = true;
-          overlays = [];
+          overlays = [inputs.fenix.overlays.default];
         };
         inherit (pkgs) lib;
         pkgs-kuriko-nur = inputs.kuriko-nur.legacyPackages.${system};
