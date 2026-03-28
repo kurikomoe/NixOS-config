@@ -115,7 +115,7 @@
           colmena
           deploy-rs
 
-          repos.pkgs-unstable.cherry-studio
+          # repos.pkgs-unstable.cherry-studio
         ];
 
         services.frp = {
