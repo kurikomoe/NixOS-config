@@ -105,25 +105,25 @@
 
       # 集成 Pre-commit (git-hooks.nix 会自动处理合并)
       pre-commit.settings.hooks = {
-        shellcheck.enable = true;
-        commitizen.enable = true;
-        alejandra.enable = true;
+        shellcheck.enable = lib.mkDefault true;
+        commitizen.enable = lib.mkDefault true;
+        alejandra.enable = lib.mkDefault true;
         trufflehog = {
-          enable = true;
+          enable = lib.mkDefault true;
           entry = lib.getExe precommit-trufflehog;
           stages = ["pre-push" "pre-commit"];
         };
         devshell = {
-          enable = true;
+          enable = lib.mkDefault true;
           entry = lib.getExe devshell-cache-tools;
           stages = ["pre-push"];
           pass_filenames = false;
           always_run = true;
         };
         # Python
-        isort.enable = true;
-        pyright.enable = true;
-        flake8.enable = true;
+        isort.enable = lib.mkDefault true;
+        pyright.enable = lib.mkDefault true;
+        flake8.enable = lib.mkDefault true;
       };
 
       # 最终生成 devShell
