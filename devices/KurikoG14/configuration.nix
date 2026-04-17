@@ -132,8 +132,6 @@ p @ {
     # automatic-timezoned.enable = true;
   };
 
-  users.defaultUserShell = pkgs.zsh;
-
   security = {
     sudo = {
       enable = true;

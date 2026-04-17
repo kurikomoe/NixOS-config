@@ -113,6 +113,7 @@ in
                   openssl
                   icu
                   libz
+                  coreutils-full
                 ]
                 ++ (pkgs.steam.args.multiPkgs pkgs)
                 ++ (pkgs.steam-run.args.multiPkgs pkgs);
@@ -128,13 +129,6 @@ in
           systemd.tmpfiles.rules = lib.mkDefault [
             "L /bin/bash - - - - /run/current-system/sw/bin/bash"
           ];
-
-          system.activationScripts."addBinBash" = {
-            deps = ["usrbinenv"];
-            text = ''
-              ln -sf /run/current-system/sw/bin/bash /bin/bash
-            '';
-          };
         })
 
         # # -------------- enable nur ----------------

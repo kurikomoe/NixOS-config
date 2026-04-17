@@ -618,6 +618,26 @@
         "type": "github"
       }
     },
+    "nix-ld": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1776070951,
+        "narHash": "sha256-z1XVxkqS9znn5CkvkOHttRYV4W5Y7ZoNGxReV6dSB6o=",
+        "owner": "Mic92",
+        "repo": "nix-ld",
+        "rev": "f9e76c43120b9104c5be855bf22da5bf71c8fed1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "repo": "nix-ld",
+        "type": "github"
+      }
+    },
     "nix-search": {
       "inputs": {
         "flake-compat": "flake-compat_5",
@@ -980,6 +1000,7 @@
         "home-manager-unstable": "home-manager-unstable",
         "kuriko-nur": "kuriko-nur",
         "nix-alien": "nix-alien",
+        "nix-ld": "nix-ld",
         "nix-search": "nix-search",
         "nixgl": "nixgl",
         "nixos-vscode-server": "nixos-vscode-server",

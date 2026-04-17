@@ -29,7 +29,10 @@ p @ {
         {
           imports = [
             home-manager.nixosModules.home-manager
+            # inputs.nix-ld.nixosModules.nix-ld
           ];
+
+          # programs.nix-ld.dev.enable = true;
 
           home-manager = {
             useGlobalPkgs = true;
@@ -56,6 +59,8 @@ p @ {
 
             usbip.enable = true;
             useWindowsDriver = true;
+
+            wrapBinSh = true;
 
             wslConf = {
               user.default = username;
@@ -120,7 +125,7 @@ p @ {
           #   })
           # ];
 
-          users.defaultUserShell = pkgs.zsh;
+          # users.defaultUserShell = pkgs.bash;
 
           users.users.${username} = {
             shell = pkgs.fish;
@@ -131,6 +136,12 @@ p @ {
 
             hashedPassword = "$6$aV8t5ljQBwHKHJdd$UO6BD7maFeOdOhH47..H2zMJaKmuyzRNb45/Q1iRtSQ87YcddkQmFeO0TF8mtyfY2rwhom3lXanBn5AT5QFYh1";
           };
+
+          programs.bash.interactiveShellInit = ''
+            if [[ $ps1 && -z "$nix_shell" ]]; then
+              exec ${pkgs.fish}/bin/fish
+            fi
+          '';
 
           networking.hostName = hostName;
 
@@ -164,6 +175,8 @@ p @ {
               workstation = true;
             };
           };
+
+          services.envfs.enable = true;
 
           # Enable hyperland
           # services.xserver.displayManager.startx.enable = true; = true;
