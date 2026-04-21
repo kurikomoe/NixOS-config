@@ -3,12 +3,12 @@
   pkgs,
   root,
   customVars,
+  kutils,
   repos,
   ...
 }: let
   system = customVars.system;
   lib = pkgs.lib;
-  kutils = import "${root.base}/common/kutils.nix" {inherit inputs lib;};
 
   hm-template = import "${root.hm}/template.nix" (with customVars; {
     inherit inputs root customVars repos pkgs;

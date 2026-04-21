@@ -4,6 +4,12 @@
   pkgs,
   customVars,
   repos,
+  kutils ?
+    import "${root.base}/common/kutils.nix" {
+      inherit inputs;
+      lib = pkgs.lib;
+      enableKCache = true;
+    },
   useGlobalPkgs ? false,
   modules ? [],
   overrideSecrets ? null,
@@ -14,10 +20,6 @@
 } @ p: let
   system = customVars.system;
   lib = pkgs.lib;
-  kutils = import "${root.base}/common/kutils.nix" {
-    inherit inputs lib;
-    enableKCache = true;
-  };
 in
   with customVars; {
     inherit pkgs;

@@ -195,6 +195,11 @@ p @ {
           # };
           # environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
+          # Add steam multiPkgs to nix-ld libraries (only needed on desktop/WSL)
+          programs.nix-ld.libraries =
+            (pkgs.steam.args.multiPkgs pkgs)
+            ++ (pkgs.steam-run.args.multiPkgs pkgs);
+
           environment.systemPackages = with pkgs; [
             compsize
             btrfs-progs

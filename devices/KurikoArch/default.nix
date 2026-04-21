@@ -3,6 +3,8 @@
   root,
   lib,
   genRepos,
+  defaultRepos,
+  kutils,
   versionMap,
   ...
 }: let
@@ -21,8 +23,7 @@
     homeDirectory = "/home/${username}";
   };
 
-  kutils = import "${root.base}/common/kutils.nix" {inherit inputs lib;};
-  repos = genRepos system;
+  repos = defaultRepos;
 
   # =========== change this to switch version ===========
   hm-version = "stable";

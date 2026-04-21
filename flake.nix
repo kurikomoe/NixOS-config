@@ -47,7 +47,10 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    deploy-rs.url = "github:serokell/deploy-rs";
+    deploy-rs = {
+      url = "github:serokell/deploy-rs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # ------------------- Core inputs -------------------
     nur = {
@@ -61,7 +64,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL/main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     agenix = {
       url = "github:ryantm/agenix";
@@ -79,12 +85,18 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
 
     # --------------------- Third Party inputs ---------------------
-    nix-alien.url = "github:thiagokokada/nix-alien";
+    nix-alien = {
+      url = "github:thiagokokada/nix-alien";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     nix-ld.url = "github:Mic92/nix-ld";
     nix-ld.inputs.nixpkgs.follows = "nixpkgs";
 
-    nixos-vscode-server.url = "github:nix-community/nixos-vscode-server";
+    nixos-vscode-server = {
+      url = "github:nix-community/nixos-vscode-server";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
 
     # --------------------- Tmux Plugins ---------------------
@@ -98,7 +110,10 @@
     };
 
     # -------------------- nix search --------------------
-    nix-search.url = "github:diamondburned/nix-search";
+    nix-search = {
+      url = "github:diamondburned/nix-search";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # -------------------- vim plugins --------------------
     # omnisharp-vim = {
@@ -153,7 +168,10 @@
     };
 
     # -------------------------------------------------------------
-    hevi.url = "github:Arnau478/hevi";
+    hevi = {
+      url = "github:Arnau478/hevi";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   nixConfig = {
@@ -247,8 +265,6 @@
           pkgs-stable = cImport inputs.nixpkgs {};
           pkgs-unstable = cImport inputs.nixpkgs-unstable {};
 
-          pkgs-fish-test = cImport inputs.nixpkgs-fish-test {};
-
           pkgs-nur = import inputs.nur {
             pkgs = pkgs-stable;
             nurpkgs = pkgs-unstable;
@@ -264,6 +280,9 @@
           };
         };
 
+        # Pre-compute repos for x86_64-linux (shared by all devices)
+        defaultRepos = genRepos "x86_64-linux";
+
         devices = [
           ./devices/KurikoG14
           ./devices/KurikoTB16p
@@ -277,19 +296,11 @@
           ./devices/iprc
         ];
 
-        deviceCfg =
+        deviceCfg = let
+          params = {inherit inputs root versionMap genRepos defaultRepos kutils lib;};
+        in
           builtins.foldl' (
-            acc: device: (lib.recursiveUpdate acc (
-              let
-                config = let
-                  params = {inherit inputs root versionMap genRepos lib;};
-                  cfg = import "${device}" params;
-                in
-                  builtins.trace "${device}: ${builtins.concatStringsSep "," (builtins.attrNames cfg)}" cfg;
-                # cfg;
-              in
-                config
-            ))
+            acc: device: lib.recursiveUpdate acc (import "${device}" params)
           ) {}
           devices;
       in

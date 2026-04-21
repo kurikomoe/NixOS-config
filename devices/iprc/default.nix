@@ -4,19 +4,20 @@
   root,
   lib,
   genRepos,
+  defaultRepos,
+  kutils,
   versionMap,
   ...
 }:
 if !builtins.pathExists ./customvars.nix
-then builtins.trace "Not Found ignore" {}
+then {}
 else let
   customVars = import ./customvars.nix;
   # -------------- custom variables --------------------
 
   system = "x86_64-linux";
 
-  kutils = import "${root.base}/common/kutils.nix" {inherit inputs lib;};
-  repos = genRepos system;
+  repos = defaultRepos;
 
   # =========== change this to switch version ===========
   hm-version = "stable";

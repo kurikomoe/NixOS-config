@@ -3,12 +3,16 @@ p @ {
   root,
   customVars,
   repos,
+  kutils ?
+    import "${root.base}/common/kutils.nix" {
+      inherit inputs;
+      lib = repos.pkgs.lib;
+    },
   modules ? [],
   ...
 }: let
   system = customVars.system;
   lib = repos.pkgs.lib;
-  kutils = import "${root.base}/common/kutils.nix" {inherit inputs lib;};
 in
   with customVars; {
     specialArgs =
@@ -105,21 +109,16 @@ in
               # clean.extraArgs = "--keep-since 14d --keep 5";
             };
 
-            nix-ld = let
-              libs = with pkgs;
-                [
-                  stdenv.cc
-                  stdenv.cc.cc.lib
-                  openssl
-                  icu
-                  libz
-                  coreutils-full
-                ]
-                ++ (pkgs.steam.args.multiPkgs pkgs)
-                ++ (pkgs.steam-run.args.multiPkgs pkgs);
-            in {
+            nix-ld = {
               enable = true;
-              libraries = libs;
+              libraries = with pkgs; [
+                stdenv.cc
+                stdenv.cc.cc.lib
+                openssl
+                icu
+                libz
+                coreutils-full
+              ];
             };
             zsh.enable = true;
             fish.enable = true;

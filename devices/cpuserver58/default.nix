@@ -3,6 +3,8 @@
   lib,
   root,
   genRepos,
+  defaultRepos,
+  kutils,
   versionMap,
   ...
 }:
@@ -14,11 +16,12 @@ else let
 
   system = customVars.system;
 
-  kutils = import "${root.base}/common/kutils.nix" {inherit inputs lib;};
-
   # =========== change this to switch version ===========
   hm-version = "stable";
-  repos = genRepos system;
+  repos =
+    if system == "x86_64-linux"
+    then defaultRepos
+    else genRepos system;
   # ====================================================
 
   nixpkgs-hm = versionMap.${hm-version}.nixpkgs;
