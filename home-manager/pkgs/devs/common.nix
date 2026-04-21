@@ -35,6 +35,8 @@ in {
     (lib.hiPrio repos.pkgs-unstable.uutils-coreutils-noprefix)
 
     opencode
+    claude-code
+    codex
 
     asdf-vm
 
