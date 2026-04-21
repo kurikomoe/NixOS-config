@@ -29,6 +29,7 @@ let
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICTqzxgeqkCXdZgNzdRn4zUjSQduRaml4vAAFFgnHSi6"
     ];
 
+  keys_imp = keys_age ++ keys_kurikoG14;
   keys = keys_age ++ keys_tx ++ keys_kurikoG14 ++ keys_cpuserver58 ++ key_tmp;
 
   file_list = {
@@ -91,6 +92,11 @@ let
 
     "res/builders" = {
       "kurikoArch.ssh".publicKeys = keys;
+    };
+
+    "res/opencode" = {
+      "config/opencode.jsonc".publicKeys = keys_imp;
+      "config/tui.jsonc".publicKeys = keys_imp;
     };
 
     "res/misc" = {

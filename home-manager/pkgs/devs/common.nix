@@ -34,6 +34,8 @@ in {
     (lib.hiPrio repos.pkgs-unstable.uutils-diffutils)
     (lib.hiPrio repos.pkgs-unstable.uutils-coreutils-noprefix)
 
+    opencode
+
     asdf-vm
 
     wget

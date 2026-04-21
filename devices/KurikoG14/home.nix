@@ -27,6 +27,8 @@
     };
 
     modules = [
+      ./age-hm.nix
+
       ({pkgs, ...}: {
         # nixpkgs.overlays = [
         #   (final: prev: {
