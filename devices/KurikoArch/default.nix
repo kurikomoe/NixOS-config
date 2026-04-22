@@ -35,7 +35,7 @@
   # ====================================================
 
   hm-template = import "${root.hm}/template.nix" (with customVars; {
-    inherit inputs root customVars repos;
+    inherit inputs root customVars repos kutils;
 
     pkgs = pkgs-hm;
 
@@ -77,6 +77,8 @@
 
             # "./devs/common.nix"
             # "./devs/langs"
+
+            "./devs/aicoding/opencode.nix"
 
             "./libs/others.nix"
 
