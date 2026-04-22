@@ -89,10 +89,10 @@ in {
           name = "fish-abbreviation-tips";
           src = fish-abbreviation-tips.src;
         }
-        {
-          name = "puffer-fish";
-          src = puffer-fish.src;
-        }
+        # {
+        #   name = "puffer-fish";
+        #   src = puffer-fish.src;
+        # }
         {
           name = "autopair";
           src = autopair.src;
