@@ -8,6 +8,7 @@
   ...
 }: let
   home = config.home.homeDirectory;
+  agenixPkg = pkgs.callPackage "${inputs.agenix}/pkgs/agenix.nix" {};
 
   identityPaths = [
     "${home}/.ssh/id_ed25519_age"
@@ -27,7 +28,7 @@ in {
 
   home.packages = with pkgs; [
     agenix-edit
-    inputs.agenix.packages.${system}.default
+    agenixPkg
   ];
 
   age = {
