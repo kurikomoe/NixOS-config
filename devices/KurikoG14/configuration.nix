@@ -57,7 +57,7 @@ p @ {
     path = with pkgs; [
       gawk # 提供 awk
       gnugrep # 提供 grep
-      utillinux # 提供 mkswap, swapon, zramctl
+      util-linux # 提供 mkswap, swapon, zramctl
       kmod # 提供 modprobe
     ];
     serviceConfig = {

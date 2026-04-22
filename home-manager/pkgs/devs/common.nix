@@ -16,6 +16,8 @@ in {
     ./tools.nix
     ./gdb
 
+    ./aicoding/opencode.nix
+
     # ./frameworks/tauri.nix
   ];
 
@@ -34,7 +36,6 @@ in {
     (lib.hiPrio repos.pkgs-unstable.uutils-diffutils)
     (lib.hiPrio repos.pkgs-unstable.uutils-coreutils-noprefix)
 
-    opencode
     claude-code
     codex
 

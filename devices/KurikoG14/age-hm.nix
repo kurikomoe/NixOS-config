@@ -5,6 +5,7 @@
   lib,
   root,
   pkgs,
+  kutils,
   ...
 }: let
   home = config.home.homeDirectory;
@@ -13,12 +14,7 @@
     "${home}/.ssh/id_ed25519_age"
   ];
 
-  helper = name: filepath: {
-    "${name}" = {
-      file = "${root.base}/res/${name}.age";
-      path = filepath;
-    };
-  };
+  helper = kutils.age.agehelper;
 
   age_secrets_filelist =
     {}

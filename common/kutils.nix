@@ -1,9 +1,12 @@
 {
   inputs,
   lib,
+  root,
   enableKCache ? true,
   ...
 }: let
+  age = import ./age-helper.nix {inherit inputs lib root;};
+
   _commonNixPkgsConfig = {
     allowUnfree = true;
 
@@ -91,4 +94,5 @@
     traverse srcPath dstPath;
 in {
   inherit customNixPkgsImport _commonNixPkgsConfig buildImports buildPath;
+  inherit age;
 }

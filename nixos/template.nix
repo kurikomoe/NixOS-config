@@ -3,11 +3,7 @@ p @ {
   root,
   customVars,
   repos,
-  kutils ?
-    import "${root.base}/common/kutils.nix" {
-      inherit inputs;
-      lib = repos.pkgs.lib;
-    },
+  kutils,
   modules ? [],
   ...
 }: let

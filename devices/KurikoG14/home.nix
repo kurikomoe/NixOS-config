@@ -11,9 +11,9 @@
   lib = pkgs.lib;
 
   hm-template = import "${root.hm}/template.nix" (with customVars; {
-    inherit inputs root customVars repos pkgs;
+    inherit inputs root customVars repos pkgs kutils agehelpers;
 
-    useGlobalPkgs = true;
+    useGlobalPkgs = false;
     stateVersion = "24.05";
 
     # extraNixPkgsOptions = {

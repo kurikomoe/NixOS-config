@@ -4,6 +4,7 @@ p @ {
   root,
   customVars,
   repos,
+  kutils,
   extraModules ? [],
   # Optional
   home-manager,
@@ -13,7 +14,7 @@ p @ {
   system = customVars.system;
 
   os-template = import "${root.os}/template.nix" (with customVars; {
-    inherit inputs root customVars repos pkgs;
+    inherit inputs root customVars repos pkgs kutils;
 
     modules =
       [
@@ -35,8 +36,8 @@ p @ {
           # programs.nix-ld.dev.enable = true;
 
           home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
+            # useGlobalPkgs = false;
+            # useUserPackages = true;
 
             extraSpecialArgs = hm-config.extraSpecialArgs;
 

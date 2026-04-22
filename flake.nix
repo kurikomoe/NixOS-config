@@ -256,7 +256,7 @@
           };
         };
 
-        kutils = import "${root.base}/common/kutils.nix" {inherit inputs lib;};
+        kutils = import "${root.base}/common/kutils.nix" {inherit inputs lib root;};
 
         genRepos = system: let
           cImport = kutils.customNixPkgsImport system;

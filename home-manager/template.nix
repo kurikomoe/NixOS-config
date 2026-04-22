@@ -4,12 +4,7 @@
   pkgs,
   customVars,
   repos,
-  kutils ?
-    import "${root.base}/common/kutils.nix" {
-      inherit inputs;
-      lib = pkgs.lib;
-      enableKCache = true;
-    },
+  kutils,
   useGlobalPkgs ? false,
   modules ? [],
   overrideSecrets ? null,

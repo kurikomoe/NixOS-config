@@ -3,11 +3,11 @@ params @ {
   pkgs,
   inputs,
   config,
+  kutils,
   lib,
   ...
 }: let
   common = import ./common.nix params;
-  age_helper = import "${root.base}/common/age-helper.nix";
 
   files = {
     "ssh/config" = ".ssh/config.extra";
@@ -17,7 +17,7 @@ params @ {
     "ssh/id_ed25519.pub" = ".ssh/id_ed25519.pub";
   };
 
-  age_secrets_filelist = age_helper.buildAgeSecretsFileList files;
+  age_secrets_filelist = kutils.age.buildAgeSecretsFileList files;
 in {
   imports = [
     ./helpers.nix
