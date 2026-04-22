@@ -473,6 +473,28 @@ if has('nvim-0.10')
 EOF
 endif
 
+augroup AgeFiletype
+    autocmd!
+    autocmd BufRead,BufNewFile *.*.age call s:SetAgeFiletype(expand('<afile>:r:e'))
+augroup END
+
+function! s:SetAgeFiletype(ext)
+    " 在这里定义后缀名到 filetype 的特例映射
+    let l:aliases = {
+          \ 'py': 'python',
+          \ 'js': 'javascript',
+          \ 'ts': 'typescript',
+          \ 'md': 'markdown',
+          \ 'yml': 'yaml'
+          \ }
+
+    " 如果在字典中找到了特例，就用特例；否则直接使用原后缀名（如 jsonc, toml 等）
+    let l:ft = get(l:aliases, a:ext, a:ext)
+
+    " 设置当前 buffer 的 filetype
+    let &l:filetype = l:ft
+endfunction
+
 
 " 应该放在最最最后的代码
 if exists("g:loaded_webdevicons")
