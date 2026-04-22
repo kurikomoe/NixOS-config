@@ -28,11 +28,17 @@ in {
     ssh = {
       enable = true;
       enableDefaultConfig = false;
-      matchBlocks."*" = {
-        serverAliveInterval = 60;
-        compression = true;
-        addKeysToAgent = "yes";
-        forwardAgent = true;
+      matchBlocks = {
+        "*" = {
+          serverAliveInterval = 60;
+          compression = true;
+          addKeysToAgent = "yes";
+          forwardAgent = true;
+        };
+        "github.com" = {
+          host = "ssh.github.com";
+          port = 443;
+        };
       };
     };
   };
