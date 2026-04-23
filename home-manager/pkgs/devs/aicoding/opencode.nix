@@ -19,8 +19,8 @@ in {
   ];
 
   home.file = {
-    ".config/opencode/prompts/build.md".source = ./prompts/build.md;
-    ".config/opencode/prompts/plan.md".source = ./prompts/plan.md;
+    ".agents/prompts/build.md".source = ./prompts/build.md;
+    ".agents/prompts/plan.md".source = ./prompts/plan.md;
   };
 
   age.secrets = age_secrets_filelist;
