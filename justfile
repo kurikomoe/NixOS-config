@@ -1,5 +1,3 @@
-set shell := ["bash", "-euo", "pipefail", "-c"]
-
 repo_root := justfile_directory()
 skills_dir := repo_root + "/devenvs/skills"
 agents_skills_dir := "~/.agents/skills"

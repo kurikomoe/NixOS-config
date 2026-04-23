@@ -177,7 +177,7 @@ p @ {
             };
           };
 
-          services.envfs.enable = true;
+          # services.envfs.enable = true;
 
           # Enable hyperland
           # services.xserver.displayManager.startx.enable = true; = true;
