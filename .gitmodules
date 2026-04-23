@@ -4,3 +4,6 @@
 [submodule "devenvs/skills/Understand-Anything"]
 	path = devenvs/skills/Understand-Anything
 	url = https://github.com/Lum1104/Understand-Anything.git
+[submodule "devenvs/skills/anthropics-skills"]
+	path = devenvs/skills/anthropics-skills
+	url = https://github.com/anthropics/skills.git
