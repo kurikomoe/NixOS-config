@@ -8,11 +8,13 @@ default:
 sync-skills: sync-code-review-skill sync-understand
 
 update-skills:
+	@printf '%s\n' 'About to update git submodule-backed skills from upstream remotes.'
+	@printf '%s\n' 'This may introduce unreviewed upstream changes and potential supply-chain risk.'
+	@printf '%s' 'Type UPDATE-SKILLS to continue: '
+	@read -r confirm; [ "$confirm" = 'UPDATE-SKILLS' ] || { printf '%s\n' 'Aborted.'; exit 1; }
 	git submodule sync --recursive
 	git submodule update --init --recursive
 	git submodule update --remote --recursive
-
-refresh-skills: update-skills sync-skills
 
 sync-code-review-skill:
 	mkdir -p {{agents_skills_dir}}
