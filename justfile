@@ -19,7 +19,7 @@ update-skills:
 sync-code-review-skill:
   mkdir -p {{agents_skills_dir}}
   ln -sfn {{skills_dir}}/code-review-skill {{agents_skills_dir}}/code-review-excellence
-  printf 'synced %s\n' code-review-excellence
+  @printf 'synced %s\n' code-review-excellence
 
 understand_dir := skills_dir + "/Understand-Anything"
 understand_plugin_dir := understand_dir + "/understand-anything-plugin"
@@ -34,11 +34,11 @@ sync-understand:
   ln -sfn {{understand_plugin_dir}}/skills/understand-domain {{agents_skills_dir}}/understand-domain
   ln -sfn {{understand_plugin_dir}}/skills/understand-knowledge {{agents_skills_dir}}/understand-knowledge
   ln -sfn {{understand_plugin_dir}} $HOME/.understand-anything-plugin
-  printf 'synced %s\n' understand understand-chat understand-dashboard understand-diff understand-explain understand-onboard understand-domain understand-knowledge
-  printf 'synced %s\n' $HOME/.understand-anything-plugin
+  @printf 'synced %s\n' understand understand-chat understand-dashboard understand-diff understand-explain understand-onboard understand-domain understand-knowledge
+  @printf 'synced %s\n' $HOME/.understand-anything-plugin
   cd {{understand_dir}} && pnpm install --frozen-lockfile 2>/dev/null || { cd {{understand_dir}} && pnpm install; }
   cd {{understand_dir}} && pnpm --filter @understand-anything/core build
-  printf 'build %s\n' $HOME/.understand-anything-plugin
+  @printf 'build %s\n' $HOME/.understand-anything-plugin
 
 
 anthropics_skills_dir := skills_dir + "/anthropics-skills/skills"
