@@ -1,6 +1,6 @@
 repo_root := justfile_directory()
 skills_dir := repo_root + "/devenvs/skills"
-agents_skills_dir := "~/.agents/skills"
+agents_skills_dir := "$HOME/.agents/skills"
 
 default:
   @just --list
@@ -33,12 +33,12 @@ sync-understand:
   ln -sfn {{understand_plugin_dir}}/skills/understand-onboard {{agents_skills_dir}}/understand-onboard
   ln -sfn {{understand_plugin_dir}}/skills/understand-domain {{agents_skills_dir}}/understand-domain
   ln -sfn {{understand_plugin_dir}}/skills/understand-knowledge {{agents_skills_dir}}/understand-knowledge
-  ln -sfn {{understand_plugin_dir}} ~/.understand-anything-plugin
+  ln -sfn {{understand_plugin_dir}} $HOME/.understand-anything-plugin
   printf 'synced %s\n' understand understand-chat understand-dashboard understand-diff understand-explain understand-onboard understand-domain understand-knowledge
-  printf 'synced %s\n' ~/.understand-anything-plugin
+  printf 'synced %s\n' $HOME/.understand-anything-plugin
   cd {{understand_dir}} && pnpm install --frozen-lockfile 2>/dev/null || { cd {{understand_dir}} && pnpm install; }
   cd {{understand_dir}} && pnpm --filter @understand-anything/core build
-  printf 'build %s\n' ~/.understand-anything-plugin
+  printf 'build %s\n' $HOME/.understand-anything-plugin
 
 
 anthropics_skills_dir := skills_dir + "/anthropics-skills/skills"
@@ -46,3 +46,13 @@ sync-skill-creator:
   mkdir -p {{agents_skills_dir}}
   ln -sfn {{anthropics_skills_dir}}/skill-creator   {{agents_skills_dir}}/anthropics-skill-creator
   ln -sfn {{anthropics_skills_dir}}/frontend-design {{agents_skills_dir}}/anthropics-frontend-design
+
+kskills_dir := skills_dir + "/KSkills"
+sync-kskills:
+  #!/usr/bin/env bash
+  mkdir -p "{{agents_skills_dir}}"
+  for dir in "{{kskills_dir}}"/*; do
+    [[ -d "$dir" ]] || continue
+    name="$(basename "$dir")"
+    ln -sfn "$dir" "{{agents_skills_dir}}/kuriko-$name"
+  done

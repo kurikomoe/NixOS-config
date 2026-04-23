@@ -1,0 +1,26 @@
+{
+  "skill_name": "tauri-v2-reference",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "我在 Tauri 2 + Vue 3 里想从前端调用 Rust，帮我写一个最小可用示例：前端传入 name，Rust 返回 greeting。请确保用的是最新 v2 写法，并附上官方文档链接。",
+      "expected_output": "答案应使用 @tauri-apps/api/core 的 invoke、#[tauri::command]、generate_handler，并引用 Tauri v2 的 calling-rust 文档。",
+      "files": [],
+      "expectations": []
+    },
+    {
+      "id": 1,
+      "prompt": "我照着旧博客在 Tauri 里用 @tauri-apps/api/shell 执行命令，现在全炸了。请按 Tauri v2 改成能执行 echo 的版本，并告诉我 capability 要怎么配。",
+      "expected_output": "答案应指出旧的 @tauri-apps/api/shell 是 v1 风格，改为 plugin-shell，包含安装/初始化步骤与 capability 权限示例，并附官方链接。",
+      "files": [],
+      "expectations": []
+    },
+    {
+      "id": 2,
+      "prompt": "帮我把这个 Tauri v1 配置迁移到 v2 思路：tauri.conf.json 里还有 tauri.allowlist.fs、tauri.updater、tauri.windows 和 package.productName。请总结哪些键要迁移到哪里，最好列一个对照表并附官方文档。",
+      "expected_output": "答案应明确说明 allowlist 已移除、updater 转为插件、package/productName 与 tauri/app 等配置变化，并引用 v1->v2 迁移文档。",
+      "files": [],
+      "expectations": []
+    }
+  ]
+}
