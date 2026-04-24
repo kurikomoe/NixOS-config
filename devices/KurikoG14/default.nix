@@ -44,11 +44,18 @@
 
       nixpkgs = nixpkgs-hm;
       pkgs = pkgs-hm;
+
+      modules = [
+        ({pkgs, ...}: {
+          nix.package = pkgs.nix;
+        })
+      ];
     });
 
   os-config = import ./nixos.nix (p
     // {
-      inherit home-manager customVars repos hm-config;
+      # inherit home-manager customVars repos hm-config;
+      inherit home-manager customVars repos;
 
       nixpkgs = nixpkgs-os;
       pkgs = pkgs-os;

@@ -8,9 +8,10 @@ p @ {
   extraModules ? [],
   # Optional
   home-manager,
-  hm-config ? {},
+  hm-config ? null,
   ...
 }: let
+  inherit (pkgs) lib;
   system = customVars.system;
 
   os-template = import "${root.os}/template.nix" (with customVars; {
@@ -27,7 +28,7 @@ p @ {
         # Also import home here
         # No! this will cause problems:
         # https://www.reddit.com/r/NixOS/comments/112ekgm/comment/j8jngb3/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
-        {
+        ({...}: (lib.optionalAttrs (hm-config != null) {
           imports = [
             home-manager.nixosModules.home-manager
             # inputs.nix-ld.nixosModules.nix-ld
@@ -45,7 +46,7 @@ p @ {
               imports = hm-config.modules;
             };
           };
-        }
+        }))
 
         inputs.nixos-wsl.nixosModules.default
         {
