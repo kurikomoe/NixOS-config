@@ -178,7 +178,7 @@
     substituters = [
       "https://cache.nixos.org"
       "https://mirrors.ustc.edu.cn/nix-channels/store"
-      "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store"
+      # "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store"
       "https://nix-community.cachix.org"
       "https://kurikomoe.cachix.org"
       "https://nix-cache.0v0.io/r2"
