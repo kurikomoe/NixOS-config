@@ -44,16 +44,21 @@
 
       nixpkgs = nixpkgs-hm;
       pkgs = pkgs-hm;
+
+      modules = [
+        ({pkgs, ...}: {
+          nix.package = pkgs.nix;
+        })
+      ];
     });
 
   os-config = import "${root.base}/devices/KurikoG14/nixos.nix" (p
     // {
       inherit home-manager customVars repos;
+      # inherit hm-config;
 
       nixpkgs = nixpkgs-os;
       pkgs = pkgs-os;
-
-      inherit hm-config;
 
       extraModules = [
         ({...}: {

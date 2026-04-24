@@ -110,6 +110,8 @@
 
             gemini-cli-bin
 
+            poppler-utils
+
             colmena
             nixos-anywhere
 

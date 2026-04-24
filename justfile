@@ -5,7 +5,10 @@ agents_skills_dir := "$HOME/.agents/skills"
 default:
   @just --list
 
-sync-skills: sync-code-review-skill sync-understand
+sync-skills: \
+    sync-code-review-skill \
+    sync-understand \
+    sync-kskills
 
 update-skills:
   @printf '%s\n' 'About to update git submodule-backed skills from upstream remotes.'
@@ -47,12 +50,10 @@ sync-skill-creator:
   ln -sfn {{anthropics_skills_dir}}/skill-creator   {{agents_skills_dir}}/anthropics-skill-creator
   ln -sfn {{anthropics_skills_dir}}/frontend-design {{agents_skills_dir}}/anthropics-frontend-design
 
-kskills_dir := skills_dir + "/KSkills"
+kskills_dir := skills_dir + "/kskills"
 sync-kskills:
   #!/usr/bin/env bash
   mkdir -p "{{agents_skills_dir}}"
-  for dir in "{{kskills_dir}}"/*; do
-    [[ -d "$dir" ]] || continue
-    name="$(basename "$dir")"
-    ln -sfn "$dir" "{{agents_skills_dir}}/kuriko-$name"
-  done
+  ln -sfn {{kskills_dir}}/academic/read-paper "{{agents_skills_dir}}/kskills-read-paper"
+  ln -sfn {{kskills_dir}}/tauri-v2-reference "{{agents_skills_dir}}/kskills-tauri-v2-reference"
+

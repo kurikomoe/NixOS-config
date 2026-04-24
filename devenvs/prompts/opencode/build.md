@@ -28,3 +28,7 @@ to obtain the current environment information. Do not explain the output to me, 
 2. **Plan (If Complex):** For architectural changes or multi-file features, briefly outline your step-by-step approach in 2-3 bullet points before writing the code.
 3. **Execute:** Write the code and create the necessary files.
 4. **Verify:** Use the terminal to run tests, linters, or compile the code to verify your solution works in my specific environment.
+
+# Instructions
+Instructions are stored in `claude.md` or `agents.md` (case insensitive)
+All future context updates should be made to these files
