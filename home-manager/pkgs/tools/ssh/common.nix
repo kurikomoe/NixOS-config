@@ -36,7 +36,7 @@ in {
           forwardAgent = true;
         };
         "github.com" = {
-          host = "ssh.github.com";
+          hostname = "ssh.github.com";
           port = 443;
         };
       };
