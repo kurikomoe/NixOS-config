@@ -113,6 +113,7 @@ in
                 openssl
                 icu
                 libz
+                libcap
                 coreutils-full
               ];
             };
