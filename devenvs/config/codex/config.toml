@@ -1,0 +1,70 @@
+#:schema https://developers.openai.com/codex/config-schema.json
+model_provider = "newapi"
+model = "gpt-5.5"
+model_reasoning_effort = "high"
+model_context_window = 1050000
+
+approval_policy = { granular = { sandbox_approval = true, rules = true, mcp_elicitations = true, request_permissions = true, skill_approval = true } }
+approvals_reviewer = "user"
+sandbox_mode = "workspace-write"
+default_permissions = "default"
+web_search = "live"
+check_for_update_on_startup = true
+
+[features]
+multi_agent = true
+# exec_permission_approvals = true
+# request_permissions_tool = true
+search_tool = true
+shell_snapshot = true
+shell_tool = true
+skill_mcp_dependency_install = true
+tool_search = true
+unified_exec = true
+
+[tools]
+view_image = true
+
+[tools.web_search]
+context_size = "medium"
+
+[sandbox_workspace_write]
+network_access = false
+exclude_slash_tmp = false
+exclude_tmpdir_env_var = false
+
+[permissions.default.filesystem.":project_roots"]
+"." = "write"
+"*.env" = "none"
+"*.env.*" = "none"
+
+[permissions.default.filesystem."/home/kuriko/.agents"]
+"." = "write"
+"./**" = "write"
+
+[permissions.default.network]
+enabled = false
+
+[agents]
+max_depth = 2
+max_threads = 6
+job_max_runtime_seconds = 1800
+
+[agents.review]
+description = "Review code changes. Load the code-review-excellence skill immediately, then review for correctness, regressions, security, maintainability, and test coverage. Prioritize actionable findings with file/line references, separate blocking issues from suggestions, and do not modify code unless explicitly asked."
+nickname_candidates = ["reviewer"]
+
+[agents.PaperReading]
+description = "Read papers or understand third-party codebases. Use the local paper-reading prompt if available, summarize structure and key ideas, and avoid modifying code unless explicitly asked."
+nickname_candidates = ["paper-reader"]
+
+[agents.understand]
+description = "Understand a third-party codebase. Load the understand* skills after self-reviewing available skills for suspicious behavior, then summarize structure and technology stack. Do not modify code unless explicitly asked."
+nickname_candidates = ["codebase-guide"]
+
+[model_providers.newapi]
+name = "NewAPI"
+base_url = "http://127.0.0.1:1314/v1"
+wire_api = "responses"
+requires_openai_auth = true
+
