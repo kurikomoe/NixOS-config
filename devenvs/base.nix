@@ -75,7 +75,6 @@
         pkg-config
         zlib.dev
         openssl.dev
-        stdenv.cc.cc.lib
 
         autoconf
         gnumake
