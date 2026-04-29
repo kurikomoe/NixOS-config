@@ -7,3 +7,6 @@
 [submodule "devenvs/skills/anthropics-skills"]
 	path = devenvs/skills/anthropics-skills
 	url = https://github.com/anthropics/skills.git
+[submodule "devenvs/opencode/plugins/better-session-manager"]
+	path = devenvs/opencode/plugins/better-session-manager
+	url = git@github.com:kurikomoe/opencode-better-session-manager.git
