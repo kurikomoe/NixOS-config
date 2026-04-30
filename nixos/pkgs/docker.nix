@@ -2,32 +2,54 @@
   config,
   lib,
   pkgs,
+  customVars,
   ...
-}: {
+}: let
+  inherit (customVars) username;
+in {
   environment.systemPackages = with pkgs; [
     arion
+    podman-compose
+    docker-compose
   ];
 
   virtualisation = {
-    docker = {
+    containers.enable = true;
+    podman = {
       enable = true;
-      autoPrune.enable = true;
+      dockerCompat = true;
+      # Required for containers under podman-compose to be able to talk to each other.
+      defaultNetwork.settings.dns_enabled = true;
     };
-
-    # podman = {
-    #   enable = true;
-    #   autoPrune.enable = true;
-    # };
-
-    # oci-containers ={
-    #   backend = "podman";
-    #   containers = {
-    #     container-name = {
-    #       image = "container-image";
-    #       autoStart = true;
-    #       ports = [ "127.0.0.1:1234:1234" ];
-    #     };
-    #   };
-    # };
   };
+
+  users.users.${username} = {
+    # replace `<USERNAME>` with the actual username
+    extraGroups = [
+      "podman"
+    ];
+  };
+
+  # virtualisation = {
+  #   docker = {
+  #     enable = true;
+  #     autoPrune.enable = true;
+  #   };
+  #
+  #   # podman = {
+  #   #   enable = true;
+  #   #   autoPrune.enable = true;
+  #   # };
+  #
+  #   # oci-containers ={
+  #   #   backend = "podman";
+  #   #   containers = {
+  #   #     container-name = {
+  #   #       image = "container-image";
+  #   #       autoStart = true;
+  #   #       ports = [ "127.0.0.1:1234:1234" ];
+  #   #     };
+  #   #   };
+  #   # };
+  # };
 }

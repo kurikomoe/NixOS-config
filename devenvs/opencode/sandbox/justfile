@@ -1,0 +1,37 @@
+set shell := ["bash", "-cu"]
+
+compose_file := "docker-compose.yml"
+
+uid := `id -u`
+gid := `id -g`
+user := `id -un`
+workspace := `pwd`
+
+export UID := uid
+export GID := gid
+export USER := user
+export WORKSPACE := workspace
+
+default:
+    just up
+
+build:
+    podman compose -f {{compose_file}} build
+
+up: build
+    podman compose -f {{compose_file}} up -d
+
+shell:
+    podman compose -f {{compose_file}} exec opencode bash
+
+down:
+    podman compose -f {{compose_file}} down
+
+logs:
+    podman compose -f {{compose_file}} logs -f opencode
+
+ps:
+    podman compose -f {{compose_file}} ps
+
+restart:
+    podman compose -f {{compose_file}} restart opencode

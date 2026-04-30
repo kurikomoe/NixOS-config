@@ -21,6 +21,7 @@ p @ {
       [
         ./configuration.nix
 
+        "${root.base}/nixos/pkgs/docker.nix"
         "${root.base}/nixos/pkgs/docker-cuda.nix"
 
         # ./age-nixos.nix
@@ -133,7 +134,7 @@ p @ {
             shell = pkgs.fish;
             isNormalUser = true;
             group = "wheel";
-            extraGroups = ["docker"];
+            extraGroups = ["docker" "podman"];
             linger = true;
 
             hashedPassword = "$6$aV8t5ljQBwHKHJdd$UO6BD7maFeOdOhH47..H2zMJaKmuyzRNb45/Q1iRtSQ87YcddkQmFeO0TF8mtyfY2rwhom3lXanBn5AT5QFYh1";
@@ -217,7 +218,7 @@ p @ {
             # docker
             dive # look into docker image layers
             podman-tui # status of containers in the terminal
-            docker-compose
+            # docker-compose
           ];
 
           # cannot enable on wsl, it will invoke building kernel

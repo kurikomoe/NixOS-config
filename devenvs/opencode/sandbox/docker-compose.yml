@@ -1,0 +1,37 @@
+services:
+  opencode:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        LOCAL_USER: ${USER:-ubuntu}
+        LOCAL_UID: ${UID:-1000}
+        LOCAL_GID: ${GID:-1000}
+    image: opencode:ubuntu-26.04
+    container_name: opencode-sandbox
+    # user: "${UID:-1000}:${GID:-1000}"
+    working_dir: ${PWD}
+    environment:
+      - HOME=/home/${USER}
+      - XDG_RUNTIME_DIR=/run/user/${UID}
+    stdin_open: true
+    tty: true
+    volumes:
+      - /nix:/nix:ro
+      - /run/user/${UID}:/run/user/${UID}
+      - /etc/passwd:/etc/passwd:ro
+      - /etc/group:/etc/group:ro
+
+      - ${HOME}:${HOME}:ro
+
+      - ${HOME}/.agenix:${HOME}/.agenix:ro
+
+      - ${HOME}/.agents:${HOME}/.agents
+
+      - ${HOME}/.local/state/opencode:${HOME}/.local/state/opencode
+      - ${HOME}/.local/share/opencode:${HOME}/.local/share/opencode
+      - ${HOME}/.config/opencode:${HOME}/.config/opencode
+      - ${HOME}/.cache/opencode:${HOME}/.cache/opencode
+      # 工作目录挂载点
+      - ${PWD}:${PWD}
+

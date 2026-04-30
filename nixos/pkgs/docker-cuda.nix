@@ -19,12 +19,12 @@ in {
   ];
 
   # ref: https://github.com/nix-community/NixOS-WSL/discussions/487#discussioncomment-11180666
-  virtualisation.docker = {
-    enable = true;
-    autoPrune.enable = true;
-
-    daemon.settings.features.cdi = true;
-  };
+  # virtualisation.docker = {
+  #   enable = true;
+  #   autoPrune.enable = true;
+  #
+  #   daemon.settings.features.cdi = true;
+  # };
 
   # hardware = {
   #   graphics.enable32Bit = true;
