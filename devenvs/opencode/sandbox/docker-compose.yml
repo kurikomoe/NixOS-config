@@ -13,16 +13,14 @@ services:
     working_dir: ${PWD}
     environment:
       - HOME=/home/${USER}
-      - XDG_RUNTIME_DIR=/run/user/${UID}
+      - XDG_RUNTIME_DIR=/run/user/${UID:-1000}
     stdin_open: true
     tty: true
     volumes:
       - /nix:/nix:ro
-      - /run/user/${UID}:/run/user/${UID}
+      - /run/user/${UID:-1000}:/run/user/${UID:-1000}
       - /etc/passwd:/etc/passwd:ro
       - /etc/group:/etc/group:ro
-
-      - ${HOME}:${HOME}:ro
 
       - ${HOME}/.agenix:${HOME}/.agenix:ro
 
@@ -34,4 +32,3 @@ services:
       - ${HOME}/.cache/opencode:${HOME}/.cache/opencode
       # 工作目录挂载点
       - ${PWD}:${PWD}
-

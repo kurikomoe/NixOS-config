@@ -1,44 +1,42 @@
-# For opencode ai agent
-# Provide a stable solo development environment
+# Stable solo development environment for opencode ai agent
 
 FROM ubuntu:26.04
 
-ARG LOCAL_UID=1000
-ARG LOCAL_GID=1000
+ARG LOCAL_USER=ubuntu
 
 ENV DEBIAN_FRONTEND=noninteractive
-
-WORKDIR /build
+ENV PATH="/root/.cargo/bin:${PATH}"
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
+        bash \
         build-essential \
         ca-certificates \
         curl \
         git \
+        tar \
+        wget \
         sudo \
-        bash \
-        vim
+        vim \
+        fastfetch \
+    && curl https://sh.rustup.rs -sSf | bash -s -- -y --default-toolchain stable \
+    && cargo install cargo-binstall \
+    && cargo binstall -y ripgrep fd-find
 
-RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
+RUN mkdir -p \
+        /home/${LOCAL_USER}/.agenix \
+        /home/${LOCAL_USER}/.agents \
+        /home/${LOCAL_USER}/.cache/opencode \
+        /home/${LOCAL_USER}/.config/opencode \
+        /home/${LOCAL_USER}/.local/share/opencode \
+        /home/${LOCAL_USER}/.local/state/opencode
 
-ENV PATH="/root/.cargo/bin:${PATH}"
-
-RUN rustup install stable
-
-RUN cargo install cargo-binstall
-
-RUN cargo binstall ripgrep fd-find
-
-RUN mkdir -p /build
+WORKDIR /build
 
 COPY ./scripts ./scripts
 
-RUN apt-get install -y tar wget
-
 RUN bash scripts/build-opencode.sh
 
-# Enter Development Env
 WORKDIR /work
 
 CMD ["opencode"]
