@@ -26,5 +26,9 @@ in {
     "${prompt_dir}/read-paper.md".source = ./prompts/read-paper.md;
   };
 
+  home.shellAliases = {
+    oc = "opencode";
+  };
+
   age.secrets = age_secrets_filelist;
 }

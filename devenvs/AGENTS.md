@@ -17,17 +17,11 @@
 
 系统中存在 nodejs，你可以安装任何 node packages
 
-# 额外工具安装说明
+# 工具安装说明
 
-系统是 NixOS，如果你有任何需要安装的工具，先输出出来，之后使用 question 相关的命令暂停执行，我在安装完相关工具后会通过 question 返回结果
-
-请尽量使用非安装软件包的方式执行工具。
-
-## 额外工具查找说明
+你可以通过查询 flake.nix 或者 nix/flake.nix 文件来检查当前已经安装的命令。
+并通过 `direnv exec [项目根目录] [命令] [参数]` 来调用工具。
 
 你可以调用 `nix-search toolname` 命令来查找需要的工具。
-
-目录中有 direnv（参见 .envrc 和 nix/flake.nix），你可以通过修改 nix/flake.nix 的方式添加需要的软件）
-
-你可以通过 `nix shell nixpkgs#cowsay -c cowsay "Temp run"` 的形式直接调用相关的程序
+并通过 `nix shell nixpkgs#cowsay -c cowsay "Temp run"` 的形式直接调用相关的程序
 

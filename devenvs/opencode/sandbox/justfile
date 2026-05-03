@@ -3,7 +3,7 @@ set shell := ["bash", "-cu"]
 compose_file := "docker-compose.yml"
 
 default:
-    podman-compose -f {{compose_file}} run --rm opencode
+    podman-compose -f {{compose_file}} run --build --rm opencode
 
 shell:
-    podman-compose -f {{compose_file}} run --rm opencode bash
+    podman-compose -f {{compose_file}} run --build --rm opencode bash
