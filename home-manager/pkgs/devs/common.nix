@@ -37,7 +37,7 @@ in {
     (lib.hiPrio repos.pkgs-unstable.uutils-coreutils-noprefix)
 
     repos.pkgs-unstable.claude-code
-    repos.pkgs-unstable.codex
+    repos.pkgs-kuriko-nur.codex
 
     asdf-vm
 

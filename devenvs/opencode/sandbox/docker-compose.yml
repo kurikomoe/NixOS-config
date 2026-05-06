@@ -11,24 +11,37 @@ services:
     container_name: opencode-sandbox
     # user: "${UID:-1000}:${GID:-1000}"
     working_dir: ${PWD}
+    network_mode: host
     environment:
       - HOME=/home/${USER}
       - XDG_RUNTIME_DIR=/run/user/${UID:-1000}
     stdin_open: true
     tty: true
     volumes:
+      # System mounts
       - /nix:/nix:ro
       - /run/user/${UID:-1000}:/run/user/${UID:-1000}
       - /etc/passwd:/etc/passwd:ro
       - /etc/group:/etc/group:ro
 
+      # Agenix secrets (read-only)
       - ${HOME}/.agenix:${HOME}/.agenix:ro
 
+      # Agent configurations and persistent state
       - ${HOME}/.agents:${HOME}/.agents
-
       - ${HOME}/.local/state/opencode:${HOME}/.local/state/opencode
       - ${HOME}/.local/share/opencode:${HOME}/.local/share/opencode
       - ${HOME}/.config/opencode:${HOME}/.config/opencode
       - ${HOME}/.cache/opencode:${HOME}/.cache/opencode
-      # 工作目录挂载点
+
+      # GitHub CLI config (optional - uncomment to persist gh auth)
+      - ${HOME}/.config/gh:${HOME}/.config/gh
+
+      # SSH keys (optional - uncomment for git over SSH)
+      # - ${HOME}/.ssh:${HOME}/.ssh:ro
+
+      # GPG keys (optional - uncomment for signing commits)
+      # - ${HOME}/.gnupg:${HOME}/.gnupg:ro
+
+      # Working directory mount
       - ${PWD}:${PWD}
