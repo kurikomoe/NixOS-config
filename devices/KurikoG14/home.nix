@@ -115,6 +115,14 @@
             colmena
             nixos-anywhere
 
+            android-tools
+            apktool
+            jadx
+            poppler-utils
+            imagemagick
+            mupdf
+            rhash
+
             # use the latest deploy to avoid a bug
             repos.pkgs-kuriko-nur.deploy-rs
 
