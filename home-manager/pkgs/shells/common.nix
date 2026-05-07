@@ -35,6 +35,8 @@ in {
     fzf
     bat
 
+    nix-sweep
+
     yazi
     helix
 

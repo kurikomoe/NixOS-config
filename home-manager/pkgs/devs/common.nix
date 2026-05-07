@@ -17,6 +17,7 @@ in {
     ./gdb
 
     ./aicoding/opencode.nix
+    ./aicoding/codex.nix
 
     # ./frameworks/tauri.nix
   ];
@@ -37,7 +38,7 @@ in {
     (lib.hiPrio repos.pkgs-unstable.uutils-coreutils-noprefix)
 
     repos.pkgs-unstable.claude-code
-    repos.pkgs-kuriko-nur.codex
+    socat
 
     asdf-vm
 

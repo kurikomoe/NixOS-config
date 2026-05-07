@@ -5,5 +5,7 @@ in {
     mkvtoolnix # dump mkv embl info
 
     speedtest-cli # speedtest
+
+    bubblewrap
   ];
 }
