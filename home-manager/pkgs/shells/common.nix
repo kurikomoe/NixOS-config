@@ -35,7 +35,7 @@ in {
     fzf
     bat
 
-    nix-sweep
+    repos.pkgs-unstable.nix-sweep
 
     yazi
     helix
