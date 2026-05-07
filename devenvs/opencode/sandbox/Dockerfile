@@ -83,4 +83,4 @@ RUN bash scripts/build-opencode.sh "${OPENCODE_VERSION}"
 
 WORKDIR /work
 
-CMD ["opencode"]
+ENTRYPOINT ["opencode"]

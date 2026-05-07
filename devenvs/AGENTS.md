@@ -1,3 +1,5 @@
+**IMPORTANT: Load project file {file:./PROJECT.md} first**
+
 # 文件组织说明
 
 `@output`: 成品文件
@@ -30,21 +32,32 @@
 
 ## 操作系统
 
+> 请通过检查 `INSIDE_DOCKER` 环境变量来确定自身是否处于 docker 环境。
+
+### Docker
+
+对于 Docker 环境，你可以使用 root 权限安装任何需要的工具。
+
 ### Ubuntu
 
 你可以通过 `apt` / `apt-get` 安装所需工具
 
 ### NixOS
 
-- 工具安装说明
+#### 工具查找
 
-你可以通过查询 `./flake.nix` 或者 `./nix/flake.nix` 文件来检查当前已经安装的命令。
-并通过 `direnv exec [项目根目录] [命令] [参数]` 来调用工具。
+通过调用 `nix-search toolname` 命令来查找需要的工具。
 
-你可以调用 `nix-search toolname` 命令来查找需要的工具。
-并通过 `nix shell nixpkgs#cowsay -c cowsay "Temp run"` 的形式直接调用相关的程序
+#### direnv 环境
+
+如果存在 `DIRENV_FILE` 环境变量，则表明在 direnv 环境，
+**所有命令****必须**通过 `direnv exec [项目根目录] [命令] [参数]` 调用
+
+#### 普通环境
+
+通过 `nix shell nixpkgs#<PACKAGE_NAME> -c <APP_NAME> <PARAMATERS>` 命令执行需要安装的工具
 
 ### 其他
 
-从网络下载工具前，需要使用 question 工具像我显式申请许可，我可能会手动帮你下载并放到指定位置
-任何从网络直接下载的工具，注意需要 `chmod +x` 设置执行权限
+从网络下载工具前，需要使用 question 工具向我申请许可，我可能会手动帮你下载并放到指定位置
+从网络直接下载的工具，需要 `chmod +x` 设置执行权限

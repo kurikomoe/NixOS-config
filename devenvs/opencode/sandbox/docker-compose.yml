@@ -15,6 +15,7 @@ services:
     environment:
       - HOME=/home/${USER}
       - XDG_RUNTIME_DIR=/run/user/${UID:-1000}
+      - INSIDE_DOCKER=1
     stdin_open: true
     tty: true
     volumes:
