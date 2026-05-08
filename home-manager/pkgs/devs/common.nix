@@ -37,7 +37,8 @@ in {
     (lib.hiPrio repos.pkgs-unstable.uutils-diffutils)
     (lib.hiPrio repos.pkgs-unstable.uutils-coreutils-noprefix)
 
-    repos.pkgs-unstable.claude-code
+    (repos.pkgs-unstable.claude-code)
+    (repos.pkgs-kuriko-nur.hermes-agent)
     socat
 
     asdf-vm
