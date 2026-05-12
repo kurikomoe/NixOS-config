@@ -149,6 +149,10 @@ in {
     wslu
   ];
 
+  home.sessionVariables = {
+    "LD_LIBRARY_PATH" = "/usr/lib/wsl/lib";
+  };
+
   home.file =
     file_list
     // {
