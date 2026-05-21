@@ -49,6 +49,7 @@ in {
     # Git
     gst = "git status";
     gd = "git diff";
+    gfa = "git fetch --all";
     # gi = "git ignore";
     gi = "gibo dump";
   };
