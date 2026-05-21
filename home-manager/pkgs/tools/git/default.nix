@@ -48,6 +48,7 @@ in {
   home.shellAliases = {
     # Git
     gst = "git status";
+    gd = "git diff";
     # gi = "git ignore";
     gi = "gibo dump";
   };

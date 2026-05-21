@@ -17,7 +17,7 @@
     // (helper "opencode/config/tui.jsonc" "${home}/.config/opencode/tui.jsonc");
 in {
   home.packages = with pkgs; [
-    repos.pkgs-kuriko-nur.opencode
+    repos.pkgs-kuriko-nur.opencode-bin
   ];
 
   home.file = {
