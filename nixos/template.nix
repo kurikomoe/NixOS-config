@@ -124,6 +124,7 @@ in
           # all /bin/bash to avoid headache
           systemd.tmpfiles.rules = lib.mkDefault [
             "L /bin/bash - - - - /run/current-system/sw/bin/bash"
+            "L /usr/bin/bash - - - - /run/current-system/sw/bin/bash"
           ];
         })
 
