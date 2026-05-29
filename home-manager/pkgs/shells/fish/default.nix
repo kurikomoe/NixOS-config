@@ -56,6 +56,7 @@ p @ {
   myInteractiveShellInit = builtins.readFile ./shell_init.fish;
   interactiveShellInit = ''
     ${myInteractiveShellInit}
+    ${builtins.readFile ./venv.fish}
   '';
 in {
   imports = [
@@ -84,6 +85,44 @@ in {
     fish = {
       enable = true;
       inherit shellInit interactiveShellInit;
+      functions = {
+        # "auto_enter_venv" = {
+        #   body = ''
+        #     status --is-command-substitution; and return
+        #
+        #     # Check if we are inside a git directory
+        #     if git rev-parse --show-toplevel &>/dev/null
+        #       set gitdir (realpath (git rev-parse --show-toplevel))
+        #       set cwd (pwd -P)
+        #       # While we are still inside the git directory, find the closest
+        #       # virtualenv starting from the current directory.
+        #       while string match "$gitdir*" "$cwd" &>/dev/null
+        #         if test -e "$cwd/.venv/bin/activate.fish"
+        #           source "$cwd/.venv/bin/activate.fish" &>/dev/null
+        #           return
+        #         else
+        #           set cwd (path dirname "$cwd")
+        #         end
+        #       end
+        #     end
+        #     # If virtualenv activated but we are not in a git directory, deactivate.
+        #     if test -n "$VIRTUAL_ENV"
+        #       deactivate
+        #     end
+        #   '';
+        #   onVariable = "PWD";
+        # };
+        # "auto_enter_direnv" = {
+        #   body = ''
+        #     set -l nix_shell_info (
+        #       if test -n "$IN_NIX_SHELL"
+        #         echo -n "<nix-shell> "
+        #       end
+        #     )
+        #   '';
+        #   onVariable = "PWD";
+        # };
+      };
       plugins = with pkgs.fishPlugins; [
         {
           name = "fish-abbreviation-tips";
