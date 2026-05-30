@@ -568,11 +568,11 @@
         "pre-commit-hooks": "pre-commit-hooks"
       },
       "locked": {
-        "lastModified": 1780009338,
-        "narHash": "sha256-3l209puE4LAOFecYK3+abpeEiFWg2Gum/bCW3AppoNc=",
+        "lastModified": 1780094888,
+        "narHash": "sha256-tP/qhgH4jwW34yoMTwzRObOv3OYMFEk55iUE9YwEEZI=",
         "owner": "kurikomoe",
         "repo": "nur-packages",
-        "rev": "f5a3eb639afaea4b646df71b31ae422137a04eb7",
+        "rev": "13020b3d32cf77cf192d7c044c32bf6021c0851d",
         "type": "github"
       },
       "original": {
@@ -844,11 +844,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1780007312,
-        "narHash": "sha256-Q8r+wxSY20Nr8Zh/YNOuq6bHx6i3fQ7OEK3Tu71eKcw=",
+        "lastModified": 1780098079,
+        "narHash": "sha256-ld7L0cekMMHAh1hqK1iUJ2iEDlYMPsW5pesgnBhSa64=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "882aa96c74fe785f7b3b52180b3a475ac70fb2cf",
+        "rev": "f6b7fa0de97a6f9f2e8f806a03b6788ce3aab366",
         "type": "github"
       },
       "original": {
