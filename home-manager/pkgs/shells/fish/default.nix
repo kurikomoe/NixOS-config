@@ -53,10 +53,10 @@ p @ {
     source ${fish-command-timer.src}/fish_command_timer.fish;
   '';
 
-  myInteractiveShellInit = builtins.readFile ./shell_init.fish;
+  # myInteractiveShellInit = builtins.readFile ./shell_init.fish;
   interactiveShellInit = ''
-    ${myInteractiveShellInit}
-    ${builtins.readFile ./venv.fish}
+    source ${./shell_init.fish}
+    source ${./venv.fish}
   '';
 in {
   imports = [

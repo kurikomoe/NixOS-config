@@ -14,7 +14,7 @@ function __find_parent_venv
 end
 
 
-function auto_enter_venv --on-variable PWD
+function auto_enter_venv --on-variable PWD --on-event fish_focus_in
     status --is-command-substitution; and return
 
     set -l venv (__find_parent_venv)
@@ -39,3 +39,5 @@ function auto_enter_venv --on-variable PWD
         deactivate
     end
 end
+
+auto_enter_venv
