@@ -286,6 +286,7 @@
         devices = [
           ./devices/KurikoG14
           ./devices/KurikoTB16p
+          ./devices/KurikoWin11
 
           ./devices/KurikoArch
 
