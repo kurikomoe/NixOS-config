@@ -57,8 +57,8 @@ in {
   #   };
   # };
 
-  system.activationScripts.script.text = ''
-    source ${config.system.build.setEnvironment}
-    ${pkgs.nvidia-docker}/bin/nvidia-ctk cdi generate --output="/etc/cdi/nvidia.yaml"
-  '';
+  # system.activationScripts.script.text = ''
+  #   source ${config.system.build.setEnvironment}
+  #   ${pkgs.nvidia-docker}/bin/nvidia-ctk cdi generate --output="/etc/cdi/nvidia.yaml"
+  # '';
 }
