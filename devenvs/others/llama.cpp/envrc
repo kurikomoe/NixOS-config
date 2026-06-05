@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+watch_file flake.nix
+watch_file flake.lock
+
+watch_file nix/flake.nix
+watch_file nix/flake.lock
+
+nix_direnv_manual_reload
+
+if [ "$FHS" == "" ]; then
+  # use flake path:nix#fhs --impure
+  # use flake . --impure
+  use flake path:nix --impure
+fi
+
+# if [ "$FHS_CURRENT" != "$1" ]; then
+#   export FHS_CURRENT=$1
+#   echo "In FHS: $FHS_CURRENT"
+#   use flake path:nix --impure
+# fi
