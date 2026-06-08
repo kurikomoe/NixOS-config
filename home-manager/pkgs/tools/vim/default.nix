@@ -72,7 +72,7 @@
     coc-cmake
     coc-git
 
-    coc-go
+    # coc-go # deprecated
     coc-sh
     coc-clangd
     coc-rust-analyzer
@@ -113,6 +113,8 @@ in {
 
   programs.neovim = {
     enable = true;
+    withRuby = true;
+    withPython3 = true;
     viAlias = true;
     vimAlias = true;
     defaultEditor = true;
@@ -128,7 +130,8 @@ in {
               inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
                                             \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
       '';
-    extraLuaConfig = ''
+    # renamed from extraLuaConfig to initLua in 26.05
+    initLua = ''
       vim.lsp.config["csharp_ls"] = {
         root_marker = { "*.sln", "*.csproj", },
         handlers = {

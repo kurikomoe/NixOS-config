@@ -101,7 +101,9 @@
 
           home.packages = with pkgs; [
             # Test gui
-            xorg.xeyes
+            # xorg.xeyes # before 26.05
+            xeyes # since 26.05
+
             mesa-demos
             vulkan-tools
 

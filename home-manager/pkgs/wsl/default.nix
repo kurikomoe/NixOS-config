@@ -146,7 +146,7 @@ in {
 
   home.packages = with pkgs; [
     mount-all
-    wslu
+    # wslu # removed in 26.05
   ];
 
   home.sessionVariables = {

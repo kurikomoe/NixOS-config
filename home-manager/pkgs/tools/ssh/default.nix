@@ -23,7 +23,7 @@ in {
   programs = lib.recursiveUpdate common.programs {};
 
   services = {
-    ssh-agent.enable = true;
+    # ssh-agent.enable = true;  # use gpg-agent's ssh function
   };
 
   # home.activation.sshAuthorizedKeys = lib.hm.dag.entryAfter ["linkGeneration"] ''

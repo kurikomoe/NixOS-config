@@ -55,6 +55,7 @@ p @ {
 
   # myInteractiveShellInit = builtins.readFile ./shell_init.fish;
   interactiveShellInit = ''
+    ${shellInit}
     source ${./shell_init.fish}
     source ${./venv.fish}
   '';
@@ -84,7 +85,7 @@ in {
 
     fish = {
       enable = true;
-      inherit shellInit interactiveShellInit;
+      inherit interactiveShellInit;
       functions = {
         # "auto_enter_venv" = {
         #   body = ''

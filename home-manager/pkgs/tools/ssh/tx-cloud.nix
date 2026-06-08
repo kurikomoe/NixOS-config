@@ -32,7 +32,7 @@ in {
   };
 
   services = {
-    ssh-agent.enable = true;
+    # ssh-agent.enable = true;
   };
 
   home.activation.sshAuthorizedKeys = lib.hm.dag.entryAfter ["linkGeneration"] ''

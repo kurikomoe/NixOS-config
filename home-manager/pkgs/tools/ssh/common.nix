@@ -28,7 +28,8 @@ in {
     ssh = {
       enable = true;
       enableDefaultConfig = false;
-      matchBlocks = {
+      # 26.05: Renamed from matchBlocks to settings
+      settings = {
         "*" = {
           serverAliveInterval = 60;
           compression = true;
