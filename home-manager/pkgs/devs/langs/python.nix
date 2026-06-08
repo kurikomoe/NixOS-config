@@ -4,7 +4,7 @@ p @ {
   repos,
   ...
 }: let
-  python3 = pkgs.python312;
+  python3 = pkgs.python3;
 in {
   # use latest python
   # nixpkgs.overlays = [
@@ -32,7 +32,6 @@ in {
         pyyaml
 
         # 异步
-        # asyncio
 
         # MS office
         xlsxwriter
@@ -71,6 +70,7 @@ in {
         pandas
         numpy
         scipy
+        # torch
 
         # 进度显示
         tqdm
@@ -84,7 +84,8 @@ in {
         # 数据格式
         pydantic
 
-        #网络
+        # 网络 / web
+        openai
         pysocks
         aiohttp
         fastapi
@@ -104,8 +105,13 @@ in {
         # Terminal 工具
         pexpect
 
+        # 字符处理
+        chardet
+        levenshtein
+
         # 其他
         setuptools
+        pyinstaller
         # ninja
         scons
 
