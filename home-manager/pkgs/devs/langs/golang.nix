@@ -9,8 +9,9 @@ in {
 
   programs.go = {
     enable = true;
-    env = {
-      GOPATH = "$HOME/.local/share/go";
-    };
+  };
+
+  home.sessionVariables = {
+    GOPATH = "~/.local/share/go";
   };
 }

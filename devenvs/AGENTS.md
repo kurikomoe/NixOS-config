@@ -41,7 +41,6 @@
 
 #### direnv 环境
 如果存在 `DIRENV_FILE` 环境变量，则表明在 direnv 环境，
-**所有命令****必须**通过 `direnv exec [项目根目录] [命令] [参数]` 调用
 
 #### 普通环境
 通过 `nix shell nixpkgs#<PACKAGE_NAME> -c <APP_NAME> <PARAMATERS>` 命令执行需要安装的工具
