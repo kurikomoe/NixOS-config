@@ -23,10 +23,10 @@ in rec {
     # repos.pkgs-unstable.maple-mono.CN
     _0xproto
 
-    repos.pkgs-kuriko-nur.kfonts
-    repos.pkgs-kuriko-nur.kuriko-all-fonts
+    (lib.mkForce repos.pkgs-kuriko-nur.kfonts)
+    (lib.mkForce repos.pkgs-kuriko-nur.kuriko-all-fonts)
 
-    jetbrains-mono
+    # jetbrains-mono
 
     ibm-plex
   ];

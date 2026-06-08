@@ -17,7 +17,7 @@ in {
   home.packages = with pkgs; [
     uv
 
-    pipx
+    # pipx
 
     pylint
     mypy
