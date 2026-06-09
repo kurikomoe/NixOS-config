@@ -62,9 +62,11 @@
 
       extraModules = [
         ({...}: {
+          users.users.kuriko.uid = 1001;
+
           # disable buggy windows vulkan, use cpu
           environment.sessionVariables = {
-            VK_ICD_FILENAMES = lib.mkDefault "/run/opengl-driver/share/vulkan/icd.d/lvp_icd.x86_64.json";
+            # VK_ICD_FILENAMES = lib.mkDefault "/run/opengl-driver/share/vulkan/icd.d/lvp_icd.x86_64.json";
           };
         })
       ];
