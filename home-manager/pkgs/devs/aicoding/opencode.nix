@@ -9,6 +9,9 @@
   home = config.home.homeDirectory;
   helper = kutils.age.agehelper;
 
+  http_proxy = "http://localhost:8899";
+  socks_proxy = "socks5://localhost:8899";
+
   prompt_dir = ".config/opencode/prompts";
 
   age_secrets_filelist =
@@ -28,6 +31,7 @@ in {
 
   home.shellAliases = {
     oc = "opencode";
+    ocp = "http_proxy=${http_proxy} https_proxy=${http_proxy} socks_proxy=${socks_proxy} all_proxy=${socks_proxy} opencode";
   };
 
   age.secrets = age_secrets_filelist;

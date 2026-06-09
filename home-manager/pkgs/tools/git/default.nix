@@ -16,6 +16,7 @@ in {
   ];
 
   home.packages = with pkgs; [
+    git-crypt
     git-lfs
     age
     sops

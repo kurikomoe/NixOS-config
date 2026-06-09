@@ -71,6 +71,8 @@
         hello
         precommit-trufflehog
 
+        git-crypt
+
         # requirements
         pkg-config
         zlib.dev
