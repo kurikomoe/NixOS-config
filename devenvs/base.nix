@@ -89,6 +89,11 @@
         cfg.python
       ];
 
+      env = {
+        SSL_CERT_FILE = /etc/ssl/certs/ca-certificates.crt;
+        NIX_SSL_CERT_FILE = /etc/ssl/certs/ca-certificates.crt;
+      };
+
       # 基础 Hook
       devShellBase.shellHook = ''
         export KROOT=$(realpath $PWD)

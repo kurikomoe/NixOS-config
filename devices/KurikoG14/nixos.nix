@@ -191,6 +191,17 @@ p @ {
             };
           };
 
+          services.chrony = {
+            enable = true;
+            servers = [
+              "ntp1.aliyun.com"
+              "ntp.tencent.com"
+              "cn.pool.ntp.org"
+              "time.apple.com"
+              "cn.ntp.org.cn"
+            ];
+          };
+
           # services.envfs.enable = true;
 
           # Enable hyperland
