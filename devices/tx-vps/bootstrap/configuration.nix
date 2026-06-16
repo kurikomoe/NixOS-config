@@ -17,6 +17,9 @@ in {
 
   # Not appliable on WSL2
   # boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
+
+  # auto grow partition size
+  boot.growPartition = true;
   boot.kernelParams = [
     "audit=0"
     "net.ifnames=0"
@@ -30,7 +33,7 @@ in {
   };
 
   boot.loader.grub = {
-    configurationLimit = 2; # avoid using up the /boot disk space
+    configurationLimit = 3; # avoid using up the /boot disk space
     efiSupport = true;
     devices = ["/dev/vda"];
     efiInstallAsRemovable = true;
@@ -73,10 +76,10 @@ in {
     "1.1.1.1"
   ];
   networking.useNetworkd = true;
-  networking.useDHCP = false;
+  networking.useDHCP = true;
 
   fileSystems."/boot" = {
-    device = "/dev/vda1";
+    device = "/dev/vda2";
     fsType = "vfat";
     options = ["umask=0077"];
   };
@@ -122,7 +125,9 @@ in {
   nixpkgs.config.allowUnfree = true;
 
   environment.variables.EDITOR = "vi";
-  environment.systemPackages = with pkgs; [];
+  environment.systemPackages = with pkgs; [
+    cloud-utils
+  ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

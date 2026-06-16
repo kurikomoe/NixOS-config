@@ -7,7 +7,7 @@ if [[ $1 == "" ]]; then
   exit 1
 fi
 
-nix run github:nix-community/nixos-anywhere  -- \
+nix run ../../../third/nixos-anywhere  -- \
   --flake .#bootstrap \
   --target-host $TARGET \
   --generate-hardware-config nixos-generate-config ./hardware-configuration.nix \

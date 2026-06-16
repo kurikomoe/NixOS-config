@@ -36,6 +36,7 @@ enter_nu_if_9p
 # =======================================================================
 
 if status is-interactive
+  if command -v  gpg-connect-agent > /dev/null
     # 1. 设置 GPG_TTY 环境变量
     # -g 表示全局 (global)，-x 表示导出 (export) 给子进程
     set -gx GPG_TTY (tty)
@@ -43,4 +44,5 @@ if status is-interactive
     # 2. 强制刷新 gpg-agent 的 TTY 上下文
     # 这一步同样关键，告诉后台的 agent 更新当前窗口信息
     gpg-connect-agent updatestartuptty /bye > /dev/null 2>&1
+  end
 end

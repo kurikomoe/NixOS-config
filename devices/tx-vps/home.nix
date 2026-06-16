@@ -11,13 +11,13 @@
   lib = pkgs.lib;
 
   hm-template = import "${root.hm}/template.nix" (with customVars; {
-    inherit inputs root customVars repos pkgs;
+    inherit inputs root customVars repos pkgs kutils;
 
     overrideSecrets = [
       ./age-hm.nix
     ];
 
-    stateVersion = "24.11";
+    stateVersion = "26.05";
 
     extraNixPkgsOptions = {};
 

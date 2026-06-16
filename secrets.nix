@@ -10,9 +10,8 @@ let
   keys_tx =
     keys_age
     ++ [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBoOHuyXCBhpcZRb/xfc7vG1nl2TKulAwrzBnL/s9tMx root@VM-0-5-debian"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPM25/UG2xBAdE679n4HzWfApH+0ezYKK0cEC+JicZcg System"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHYWa0plFvmQkJIHG15fkLqX6cjyg5pimMnnplGc2y7n User"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO7ll3+JwKIAbMQzpCT91zYJYmdC+2TAAFqC1vFFAtXh kuriko@KurikoTXCloud"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH7WSaOGbCP4u7HoAI4BSOkSgpdzsDmYbepdg7k7f1VA root@KurikoTXCloud"
     ];
 
   keys_kurikoG14 =
@@ -96,12 +95,16 @@ let
     };
 
     "res/opencode" = {
-      "config/opencode.jsonc".publicKeys = keys_imp;
-      "config/tui.jsonc".publicKeys = keys_imp;
+      "config/opencode.jsonc".publicKeys = keys;
+      "config/tui.jsonc".publicKeys = keys;
     };
 
     "res/misc" = {
       "shell_gpt/sgptrc".publicKeys = keys;
+    };
+
+    "res/dns" = {
+      "cloudflare.txt".publicKeys = keys;
     };
   };
 

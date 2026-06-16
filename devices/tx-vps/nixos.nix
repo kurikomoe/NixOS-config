@@ -3,6 +3,7 @@
   pkgs,
   root,
   customVars,
+  kutils,
   repos,
   hm-config,
   ...
@@ -10,7 +11,7 @@
   system = customVars.system;
 
   os-template = import "${root.os}/template.nix" (with customVars; {
-    inherit inputs root customVars repos pkgs;
+    inherit inputs root customVars repos pkgs kutils;
 
     modules = [
       ./bootstrap/configuration.nix
@@ -116,12 +117,43 @@
           };
         };
 
+        # security.acme = {
+        #   acceptTerms = true;
+        #   defaults.email = "kurikomoe@gmail.com";
+        #   certs = {
+        #     "0v0.io" = {
+        #       domain = "c.0v0.io";
+        #       group = "nginx";
+        #       dnsProvider = "cloudflare";
+        #       environmentFile = config.age.secrets."dns/cloudflare.txt".path;
+        #     };
+        #   };
+        # };
+
         services.tailscale = {
           enable = true;
-          # derper.enable = true;
-          # derper.domain = "c.0v0.io";
-          # derper.verifyClients = true;
+          # derper = {
+          #   enable = true;
+          #   domain = "c.0v0.io";
+          #   verifyClients = true;
+          #   port = 8010;
+          #   stunPort = 3478;
+          # };
         };
+
+        # systemd.services.derp-route-fix = {
+        #   description = "Fix routing for DERP traffic";
+        #   wantedBy = ["multi-user.target"];
+        #   after = ["network-online.target"];
+        #   serviceConfig = {
+        #     Type = "oneshot";
+        #     RemainAfterExit = true;
+        #     ExecStart = "${pkgs.iproute2}/bin/ip rule add dport 3478 table main";
+        #     ExecStartPost = "${pkgs.iproute2}/bin/ip rule add sport 3478 table main";
+        #     ExecStop = "${pkgs.iproute2}/bin/ip rule del dport 3478 table main";
+        #     ExecStopPost = "${pkgs.iproute2}/bin/ip rule del sport 3478 table main";
+        #   };
+        # };
 
         # age.secrets."frp/frps.toml" = {
         #   mode = "400";
@@ -159,7 +191,7 @@
         zramSwap = {
           enable = true;
           algorithm = "zstd";
-          memoryPercent = 50;
+          memoryPercent = 100;
         };
 
         services.rustdesk-server = {

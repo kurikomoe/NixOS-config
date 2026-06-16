@@ -19,7 +19,7 @@ in {
       enable = true;
       enableSshSupport = true;
 
-      pinentry.package = pkgs.pinentry-tty;
+      pinentry.package = pkgs.pinentry-curses;
 
       defaultCacheTtl = 7200;
       defaultCacheTtlSsh = 7200;

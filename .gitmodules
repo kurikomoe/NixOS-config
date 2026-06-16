@@ -10,3 +10,6 @@
 [submodule "devenvs/opencode/plugins/better-session-manager"]
 	path = devenvs/opencode/plugins/better-session-manager
 	url = git@github.com:kurikomoe/opencode-better-session-manager.git
+[submodule "third/nixos-anywhere"]
+	path = third/nixos-anywhere
+	url = git@github.com:nix-community/nixos-anywhere.git

@@ -39,7 +39,7 @@
   # Put into nixos build config
   hm-config = import ./home.nix (p
     // {
-      inherit home-manager customVars repos;
+      inherit home-manager customVars repos kutils;
 
       nixpkgs = nixpkgs-hm;
       pkgs = pkgs-hm;
@@ -47,7 +47,7 @@
 
   os-config = import ./nixos.nix (p
     // {
-      inherit home-manager customVars repos hm-config;
+      inherit home-manager customVars repos kutils hm-config;
 
       nixpkgs = nixpkgs-os;
       pkgs = pkgs-os;
@@ -68,10 +68,10 @@ in
         profiles.system = {
           user = "root";
           sshUser = "root";
-          fastConnection = false;
+          fastConnection = true; # copy from local to remote
+          remoteBuild = false; # build in remote machine
           autoRollback = false;
           magicRollback = true;
-          remoteBuild = false;
           path =
             inputs.deploy-rs.lib.${system}.activate.nixos
             nixosConfigurations.${hostName};
