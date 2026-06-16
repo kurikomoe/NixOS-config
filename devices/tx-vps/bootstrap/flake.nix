@@ -2,7 +2,7 @@
   description = "Kuriko's Bootstrap NixOS Flake";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
 
     impermanence.url = "github:nix-community/impermanence";
 

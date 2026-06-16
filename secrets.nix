@@ -10,6 +10,7 @@ let
   keys_tx =
     keys_age
     ++ [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBoOHuyXCBhpcZRb/xfc7vG1nl2TKulAwrzBnL/s9tMx root@VM-0-5-debian"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPM25/UG2xBAdE679n4HzWfApH+0ezYKK0cEC+JicZcg System"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHYWa0plFvmQkJIHG15fkLqX6cjyg5pimMnnplGc2y7n User"
     ];

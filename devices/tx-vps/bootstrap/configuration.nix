@@ -51,21 +51,21 @@ in {
 
   networking.hostName = lib.mkDefault "KurikoTXCloud";
   systemd.network.enable = true;
-  systemd.network.networks.eth0 = {
-    matchConfig.Name = "eth0";
-    address = ["10.0.16.16/22"];
-    gateway = ["10.0.16.1"];
-    routes = [
-      {
-        Destination = "183.60.82.98";
-        Gateway = "10.0.16.1";
-      }
-      {
-        Destination = "183.60.83.19";
-        Gateway = "10.0.16.1";
-      }
-    ];
-  };
+  # systemd.network.networks.eth0 = {
+  #   matchConfig.Name = "eth0";
+  #   address = ["10.0.16.16/22"];
+  #   gateway = ["10.0.16.1"];
+  #   routes = [
+  #     {
+  #       Destination = "183.60.82.98";
+  #       Gateway = "10.0.16.1";
+  #     }
+  #     {
+  #       Destination = "183.60.83.19";
+  #       Gateway = "10.0.16.1";
+  #     }
+  #   ];
+  # };
   services.resolved.enable = true;
   networking.nameservers = [
     "119.29.29.29"
@@ -76,7 +76,7 @@ in {
   networking.useDHCP = false;
 
   fileSystems."/boot" = {
-    device = "/dev/vda2";
+    device = "/dev/vda1";
     fsType = "vfat";
     options = ["umask=0077"];
   };
@@ -130,5 +130,5 @@ in {
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "24.11"; # Did you read the comment?
+  system.stateVersion = "26.05"; # Did you read the comment?
 }
