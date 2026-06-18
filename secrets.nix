@@ -99,12 +99,16 @@ let
       "config/tui.jsonc".publicKeys = keys;
     };
 
-    "res/misc" = {
-      "shell_gpt/sgptrc".publicKeys = keys;
-    };
-
     "res/dns" = {
       "cloudflare.txt".publicKeys = keys;
+    };
+
+    "res/aicoding" = {
+      "codex/config.toml".publicKeys = keys_imp;
+    };
+
+    "res/misc" = {
+      "shell_gpt/sgptrc".publicKeys = keys;
     };
   };
 
