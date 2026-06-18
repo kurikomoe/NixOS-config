@@ -30,6 +30,7 @@
             "./shells/fish"
 
             "./tools/ssh/tx-cloud.nix"
+            "./tools/git"
 
             # "./devs/common.nix"
             # "./devs/langs"
