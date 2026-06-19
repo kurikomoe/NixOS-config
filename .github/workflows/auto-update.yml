@@ -95,7 +95,7 @@ jobs:
               run: |
                 # We treat KurikoG14 as the standard
                 TARGET="KurikoG14"
-                set -e
+                set -euo pipefail  # 加上 -u 和 -o pipefail
 
                 echo "===== initial storage info ====="
                 df -h
@@ -103,7 +103,7 @@ jobs:
 
                 nix_build_once() {
                   # $1: flake attr path
-                  nix build "$1" --no-link --print-out-paths
+                  nix build "$1" --no-link --print-out-paths --fallback
                 }
 
                 nix_build_with_retry() {
