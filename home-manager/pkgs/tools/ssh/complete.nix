@@ -18,29 +18,24 @@ params @ {
   };
 
   age_secrets_filelist = kutils.age.buildAgeSecretsFileList files;
-in {
-  imports = [
-    ./helpers.nix
-  ];
+in
+  lib.recursiveUpdate common {
+    imports = [
+      ./helpers.nix
+    ];
 
-  home.packages = common.packages;
+    age.secrets = age_secrets_filelist;
 
-  age.secrets = age_secrets_filelist;
-
-  programs = lib.recursiveUpdate common.programs {
-    ssh = {
-      extraConfig = "";
-      includes = [
-        "config.extra"
-      ];
+    programs = {
+      ssh = {
+        extraConfig = "";
+        includes = [
+          "config.extra"
+        ];
+      };
     };
-  };
 
-  services = {
-    # ssh-agent.enable = true;
-  };
-
-  # home.activation.sshAuthorizedKeys = lib.hm.dag.entryAfter ["linkGeneration"] ''
-  #   run cat $HOME/.ssh/*.pub >> $HOME/.ssh/authorized_keys
-  # '';
-}
+    # home.activation.sshAuthorizedKeys = lib.hm.dag.entryAfter ["linkGeneration"] ''
+    #   run cat $HOME/.ssh/*.pub >> $HOME/.ssh/authorized_keys
+    # '';
+  }

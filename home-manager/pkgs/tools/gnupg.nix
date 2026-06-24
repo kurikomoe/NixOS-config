@@ -17,7 +17,7 @@ in {
   services = {
     gpg-agent = {
       enable = true;
-      enableSshSupport = true;
+      enableSshSupport = false; # conflicts
 
       pinentry.package = pkgs.pinentry-curses;
 
