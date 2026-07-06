@@ -1,48 +1,50 @@
 # =======================================================================
-# 用于存储已进入 9P 目录的状态
 set -g __entered_nu_for_9p 0
+set -g __checked_initial_windows_user_dir 0
 
-function enter_nu_if_9p
-    if test $__entered_nu_for_9p -eq 1
+function __is_windows_user_dir --argument-names dir
+    string match -qr '^/mnt/[cC]/Users/[^/]+/?$' -- "$dir"
+end
+
+function __is_windows_mount_dir --argument-names dir
+    string match -qr '^/mnt/[a-zA-Z](/|$)' -- "$dir"
+end
+
+function __cd_home_if_started_in_windows_user_dir
+    if test "$__checked_initial_windows_user_dir" -eq 1
         return
     end
 
-    if string match -r '^/mnt/c/Users' "$PWD"
-        return
-    end
+    set -g __checked_initial_windows_user_dir 1
 
-    # 获取当前目录的挂载点信息
-    set mount_info (df --output=fstype "$PWD" | tail -n 1)
-    # 检查文件系统是否为 9P
-    if test "$mount_info" = "9p" -a $__entered_nu_for_9p -eq 0
-        # 检查 nu.exe 是否存在
-        if command -v nu.exe > /dev/null
-            # 运行 nu.exe
-            echo "Entering windows because you're in a windows directory."
-            set -g __entered_nu_for_9p 1
-            nu.exe
-        else
-            echo "nu.exe not found in PATH"
-        end
+    if __is_windows_user_dir "$PWD"
+        cd ~
     end
 end
 
-# 每次切换目录时运行检测函数
+function enter_nu_if_9p
+    if test "$__entered_nu_for_9p" -eq 1
+        return
+    end
+
+    if not __is_windows_mount_dir "$PWD"
+        return
+    end
+
+    if command -q nu.exe
+        echo "Entering Windows because you're in a Windows directory."
+        set -g __entered_nu_for_9p 1
+        nu.exe
+        set -g __entered_nu_for_9p 0
+    else
+        echo "nu.exe not found in PATH"
+    end
+end
+
 function on_directory_change --on-variable PWD
     enter_nu_if_9p
 end
 
+__cd_home_if_started_in_windows_user_dir
 enter_nu_if_9p
 # =======================================================================
-
-if status is-interactive
-  if command -v  gpg-connect-agent > /dev/null
-    # 1. 设置 GPG_TTY 环境变量
-    # -g 表示全局 (global)，-x 表示导出 (export) 给子进程
-    set -gx GPG_TTY (tty)
-
-    # 2. 强制刷新 gpg-agent 的 TTY 上下文
-    # 这一步同样关键，告诉后台的 agent 更新当前窗口信息
-    gpg-connect-agent updatestartuptty /bye > /dev/null 2>&1
-  end
-end
