@@ -14,21 +14,25 @@
     # gsudo pwsh -c 'wsl.exe -d NixOS --mount --vhd "D:/Data/WSL/LinuxProjects.vhdx" --bare'
     # gsudo "$(wslupath $(realpath wsl.exe))" -d NixOS --mount --vhd "D:/Data/WSL/LinuxProjects.vhdx" --bare
 
+    wsl=$(wslpath -w $(realpath $(which wsl.exe)))
+    wsl=$(realpath $(which wsl.exe))
+
     ProjectVhdx=/mnt/d/Data/WSL/LinuxProjects.vhdx
     [ -f "$ProjectVhdx" ] \
-      && gsudo "$(wslpath -w $(realpath $(which wsl.exe)))" -d NixOS --mount \
+      && "$wsl" -d NixOS --mount \
         --vhd "$(wslpath -w $ProjectVhdx)" --bare \
       && echo Mount $ProjectVhdx
 
     ProjectVhdx=/mnt/w/@Data/WSL/LinuxProjects.vhdx
     [ -f "$ProjectVhdx" ] \
-      && gsudo "$(wslpath -w $(realpath $(which wsl.exe)))" -d NixOS --mount \
+      && "$wsl" -d NixOS --mount \
         --vhd "$(wslpath -w $ProjectVhdx)" --bare \
       && echo Mount $ProjectVhdx
 
     sleep 1
 
-    for i in `seq 1 10`; do
+    for i in `seq 1 3`; do
+      # sudo mount -a;
       sudo mount -a;
       if [[ $? == 0 ]]; then
         break
