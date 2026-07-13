@@ -43,11 +43,11 @@ in {
 
   fileSystems = {
     "/home/kuriko/Projects" = {
-      device = "/dev/disk/by-uuid/e0e5f930-1dee-4179-a2bd-897e7b8b733b";
+      device = "/dev/disk/by-label/Projects";
       fsType = "btrfs";
       options = [
         "compress=zstd:1" # 开启透明压缩，等级1 (最佳性能/压缩比)
-        "noatime" # 读取文件不更新访问时间 (大幅减少写操作)
+        "noatime"
         "space_cache=v2" # Btrfs 专用：优化空闲空间管理 (推荐开启)
         "discard=async" # SSD 优化：异步 TRIM (对 WSL 虚拟盘也有帮助)
         "nofail" # 必须保留：防止磁盘未挂载时导致系统启动失败
