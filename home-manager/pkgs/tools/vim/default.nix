@@ -69,7 +69,7 @@
     coc-toml
 
     # coc-tabnine
-    coc-cmake
+    # coc-cmake
     coc-git
 
     # coc-go # deprecated
@@ -84,6 +84,14 @@
     coc-pyright
   ];
 in {
+  nixpkgs.overlays = [
+    (final: prev: {
+      neovim-unwrapped = prev.neovim-unwrapped.overrideAttrs (oldAttrs: {
+        doCheck = false;
+      });
+    })
+  ];
+
   # neovim deps
   imports = [
     "${root.hm-pkgs}/devs/langs/python.nix"
