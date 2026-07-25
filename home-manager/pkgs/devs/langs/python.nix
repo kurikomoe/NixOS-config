@@ -93,7 +93,7 @@ in {
         uvicorn
         requests
         beautifulsoup4
-        scrapy
+        # scrapy
         flask
 
         openapi-python-client

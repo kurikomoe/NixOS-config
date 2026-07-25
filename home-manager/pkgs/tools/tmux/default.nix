@@ -28,7 +28,6 @@ in {
     historyLimit = 9999;
     mouse = true;
     sensibleOnTop = true;
-    terminal = "tmux-256color";
     plugins = with pkgs.tmuxPlugins; [
       # tmux-themepack
       # nord

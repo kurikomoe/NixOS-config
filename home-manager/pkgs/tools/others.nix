@@ -33,7 +33,7 @@ in {
 
       kmod
 
-      glances
+      # glances
       gtop
       dust # du-dust
       fd # find
