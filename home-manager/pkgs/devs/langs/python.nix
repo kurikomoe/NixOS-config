@@ -59,7 +59,6 @@ in {
 
         # 图像处理的库
         pillow
-        opencv
         seaborn
         matplotlib
 
@@ -97,10 +96,6 @@ in {
         flask
 
         openapi-python-client
-
-        # GUI
-        pyqt5
-        pyqt6
 
         # Terminal 工具
         pexpect
