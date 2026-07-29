@@ -128,7 +128,7 @@
             # use the latest deploy to avoid a bug
             repos.pkgs-kuriko-nur.deploy-rs
 
-            qemu
+            # qemu
 
             (pkgs.callPackage "${root.pkgs}/home-manager/fix-wsl.nix" {})
 

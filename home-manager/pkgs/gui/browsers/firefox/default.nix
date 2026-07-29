@@ -7,6 +7,6 @@ in {
   home.packages = with pkgs; [
     # Depreatced
     # firefox-devedition-bin
-    firefox-devedition
+    firefox-bin
   ];
 }
