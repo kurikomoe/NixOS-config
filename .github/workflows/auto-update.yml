@@ -101,82 +101,67 @@ jobs:
                 df -h
                 echo "================================"
 
-                nix_build_once() {
+                nix_eval_once() {
                   # $1: flake attr path
-                  nix build "$1" --no-link --print-out-paths --fallback
+                  nix eval --raw "$1"
                 }
 
-                nix_build_with_retry() {
+                nix_eval_with_retry() {
                   # $1: flake attr path
                   local attr="$1"
                   local out
-                  if out=$(nix_build_once "$attr"); then
+                  if out=$(nix_eval_once "$attr"); then
                     echo "$out"
                     return 0
                   fi
-                  echo "nix build failed for $attr, retrying once in 5s..." >&2
+                  echo "nix eval failed for $attr, retrying once in 5s..." >&2
                   sleep 5
-                  if out=$(nix_build_once "$attr"); then
+                  if out=$(nix_eval_once "$attr"); then
                     echo "$out"
                     return 0
                   fi
-                  echo "nix build failed twice for $attr" >&2
+                  echo "nix eval failed twice for $attr" >&2
                   return 1
                 }
 
-                ATTR=".#nixosConfigurations.${TARGET}.config.system.build.toplevel"
+                ATTR=".#nixosConfigurations.${TARGET}.config.system.build.toplevel.drvPath"
 
-                echo "### 1. Getting current system path..."
-                # 使用 nix build 来确保路径是可用的
-                OLD_BUILD=$(nix_build_with_retry "$ATTR")
+                echo "### 1. Evaluating current system derivation..."
+                OLD_DRV=$(nix_eval_with_retry "$ATTR")
+                echo "Current drv: ${OLD_DRV}"
 
                 echo "### 2. Updating flake inputs..."
                 # 更新 flake.lock 文件
                 nix flake update
 
-                echo "### 3. Getting new system path..."
-                NEW_BUILD=$(nix_build_with_retry "$ATTR")
+                echo "### 3. Evaluating updated system derivation..."
+                NEW_DRV=$(nix_eval_with_retry "$ATTR")
+                echo "Updated drv: ${NEW_DRV}"
 
-                echo "### 4. Comparing closures..."
-                # 使用 || true 防止在有差异时命令失败
-                nix store diff-closures ${OLD_BUILD} ${NEW_BUILD} > /tmp/results.txt || true
-
-                cat /tmp/results.txt
-
-                # Show updates
-                echo "==================================="
-                cat /tmp/results.txt
-                echo "==================================="
-
-                # 清理输出：
-                # 1. 排除顶层的系统元包
-                # 2. 排除纯哈希的无意义重建
-                grep -v 'nixos-system-' /tmp/results.txt \
-                  | grep -v -E '^\s*[0-9a-z]{32}:' \
-                  | grep -v -E '^\s*source:' \
-                  > /tmp/results.clean.txt || true
-
-
-                echo "### 5. Checking for meaningful changes..."
-                line_count=$(< /tmp/results.clean.txt wc -l)
-                if [[ $line_count -gt 0 ]]; then
-                  echo "✅ Meaningful changes detected ($line_count lines). Preparing commit."
+                echo "### 4. Checking flake.lock changes..."
+                if git diff --quiet -- flake.lock; then
+                  echo "No flake.lock changes detected. Skipping commit."
+                  echo "changes_detected=false" >> $GITHUB_OUTPUT
+                else
+                  echo "flake.lock changed and ${TARGET} evaluates successfully. Preparing commit."
                   echo "changes_detected=true" >> $GITHUB_OUTPUT
                   echo "commit_body<<EOF" >> $GITHUB_OUTPUT
-                  cat /tmp/results.clean.txt >> $GITHUB_OUTPUT
+                  echo "Updated flake.lock." >> $GITHUB_OUTPUT
+                  echo "" >> $GITHUB_OUTPUT
+                  echo "Validation:" >> $GITHUB_OUTPUT
+                  echo "- ${TARGET} toplevel derivation evaluates successfully." >> $GITHUB_OUTPUT
+                  echo "- Old drv: ${OLD_DRV}" >> $GITHUB_OUTPUT
+                  echo "- New drv: ${NEW_DRV}" >> $GITHUB_OUTPUT
                   echo "EOF" >> $GITHUB_OUTPUT
-                else
-                  echo "✅ No meaningful changes detected ($line_count lines). Skipping commit."
-                  echo "changes_detected=false" >> $GITHUB_OUTPUT
                 fi
 
                 echo "===== after storage info ====="
                 df -h
                 echo "================================"
 
-            - name: Check Build Others
+            - name: Check Eval Others
               run: |
-                nix build .#devShells.x86_64-linux.default --no-link --impure
+                nix eval --raw .#devShells.x86_64-linux.default.drvPath --impure
 
             - name: Generate timestamp
               id: timestamp
@@ -193,7 +178,7 @@ jobs:
                 message: |
                   Auto-update:
 
-                  The following package changes were detected in the system closure:
+                  flake.lock was updated after evaluation checks:
                   ${{ steps.update-flake.outputs.commit_body }}
 
             - name: Setup upterm session
