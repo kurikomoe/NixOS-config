@@ -108,7 +108,7 @@ in {
     universal-ctags
     xclip # Clipboard support
 
-    csharp-ls
+    # csharp-ls
 
     # vim alternative?
     helix
@@ -138,19 +138,19 @@ in {
               inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
                                             \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
       '';
-    # renamed from extraLuaConfig to initLua in 26.05
-    initLua = ''
-      vim.lsp.config["csharp_ls"] = {
-        root_marker = { "*.sln", "*.csproj", },
-        handlers = {
-          ["textDocument/definition"] = require('csharpls_extended').handler,
-          ["textDocument/typeDefinition"] = require('csharpls_extended').handler,
-        },
-        cmd = { "csharp-ls" },
-      }
-      vim.lsp.enable("csharp_ls")
-      require("csharpls_extended").buf_read_cmd_bind()
-    '';
+    # csharp-ls is disabled to avoid its source-built .NET SDK dependency chain.
+    # initLua = ''
+    #   vim.lsp.config["csharp_ls"] = {
+    #     root_marker = { "*.sln", "*.csproj", },
+    #     handlers = {
+    #       ["textDocument/definition"] = require('csharpls_extended').handler,
+    #       ["textDocument/typeDefinition"] = require('csharpls_extended').handler,
+    #     },
+    #     cmd = { "csharp-ls" },
+    #   }
+    #   vim.lsp.enable("csharp_ls")
+    #   require("csharpls_extended").buf_read_cmd_bind()
+    # '';
     plugins = vimPlugins;
     coc = {
       enable = true;

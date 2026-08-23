@@ -7,26 +7,10 @@ p @ {
   inherit (repos) pkgs-unstable;
   PNPM_HOME = "$HOME/.local/opt/pnpm";
 in {
-  nixpkgs.overlays = [
-    (final: prev: {
-      inherit
-        (pkgs-unstable)
-        bun
-        deno
-        nodejs
-        pnpm
-        yarn
-        ;
-      pnpm_8 = pkgs-unstable.pnpm;
-    })
-  ];
-
-  home.packages = with pkgs; [
+  home.packages = with pkgs-unstable; [
     nodejs
     deno
-
     bun
-
     yarn
     pnpm
   ];

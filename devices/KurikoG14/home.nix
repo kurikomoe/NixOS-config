@@ -119,7 +119,7 @@
 
             android-tools
             apktool
-            jadx
+            # jadx # pulls in quark-engine and its large Python/Arrow dependency chain
             poppler-utils
             imagemagick
             mupdf

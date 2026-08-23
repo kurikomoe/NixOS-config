@@ -13,14 +13,6 @@ p @ {
       sdk_9_0-bin
       sdk_8_0-bin
     ];
-
-  combineMono = pkgs.buildEnv {
-    name = "mono-combine";
-    paths = with pkgs; [
-      mono
-      (lib.lowPrio msbuild) # for neovim omnisharp-vim plugin
-    ];
-  };
 in {
   nixpkgs = lib.mkIf (!useGlobalPkgs) {
     overlays = with repos.pkgs-stable.dotnetCorePackages; [
@@ -39,9 +31,7 @@ in {
 
   home.packages = with pkgs;
     [
-      combineMono
-      # mono
-      # (lib.lowPrio msbuild)  # for neovim omnisharp-vim plugin
+      mono
 
       dotnetPackages.Nuget
 
