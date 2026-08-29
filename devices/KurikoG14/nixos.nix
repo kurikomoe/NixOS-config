@@ -192,6 +192,7 @@ p @ {
               AllowUsers = ["kuriko"];
               MaxAuthTries = 3;
               PerSourcePenalties = "crash:3600s authfail:3600s max:86400s";
+              PerSourcePenaltyExemptList = "127.0.0.0/8,::1/128,100.64.0.0/10,fd7a:115c:a1e0::/48";
             };
           };
 
