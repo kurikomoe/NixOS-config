@@ -42,6 +42,12 @@ p @ {
     src = inputs.fishPlugin-fish-abbreviation-tips;
   };
 
+  fishPlugin-autopy = pkgs.fishPlugins.buildFishPlugin {
+    pname = "autopy.fish";
+    version = "unstable";
+    src = inputs.fishPlugin-autopy;
+  };
+
   theme-dracula = pkgs.fishPlugins.buildFishPlugin {
     pname = "theme-dracula";
     version = "unstable";
@@ -152,6 +158,10 @@ in {
         {
           name = "humantime-fish";
           src = humantime-fish.src;
+        }
+        {
+          name = "autopy.fish";
+          src = fishPlugin-autopy.src;
         }
 
         # disable this since it grep out failed commands

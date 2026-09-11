@@ -166,6 +166,10 @@
       url = "github:dracula/fish";
       flake = false;
     };
+    fishPlugin-autopy = {
+      url = "github:SpaceShaman/autopy.fish";
+      flake = false;
+    };
 
     # -------------------------------------------------------------
     hevi = {
