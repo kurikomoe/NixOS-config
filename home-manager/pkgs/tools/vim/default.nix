@@ -1,9 +1,7 @@
 {
   inputs,
-  config,
   root,
   pkgs,
-  lib,
   ...
 }: let
   # omnisharp-vim-plugin = pkgs.vimUtils.buildVimPlugin {
@@ -126,36 +124,33 @@ in {
     viAlias = true;
     vimAlias = true;
     defaultEditor = true;
-    extraConfig =
-      (builtins.readFile ./nvim/init.vim)
-      + ''        ;
-              " set log dir to avoid write into /nix
-              " let g:OmniSharp_log_dir = "$HOME/.cache/omnisharp-vim"
-              " let g:OmniSharp_server_use_mono = 1
+    # Lazy owns Neovim plugins; the Nix plugin list is only for legacy Vim.
+    initLua = builtins.readFile ./nvim/init.lua;
+    extraPackages = with pkgs; [
+      git
+      curl
+      wget
+      unzip
+      gnutar
+      gzip
+      xz
+      gcc
+      gnumake
+      nodejs
+      go # Mason builds gopls, goimports and gofumpt with Go.
+      rustfmt # Fallback when no project/rustup formatter is on PATH.
+      zig # zig fmt is part of the Zig toolchain, not a Mason package.
+      (python3.withPackages (ps: [ps.pip]))
+      ripgrep
+      fd
+      tree-sitter
+    ];
+  };
 
-              " Make <CR> to accept selected completion item or notify coc.nvim to format
-              " <C-g>u breaks current undo, please make your own choice
-              inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
-                                            \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-      '';
-    # csharp-ls is disabled to avoid its source-built .NET SDK dependency chain.
-    # initLua = ''
-    #   vim.lsp.config["csharp_ls"] = {
-    #     root_marker = { "*.sln", "*.csproj", },
-    #     handlers = {
-    #       ["textDocument/definition"] = require('csharpls_extended').handler,
-    #       ["textDocument/typeDefinition"] = require('csharpls_extended').handler,
-    #     },
-    #     cmd = { "csharp-ls" },
-    #   }
-    #   vim.lsp.enable("csharp_ls")
-    #   require("csharpls_extended").buf_read_cmd_bind()
-    # '';
-    plugins = vimPlugins;
-    coc = {
-      enable = true;
-      settings = lib.importJSON ./nvim/coc-settings.json;
-    };
+  xdg.configFile = {
+    "nvim/lua".source = ./nvim/lua;
+    # Read-only seed; Lazy writes its working lockfile under stdpath("data").
+    "nvim/lazy-lock.seed.json".source = ./nvim/lazy-lock.json;
   };
 
   programs.vim = {
