@@ -96,47 +96,48 @@ jobs:
               run: |
                 # We treat KurikoG14 as the standard
                 TARGET="KurikoG14"
-                set -euo pipefail
+                set -e
 
                 echo "===== initial storage info ====="
                 df -h
                 echo "================================"
 
-                nix_eval_once() {
+                nix_build_once() {
                   # $1: flake attr path
-                  nix eval --raw "$1"
+                  nix build "$1" --no-link --print-out-paths
                 }
 
-                nix_eval_with_retry() {
+                nix_build_with_retry() {
                   # $1: flake attr path
                   local attr="$1"
                   local out
-                  if out=$(nix_eval_once "$attr"); then
+                  if out=$(nix_build_once "$attr"); then
                     echo "$out"
                     return 0
                   fi
-                  echo "nix eval failed for $attr, retrying once in 5s..." >&2
+                  echo "nix build failed for $attr, retrying once in 5s..." >&2
                   sleep 5
-                  if out=$(nix_eval_once "$attr"); then
+                  if out=$(nix_build_once "$attr"); then
                     echo "$out"
                     return 0
                   fi
-                  echo "nix eval failed twice for $attr" >&2
+                  echo "nix build failed twice for $attr" >&2
                   return 1
                 }
 
-                ATTR=".#nixosConfigurations.${TARGET}.config.system.build.toplevel.drvPath"
+                ATTR=".#nixosConfigurations.${TARGET}.config.system.build.toplevel"
 
-                echo "### 1. Evaluating current system derivation..."
-                nix_eval_with_retry "$ATTR"
+                echo "### 1. Getting current system path..."
+                # 使用 nix build 来确保路径是可用的
+                nix_build_with_retry "$ATTR"
 
                 echo "===== after storage info ====="
                 df -h
                 echo "================================"
 
-            - name: Check Eval Others
+            - name: Check Build Others
               run: |
-                nix eval --raw .#devShells.x86_64-linux.default.drvPath --impure
+                nix build .#devShells.x86_64-linux.default --no-link --impure
 
             - name: Setup upterm session
               uses: lhotari/action-upterm@v1
