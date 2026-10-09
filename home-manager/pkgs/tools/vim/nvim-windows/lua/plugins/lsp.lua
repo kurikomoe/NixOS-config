@@ -12,7 +12,6 @@ local servers = {
     },
   },
   pyright = {},
-  gopls = { settings = { gopls = { gofumpt = true } } },
   zls = {},
   ts_ls = {},
   bashls = {},
@@ -22,6 +21,12 @@ local servers = {
   yamlls = {},
   taplo = {},
 }
+
+-- gopls / goimports / gofumpt 需要本地 Go 来安装和运行。
+-- 未安装 Go 的机器不反复触发失败安装；安装 Go 并重启后自动补装。
+if vim.fn.executable("go") == 1 then
+  servers.gopls = { settings = { gopls = { gofumpt = true } } }
+end
 
 return {
   {
@@ -44,9 +49,10 @@ return {
           "ruff",
           "prettier",
           "shfmt",
-          "goimports",
-          "gofumpt",
         }
+        if vim.fn.executable("go") == 1 then
+          vim.list_extend(wanted, { "goimports", "gofumpt" })
+        end
         local missing = vim.tbl_filter(function(name)
           return not registry.is_installed(name)
         end, wanted)
