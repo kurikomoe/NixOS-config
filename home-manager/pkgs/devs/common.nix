@@ -47,6 +47,7 @@ in {
     curl
 
     htop
+    bottom
     which
 
     dust # du-dust
