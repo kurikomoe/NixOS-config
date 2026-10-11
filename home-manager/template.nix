@@ -60,6 +60,7 @@ in
         {
           # This should be safe, since nur use username as namespace.
           home.packages = [];
+          imports = [inputs.dsh-nix.homeManagerModules.dsh];
         }
 
         # -------------- nixGL ------------------

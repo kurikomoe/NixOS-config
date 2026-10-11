@@ -176,6 +176,12 @@
       url = "github:Arnau478/hevi";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # -------------------------------------------------------------
+    dsh-nix = {
+      url = "github:Samuka007/dsh-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   nixConfig = {
