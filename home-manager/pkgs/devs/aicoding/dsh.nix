@@ -7,8 +7,14 @@
   ...
 }: let
 in {
+  home.packages = with pkgs; [
+    # repos.pkgs-kuriko-nur.dsh
+    repos.pkgs-kuriko-nur.dsh-tui
+  ];
+
   programs.dsh = {
-    enable = true;
+    # conflicts with self built dsh
+    enable = false;
     profiles.headless = {
       plugins = ["@deepseek-ai/dsh-base" "@deepseek-ai/dsh-headless"];
     };
