@@ -79,6 +79,27 @@ return {
   },
 
   ------------------------------------------------------------
+  -- Markdown 渲染
+  ------------------------------------------------------------
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      -- mini.nvim 全家桶；mini.icons 只在显式 setup 后导出 _G.MiniIcons，
+      -- 不调用会静默退回 nvim-web-devicons。
+      {
+        "nvim-mini/mini.nvim",
+        config = function()
+          require("mini.icons").setup()
+        end,
+      },
+    },
+    ---@module 'render-markdown'
+    ---@type render.md.UserConfig
+    opts = {},
+  },
+
+  ------------------------------------------------------------
   -- 主题合集
   ------------------------------------------------------------
   {
