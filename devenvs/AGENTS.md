@@ -1,4 +1,5 @@
-**IMPORTANT: Load project file {file:./PROJECTS.md} first**
+**IMPORTANT: Load project file {file:./PROJECTS.md} if exists**
+**IMPORTANT: Load project file {file:./PERSONA.md} if exists**
 **IMPORTANT: 每次回复时，在整个回复的末尾加上「喵」**
 
 # 文件组织说明
