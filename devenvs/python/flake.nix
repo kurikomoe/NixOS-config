@@ -75,7 +75,45 @@
           packages = with pkgs; [];
           python = my-python;
 
+          # pip 装出来的二进制 wheel（numpy / torch / triton）依赖 "系统" 的
+          # libstdc++.so.6、libgcc_s.so.1，而 WSL 这种精简 rootfs（没装 g++）
+          # 里根本没有这两个库，import numpy 会直接失败。
+          #
+          # 这里列出的库会被 devShellBase 同时放进 mkShell 的 buildInputs
+          #（提供 -L/-rpath）和 LD_LIBRARY_PATH（提供运行期查找），
+          # 所以不用自己手写 LD_LIBRARY_PATH。
+          #
+          # 注：zlib(libz.so.1) / openssl / python 已经由 devShellBase 的默认
+          # libraries 提供，这里只补缺失的 libstdc++。
+          libraries = [
+            config.devShellBase.stdenv.cc.cc.lib # libstdc++.so.6 + libgcc_s.so.1
+          ];
+
           shellHook = ''
+            # ---- CUDA / triton ----
+            # triton 的 nvidia backend（triton/backends/nvidia/driver.py）会执行
+            # `/sbin/ldconfig -p` 去定位 libcuda.so.1。WSL 的 rootfs 里没有
+            # ldconfig，于是直接抛 FileNotFoundError。
+            # triton >= 3.3 支持用 TRITON_LIBCUDA_PATH 显式指定驱动 stub 目录，
+            # 命中后就不再走 ldconfig。
+            if [ -z "''${TRITON_LIBCUDA_PATH-}" ]; then
+              for _cuda_dir in /usr/lib/wsl/lib /usr/local/cuda/lib64 /usr/lib64; do
+                if [ -e "$_cuda_dir/libcuda.so.1" ]; then
+                  export TRITON_LIBCUDA_PATH="$_cuda_dir"
+                  break
+                fi
+              done
+              unset _cuda_dir
+            fi
+
+            # triton 运行期会用 gcc 现场编译 kernel launcher，并需要
+            # libcuda.so（无版本号的那个）来 -lcuda，WSL 的驱动目录里有。
+            if [ -n "''${TRITON_LIBCUDA_PATH-}" ]; then
+              case ":''${LD_LIBRARY_PATH-}:" in
+                *":$TRITON_LIBCUDA_PATH:"*) ;;
+                *) export LD_LIBRARY_PATH="$TRITON_LIBCUDA_PATH:''${LD_LIBRARY_PATH-}" ;;
+              esac
+            fi
           '';
 
           env = rec {};

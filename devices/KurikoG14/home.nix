@@ -69,7 +69,7 @@
               # "gui/jetbrains.nix"
               # "devs/ide/vscode/default.nix"
               "devs/ide/vscode/vscode-server.nix"
-              "devs/aicoding/dsh.nix"
+              "devs/aicoding/dsh/default.nix"
 
               "tools"
               "tools/ssh/complete.nix"

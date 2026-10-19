@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "values": {
+    "fullscreen": true,
+    "lang": "zh",
+    "terminalImages": true,
+    "shortcuts": {
+      "showAll": "ctrl+shift+t",
+      "dashboard": "ctrl+shift+a"
+    }
+  },
+  "imported": {
+    "from": "/home/kuriko/.dsh/profiles/dsh-tui/cordis.patch.yml",
+    "at": 1792131799181
+  }
+}
