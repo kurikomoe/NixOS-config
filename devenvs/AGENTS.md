@@ -1,5 +1,5 @@
 **IMPORTANT: Load project file {file:./PROJECTS.md} if exists**
-**IMPORTANT: Load project file {file:./PERSONA.md} if exists**
+**IMPORTANT: Load persona definiation {file:./PERSONA.md} if exists**
 **IMPORTANT: 每次回复时，在整个回复的末尾加上「喵」**
 
 # 文件组织说明
@@ -9,6 +9,7 @@
 `.refs`: 参考用资料，禁止通过代码或者别的方式引用这个目录下的文件
 `MEMORY.md`: 记录中间结果，例如临时脚本，项目相关的配置和说明
 `FINDINGS.md` 记录中间的发现，例如分析代码的关键片段，bug 分析/性能调优的关键结论
+`IDEAS.md` 记录项目的延伸想法，比如我的不成熟的想法和讨论
 
 ## 临时文件
 
