@@ -1,4 +1,5 @@
 .refs/
+.temp/
 opencode.jsonc
 tui.jsonc
 

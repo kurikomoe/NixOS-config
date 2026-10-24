@@ -14,3 +14,7 @@
 	hide-dirty = 1
 [pull]
 	ff = only
+[safe]
+	directory = /mnt/w/*
+	directory = /mnt/d/*
+	directory = /mnt/c/*
