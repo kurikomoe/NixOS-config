@@ -38,7 +38,7 @@ Mason 下载的 Linux 二进制在 NixOS 上依赖可用的 nix-ld。本仓库�
 
 ## 常用键位
 
-Leader 仍是反斜杠 `\`，大小写有区别。
+Leader 仍是反斜杠 `\`，大小写有区别。按下 `\` 后会由 which-key 列出后续键位（延迟约 200ms），`Leader+?` 只看当前 buffer 的局部映射。
 
 | 键位 | 功能 |
 | --- | --- |
@@ -74,11 +74,11 @@ Telescope 使用 Leader+p 分组，避免与 EasyMotion 的 Leader+f 冲突。�
 
 ## 格式化
 
-默认保存时同步格式化，超时 1 秒。特殊 buffer、不可修改 buffer 及当前内容超过 200 KiB 的文件跳过自动格式化；缺少工具或执行失败不阻止保存。
+保存时格式化默认关闭（`vim.g.autoformat = false`）。`:AutoFormatToggle` 全局开启后同步格式化，超时 1 秒；特殊 buffer、不可修改 buffer 及当前内容超过 200 KiB 的文件仍然跳过，缺少工具或执行失败不阻止保存。
 
 - Lua：Stylua；Python：Ruff；前端、JSON/JSONC、YAML、Markdown：Prettier；Shell：shfmt。
 - Rust：rustfmt；Go：先 goimports 整理 import，再 gofumpt 格式化；Zig：zig fmt；没有外部格式化器时回退到支持格式化的 LSP。
-- `:FormatToggle` 只切换当前 buffer 的保存格式化，手动 Leader+F 始终可用。
+- `:AutoFormatToggle` 切换全局保存格式化（默认关闭），`:FormatToggle` 只切换当前 buffer；手动 Leader+F 始终可用。
 - 不再额外执行旧的保存时空白清理，避免重复修改；尾随空白仍有提示。
 - `.age` 规则只识别文件类型，不负责加解密。
 

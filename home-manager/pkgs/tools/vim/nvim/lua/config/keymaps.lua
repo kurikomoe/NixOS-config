@@ -4,6 +4,11 @@
 local map = vim.keymap.set
 local opts = { silent = true, noremap = true }
 
+-- 复用通用选项同时带 desc，which-key 才有可读的说明。
+local function with_desc(desc)
+  return vim.tbl_extend("force", opts, { desc = desc })
+end
+
 -- 禁用 Ex 模式
 map({ "n", "v" }, "Q", "<Nop>", opts)
 
@@ -47,10 +52,19 @@ end, opts)
 map("n", "]d", function()
   vim.diagnostic.jump({ count = 1, float = true })
 end, opts)
-map("n", "<leader>e", vim.diagnostic.open_float, opts)
-map("n", "<leader>q", vim.diagnostic.setloclist, opts)
+map("n", "<leader>e", vim.diagnostic.open_float, with_desc("Diagnostic float"))
+map("n", "<leader>q", vim.diagnostic.setloclist, with_desc("Diagnostics to loclist"))
 -- 不占用 Git hunk 操作的 Leader+h 前缀。
 map("n", "<leader>H", "<cmd>Inspect<CR>", { desc = "Inspect highlight", silent = true })
+
+-- 保存时格式化默认关闭；plugins/format.lua 在保存时读取这个全局开关。
+-- 手动 Leader+F 不受影响，:AutoFormatToggle 可以即时开回来，不需要重新部署。
+vim.g.autoformat = false
+
+vim.api.nvim_create_user_command("AutoFormatToggle", function()
+  vim.g.autoformat = not vim.g.autoformat
+  vim.notify("保存时格式化（全局）：" .. (vim.g.autoformat and "开启" or "关闭"))
+end, { desc = "Toggle format on save globally" })
 
 vim.api.nvim_create_user_command("FormatToggle", function()
   vim.b.disable_autoformat = not vim.b.disable_autoformat
@@ -87,4 +101,4 @@ vim.api.nvim_create_user_command("ClearUndo", function()
   vim.bo.modified = modified
   vim.fn.winrestview(view)
 end, { desc = "Clear undo history of the current buffer" })
-map("n", "<leader>du", "<cmd>ClearUndo<CR>", opts)
+map("n", "<leader>du", "<cmd>ClearUndo<CR>", with_desc("Clear undo history"))

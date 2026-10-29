@@ -160,7 +160,9 @@ Leader 是反斜杠 `\`，大小写有区别：
 
 Windows Terminal 若拦截 Alt+数字或 Ctrl+Shift 等组合，可调整终端绑定或改用 Leader 键位。图标显示需要终端选择 Nerd Font；字体未安装不影响编辑。
 
-保存时默认同步格式化，超时 1 秒，特殊 buffer 和超过 200 KiB 的内容跳过。`:FormatToggle` 切换当前 buffer 自动格式化，`:ConformInfo` 查看格式化器状态。
+按下 `\` 后 which-key 会列出后续键位（延迟约 200ms），`Leader+?` 只看当前 buffer 的局部映射。
+
+保存时格式化默认关闭（`vim.g.autoformat = false`），`:AutoFormatToggle` 全局切换；开启后同步格式化，超时 1 秒，特殊 buffer 和超过 200 KiB 的内容跳过。`:FormatToggle` 只切换当前 buffer，`:ConformInfo` 查看格式化器状态。
 
 ## 5. 与原配置的兼容性取舍
 

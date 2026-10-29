@@ -167,6 +167,10 @@
     "branch": "master",
     "commit": "15db3f697aa1fa696d99fcdc920c90cd2cec855e"
   },
+  "which-key.nvim": {
+    "branch": "main",
+    "commit": "3aab2147e74890957785941f0c1ad87d0a44c15a"
+  },
   "zig.vim": {
     "branch": "master",
     "commit": "1a1112eec20e28c832a06ddb1d0060f6ce652372"

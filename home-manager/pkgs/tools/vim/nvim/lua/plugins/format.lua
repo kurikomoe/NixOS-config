@@ -38,7 +38,8 @@ return {
       default_format_opts = { lsp_format = "fallback" },
       format_on_save = function(buf)
         if
-          vim.b[buf].disable_autoformat
+          not vim.g.autoformat
+          or vim.b[buf].disable_autoformat
           or vim.bo[buf].buftype ~= ""
           or not vim.bo[buf].modifiable
         then
