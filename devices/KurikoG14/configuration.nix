@@ -125,7 +125,7 @@ p @ {
     fish.enable = true;
   };
 
-  time.timeZone = "Asia/Shanghai";
+  time.timeZone = "Asia/Japan";
 
   services = {
     # conflic with time.timeZone
